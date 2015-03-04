@@ -3,8 +3,8 @@ node_js:
   - "0.10"
 env:
   global:
-    - secure: RhmfgnPkrCcjOTWkfYFZS5zlBQhte2cAAtjA/bIKH4qhaLsWHHS0ApJ065PJs4H/lfslWSfnRcUpaeFq8hhr/9dMlCxFJc5CTJ2EfmV56NjsiaETtrxHdNVFtZU/DxJnSxnW4revbFkk/mM6JZ+P7XwVv+iitKhx3uRpX2/rKWA=
-    - secure: hmu/VH1viA8oPFjxBrjvnLrNa0PnfXsIKMMv9ZmgpXthdhTtuReD9rPmbnFzNh9MyCkLSZcndJakpDu9SwHVDcs5eyV72fuXHW/0htyN9eNTMyShrNIpOJe6JUqMez7MxQU9J45IJGSvbyEfrbZ20mbGGzJ41KnEZ0IfwODPcMY=
+    - secure: TH/0rZcre20ehUsc+m0nVMYrWrYMefjWUEyhlVR+OoXpPZUr9ZHCZ+7dFXozySeLH8JNJJEsvvDuc/ZMgTuQIiiTcpIjQlgR5mrEo+POe1LGpWAQDTsc99/1R/VkHj1QZFocUpx0rqVaWIcuh7KFTI5FGNobUrfMY0WRQsrbv8A=
+    - secure: P4+VIEHymk5dGEzWeHRnWI14ajFmxY3BHIahDhaBG1uCBQbL0QN1z48iQwsk9hsR5n8eqt4rNg8wGq6+lnAyDEnPhxyHj+a4XS20PDMc0T8VN0csBKjgB2lnKnWAVswRxUdc3w3DDmxR4Gesl79Du8KCUU6uCWT8gOXXHl7IcXs=
 before_install:
   - npm install -g bower
   - npm install -g grunt-cli
