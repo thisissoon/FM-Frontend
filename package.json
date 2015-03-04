@@ -1,9 +1,9 @@
 {
-  "name": "angular-start",
+  "name": "FM-Frontend",
   "private": true,
-  "version": "0.1.0",
-  "description": "The start of all angularjs projects. A base template for a typical angularjs application.",
-  "repository": "https://github.com/thisissoon/angular-start",
+  "version": "0.0.0",
+  "description": "The frontend for thisissoon.fm",
+  "repository": "https://github.com/thisissoon/FM-Frontend",
   "license": "MIT",
   "dependencies": {
     "bower": "~1.3.12",
