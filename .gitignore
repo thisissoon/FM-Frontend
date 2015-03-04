@@ -1,0 +1,15 @@
+logs/*
+!.gitkeep
+node_modules/
+app/index-e2e.html
+app/components/
+dist/
+docs/
+css/
+coverage/
+tmp
+.DS_Store
+.idea
+.grunt
+*.log
+_SpecRunner.html
