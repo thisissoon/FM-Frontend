@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>thisissoonFM - Modules</title>
+
+        <base href="/app/">
+        <link rel="stylesheet" href="components/angular-material/angular-material.css"/>
+
+        <style>
+
+
+            .artwork {
+                height: 70px;
+                padding: .5em;
+            }
+
+            md-content {
+                min-height: 500px;
+            }
+
+            md-autocomplete ul li {
+                line-height: 70px;
+                height: 70px;
+            }
+
+            .menuBtn {
+                background-color: transparent;
+                border: none;
+                height: 38px;
+                margin: 16px;
+                position: absolute;
+                width: 36px;
+            }
+            md-toolbar h1 {
+                font-size: 1.250em;
+                font-weight: 400;
+                margin: auto;
+            }
+            md-list .md-button {
+                color: inherit;
+                font-weight: 500;
+                text-align: left;
+                width: 100%;
+            }
+            .visually-hidden {
+                border: 0;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+
+            /* Using Data-URI converted from svg until <md-icon> becomes available
+            https://github.com/google/material-design-icons
+            */
+            .menuBtn {
+                background: transparent url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyNHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IkhlYWRlciI+CiAgICA8Zz4KICAgICAgICA8cmVjdCB4PSItNjE4IiB5PSItMjIzMiIgZmlsbD0ibm9uZSIgd2lkdGg9IjE0MDAiIGhlaWdodD0iMzYwMCIvPgogICAgPC9nPgo8L2c+CjxnIGlkPSJMYWJlbCI+CjwvZz4KPGcgaWQ9Ikljb24iPgogICAgPGc+CiAgICAgICAgPHJlY3QgZmlsbD0ibm9uZSIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+CiAgICAgICAgPHBhdGggZD0iTTMsMThoMTh2LTJIM1YxOHogTTMsMTNoMTh2LTJIM1YxM3ogTTMsNnYyaDE4VjZIM3oiIHN0eWxlPSJmaWxsOiNmM2YzZjM7Ii8+CiAgICA8L2c+CjwvZz4KPGcgaWQ9IkdyaWQiIGRpc3BsYXk9Im5vbmUiPgogICAgPGcgZGlzcGxheT0iaW5saW5lIj4KICAgIDwvZz4KPC9nPgo8L3N2Zz4=) no-repeat  center center;
+            }
+
+        </style>
+    </head>
+
+    <body layout="column" ng-controller="AppCtrl as ctrl">
+
+        <md-toolbar layout="row">
+            <button ng-click="toggleSidenav('left')" hide-gt-sm class="menuBtn">
+                <span class="visually-hidden">Menu</span>
+            </button>
+            <h1>thisissoon.fm</h1>
+        </md-toolbar>
+
+        <div layout="row" flex>
+            <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$media('gt-sm')">
+
+            </md-sidenav>
+            <div layout="column" flex id="content">
+                <md-content layout="column" flex class="md-padding">
+
+                    <div layout="column">
+                        <md-content class="md-padding" layout="column">
+                            <p>Use <code>&lt;md-autocomplete&gt;</code> to search for matches from local or remote data sources.</p>
+                            <md-autocomplete
+                                ng-disabled="ctrl.isDisabled"
+                                md-no-cache="ctrl.noCache"
+                                md-selected-item="ctrl.selectedItem"
+                                md-search-text="ctrl.searchText"
+                                md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                md-item-text="item.display"
+                                placeholder="What is your favorite US state?">
+                                <div layout="row" layout-align="start center">
+                                    <img ng-src="{{ item.artwork }}" class="artwork md-padding" alt="{{ item.display }}">
+                                    <span md-highlight-text="searchText">{{ item.display }}</span>
+                                </div>
+                            </md-autocomplete>
+                        </md-content>
+                    </div>
+
+                </md-content>
+            </div>
+        </div>
+
+        <script src="components/angular/angular.js"></script>
+        <script src="components/angular-aria/angular-aria.js"></script>
+        <script src="components/angular-animate/angular-animate.js"></script>
+        <script src="components/angular-material/angular-material.js"></script>
+
+        <script>
+            angular.module('myApp', ['ngMaterial'])
+                .controller('AppCtrl', function ($scope, $mdSidenav, $timeout, $q) {
+
+                    $scope.toggleSidenav = function(menuId) {
+                        $mdSidenav(menuId).toggle();
+                    };
+
+
+                    var self = this;
+                    // list of `state` value/display objects
+                    self.states        = loadAll();
+                    self.selectedItem  = null;
+                    self.searchText    = null;
+                    self.querySearch   = querySearch;
+                    self.simulateQuery = false;
+                    self.isDisabled    = false;
+                    // ******************************
+                    // Internal methods
+                    // ******************************
+                    /**
+                    * Search for states... use $timeout to simulate
+                    * remote dataservice call.
+                    */
+                    function querySearch (query) {
+                        var results = query ? self.states.filter( createFilterFor(query) ) : [],
+                            deferred;
+                        if (self.simulateQuery) {
+                            deferred = $q.defer();
+                            $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+                            return deferred.promise;
+                        } else {
+                          return results;
+                        }
+                    }
+                    /**
+                     * Build `states` list of key/value pairs
+                     */
+                    function loadAll() {
+                        var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
+                                  Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
+                                  Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
+                                  Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
+                                  North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
+                                  South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
+                                  Wisconsin, Wyoming';
+
+                        return allStates.split(/, +/g).map( function (state) {
+                            return {
+                                value: state.toLowerCase(),
+                                display: state,
+                                artwork: 'http://upload.wikimedia.org/wikipedia/en/b/b9/Nothing_Was_the_Same_cover_2.png'
+                            };
+                        });
+                    }
+                    /**
+                     * Create filter function for a query string
+                     */
+                    function createFilterFor(query) {
+                        var lowercaseQuery = angular.lowercase(query);
+                        return function filterFn(state) {
+                            return (state.value.indexOf(lowercaseQuery) === 0);
+                        };
+                    }
+                });
+        </script>
+
+    </body>
+</html>
