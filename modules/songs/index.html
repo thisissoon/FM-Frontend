@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>thisissoonFM - Modules</title>
+
+        <base href="/app/">
+        <link rel="stylesheet" href="components/angular-material/angular-material.css"/>
+
+        <style>
+
+            .artwork {
+                margin: .5em;
+                width: 75px;
+            }
+
+            .song {
+                border: 1px solid #F0F0F0;
+                box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
+                display: block;
+                margin-bottom: 3px;
+            }
+
+            .song.current .artwork {
+                margin: 0 1em -4px 0;
+                width: 125px;
+            }
+
+            .song.current h3 {
+                font-size: 2em;
+            }
+
+            .song.current h4 {
+                font-size: 1.6em;
+            }
+
+            @media (max-width: 600px) {
+                .song.current h3 {
+                    font-size: 1.5em;
+                }
+
+                .song.current h4 {
+                    font-size: 1.2em;
+                }
+            }
+
+            .song:last-child {
+                margin-bottom: 0px;
+            }
+
+            .track-length {
+                padding: 1em;
+            }
+
+            .menuBtn {
+                background-color: transparent;
+                border: none;
+                height: 38px;
+                margin: 16px;
+                position: absolute;
+                width: 36px;
+            }
+            md-toolbar h1 {
+                font-size: 1.250em;
+                font-weight: 400;
+                margin: auto;
+            }
+            md-list .md-button {
+                color: inherit;
+                font-weight: 500;
+                text-align: left;
+                width: 100%;
+            }
+            .visually-hidden {
+                border: 0;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+
+            /* Using Data-URI converted from svg until <md-icon> becomes available
+            https://github.com/google/material-design-icons
+            */
+            .menuBtn {
+                background: transparent url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyNHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IkhlYWRlciI+CiAgICA8Zz4KICAgICAgICA8cmVjdCB4PSItNjE4IiB5PSItMjIzMiIgZmlsbD0ibm9uZSIgd2lkdGg9IjE0MDAiIGhlaWdodD0iMzYwMCIvPgogICAgPC9nPgo8L2c+CjxnIGlkPSJMYWJlbCI+CjwvZz4KPGcgaWQ9Ikljb24iPgogICAgPGc+CiAgICAgICAgPHJlY3QgZmlsbD0ibm9uZSIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+CiAgICAgICAgPHBhdGggZD0iTTMsMThoMTh2LTJIM1YxOHogTTMsMTNoMTh2LTJIM1YxM3ogTTMsNnYyaDE4VjZIM3oiIHN0eWxlPSJmaWxsOiNmM2YzZjM7Ii8+CiAgICA8L2c+CjwvZz4KPGcgaWQ9IkdyaWQiIGRpc3BsYXk9Im5vbmUiPgogICAgPGcgZGlzcGxheT0iaW5saW5lIj4KICAgIDwvZz4KPC9nPgo8L3N2Zz4=) no-repeat  center center;
+            }
+
+        </style>
+    </head>
+
+    <body layout="column" ng-controller="AppCtrl">
+
+        <md-toolbar layout="row">
+            <button ng-click="toggleSidenav('left')" hide-gt-sm class="menuBtn">
+                <span class="visually-hidden">Menu</span>
+            </button>
+            <h1>thisissoon.fm</h1>
+        </md-toolbar>
+
+        <div layout="row" flex>
+            <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$media('gt-sm')">
+
+            </md-sidenav>
+            <div layout="column" flex id="content">
+                <md-content layout="column" flex class="md-padding">
+                    <md-list>
+                        <md-item ng-repeat="item in todos" class="md-item song" ng-class="{ current: $first }">
+                            <md-item-content layout="row" layout-align="start center">
+                                <div class="md-tile-left">
+                                    <img ng-src="{{ item.face }}" class="artwork md-padding" alt="{{ item.who }}">
+                                </div>
+                                <div class="md-tile-content">
+                                    <h3>{{ item.what }}</h3>
+                                    <h4>{{ item.who }}</h4>
+                                </div>
+                                <div class="md-tile-right" hide-sm>
+                                    <span class="track-length">3:16</span>
+                                </div>
+                            </md-item-content>
+                        </md-item>
+                    </md-list>
+                </md-content>
+            </div>
+        </div>
+
+        <script src="components/angular/angular.js"></script>
+        <script src="components/angular-aria/angular-aria.js"></script>
+        <script src="components/angular-animate/angular-animate.js"></script>
+        <script src="components/angular-material/angular-material.js"></script>
+
+        <script>
+            angular.module('myApp', ['ngMaterial'])
+                .controller('AppCtrl', function ($scope, $mdSidenav) {
+
+                    $scope.toggleSidenav = function(menuId) {
+                        $mdSidenav(menuId).toggle();
+                    };
+
+                    $scope.todos = [
+                        {
+                            face : 'http://upload.wikimedia.org/wikipedia/en/b/b9/Nothing_Was_the_Same_cover_2.png',
+                            what: 'Brunch this weekend?',
+                            who: 'Min Li Chan',
+                            when: '3:08PM',
+                            notes: " I'll be in your neighborhood doing errands"
+                        },
+                        {
+                            face : 'http://upload.wikimedia.org/wikipedia/en/b/b9/Nothing_Was_the_Same_cover_2.png',
+                            what: 'Brunch this weekend?',
+                            who: 'Min Li Chan',
+                            when: '3:08PM',
+                            notes: " I'll be in your neighborhood doing errands"
+                        },
+                        {
+                            face : 'http://upload.wikimedia.org/wikipedia/en/b/b9/Nothing_Was_the_Same_cover_2.png',
+                            what: 'Brunch this weekend?',
+                            who: 'Min Li Chan',
+                            when: '3:08PM',
+                            notes: " I'll be in your neighborhood doing errands"
+                        },
+                        {
+                            face : 'http://upload.wikimedia.org/wikipedia/en/b/b9/Nothing_Was_the_Same_cover_2.png',
+                            what: 'Brunch this weekend?',
+                            who: 'Min Li Chan',
+                            when: '3:08PM',
+                            notes: " I'll be in your neighborhood doing errands"
+                        },
+                        {
+                            face : 'http://upload.wikimedia.org/wikipedia/en/b/b9/Nothing_Was_the_Same_cover_2.png',
+                            what: 'Brunch this weekend?',
+                            who: 'Min Li Chan',
+                            when: '3:08PM',
+                            notes: " I'll be in your neighborhood doing errands"
+                        }
+                    ];
+                });
+        </script>
+
+    </body>
+</html>
