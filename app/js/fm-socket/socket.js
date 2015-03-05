@@ -12,18 +12,24 @@ angular.module("sn.fm.sockets", [
     "btford.socket-io",
 ])
 
+    /**
+     * @constant {String} address of thisisoon.fm socket server
+     */
+    .constant("FM_SOCKET_ADDRESS", "http://localdocker:8080")
+
     .factory("fmSocket", [
         "socketFactory",
+        "FM_SOCKET_ADDRESS",
         /**
          * @constructor
          * @param   {Factory} socketFactory  factory for creating socket instances
          * @returns {Object}  socket.io instance
          */
-        function (socketFactory) {
+        function (socketFactory, FM_SOCKET_ADDRESS) {
 
             return socketFactory({
                 prefix: "",
-                ioSocket: io.connect("http://localdocker:8080")
+                ioSocket: io.connect(FM_SOCKET_ADDRESS)
             });
 
         }
