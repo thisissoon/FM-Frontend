@@ -3,40 +3,90 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <title>SOON_ AngularJS Template - Modules</title>
+        <title>thisissoonFM - Modules</title>
 
         <base href="/app/">
         <link rel="stylesheet" href="css/all.css"/>
-
-        <style>
-
-            .box {
-            	display: block;
-                height: 200px;
-                width: 100%;
-                padding: 1em;
-                margin: 5px 0;
-            }
-
-        </style>
+        <link rel="stylesheet" href="components/angular-material/angular-material.css"/>
     </head>
+
     <body>
 
-         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><pre class="box">.col-lg-12 .col-md-12 .col-sm-12 .col-xs-12</pre></div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-6 "><pre class="box">.col-lg-12 .col-md-12 .col-sm-12 .col-xs-6 </pre></div>
-                <div class="col-lg-6  col-md-6  col-sm-6  col-xs-6 "><pre class="box">.col-lg-6  .col-md-6  .col-sm-6  .col-xs-6 </pre></div>
-                <div class="col-lg-6  col-md-6  col-sm-6  col-xs-12"><pre class="box">.col-lg-6  .col-md-6  .col-sm-6  .col-xs-12</pre></div>
-                <div class="col-lg-4  col-md-4  col-sm-4  col-xs-12"><pre class="box">.col-lg-4  .col-md-4  .col-sm-4  .col-xs-12</pre></div>
-                <div class="col-lg-4  col-md-4  col-sm-4  col-xs-12"><pre class="box">.col-lg-4  .col-md-4  .col-sm-4  .col-xs-12</pre></div>
-                <div class="col-lg-4  col-md-4  col-sm-4  col-xs-6 "><pre class="box">.col-lg-4  .col-md-4  .col-sm-4  .col-xs-6 </pre></div>
-                <div class="col-lg-3  col-md-3  col-sm-3  col-xs-6 "><pre class="box">.col-lg-3  .col-md-3  .col-sm-3  .col-xs-6 </pre></div>
-                <div class="col-lg-3  col-md-3  col-sm-3  col-xs-12"><pre class="box">.col-lg-3  .col-md-3  .col-sm-3  .col-xs-12</pre></div>
-                <div class="col-lg-3  col-md-3  col-sm-3  col-xs-12"><pre class="box">.col-lg-3  .col-md-3  .col-sm-3  .col-xs-12</pre></div>
-                <div class="col-lg-3  col-md-3  col-sm-3  col-xs-12"><pre class="box">.col-lg-3  .col-md-3  .col-sm-3  .col-xs-12</pre></div>
+        <div layout="column" layout-padding>
+
+            <h2>Container Elements</h2>
+            <div layout="row">
+                <pre>I'm left.</pre>
+                <pre>I'm right.</pre>
             </div>
+            <div layout="column">
+                <pre>I'm above.</pre>
+                <pre>I'm below.</pre>
+            </div>
+
+            <h2>Default behaviour</h2>
+            <div layout="row">
+                <pre flex>[flex]</pre>
+                <pre flex>[flex]</pre>
+                <pre flex hide-sm>[flex]</pre>
+            </div>
+
+            <h2>Specific widths</h2>
+            <div layout="row" layout-wrap>
+                <pre flex="33">[flex="33"]</pre>
+                <pre flex="55">[flex="55"]</pre>
+                <pre flex="">[flex]</pre>
+                <pre flex="66">[flex="66"]</pre>
+                <pre flex="33">[flex="33"]</pre>
+            </div>
+
+            <h2>Change Order</h2>
+            <div layout="row" layout-margin>
+                <pre flex flex-order="3">[flex-order="3"]</pre>
+                <pre flex flex-order="2">[flex-order="2"]</pre>
+                <pre flex flex-order="1">[flex-order="1"]</pre>
+            </div>
+
+            <h2>Child layouts</h2>
+            <div layout="row" layout-align="center center">
+                <pre>one</pre>
+                <pre>two</pre>
+                <pre>three</pre>
+            </div>
+
+            <div layout="row" layout-align="space-around end">
+                <pre>one</pre>
+                <pre>two</pre>
+                <pre>three</pre>
+            </div>
+
+            <h2>Responsive layout</h2>
+            <div layout="row" layout-sm="column">
+                <pre flex>I'm above on mobile, and to the left on larger devices.</pre>
+                <pre flex>I'm below on mobile, and to the right on larger devices.</pre>
+            </div>
+
+            <div layout="row">
+                <pre flex="66" flex-sm="33">I flex to one-third of the space on mobile, and two-thirds on other devices.</pre>
+                <pre flex="33" flex-sm="66">I flex to two-thirds of the space on mobile, and one-third on other devices.</pre>
+            </div>
+
+            <h2>Padding and margin</h2>
+            <div layout="row" layout-margin layout-fill layout-padding>
+                <pre flex>I'm on the left, and there's an empty area around me.</pre>
+                <pre flex>I'm on the right, and there's an empty area around me.</pre>
+            </div>
+
+            <h2>Show/Hide</h2>
+            <div layout layout-align="center center">
+                <pre hide-sm>I'm hidden on mobile and shown on larger devices.</pre>
+                <pre hide-gt-sm>I'm shown on mobile and hidden on larger devices.</pre>
+            </div>
+
         </div>
+
+        <script src="components/angular/angular.js"></script>
+        <script src="components/angular-material/angular-material.js"></script>
 
     </body>
 </html>
