@@ -7,4 +7,4 @@
  * @author   SOON_
  * @requires ngRoute {@link https://docs.angularjs.org/api/ngRoute}
  */
-angular.module("sn.fm.player", ["ngRoute"]);
+angular.module("sn.fm.player", ["ngRoute", "spotify", "sn.fm.api"]);

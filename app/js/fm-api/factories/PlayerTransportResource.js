@@ -4,36 +4,34 @@
  */
 angular.module("sn.fm.api").factory("PlayerTransportResource", [
     "$resource",
-    "ENV",
+    "SERVER_ADDRESS",
     /**
      * @constructor
      * @param   {Service}  $resource angular resource service xhr wrapper for REST api's
-     * @param   {String}   ENV       environment variables object
+     * @param   {String}   SERVER_ADDRESS    API address url
      */
-    function ($resource, ENV) {
+    function ($resource, SERVER_ADDRESS) {
 
         return $resource(
-            ENV.API_ADDRESS + "player/",
+            SERVER_ADDRESS + "player/",
             // Default values for url parameters.
-            {
-
-            },
+            {},
             // Hash with declaration of custom action that should
             // extend the default set of resource actions
             {
                 track: {
                     method: "GET",
-                    url: ENV.API_ADDRESS + "player/playing"
+                    url: SERVER_ADDRESS + "player/playing"
                 },
 
                 pause: {
                     method: "POST",
-                    url: ENV.API_ADDRESS + "player/pause"
+                    url: SERVER_ADDRESS + "player/pause"
                 },
 
                 resume: {
                     method: "DELETE",
-                    url: ENV.API_ADDRESS + "player/pause"
+                    url: SERVER_ADDRESS + "player/pause"
                 }
             }
 

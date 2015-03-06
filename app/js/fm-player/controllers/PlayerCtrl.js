@@ -9,11 +9,12 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "$scope",
     "$q",
     "Spotify",
+    "PlayerPlaylistResource",
     /**
      * @constructor
      * @param {Object} $scope
      */
-    function ($scope, $q, Spotify) {
+    function ($scope, $q, Spotify, PlayerPlaylistResource) {
 
         $scope.selectedItem = null;
 
@@ -27,6 +28,11 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
             });
 
             return deferred.promise;
+        };
+
+        $scope.onTrackSelected = function onTrackSelected(track){
+            console.log(arguments);
+            PlayerPlaylistResource.save({ uri: track.uri });
         };
 
     }
