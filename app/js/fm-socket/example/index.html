@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="sn.fm.sockets.example">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="fragment" content="!" />
+        <title>FMSocket Angular Example</title>
+        <base href="/app/">
+        <link rel="stylesheet" href="css/all.css"/>
+    </head>
+    <body ng-controller="PlayerCtrl">
+        <h2>FMSocket Angular Example</h2>
+
+        <div>
+            <span ng-if="playing">Playing</span>
+            <span ng-if="!playing">Paused</span>
+            {{ track.title }}
+        </div>
+
+        <div>
+            <div ng-repeat="track in playlist">
+                {{ track.title }}
+            </div>
+        </div>
+
+        <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+
+        <script src="components/angular/angular.js"></script>
+        <script src="components/angular-route/angular-route.js"></script>
+        <script src="components/angular-socket-io/socket.js"></script>
+
+        <script src="js/fm-socket/socket.js"></script>
+        <script src="js/fm-socket/example/PlayerCtrl.js"></script>
+
+    </body>
+</html>
