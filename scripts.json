@@ -9,6 +9,11 @@
         "app/js/soon-example/controllers/SearchCtrl.js",
         "app/js/soon-example/controllers/ResultsCtrl.js",
 
+        "app/js/fm-api/app.js",
+        "app/js/fm-api/PlayerPlaylistResource.js",
+        "app/js/fm-api/PlayerTransportResource.js",
+        "app/js/fm-api/TracksResource.js",
+
         "app/js/fm-socket/socket.js"
     ]
 }
