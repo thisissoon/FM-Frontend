@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Creates a socket instance for interacting with thisisoon.fm
  * Event handles can be passed to fmSocket using 'fmSocket.addListener("fm:player:play", eventHandler)'
@@ -9,7 +10,7 @@
  * @author SOON_
  */
 angular.module("sn.fm.sockets", [
-    "btford.socket-io",
+    "btford.socket-io"
 ])
 
     /**
@@ -55,9 +56,9 @@ angular.module("sn.fm.sockets", [
          */
         function (fmSocket, EVENTS) {
             return {
-                forward: function(){
+                forward: function forward() {
                     fmSocket.forward(EVENTS);
                 }
-            }
+            };
         }
     ]);
