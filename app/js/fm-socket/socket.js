@@ -17,6 +17,16 @@ angular.module("sn.fm.sockets", [
      */
     .constant("FM_SOCKET_ADDRESS", "http://localdocker:8080")
 
+    /**
+     * @constant {Array} list of available socket events
+     */
+    .constant("EVENTS", [
+        "fm:player:play",
+        "fm:player:pause",
+        "fm:player:resume",
+        "fm:player:add"
+    ])
+
     .factory("fmSocket", [
         "socketFactory",
         "FM_SOCKET_ADDRESS",
@@ -32,5 +42,22 @@ angular.module("sn.fm.sockets", [
                 ioSocket: io.connect(FM_SOCKET_ADDRESS)
             });
 
+        }
+    ])
+
+    .service("fmSocketInit", [
+        "fmSocket",
+        "EVENTS",
+        /**
+         * @constructor
+         * @param {Factory} fmSocket socket instance
+         * @param {Array}   EVENTS   list of available socket events
+         */
+        function (fmSocket, EVENTS) {
+            return {
+                forward: function(){
+                    fmSocket.forward(EVENTS);
+                }
+            }
         }
     ]);
