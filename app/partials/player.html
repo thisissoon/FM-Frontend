@@ -2,10 +2,11 @@
 
     <button ng-click="toggleSidenav('left')"
             hide-gt-sm
-            class="btn-menu"
-    >
-        <span class="visually-hidden">Menu</span>
+            class="btn-menu">
+        <md-icon md-svg-src="img/icons/ic_playlist_add_48px.svg"></md-icon>
     </button>
+
+    <img class="logo" src="img/logo/soon.svg" height="50px" class="md-padding" alt="SOON_"/>
 
     <h1>thisissoon.fm</h1>
 
@@ -17,47 +18,74 @@
         layout="column"
         class="md-sidenav-left md-whiteframe-z2"
         md-component-id="left"
-        md-is-locked-open="$media('gt-sm')"
-    ></md-sidenav>
+        md-is-locked-open="$mdMedia('gt-sm')"
+    >
+        <md-autocomplete
+            md-no-cache="noCache"
+            md-selected-item="selectedItem"
+            md-search-text="searchText"
+            md-items="item in querySearch(searchText)"
+            md-item-text="item.display"
+            placeholder="Add track">
+            <div layout="row" layout-align="start center">
+                <img ng-src="{{ item.artwork }}"
+                     class="artwork md-padding"
+                     alt="{{ item.display }}">
+                <span md-highlight-text="searchText">
+                    {{ item.display }}
+                </span>
+            </div>
+        </md-autocomplete>
+    </md-sidenav>
 
     <div layout="column" flex>
         <md-content
             class="md-padding"
             layout="column"
-            flex
-        >
+            flex>
+
             <md-list>
                 <md-item
                     ng-repeat="song in playlist"
                     class="md-item song"
-                    ng-class="{ current: $first }"
-                >
+                    ng-class="{ current: $first }">
                     <md-item-content
                         layout="row"
-                        layout-align="start center"
-                    >
+                        layout-align="start center">
                         <div class="md-tile-left">
                             <img ng-src="{{ song.album.images[0].url }}"
                                  class="artwork md-padding"
-                                 alt="{{ item.who }}"
-                            >
+                                 alt="{{ item.who }}">
                         </div>
 
-                        <div class="md-tile-content">
-                            <h3>
-                                {{ song.name }}
-                            </h3>
-                            <h4 ng-repeat="artist in song.album.artists">
-                                {{ artist.name }}
-                            </h4>
-                        </div>
-
-                        <div class="md-tile-right" hide-sm>
-                            <span class="track-length">
+                        <div class="md-tile-content"
+                             layout="row"
+                             layout-align="space-around center"
+                             layout-sm="column"
+                             layout-align-sm="space-between center">
+                            <div class="md-tile-content song-details">
+                                <h3>
+                                    {{ song.name }}
+                                </h3>
+                                <h4 ng-repeat="artist in song.album.artists">
+                                    {{ artist.name }}
+                                </h4>
+                            </div>
+                            <span ng-if="$first" class="md-tile-right">
+                                <md-button class="md-fab md-primary" aria-label="Play">
+                                    <md-icon md-svg-src="img/icons/ic_play_arrow_24px.svg"></md-icon>
+                                </md-button>
+                                <md-button class="md-fab md-primary" aria-label="Pause">
+                                    <md-icon md-svg-src="img/icons/ic_pause_24px.svg"></md-icon>
+                                </md-button>
+                                <md-button class="md-fab md-primary" aria-label="Stop">
+                                    <md-icon md-svg-src="img/icons/ic_stop_24px.svg"></md-icon>
+                                </md-button>
+                            </span>
+                            <span class="track-length" hide-sm>
                                 {{ song.duration | date: 'm:ss' }}
                             </span>
                         </div>
-
                     </md-item-content>
                 </md-item>
             </md-list>
