@@ -7,39 +7,19 @@
 /**
  * import less files from libraries such as bootstrap here
  */
-// Core variables and mixins
-@import "../components/bootstrap/less/variables.less";
-@import "../components/bootstrap/less/mixins.less";
+@import "../components/angular-material/angular-material.css";
 
-// Reset
-@import "../components/bootstrap/less/normalize.less";
-@import "../components/bootstrap/less/print.less";
-
-// Core CSS
-@import "../components/bootstrap/less/scaffolding.less";
-@import "../components/bootstrap/less/type.less";
-@import "../components/bootstrap/less/code.less";
-@import "../components/bootstrap/less/grid.less";
-@import "../components/bootstrap/less/tables.less";
-@import "../components/bootstrap/less/forms.less";
-@import "../components/bootstrap/less/buttons.less";
-
-// Utility classes
-@import "../components/bootstrap/less/utilities.less";
-@import "../components/bootstrap/less/responsive-utilities.less";
 
 
 /**
  * import less files for all devices here
  * eg. width > 1200px
  */
-
-@import "default/core/colors.less";
 @import "default/core/variables.less";
-@import "default/core/type.less";
+@import "default/core/reset.less";
 
-// @import "default/modules/article-card.less";
-// @import "default/modules/article.less";
+@import "default/modules/menu.less";
+@import "default/modules/songs.less";
 
 
 /**
@@ -81,5 +61,5 @@
  *      @import "mobile/modules/article.less";
  */
 @media (max-width: @screen-xs-max) {
-
+    @import "mobile/modules/songs.less";
 }
