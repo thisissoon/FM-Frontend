@@ -6,7 +6,7 @@
  * @main     sn.fm
  * @author   SOON_
  */
-angular.module("sn.fm", ["ngMaterial", "sn.fm.api", "sn.fm.player", "sn.fm.sockets"])
+angular.module("sn.fm", ["ngMaterial", "spotify", "sn.fm.api", "sn.fm.player", "sn.fm.sockets"])
 
 .run([
     "$rootScope",

@@ -5,6 +5,8 @@
         "app/components/angular-route/angular-route.js",
         "app/components/angular-animate/angular-animate.js",
         "app/components/angular-material/angular-material.js",
+        "app/components/angular-spotify/src/angular-spotify.js",
+        "app/components/angular-resource/angular-resource.js",
         "app/components/angular-socket-io/socket.js"
     ],
     "application": [
