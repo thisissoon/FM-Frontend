@@ -4,9 +4,7 @@
  * @module sn.fm.api
  * @author SOON_
  */
-angular.module("sn.fm.api")
-
-.config([
+angular.module("sn.fm.api").config([
     "$httpProvider",
     function ($httpProvider) {
 

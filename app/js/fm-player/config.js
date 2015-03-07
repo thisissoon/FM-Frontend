@@ -20,9 +20,11 @@ angular.module("sn.fm.player").config([
             .when("/", {
                 templateUrl: "partials/player.html",
                 controller: "PlayerCtrl",
-                resolve: ["PlayerPlaylistResource", "$route", function (PlayerPlaylistResource, $route){
-                    return PlayerPlaylistResource.query($route.current.params);
-                }]
+                resolve: {
+                    PlayerPlaylistResource: ["PlayerPlaylistResource", "$route", function (PlayerPlaylistResource, $route){
+                        return PlayerPlaylistResource.query($route.current.params);
+                    }]
+                }
             })
             .otherwise({
                 redirectTo: "/"

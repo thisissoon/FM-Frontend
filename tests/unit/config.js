@@ -1,11 +1,11 @@
 "use strict";
 
-describe("sn.fm:config", function() {
+describe("sn.fm.player:config", function() {
 
     var location, route, rootScope;
 
     beforeEach(function(){
-        module("sn.fm");
+        module("sn.fm.player");
     });
 
     beforeEach(inject(function ( _$location_, _$route_, _$rootScope_ ) {
