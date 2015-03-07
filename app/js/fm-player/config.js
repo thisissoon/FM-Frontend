@@ -1,6 +1,8 @@
 "use strict";
 /**
- * Configuration for fm.player
+ * Configure angular services to the requirements
+ * of sn.fm.player angular module e.g. Creates player
+ * playlist routes.
  * @module sn.fm.player
  * @author SOON_
  */

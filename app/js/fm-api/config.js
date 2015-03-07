@@ -1,6 +1,7 @@
 "use strict";
 /**
- * Configuration for FM API
+ * Configure angular services to the requirements
+ * of sn.fm.api angular module such as $httpProvider
  * @module sn.fm.api
  * @author SOON_
  */

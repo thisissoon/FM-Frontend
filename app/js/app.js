@@ -1,25 +1,9 @@
 "use strict";
 /**
- * Search for tracks on spotify and request tracks to be played
- * on thisissoon.fm
+ * Searches for tracks using spotify and sends track uri data to
+ * thisissoon FM API to add to the thisissoon FM player playlist
  * @module   sn.fm
  * @main     sn.fm
  * @author   SOON_
  */
-angular.module("sn.fm", ["ngMaterial", "sn.fm.player", "sn.fm.sockets"])
-
-.run([
-    "$rootScope",
-    "$mdSidenav",
-    function ($rootScope, $mdSidenav){
-
-        /**
-         * Toggles the state of the sidebar
-         * @method toggleSidenav
-         * @param {String} menuId
-         */
-        $rootScope.toggleSidenav = function toggleSidenav(menuId){
-            $mdSidenav(menuId).toggle();
-        };
-    }
-]);
+angular.module("sn.fm", ["ngMaterial", "sn.fm.player", "sn.fm.sockets"]);
