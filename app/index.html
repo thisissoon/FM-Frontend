@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- build:[ng-app]:e2e sn.example.e2e -->
-<html lang="en" ng-app="sn.fm">
+<html lang="en" ng-app="sn.fm" ng-strict-di>
 <!-- /build -->
     <head>
         <meta charset="utf-8">
@@ -30,10 +30,16 @@
         <script src="components/angular-route/angular-route.js"></script>
         <script src="components/angular-animate/angular-animate.js"></script>
         <script src="components/angular-material/angular-material.js"></script>
+        <script src="components/angular-resource/angular-resource.js"></script>
+        <script src="components/angular-spotify/src/angular-spotify.js"></script>
         <script src="components/angular-socket-io/socket.js"></script>
 
         <!-- sn.fm.api -->
+        <script src="js/fm-socket/socket.js"></script>
+
         <script src="js/fm-api/app.js"></script>
+        <script src="js/fm-api/config.js"></script>
+        <script src="js/fm-api/constants/constants.js"></script>
         <script src="js/fm-api/factories/PlayerPlaylistResource.js"></script>
         <script src="js/fm-api/factories/PlayerTransportResource.js"></script>
         <script src="js/fm-api/factories/TracksResource.js"></script>
@@ -42,8 +48,6 @@
         <script src="js/fm-player/app.js"></script>
         <script src="js/fm-player/config.js"></script>
         <script src="js/fm-player/controllers/PlayerCtrl.js"></script>
-
-        <script src="js/fm-socket/socket.js"></script>
         <!-- /build -->
         <!-- build:include:e2e ../tests/e2e/scripts.html --><!-- /build -->
 

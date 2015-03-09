@@ -21,18 +21,19 @@
         md-is-locked-open="$mdMedia('gt-sm')"
     >
         <md-autocomplete
-            md-no-cache="noCache"
-            md-selected-item="selectedItem"
+            md-no-cache="false"
             md-search-text="searchText"
-            md-items="item in querySearch(searchText)"
-            md-item-text="item.display"
+            md-items="item in search(searchText)"
+            md-min-length="3"
+            md-delay="300"
+            md-selected-item-change="onTrackSelected(selectedItem)"
             placeholder="Add track">
             <div layout="row" layout-align="start center">
-                <img ng-src="{{ item.artwork }}"
+                <img ng-src="{{ item.album.images[0].url }}"
                      class="artwork md-padding"
-                     alt="{{ item.display }}">
+                     alt="{{ item.album.name }}">
                 <span md-highlight-text="searchText">
-                    {{ item.display }}
+                    {{ item.name }} - {{ item.artists[0].name }}
                 </span>
             </div>
         </md-autocomplete>

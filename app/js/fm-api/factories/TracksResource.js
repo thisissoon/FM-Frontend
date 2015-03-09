@@ -1,29 +1,25 @@
 "use strict";
 /**
- * Factory which provides actions to perform on /tracks endpoint
+ * Factory which provides methods to perform on thisisoon FM API
+ * /player/tracks endpoint. Gets specific track data.
+ * @class PlayerPlaylistResource
  */
 angular.module("sn.fm.api").factory("TracksResource", [
     "$resource",
-    "ENV",
+    "SERVER_ADDRESS",
     /**
      * @constructor
-     * @param   {Service}  $resource angular resource service xhr wrapper for REST api's
-     * @param   {String}   ENV       environment variables object
+     * @param {Service} $resource
+     * @param {String}  SERVER_ADDRESS
      */
-    function ($resource, ENV) {
+    function ($resource, SERVER_ADDRESS) {
 
         return $resource(
-            ENV.API_ADDRESS + "tracks" + "/:id",
+            SERVER_ADDRESS + "tracks" + "/:id",
             // Default values for url parameters.
             {
                 id: "@id"
-            },
-            // Hash with declaration of custom action that should
-            // extend the default set of resource actions
-            {
-
             }
-
         );
 
     }
