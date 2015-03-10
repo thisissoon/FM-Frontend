@@ -97,8 +97,8 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
                 PlayerTransportResource.get().$promise
             ]).then(function(response){
                 $scope.playlist = response[0];
-                $scope.playlist.unshift(response[1]);
                 $scope.current = response[1];
+                $scope.playlist.unshift($scope.current);
             });
         };
 
@@ -117,7 +117,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          */
         $scope.$on("fm:player:play", function (event, data) {
 
-            if ($scope.playlist[1].uri === data.uri) {
+            if ($scope.playlist[1].spotify_uri === data.uri) { // jshint ignore:line
                 $scope.playlist.splice(0, 1);
                 $scope.paused = false;
                 $scope.current = $scope.playlist[0];
