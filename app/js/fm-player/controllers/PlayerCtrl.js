@@ -13,6 +13,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "Spotify",
     "PlayerQueueResource",
     "PlayerTransportResource",
+    "TracksResource",
     "playlistData",
     "currentTrack",
     /**
@@ -22,10 +23,11 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @param {Service} Spotify
      * @param {Factory} PlayerQueueResource
      * @param {Factory} PlayerTranportResource
+     * @param {Factory} TracksResource
      * @param {Array}   playlistData
      * @param {Object}  currentTrack
      */
-    function ($scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, playlistData, currentTrack) {
+    function ($scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, TracksResource, playlistData, currentTrack) {
 
         /**
          * An instance of the $resource PlayerQueueResource
@@ -86,6 +88,21 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         };
 
         /**
+         * Update `playlist` and `current` with queue data and currently playing track from the API
+         * @method refreshPlaylist
+         */
+        $scope.refreshPlaylist = function refreshPlaylistQueue(){
+            $q.all([
+                PlayerQueueResource.get().$promise,
+                PlayerTransportResource.get().$promise
+            ]).then(function(response){
+                $scope.playlist = response[0];
+                $scope.playlist.unshift(response[1]);
+                $scope.current = response[1];
+            });
+        };
+
+        /**
          * Add currently playing track to playlist
          * @method init
          */
@@ -99,9 +116,16 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @listens fm:player:play
          */
         $scope.$on("fm:player:play", function (event, data) {
-            $scope.playlist.splice(0, 1);
-            $scope.paused = false;
-            $scope.current = data.track;
+
+            if ($scope.playlist[1].uri === data.uri) {
+                $scope.playlist.splice(0, 1);
+                $scope.paused = false;
+                $scope.current = $scope.playlist[0];
+            } else {
+                $scope.refreshPlaylist();
+                $scope.paused = false;
+            }
+
         });
 
         /**
