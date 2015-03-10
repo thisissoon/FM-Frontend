@@ -23,7 +23,7 @@ angular.module("sn.fm.player").config([
                 templateUrl: "partials/player.html",
                 controller: "PlayerCtrl",
                 resolve: {
-                    PlayerQueueResource: ["PlayerQueueResource", "$route", function (PlayerQueueResource, $route){
+                    playlistData: ["PlayerQueueResource", "$route", function (PlayerQueueResource, $route){
                         return PlayerQueueResource.query($route.current.params);
                     }]
                 }

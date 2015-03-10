@@ -12,6 +12,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "$q",
     "Spotify",
     "PlayerQueueResource",
+    "playlistData",
     /**
      * @constructor
      * @param {Object}  $scope
@@ -19,7 +20,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @param {Service} Spotify
      * @param {Factory} PlayerQueueResource
      */
-    function ($scope, $q, Spotify, PlayerQueueResource) {
+    function ($scope, $q, Spotify, PlayerQueueResource, playlistData) {
 
         /**
          * An instance of the $resource PlayerQueueResource
@@ -27,7 +28,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @property playlist
          * @type     {Object}
          */
-        $scope.playlist = PlayerQueueResource;
+        $scope.playlist = playlistData;
 
         /**
          * Searches the spotify api unsing angular-spotify and returns a
