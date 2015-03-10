@@ -1,10 +1,10 @@
 "use strict";
 /**
  * Factory which provides methods to perform on thisisoon FM API
- * /player/playlist endpoint
- * @class PlayerPlaylistResource
+ * /player/queue endpoint
+ * @class PlayerQueueResource
  */
-angular.module("sn.fm.api").factory("PlayerPlaylistResource", [
+angular.module("sn.fm.api").factory("PlayerQueueResource", [
     "$resource",
     "SERVER_ADDRESS",
     /**
@@ -14,7 +14,7 @@ angular.module("sn.fm.api").factory("PlayerPlaylistResource", [
      */
     function ($resource, SERVER_ADDRESS) {
 
-        return $resource(SERVER_ADDRESS + "player/playlist");
+        return $resource(SERVER_ADDRESS + "player/queue");
 
     }
 ]);

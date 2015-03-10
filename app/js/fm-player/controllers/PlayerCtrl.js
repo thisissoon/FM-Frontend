@@ -11,24 +11,27 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "$scope",
     "$q",
     "Spotify",
-    "PlayerPlaylistResource",
+    "PlayerQueueResource",
     "PlayerTransportResource",
+    "playlistData",
     /**
      * @constructor
      * @param {Object}  $scope
      * @param {Service} $q
      * @param {Service} Spotify
-     * @param {Factory} PlayerPlaylistResource
+     * @param {Factory} PlayerQueueResource
+     * @param {Factory} PlayerTranportResource
+     * @param {Array}   playlistData
      */
-    function ($scope, $q, Spotify, PlayerPlaylistResource, PlayerTransportResource) {
+    function ($scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, playlistData) {
 
         /**
-         * An instance of the $resource PlayerPlaylistResource
-         * which contains a list of the thisissoon FM playlist
+         * An instance of the $resource PlayerQueueResource
+         * which contains a list of the thisissoon FM queue
          * @property playlist
          * @type     {Object}
          */
-        $scope.playlist = PlayerPlaylistResource;
+        $scope.playlist = playlistData;
 
         /**
          * An instance of the $resource PlayerTransportResource
@@ -71,13 +74,13 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         };
 
         /**
-         * POST the selected track to the thisissoon FM API PlayerPlaylistResource
+         * POST the selected track to the thisissoon FM API PlayerQueueResource
          * to add it to the playlist
          * @method onTrackSelected
          * @param  {Object} track The selected track from the spotify search
          */
         $scope.onTrackSelected = function onTrackSelected(track){
-            PlayerPlaylistResource.save({ uri: track.uri });
+            PlayerQueueResource.save({ uri: track.uri });
         };
 
         /**
