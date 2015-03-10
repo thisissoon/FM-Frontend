@@ -112,10 +112,10 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
 
         /**
          * On play event, set playback state variables
-         * @listens fm:player:play
+         * refresh playlist if song URI doesn't match the playlist
+         * @method onPlay
          */
-        $scope.$on("fm:player:play", function (event, data) {
-
+        $scope.onPlay = function onPlay(event, data) {
             if ($scope.playlist[0].spotify_uri === data.uri) { // jshint ignore:line
                 $scope.paused = false;
                 $scope.current = $scope.playlist[0];
@@ -123,45 +123,72 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
                 $scope.refreshPlaylist();
                 $scope.paused = false;
             }
-
-        });
+        };
 
         /**
          * On end event, remove track from playlist
-         * @listens fm:player:end
+         * refresh playlist if song URI doesn't match the playlist
+         * @method onEnd
          */
-        $scope.$on("fm:player:end", function (event, data) {
+        $scope.onEnd = function onEnd(event, data) {
             if ($scope.playlist[0].spotify_uri === data.uri) { // jshint ignore:line
                 $scope.playlist.splice(0, 1);
+            } else {
+                $scope.refreshPlaylist();
             }
-        });
+        };
 
         /**
          * On pause event, update paused state
-         * @listens fm:player:pause
+         * @method onPause
          */
-        $scope.$on("fm:player:pause", function () {
+        $scope.onPause = function onPause() {
             $scope.paused = true;
-        });
+        };
 
         /**
          * On resume event, update paused state
-         * @listens fm:player:resume
+         * @method onResume
          */
-        $scope.$on("fm:player:resume", function () {
+        $scope.onResume = function onResume() {
             $scope.paused = false;
-        });
+        };
 
         /**
          * On add event, get track data and push to playlist
-         * @listens fm:player:pause
+         * @method onAdd
          */
-        $scope.$on("fm:player:add", function (event, data) {
+        $scope.onAdd = function onAdd(event, data) {
             TracksResource.get({ id: data.uri }).$promise
                 .then(function(track){
                     $scope.playlist.push(track);
                 });
-        });
+        };
+
+        /**
+         * @listens fm:player:play
+         */
+        $scope.$on("fm:player:play", $scope.onPlay);
+
+        /**
+         * @listens fm:player:end
+         */
+        $scope.$on("fm:player:end", $scope.onEnd);
+
+        /**
+         * @listens fm:player:pause
+         */
+        $scope.$on("fm:player:pause", $scope.onPause);
+
+        /**
+         * @listens fm:player:resume
+         */
+        $scope.$on("fm:player:resume", $scope.onResume);
+
+        /**
+         * @listens fm:player:pause
+         */
+        $scope.$on("fm:player:add", $scope.onAdd);
 
         $scope.init();
 
