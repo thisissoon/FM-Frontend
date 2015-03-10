@@ -21,10 +21,6 @@ angular.module("sn.fm.api").factory("PlayerTransportResource", [
             // Hash with declaration of custom action that should
             // extend the default set of resource actions
             {
-                track: {
-                    method: "GET"
-                },
-
                 pause: {
                     method: "POST",
                     url: SERVER_ADDRESS + "player/pause"
