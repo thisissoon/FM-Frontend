@@ -25,6 +25,7 @@ angular.module("sn.fm.sockets", [
      */
     .constant("EVENTS", [
         "fm:player:play",
+        "fm:player:end",
         "fm:player:pause",
         "fm:player:resume",
         "fm:player:add"
