@@ -6,4 +6,4 @@
  * @main     sn.fm
  * @author   SOON_
  */
-angular.module("sn.fm", ["ngMaterial", "sn.fm.player", "sn.fm.sockets"]);
+angular.module("sn.fm", ["ngMaterial", "sn.fm.player"]);

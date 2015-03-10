@@ -10,4 +10,11 @@
  * @requires spotify   {@link https://github.com/eddiemoore/angular-spotify}
  * @requires sn.fm.api
  */
-angular.module("sn.fm.player", ["ngRoute", "spotify", "sn.fm.api"]);
+angular.module("sn.fm.player", ["ngRoute", "spotify", "sn.fm.api", "sn.fm.sockets"])
+
+    .run([
+        "fmSocketInit",
+        function (fmSocketInit) {
+            fmSocketInit.forward();
+        }
+    ]);
