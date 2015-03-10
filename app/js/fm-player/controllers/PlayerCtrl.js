@@ -14,6 +14,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "PlayerQueueResource",
     "PlayerTransportResource",
     "playlistData",
+    "currentTrack",
     /**
      * @constructor
      * @param {Object}  $scope
@@ -22,8 +23,9 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @param {Factory} PlayerQueueResource
      * @param {Factory} PlayerTranportResource
      * @param {Array}   playlistData
+     * @param {Object}  currentTrack
      */
-    function ($scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, playlistData) {
+    function ($scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, playlistData, currentTrack) {
 
         /**
          * An instance of the $resource PlayerQueueResource
@@ -47,7 +49,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @property current
          * @type     {Object}
          */
-        $scope.current = {};
+        $scope.current = currentTrack;
 
         /**
          * Tracks the state of playback
@@ -88,7 +90,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method init
          */
         $scope.init = function init() {
-            $scope.playlist.unshift($scope.currentTrack);
+            $scope.playlist.unshift($scope.current);
         };
 
         /**
