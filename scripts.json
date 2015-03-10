@@ -15,7 +15,7 @@
         "app/js/fm-api/app.js",
         "app/js/fm-api/config.js",
         "app/js/fm-api/constants/constants.js",
-        "app/js/fm-api/factories/PlayerPlaylistResource.js",
+        "app/js/fm-api/factories/PlayerQueueResource.js",
         "app/js/fm-api/factories/PlayerTransportResource.js",
         "app/js/fm-api/factories/TracksResource.js",
 

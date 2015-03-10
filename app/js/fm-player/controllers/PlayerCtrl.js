@@ -47,13 +47,13 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         };
 
         /**
-         * POST the selected track to the thisissoon FM API PlayerPlaylistResource
+         * POST the selected track to the thisissoon FM API PlayerQueueResource
          * to add it to the playlist
          * @method onTrackSelected
          * @param  {Object} track The selected track from the spotify search
          */
         $scope.onTrackSelected = function onTrackSelected(track){
-            PlayerPlaylistResource.save({ uri: track.uri });
+            PlayerQueueResource.save({ uri: track.uri });
         };
 
     }
