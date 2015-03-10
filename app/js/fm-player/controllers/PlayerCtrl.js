@@ -111,14 +111,12 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         };
 
         /**
-         * On play event, remove previous track from playlist and set
-         * playback state variables
+         * On play event, set playback state variables
          * @listens fm:player:play
          */
         $scope.$on("fm:player:play", function (event, data) {
 
-            if ($scope.playlist[1].spotify_uri === data.uri) { // jshint ignore:line
-                $scope.playlist.splice(0, 1);
+            if ($scope.playlist[0].spotify_uri === data.uri) { // jshint ignore:line
                 $scope.paused = false;
                 $scope.current = $scope.playlist[0];
             } else {
@@ -126,6 +124,16 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
                 $scope.paused = false;
             }
 
+        });
+
+        /**
+         * On end event, remove track from playlist
+         * @listens fm:player:end
+         */
+        $scope.$on("fm:player:end", function (event, data) {
+            if ($scope.playlist[0].spotify_uri === data.uri) { // jshint ignore:line
+                $scope.playlist.splice(0, 1);
+            }
         });
 
         /**
