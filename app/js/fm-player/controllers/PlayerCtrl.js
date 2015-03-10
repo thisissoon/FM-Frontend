@@ -12,6 +12,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "$q",
     "Spotify",
     "PlayerPlaylistResource",
+    "PlayerTransportResource",
     /**
      * @constructor
      * @param {Object}  $scope
@@ -19,7 +20,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @param {Service} Spotify
      * @param {Factory} PlayerPlaylistResource
      */
-    function ($scope, $q, Spotify, PlayerPlaylistResource) {
+    function ($scope, $q, Spotify, PlayerPlaylistResource, PlayerTransportResource) {
 
         /**
          * An instance of the $resource PlayerPlaylistResource
@@ -28,6 +29,29 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @type     {Object}
          */
         $scope.playlist = PlayerPlaylistResource;
+
+        /**
+         * An instance of the $resource PlayerTransportResource
+         * which provides player transport operations and information
+         * about the currently playing track
+         * @property transport
+         * @type     {Object}
+         */
+        $scope.transport = PlayerTransportResource;
+
+        /**
+         * The currently playing track
+         * @property current
+         * @type     {Object}
+         */
+        $scope.current = {};
+
+        /**
+         * Tracks the state of playback
+         * @property paused
+         * @type     {Boolean}
+         */
+        $scope.paused = false;
 
         /**
          * Searches the spotify api unsing angular-spotify and returns a
@@ -55,6 +79,51 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         $scope.onTrackSelected = function onTrackSelected(track){
             PlayerPlaylistResource.save({ uri: track.uri });
         };
+
+        /**
+         * Add currently playing track to playlist
+         * @method init
+         */
+        $scope.init = function init() {
+            $scope.playlist.unshift($scope.currentTrack);
+        };
+
+        /**
+         * On play event, remove previous track from playlist and set
+         * playback state variables
+         * @listens fm:player:play
+         */
+        $scope.$on("fm:player:play", function (event, data) {
+            $scope.playlist.splice(0, 1);
+            $scope.paused = false;
+            $scope.current = data.track;
+        });
+
+        /**
+         * On pause event, update paused state
+         * @listens fm:player:pause
+         */
+        $scope.$on("fm:player:pause", function () {
+            $scope.paused = true;
+        });
+
+        /**
+         * On resume event, update paused state
+         * @listens fm:player:resume
+         */
+        $scope.$on("fm:player:resume", function () {
+            $scope.paused = false;
+        });
+
+        /**
+         * On add event, push track to playlist
+         * @listens fm:player:pause
+         */
+        $scope.$on("fm:player:add", function (event, data) {
+            $scope.playlist.push(data.track);
+        });
+
+        $scope.init();
 
     }
 
