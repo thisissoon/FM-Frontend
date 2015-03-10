@@ -211,13 +211,30 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     describe("socket event handling", function(){
 
+        it("should update playlist on end event", function() {
+            var eventData = { uri: _currentTrack.spotify_uri },
+                expectLength = $scope.playlist.length - 1;
+
+            $scope.$broadcast("fm:player:end", eventData);
+
+            expect($scope.playlist.length).toEqual(expectLength);
+        });
+
+        it("should call refreshPlaylist on end event if track doesn't match playlist", function() {
+            var eventData = { uri: "spotify:track:3OYPskZPKnOcHZ9fUDwmCA" },
+                refreshPlaylist = spyOn($scope, "refreshPlaylist");
+
+            $scope.$broadcast("fm:player:end", eventData);
+
+            expect(refreshPlaylist).toHaveBeenCalled();
+        });
+
         it("should update playlist and current on play event", function() {
-            var eventData = { uri: "spotify:track:3OYPskZPKnOcHZ9fUDwmCK" };
+            var eventData = { uri: _playlistData[0].spotify_uri };
 
             $scope.$broadcast("fm:player:play", eventData);
 
             expect($scope.paused).toEqual(false);
-            expect($scope.playlist.length).toEqual(2);
             expect($scope.current).toEqual($scope.playlist[0]);
             expect($scope.current.spotify_uri).toEqual(eventData.uri);
         });
