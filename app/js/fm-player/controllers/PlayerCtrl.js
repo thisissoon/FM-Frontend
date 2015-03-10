@@ -145,11 +145,14 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         });
 
         /**
-         * On add event, push track to playlist
+         * On add event, get track data and push to playlist
          * @listens fm:player:pause
          */
         $scope.$on("fm:player:add", function (event, data) {
-            $scope.playlist.push(data.track);
+            TracksResource.get({ id: data.uri }).$promise
+                .then(function(track){
+                    $scope.playlist.push(track);
+                });
         });
 
         $scope.init();
