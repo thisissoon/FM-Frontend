@@ -74,15 +74,17 @@
                                 </h4>
                             </div>
                             <span ng-if="$first" class="md-tile-right">
-                                <md-button class="md-fab md-primary" aria-label="Play" ng-show="paused" ng-click="transport.$resume()">
+                                <md-button class="md-fab md-primary" aria-label="Play" ng-show="paused" ng-click="transport.resume()">
                                     <md-icon md-svg-src="img/icons/ic_play_arrow_24px.svg"></md-icon>
                                 </md-button>
-                                <md-button class="md-fab md-primary" aria-label="Pause" ng-show="!paused" ng-click="transport.$pause()">
+                                <md-button class="md-fab md-primary" aria-label="Pause" ng-show="!paused" ng-click="transport.pause({})">
                                     <md-icon md-svg-src="img/icons/ic_pause_24px.svg"></md-icon>
                                 </md-button>
+<!--
                                 <md-button class="md-fab md-primary" aria-label="Stop">
                                     <md-icon md-svg-src="img/icons/ic_stop_24px.svg"></md-icon>
                                 </md-button>
+-->
                             </span>
                             <span class="track-length" hide-sm>
                                 {{ song.duration | date: 'm:ss' }}
