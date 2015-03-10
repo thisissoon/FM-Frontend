@@ -2,7 +2,7 @@
 
 describe("sn.fm.player:PlayerCtrl", function() {
 
-    var $scope, $q, Spotify, PlayerPlaylistResource, callback;
+    var $scope, $q, Spotify, PlayerQueueResource, callback;
 
     beforeEach(function (){
         module("sn.fm.player");
@@ -29,14 +29,14 @@ describe("sn.fm.player:PlayerCtrl", function() {
         }
         spyOn(Spotify, "search").and.callFake(callback);
 
-        PlayerPlaylistResource = $injector.get("PlayerPlaylistResource");
-        spyOn(PlayerPlaylistResource, "save");
+        PlayerQueueResource = $injector.get("PlayerQueueResource");
+        spyOn(PlayerQueueResource, "save");
 
         $controller("PlayerCtrl", {
             $scope: $scope,
             $q: $q,
             Spotify: Spotify,
-            PlayerPlaylistResource: PlayerPlaylistResource
+            PlayerQueueResource: PlayerQueueResource
         });
     }));
 
@@ -48,6 +48,6 @@ describe("sn.fm.player:PlayerCtrl", function() {
     it("should search for spotify track", function() {
         var track = { uri: "foo" };
         $scope.onTrackSelected(track);
-        expect(PlayerPlaylistResource.save).toHaveBeenCalledWith(track);
+        expect(PlayerQueueResource.save).toHaveBeenCalledWith(track);
     })
 });
