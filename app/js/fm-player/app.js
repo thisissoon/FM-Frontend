@@ -24,7 +24,7 @@ angular.module("sn.fm.player", ["ngRoute", "ngMaterial", "spotify", "sn.fm.api"]
          * @param {String} menuId
          */
         $rootScope.toggleSidenav = function toggleSidenav(menuId){
-            $mdSidenav(menuId).toggle();
+            return $mdSidenav(menuId).toggle();
         };
     }
 ]);
