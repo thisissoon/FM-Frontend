@@ -23,12 +23,12 @@ angular.module("sn.fm.api").factory("PlayerTransportResource", [
             {
                 pause: {
                     method: "POST",
-                    url: SERVER_ADDRESS + "player/pause"
+                    url: ENV.FM_API_SERVER_ADDRESS + "player/pause"
                 },
 
                 resume: {
                     method: "DELETE",
-                    url: SERVER_ADDRESS + "player/pause"
+                    url: ENV.FM_API_SERVER_ADDRESS + "player/pause"
                 }
             }
 
