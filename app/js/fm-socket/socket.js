@@ -12,13 +12,9 @@
  * @author SOON_
  */
 angular.module("sn.fm.sockets", [
+    "ENV",
     "btford.socket-io"
 ])
-
-    /**
-     * @constant {String} address of thisisoon.fm socket server
-     */
-    .constant("FM_SOCKET_ADDRESS", "http://localdocker:8080")
 
     /**
      * @constant {Array} list of available socket events

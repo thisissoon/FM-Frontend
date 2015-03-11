@@ -6,16 +6,16 @@
  */
 angular.module("sn.fm.api").factory("PlayerTransportResource", [
     "$resource",
-    "ENV",
+    "FM_API_SERVER_ADDRESS",
     /**
      * @constructor
      * @param {Service} $resource
-     * @param {Object}  ENV
+     * @param {String}  FM_API_SERVER_ADDRESS
      */
-    function ($resource, ENV) {
+    function ($resource, FM_API_SERVER_ADDRESS) {
 
         return $resource(
-            ENV.FM_API_SERVER_ADDRESS + "player/current",
+            FM_API_SERVER_ADDRESS + "player/current",
             // Default values for url parameters.
             {},
             // Hash with declaration of custom action that should
@@ -23,12 +23,12 @@ angular.module("sn.fm.api").factory("PlayerTransportResource", [
             {
                 pause: {
                     method: "POST",
-                    url: ENV.FM_API_SERVER_ADDRESS + "player/pause"
+                    url: FM_API_SERVER_ADDRESS + "player/pause"
                 },
 
                 resume: {
                     method: "DELETE",
-                    url: ENV.FM_API_SERVER_ADDRESS + "player/pause"
+                    url: FM_API_SERVER_ADDRESS + "player/pause"
                 }
             }
 
