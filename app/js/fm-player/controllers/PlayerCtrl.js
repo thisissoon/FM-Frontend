@@ -12,15 +12,22 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "$q",
     "Spotify",
     "PlayerQueueResource",
+    "PlayerTransportResource",
+    "TracksResource",
     "playlistData",
+    "currentTrack",
     /**
      * @constructor
      * @param {Object}  $scope
      * @param {Service} $q
      * @param {Service} Spotify
      * @param {Factory} PlayerQueueResource
+     * @param {Factory} PlayerTranportResource
+     * @param {Factory} TracksResource
+     * @param {Array}   playlistData
+     * @param {Object}  currentTrack
      */
-    function ($scope, $q, Spotify, PlayerQueueResource, playlistData) {
+    function ($scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, TracksResource, playlistData, currentTrack) {
 
         /**
          * An instance of the $resource PlayerQueueResource
@@ -29,6 +36,29 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @type     {Object}
          */
         $scope.playlist = playlistData;
+
+        /**
+         * An instance of the $resource PlayerTransportResource
+         * which provides player transport operations and information
+         * about the currently playing track
+         * @property transport
+         * @type     {Object}
+         */
+        $scope.transport = PlayerTransportResource;
+
+        /**
+         * The currently playing track
+         * @property current
+         * @type     {Object}
+         */
+        $scope.current = currentTrack;
+
+        /**
+         * Tracks the state of playback
+         * @property paused
+         * @type     {Boolean}
+         */
+        $scope.paused = false;
 
         /**
          * Searches the spotify api unsing angular-spotify and returns a
@@ -56,6 +86,111 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         $scope.onTrackSelected = function onTrackSelected(track){
             PlayerQueueResource.save({ uri: track.uri });
         };
+
+        /**
+         * Update `playlist` and `current` with queue data and currently playing track from the API
+         * @method refreshPlaylist
+         */
+        $scope.refreshPlaylist = function refreshPlaylistQueue(){
+            $q.all([
+                PlayerQueueResource.get().$promise,
+                PlayerTransportResource.get().$promise
+            ]).then(function(response){
+                $scope.playlist = response[0];
+                $scope.current = response[1];
+                $scope.playlist.unshift($scope.current);
+            });
+        };
+
+        /**
+         * Add currently playing track to playlist
+         * @method init
+         */
+        $scope.init = function init() {
+            $scope.playlist.unshift($scope.current);
+        };
+
+        /**
+         * On play event, set playback state variables
+         * refresh playlist if song URI doesn't match the playlist
+         * @method onPlay
+         */
+        $scope.onPlay = function onPlay(event, data) {
+            if ($scope.playlist[0].spotify_uri === data.uri) { // jshint ignore:line
+                $scope.paused = false;
+                $scope.current = $scope.playlist[0];
+            } else {
+                $scope.refreshPlaylist();
+                $scope.paused = false;
+            }
+        };
+
+        /**
+         * On end event, remove track from playlist
+         * refresh playlist if song URI doesn't match the playlist
+         * @method onEnd
+         */
+        $scope.onEnd = function onEnd(event, data) {
+            if ($scope.playlist[0].spotify_uri === data.uri) { // jshint ignore:line
+                $scope.playlist.splice(0, 1);
+            } else {
+                $scope.refreshPlaylist();
+            }
+        };
+
+        /**
+         * On pause event, update paused state
+         * @method onPause
+         */
+        $scope.onPause = function onPause() {
+            $scope.paused = true;
+        };
+
+        /**
+         * On resume event, update paused state
+         * @method onResume
+         */
+        $scope.onResume = function onResume() {
+            $scope.paused = false;
+        };
+
+        /**
+         * On add event, get track data and push to playlist
+         * @method onAdd
+         */
+        $scope.onAdd = function onAdd(event, data) {
+            TracksResource.get({ id: data.uri }).$promise
+                .then(function(track){
+                    $scope.playlist.push(track);
+                });
+        };
+
+        /**
+         * @listens fm:player:play
+         */
+        $scope.$on("fm:player:play", $scope.onPlay);
+
+        /**
+         * @listens fm:player:end
+         */
+        $scope.$on("fm:player:end", $scope.onEnd);
+
+        /**
+         * @listens fm:player:pause
+         */
+        $scope.$on("fm:player:pause", $scope.onPause);
+
+        /**
+         * @listens fm:player:resume
+         */
+        $scope.$on("fm:player:resume", $scope.onResume);
+
+        /**
+         * @listens fm:player:pause
+         */
+        $scope.$on("fm:player:add", $scope.onAdd);
+
+        $scope.init();
 
     }
 

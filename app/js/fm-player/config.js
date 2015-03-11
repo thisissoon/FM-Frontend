@@ -25,6 +25,9 @@ angular.module("sn.fm.player").config([
                 resolve: {
                     playlistData: ["PlayerQueueResource", "$route", function (PlayerQueueResource, $route){
                         return PlayerQueueResource.query($route.current.params);
+                    }],
+                    currentTrack: ["PlayerTransportResource", function (PlayerTransportResource){
+                        return PlayerTransportResource.get();
                     }]
                 }
             })
