@@ -6,16 +6,16 @@
  */
 angular.module("sn.fm.api").factory("TracksResource", [
     "$resource",
-    "SERVER_ADDRESS",
+    "ENV",
     /**
      * @constructor
      * @param {Service} $resource
-     * @param {String}  SERVER_ADDRESS
+     * @param {Object}  ENV
      */
-    function ($resource, SERVER_ADDRESS) {
+    function ($resource, ENV) {
 
         return $resource(
-            SERVER_ADDRESS + "tracks" + "/:id",
+            ENV.FM_API_SERVER_ADDRESS + "tracks" + "/:id",
             // Default values for url parameters.
             {
                 id: "@id"

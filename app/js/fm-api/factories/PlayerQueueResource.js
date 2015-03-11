@@ -6,15 +6,15 @@
  */
 angular.module("sn.fm.api").factory("PlayerQueueResource", [
     "$resource",
-    "SERVER_ADDRESS",
+    "ENV",
     /**
      * @constructor
      * @param {Service} $resource
-     * @param {String}  SERVER_ADDRESS
+     * @param {Object}  ENV
      */
-    function ($resource, SERVER_ADDRESS) {
+    function ($resource, ENV) {
 
-        return $resource(SERVER_ADDRESS + "player/queue");
+        return $resource(ENV.FM_API_SERVER_ADDRESS + "player/queue");
 
     }
 ]);
