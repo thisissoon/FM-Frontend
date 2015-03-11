@@ -11,13 +11,12 @@
  * @requires spotify    {@link https://github.com/eddiemoore/angular-spotify}
  * @requires sn.fm.api
  */
-angular.module("sn.fm.player", ["ngRoute", "ngMaterial", "spotify", "sn.fm.api", "sn.fm.sockets"])
+angular.module("sn.fm.player", ["ngRoute", "ngMaterial", "spotify", "sn.fm.api"])
 
 .run([
     "$rootScope",
     "$mdSidenav",
-    "fmSocketInit",
-    function ($rootScope, $mdSidenav, fmSocketInit){
+    function ($rootScope, $mdSidenav){
 
         /**
          * Toggles the state of the sidebar
@@ -28,9 +27,5 @@ angular.module("sn.fm.player", ["ngRoute", "ngMaterial", "spotify", "sn.fm.api",
             return $mdSidenav(menuId).toggle();
         };
 
-        /**
-         * Forwards all fm.socket events to angular event system
-         */
-        fmSocketInit.forward();
     }
 ]);

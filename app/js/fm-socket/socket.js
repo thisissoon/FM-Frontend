@@ -15,6 +15,22 @@ angular.module("sn.fm.sockets", [
     "btford.socket-io"
 ])
 
+    .run([
+        "fmSocket",
+        "EVENTS",
+        /**
+         * @constructor
+         * @param {Factory} fmSocket socket instance
+         * @param {Array}   EVENTS   list of available socket events
+         */
+        function(fmSocket, EVENTS){
+            /**
+             * Forwards all fm.socket events to angular event system
+             */
+            fmSocket.forward(EVENTS);
+        }
+    ])
+
     /**
      * @constant {String} address of thisisoon.fm socket server
      */
@@ -55,22 +71,5 @@ angular.module("sn.fm.sockets", [
                 ioSocket: io.connect(FM_SOCKET_ADDRESS)
             });
 
-        }
-    ])
-
-    .service("fmSocketInit", [
-        "fmSocket",
-        "EVENTS",
-        /**
-         * @constructor
-         * @param {Factory} fmSocket socket instance
-         * @param {Array}   EVENTS   list of available socket events
-         */
-        function (fmSocket, EVENTS) {
-            return {
-                forward: function forward() {
-                    fmSocket.forward(EVENTS);
-                }
-            };
         }
     ]);
