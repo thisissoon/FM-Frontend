@@ -5,6 +5,7 @@
  * @module sn.fm.api
  * @main   sn.fm.api
  * @author SOON_
+ * @requires ENV        Angular environment variables
  * @requires ngResource {@link https://docs.angularjs.org/api/ngResource}
  */
-angular.module("sn.fm.api", ["ngResource"]);
+angular.module("sn.fm.api", ["ENV", "ngResource"]);

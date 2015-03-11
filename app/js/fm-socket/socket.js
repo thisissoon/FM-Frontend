@@ -12,6 +12,7 @@
  * @author SOON_
  */
 angular.module("sn.fm.sockets", [
+    "ENV",
     "btford.socket-io"
 ])
 
@@ -30,11 +31,6 @@ angular.module("sn.fm.sockets", [
             fmSocket.forward(EVENTS);
         }
     ])
-
-    /**
-     * @constant {String} address of thisisoon.fm socket server
-     */
-    .constant("FM_SOCKET_ADDRESS", "http://localdocker:8080")
 
     /**
      * @constant {Array} list of available socket events

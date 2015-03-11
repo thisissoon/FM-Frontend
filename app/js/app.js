@@ -5,5 +5,6 @@
  * @module   sn.fm
  * @main     sn.fm
  * @author   SOON_
+ * @requires sn.fm.player Main FM player module that displays tracks
  */
 angular.module("sn.fm", ["sn.fm.player", "sn.fm.sockets"]);

@@ -5,6 +5,7 @@ var modRewrite = require("connect-modrewrite");
 module.exports = function (grunt) {
 
     var base = grunt.option("baseDir") || "",
+        env = grunt.option("env") || "development",
         protractorConf = grunt.option("ci") ?
                         "tests/e2e/protractor.saucelabs.conf.js" :
                         "tests/e2e/protractor.conf.js" ;
@@ -127,7 +128,7 @@ module.exports = function (grunt) {
                 keepRunner: true,
             },
             development: {
-                src: ["<%= config.applicationFiles %>"],
+                src: ["<%= ngconstant.options.dest %>", "<%= config.applicationFiles %>"],
                 options: {
                     vendor: ["<%= config.vendorFiles %>"],
                     helpers:["app/components/angular-mocks/angular-mocks.js"],
@@ -183,6 +184,7 @@ module.exports = function (grunt) {
             production: {
                 src: [
                     "<%= config.vendorFiles %>",
+                    "<%= ngconstant.options.dest %>",
                     "<%= config.applicationFiles %>"
                 ],
                 dest: "<%= config.outputDir %>js/app.js"
@@ -202,6 +204,7 @@ module.exports = function (grunt) {
                     "<%= config.outputDir %>js/app.min.js":
                     [
                         "<%= config.vendorFiles %>",
+                        "<%= ngconstant.options.dest %>",
                         "<%= config.applicationFiles %>"
                     ]
                 }
@@ -288,7 +291,16 @@ module.exports = function (grunt) {
                 push: true,
                 pushTo: "origin master"
             }
-        }
+        },
+
+        ngconstant: {
+            options: {
+                name: "ENV",
+                dest: "app/js/env/env.js",
+                constants: grunt.file.readJSON("env.json")[env]
+            },
+            dist: {}
+        },
 
 
     });
@@ -306,11 +318,13 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-protractor-runner");
     grunt.loadNpmTasks("grunt-protractor-webdriver");
     grunt.loadNpmTasks("grunt-processhtml");
+    grunt.loadNpmTasks('grunt-ng-constant');
     grunt.loadNpmTasks('grunt-bump');
 
     grunt.registerTask("build", [
         "clean:beforeBuild",
         "less:production",
+        "ngconstant",
         "uglify",
         "copyBuild",
         "processhtml:production"
@@ -328,18 +342,21 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask("server", [
+        "ngconstant",
         "less:development",
         "connect:server",
         "watch:css"
     ]);
 
     grunt.registerTask("serverjs", [
+        "ngconstant",
         "less:development",
         "connect:server",
         "watch:javascript"
     ]);
 
     grunt.registerTask("serverall", [
+        "ngconstant",
         "less:development",
         "connect:server",
         "watch"
@@ -347,19 +364,22 @@ module.exports = function (grunt) {
 
     grunt.registerTask("test", [
         "clean:beforeBuild",
+        "ngconstant",
         "jshint",
         "uglify",
         "jasmine:production"
     ]);
 
     grunt.registerTask("test:development", [
+        "ngconstant",
         "jshint",
         "jasmine:development"
     ]);
 
     grunt.registerTask("e2e", [
-        "uglify",
+        "ngconstant",
         "less:production",
+        "uglify",
         "copy",
         "processhtml:e2e",
         "connect:servertest",

@@ -3,20 +3,22 @@
 <html lang="en" ng-app="sn.fm" ng-strict-di>
 <!-- /build -->
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="fragment" content="!" />
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <meta name="fragment" content="!"/>
         <title>thisissoon.fm</title>
+
         <!-- build:template
-        <base href="/">
+        <base href="/"/>
         /build -->
         <!-- build:remove -->
-        <base href="/app/">
+        <base href="/app/"/>
         <!-- /build -->
+
         <!-- build:css css/all.min.css -->
         <link rel="stylesheet" href="css/all.css"/>
         <!-- /build -->
-        <link rel="shortcut icon" type="image/png" href="img/icons/favicon-16x16.png" />
+        <link rel="shortcut icon" type="image/png" href="img/icons/favicon-16x16.png"/>
     </head>
     <body>
 
@@ -34,20 +36,21 @@
         <script src="components/angular-spotify/src/angular-spotify.js"></script>
         <script src="components/angular-socket-io/socket.js"></script>
 
-        <!-- sn.fm.api -->
+        <script src="js/env/env.js"></script>
+
         <script src="js/fm-socket/socket.js"></script>
 
         <script src="js/fm-api/app.js"></script>
         <script src="js/fm-api/config.js"></script>
-        <script src="js/fm-api/constants/constants.js"></script>
         <script src="js/fm-api/factories/PlayerQueueResource.js"></script>
         <script src="js/fm-api/factories/PlayerTransportResource.js"></script>
         <script src="js/fm-api/factories/TracksResource.js"></script>
 
-        <script src="js/app.js"></script>
         <script src="js/fm-player/app.js"></script>
         <script src="js/fm-player/config.js"></script>
         <script src="js/fm-player/controllers/PlayerCtrl.js"></script>
+
+        <script src="js/app.js"></script>
         <!-- /build -->
         <!-- build:include:e2e ../tests/e2e/scripts.html --><!-- /build -->
 
