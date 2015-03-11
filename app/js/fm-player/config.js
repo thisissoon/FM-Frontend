@@ -31,6 +31,11 @@ angular.module("sn.fm.player").config([
                     }]
                 }
             })
+
+            .when("/500", {
+                templateUrl: "partials/500.html"
+            })
+
             .otherwise({
                 redirectTo: "/"
             });
