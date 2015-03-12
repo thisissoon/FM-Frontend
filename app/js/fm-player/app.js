@@ -11,7 +11,7 @@
  * @requires spotify    {@link https://github.com/eddiemoore/angular-spotify}
  * @requires sn.fm.api
  */
-angular.module("sn.fm.player", ["ngRoute", "ngMaterial", "spotify", "rt.debounce", "sn.fm.api"])
+angular.module("sn.fm.player", ["ngRoute", "ngMaterial", "spotify", "sn.fm.api"])
 
 .run([
     "$rootScope",

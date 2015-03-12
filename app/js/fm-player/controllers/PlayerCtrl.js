@@ -10,7 +10,6 @@
 angular.module("sn.fm.player").controller("PlayerCtrl", [
     "$scope",
     "$q",
-    "debounce",
     "Spotify",
     "PlayerQueueResource",
     "PlayerTransportResource",
@@ -23,7 +22,6 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @constructor
      * @param {Object}  $scope
      * @param {Service} $q
-     * @param {Service} debounce                angular-debounce service
      * @param {Service} Spotify
      * @param {Factory} PlayerQueueResource
      * @param {Factory} PlayerTranportResource
@@ -31,7 +29,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @param {Array}   playlistData
      * @param {Object}  currentTrack
      */
-    function ($scope, $q, debounce, Spotify, PlayerQueueResource, PlayerTransportResource, TracksResource, PlayerMuteResource, PlayerVolumeResource, playlistData, currentTrack) {
+    function ($scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, TracksResource, PlayerMuteResource, PlayerVolumeResource, playlistData, currentTrack) {
 
         /**
          * An instance of the $resource PlayerQueueResource
@@ -81,14 +79,55 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         $scope.mute = PlayerMuteResource;
 
         /**
-         * Debounce and save volume state
-         * @param {Number}   250    ms to wait after last adjustment
-         * @param {Function} save   Save volume state
-         * @method onVolumeChanged
+         * Increment volume by 10
+         * @method volumeUp
          */
-        $scope.onVolumeChange = debounce(250, function save(){
-            $scope.volume.$save();
-        });
+        $scope.volumeUp = function volumeUp() {
+            PlayerVolumeResource.get({}, function(volume){
+
+                // round volume to nearest 10
+                volume.volume = Math.round(volume.volume / 10) * 10;
+
+                if (volume.volume <= 90) {
+                    volume.volume = volume.volume + 10;
+                }
+
+                volume.$save();
+
+            });
+        };
+
+        /**
+         * Decrement volume by 10
+         * @method volumeDown
+         */
+        $scope.volumeDown = function volumeDown() {
+            PlayerVolumeResource.get({}, function(volume){
+
+                // round volume to nearest 10
+                volume.volume = Math.round(volume.volume / 10) * 10;
+
+                if (volume.volume >= 10) {
+                    volume.volume = volume.volume - 10;
+                }
+
+                volume.$save();
+            });
+        };
+
+        /**
+         * Toggle mute state and save
+         * @method toggleMute
+         */
+        $scope.toggleMute = function toggleMute() {
+            if ($scope.mute.mute) {
+                $scope.mute.mute = false;
+                $scope.mute.$delete();
+            } else {
+                $scope.mute.mute = true;
+                $scope.mute.$save();
+            }
+        };
 
         /**
          * Searches the spotify api unsing angular-spotify and returns a
@@ -196,6 +235,14 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         };
 
         /**
+         * On setMute event, set mute status
+         * @method onSetMute
+         */
+        $scope.onSetMute = function onSetMute(event, data) {
+            $scope.mute.mute = data.mute;
+        };
+
+        /**
          * @listens fm:player:play
          */
         $scope.$on("fm:player:play", $scope.onPlay);
@@ -219,6 +266,11 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @listens fm:player:pause
          */
         $scope.$on("fm:player:add", $scope.onAdd);
+
+        /**
+         * @listens fm:player:setMute
+         */
+        $scope.$on("fm:player:setMute", $scope.onSetMute);
 
         $scope.init();
 
