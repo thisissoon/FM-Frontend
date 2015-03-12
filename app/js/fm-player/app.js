@@ -20,11 +20,29 @@ angular.module("sn.fm.player", ["ngRoute", "ngMaterial", "spotify", "sn.fm.api"]
 
         /**
          * Toggles the state of the sidebar
-         * @method toggleSidenav
-         * @param {String} menuId
+         * @method toggleSideNav
+         * @param  {String} menuId
          */
-        $rootScope.toggleSidenav = function toggleSidenav(menuId){
+        $rootScope.toggleSideNav = function toggleSideNav(menuId){
             return $mdSidenav(menuId).toggle();
+        };
+
+        /**
+         * Open side nav bar
+         * @method openSideNav
+         * @param  {String} menuId
+         */
+        $rootScope.openSideNav = function openSideNav(menuId){
+            return $mdSidenav(menuId).open();
+        };
+
+        /**
+         * Close side nav bar
+         * @method closeSideNav
+         * @param  {String} menuId
+         */
+        $rootScope.closeSideNav = function closeSideNav(menuId){
+            return $mdSidenav(menuId).close();
         };
 
     }
