@@ -2,7 +2,7 @@
 
 describe("sn.fm.player:PlayerCtrl", function() {
 
-    var $scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, TracksResource, spotifyCallback, queueCallback, trackCallback, _playlistData, _currentTrack;
+    var $scope, $q, Spotify, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource, spotifyCallback, queueCallback, trackCallback, _playlistData, _currentTrack, _initialVolume, _initialMute;
 
     beforeEach(function (){
         module("sn.fm.player");
@@ -48,12 +48,18 @@ describe("sn.fm.player:PlayerCtrl", function() {
         }
         spyOn(Spotify, "search").and.callFake(spotifyCallback);
 
+        PlayerMuteResource = $injector.get("PlayerMuteResource");
+        spyOn(PlayerMuteResource, "get");
+
         PlayerQueueResource = $injector.get("PlayerQueueResource");
         spyOn(PlayerQueueResource, "save");
         spyOn(PlayerQueueResource, "get").and.callFake(queueCallback);
 
         PlayerTransportResource = $injector.get("PlayerTransportResource");
         spyOn(PlayerTransportResource, "get").and.callFake(trackCallback);
+
+        PlayerVolumeResource = $injector.get("PlayerVolumeResource");
+        spyOn(PlayerVolumeResource, "get");
 
         TracksResource = $injector.get("TracksResource");
         spyOn(TracksResource, "get").and.callFake(trackCallback);
@@ -156,8 +162,10 @@ describe("sn.fm.player:PlayerCtrl", function() {
             $scope: $scope,
             $q: $q,
             Spotify: Spotify,
+            PlayerMuteResource: PlayerMuteResource,
             PlayerQueueResource: PlayerQueueResource,
             PlayerTransportResource: PlayerTransportResource,
+            PlayerVolumeResource: PlayerVolumeResource,
             TracksResource: TracksResource,
             playlistData: _playlistData,
             currentTrack: _currentTrack

@@ -10,6 +10,10 @@
 
     <h1>thisissoon.fm</h1>
 
+    <div class="volume">
+        <md-slider class="volume-slider" min="0" max="100" ng-model="volume.volume" ng-change="onVolumeChange()" aria-label="volume"></md-slider>
+    </div>
+
 </md-toolbar>
 
 <div layout="row" flex>

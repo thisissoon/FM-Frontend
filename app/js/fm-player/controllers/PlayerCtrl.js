@@ -10,16 +10,20 @@
 angular.module("sn.fm.player").controller("PlayerCtrl", [
     "$scope",
     "$q",
+    "debounce",
     "Spotify",
     "PlayerQueueResource",
     "PlayerTransportResource",
     "TracksResource",
+    "PlayerMuteResource",
+    "PlayerVolumeResource",
     "playlistData",
     "currentTrack",
     /**
      * @constructor
      * @param {Object}  $scope
      * @param {Service} $q
+     * @param {Service} debounce                angular-debounce service
      * @param {Service} Spotify
      * @param {Factory} PlayerQueueResource
      * @param {Factory} PlayerTranportResource
@@ -27,7 +31,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @param {Array}   playlistData
      * @param {Object}  currentTrack
      */
-    function ($scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, TracksResource, playlistData, currentTrack) {
+    function ($scope, $q, debounce, Spotify, PlayerQueueResource, PlayerTransportResource, TracksResource, PlayerMuteResource, PlayerVolumeResource, playlistData, currentTrack) {
 
         /**
          * An instance of the $resource PlayerQueueResource
@@ -59,6 +63,32 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @type     {Boolean}
          */
         $scope.paused = false;
+
+        /**
+         * An instance of the $resource PlayerVolumeResource
+         * which provides player volume operations
+         * @property volume
+         * @type     {Object}
+         */
+        $scope.volume = PlayerVolumeResource;
+
+        /**
+         * An instance of the $resource PlayerMuteResource
+         * which provides player mute operations
+         * @property mute
+         * @type     {Object}
+         */
+        $scope.mute = PlayerMuteResource;
+
+        /**
+         * Debounce and save volume state
+         * @param {Number}   250    ms to wait after last adjustment
+         * @param {Function} save   Save volume state
+         * @method onVolumeChanged
+         */
+        $scope.onVolumeChange = debounce(250, function save(){
+            $scope.volume.$save();
+        });
 
         /**
          * Searches the spotify api unsing angular-spotify and returns a
