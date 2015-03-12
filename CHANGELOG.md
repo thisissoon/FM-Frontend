@@ -1,3 +1,3 @@
-Changes in 0.1.0
+Changes in 0.0.0
 
  * @eopa: First release
