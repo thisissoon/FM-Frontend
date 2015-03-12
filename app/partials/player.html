@@ -1,4 +1,4 @@
-<md-toolbar layout="row">
+<md-toolbar layout="row" class="header-menu">
 
     <button ng-click="toggleSidenav('left')"
             hide-gt-sm
@@ -21,6 +21,7 @@
         md-is-locked-open="$mdMedia('gt-sm')"
     >
         <md-autocomplete
+            class="spotify-search"
             md-no-cache="false"
             md-search-text="searchText"
             md-items="item in search(searchText)"
@@ -33,7 +34,7 @@
                 <img ng-src="{{ item.album.images[0].url }}"
                      class="artwork md-padding"
                      alt="{{ item.album.name }}">
-                <span md-highlight-text="searchText">
+                <span md-highlight-text="searchText" class="item-text">
                     {{ item.name }} - {{ item.artists[0].name }}
                 </span>
             </div>
