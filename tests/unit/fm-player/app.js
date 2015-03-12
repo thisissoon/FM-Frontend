@@ -14,7 +14,17 @@ describe("sn.fm.player:app", function() {
     }));
 
     it("should toogle sidenav", function() {
-        var sidenav = $rootScope.toggleSidenav("foo");
+        var sidenav = $rootScope.toggleSideNav("foo");
+        expect(sidenav).toEqual(jasmine.any(Object));
+    })
+
+    it("should close sidenav", function() {
+        var sidenav = $rootScope.closeSideNav("foo");
+        expect(sidenav).toEqual(jasmine.any(Object));
+    })
+
+    it("should open sidenav", function() {
+        var sidenav = $rootScope.openSideNav("foo");
         expect(sidenav).toEqual(jasmine.any(Object));
     })
 });
