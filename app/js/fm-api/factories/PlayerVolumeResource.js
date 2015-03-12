@@ -6,15 +6,15 @@
  */
 angular.module("sn.fm.api").factory("PlayerVolumeResource", [
     "$resource",
-    "SERVER_ADDRESS",
+    "FM_API_SERVER_ADDRESS",
     /**
      * @constructor
      * @param {Service} $resource
      * @param {String}  SERVER_ADDRESS
      */
-    function ($resource, SERVER_ADDRESS) {
+    function ($resource, FM_API_SERVER_ADDRESS) {
 
-        return $resource(SERVER_ADDRESS + "player/volume");
+        return $resource(FM_API_SERVER_ADDRESS + "player/volume");
 
     }
 ]);

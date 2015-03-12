@@ -108,7 +108,7 @@ To run tests or compile less to css when the relevent files are updated.
 To create a build to deploy for a production environment simply run: 
 
 ```
-grunt build
+grunt build -env production
 ```
 
 The build files will then be in the `dist/` directory.
@@ -118,7 +118,7 @@ The build files will then be in the `dist/` directory.
 To create a new release simply run: 
 
 ```
-grunt release --setversion X.Y.Z
+grunt release -env production --setversion X.Y.Z
 ```
 
 Where `X.Y.Z` is the new version number. This will update `package.json` 
