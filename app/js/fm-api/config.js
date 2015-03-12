@@ -10,6 +10,7 @@ angular.module("sn.fm.api").config([
     function ($httpProvider) {
 
         $httpProvider.defaults.headers.common["Content-Type"] = "application/json; charset=utf-8";
+        $httpProvider.interceptors.push("RequestInterceptor");
 
     }
 
