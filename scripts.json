@@ -7,8 +7,7 @@
         "app/components/angular-material/angular-material.js",
         "app/components/angular-resource/angular-resource.js",
         "app/components/angular-spotify/src/angular-spotify.js",
-        "app/components/angular-socket-io/socket.js",
-        "app/components/angular-debounce/dist/angular-debounce.js"
+        "app/components/angular-socket-io/socket.js"
     ],
     "application": [
         "app/js/fm-socket/socket.js",
