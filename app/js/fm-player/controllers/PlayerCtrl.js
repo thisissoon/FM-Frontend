@@ -63,14 +63,6 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         $scope.paused = false;
 
         /**
-         * An instance of the $resource PlayerVolumeResource
-         * which provides player volume operations
-         * @property volume
-         * @type     {Object}
-         */
-        $scope.volume = PlayerVolumeResource;
-
-        /**
          * An instance of the $resource PlayerMuteResource
          * which provides player mute operations
          * @property mute
@@ -87,9 +79,10 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
 
                 // round volume to nearest 10
                 volume.volume = Math.round(volume.volume / 10) * 10;
+                volume.volume = volume.volume + 10;
 
-                if (volume.volume <= 90) {
-                    volume.volume = volume.volume + 10;
+                if (volume.volume > 100) {
+                    volume.volume = 100;
                 }
 
                 volume.$save();
@@ -106,9 +99,10 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
 
                 // round volume to nearest 10
                 volume.volume = Math.round(volume.volume / 10) * 10;
+                volume.volume = volume.volume - 10;
 
-                if (volume.volume >= 10) {
-                    volume.volume = volume.volume - 10;
+                if (volume.volume < 0) {
+                    volume.volume = 0;
                 }
 
                 volume.$save();
