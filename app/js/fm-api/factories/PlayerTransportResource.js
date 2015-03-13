@@ -21,6 +21,25 @@ angular.module("sn.fm.api").factory("PlayerTransportResource", [
             // Hash with declaration of custom action that should
             // extend the default set of resource actions
             {
+                get: {
+                    method: "GET",
+                    interceptor: {
+                        response: function(response){
+
+                            response.data = {
+                                track: response.data,
+                                status: response.status,
+                                paused: response.headers("Paused")
+                            };
+
+                            response.resource.track = response.data;
+                            response.resource.status = response.status;
+                            response.resource.paused = response.headers("Paused");
+
+                            return response;
+                        }
+                    }
+                },
                 pause: {
                     method: "POST",
                     url: FM_API_SERVER_ADDRESS + "player/pause"

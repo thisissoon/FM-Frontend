@@ -2,7 +2,7 @@
 
 describe("sn.fm.player:PlayerCtrl", function() {
 
-    var $scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, TracksResource, spotifyCallback, queueCallback, trackCallback, _playlistData, _currentTrack;
+    var $scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, TracksResource, spotifyCallback, queueCallback, transportCallback, trackCallback, _playlistData, _currentTrack;
 
     beforeEach(function (){
         module("sn.fm.player");
@@ -33,11 +33,20 @@ describe("sn.fm.player:PlayerCtrl", function() {
                 }
             }
         }
-        trackCallback = function(){
+        transportCallback = function(){
             return {
                 $promise: {
                     then: function(fn){
                         fn.apply(this,[_currentTrack])
+                    }
+                }
+            }
+        }
+        trackCallback = function(){
+            return {
+                $promise: {
+                    then: function(fn){
+                        fn.apply(this,[_currentTrack.track])
                     }
                 }
             }
@@ -50,10 +59,10 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
         PlayerQueueResource = $injector.get("PlayerQueueResource");
         spyOn(PlayerQueueResource, "save");
-        spyOn(PlayerQueueResource, "get").and.callFake(queueCallback);
+        spyOn(PlayerQueueResource, "query").and.callFake(queueCallback);
 
         PlayerTransportResource = $injector.get("PlayerTransportResource");
-        spyOn(PlayerTransportResource, "get").and.callFake(trackCallback);
+        spyOn(PlayerTransportResource, "get").and.callFake(transportCallback);
 
         TracksResource = $injector.get("TracksResource");
         spyOn(TracksResource, "get").and.callFake(trackCallback);
@@ -117,39 +126,43 @@ describe("sn.fm.player:PlayerCtrl", function() {
         }]
 
         _currentTrack = {
-            "album": {
-                "artists": [
-                    {
-                        "id": "26556f7e-3304-4e51-8243-dd2199fcf6fa",
-                        "name": "Nightwish",
-                        "spotify_uri": "spotify:artist:2NPduAUeLVsfIauhRwuft1"
-                    }
-                ],
-                "id": "7f8bda77-5364-4902-9a98-208f1cdd7643",
-                "images": [
-                    {
-                        "height": 640,
-                        "url": "https://i.scdn.co/image/7928fc9bd902b917aae0ef1bee41cb51598a2d27",
-                        "width": 640
-                    },
-                    {
-                        "height": 300,
-                        "url": "https://i.scdn.co/image/e80cb4d324d16881e2f7653abdbd70497bbab68d",
-                        "width": 300
-                    },
-                    {
-                        "height": 64,
-                        "url": "https://i.scdn.co/image/bf567406035a8e2b162c6a23470c6cdd5dd560f3",
-                        "width": 64
-                    }
-                ],
-                "name": "Showtime, Storytime",
-                "spotify_uri": "spotify:album:1tZlCjdI2dcfBXP8iSDsSI"
-            },
-            "duration": 272906,
-            "id": "4b170737-017c-4e85-965c-47b8a158c789",
-            "name": "Dark Chest Of Wonders - Live @ Wacken 2013",
-            "spotify_uri": "spotify:track:6FshvOVICpRVkwpYE5BYTD"
+            paused: 0,
+            status: 200,
+            track: {
+                "album": {
+                    "artists": [
+                        {
+                            "id": "26556f7e-3304-4e51-8243-dd2199fcf6fa",
+                            "name": "Nightwish",
+                            "spotify_uri": "spotify:artist:2NPduAUeLVsfIauhRwuft1"
+                        }
+                    ],
+                    "id": "7f8bda77-5364-4902-9a98-208f1cdd7643",
+                    "images": [
+                        {
+                            "height": 640,
+                            "url": "https://i.scdn.co/image/7928fc9bd902b917aae0ef1bee41cb51598a2d27",
+                            "width": 640
+                        },
+                        {
+                            "height": 300,
+                            "url": "https://i.scdn.co/image/e80cb4d324d16881e2f7653abdbd70497bbab68d",
+                            "width": 300
+                        },
+                        {
+                            "height": 64,
+                            "url": "https://i.scdn.co/image/bf567406035a8e2b162c6a23470c6cdd5dd560f3",
+                            "width": 64
+                        }
+                    ],
+                    "name": "Showtime, Storytime",
+                    "spotify_uri": "spotify:album:1tZlCjdI2dcfBXP8iSDsSI"
+                },
+                "duration": 272906,
+                "id": "4b170737-017c-4e85-965c-47b8a158c789",
+                "name": "Dark Chest Of Wonders - Live @ Wacken 2013",
+                "spotify_uri": "spotify:track:6FshvOVICpRVkwpYE5BYTD"
+            }
         }
 
         $controller("PlayerCtrl", {
@@ -171,11 +184,11 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     it("should attach resolved data to scope", function() {
         expect($scope.playlist).toEqual(_playlistData);
-        expect($scope.current).toEqual(_currentTrack);
+        expect($scope.current).toEqual(_currentTrack.track);
     });
 
     it("should add current track to playlist on init", function() {
-        expect($scope.playlist[0]).toEqual(_currentTrack);
+        expect($scope.playlist[0]).toEqual(_currentTrack.track);
         expect($scope.playlist.length).toEqual(3);
     });
 
@@ -195,24 +208,24 @@ describe("sn.fm.player:PlayerCtrl", function() {
         });
 
         it("should make request to Queue and Transport resource", function() {
-            expect(PlayerQueueResource.get).toHaveBeenCalledWith();
+            expect(PlayerQueueResource.query).toHaveBeenCalledWith();
             expect(PlayerTransportResource.get).toHaveBeenCalledWith();
         });
 
         it("should update playlist", function(){
-            _playlistData.unshift(_currentTrack);
+            _playlistData.unshift(_currentTrack.track);
             expect($scope.playlist).toEqual(_playlistData);
         });
 
         it("should update current", function(){
-            expect($scope.current).toEqual(_currentTrack);
+            expect($scope.current).toEqual(_currentTrack.track);
         });
     });
 
     describe("socket event handling", function(){
 
         it("should update playlist on end event", function() {
-            var eventData = { uri: _currentTrack.spotify_uri },
+            var eventData = { uri: _currentTrack.track.spotify_uri },
                 expectLength = $scope.playlist.length - 1;
 
             $scope.$broadcast("fm:player:end", eventData);
@@ -263,7 +276,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
             $scope.$broadcast("fm:player:add", eventData);
             expect($scope.playlist.length).toEqual(4);
-            expect($scope.playlist[3]).toEqual(_currentTrack);
+            expect($scope.playlist[3]).toEqual(_currentTrack.track);
         });
 
     });

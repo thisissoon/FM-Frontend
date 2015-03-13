@@ -51,14 +51,14 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @property current
          * @type     {Object}
          */
-        $scope.current = currentTrack;
+        $scope.current = currentTrack.track;
 
         /**
          * Tracks the state of playback
          * @property paused
          * @type     {Boolean}
          */
-        $scope.paused = false;
+        $scope.paused = currentTrack.paused;
 
         /**
          * Searches the spotify api unsing angular-spotify and returns a
@@ -93,12 +93,19 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          */
         $scope.refreshPlaylist = function refreshPlaylistQueue(){
             $q.all([
-                PlayerQueueResource.get().$promise,
+                PlayerQueueResource.query().$promise,
                 PlayerTransportResource.get().$promise
             ]).then(function(response){
                 $scope.playlist = response[0];
-                $scope.current = response[1];
-                $scope.playlist.unshift($scope.current);
+
+                if (response[1]) {
+                    $scope.current = response[1].track;
+                    $scope.paused = response[1].paused;
+
+                    if (response[1].status === 200) {
+                        $scope.playlist.unshift($scope.current);
+                    }
+                }
             });
         };
 
@@ -107,7 +114,11 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method init
          */
         $scope.init = function init() {
-            $scope.playlist.unshift($scope.current);
+
+            if(currentTrack.status === 200){
+                $scope.playlist.unshift(currentTrack.track);
+            }
+
         };
 
         /**
