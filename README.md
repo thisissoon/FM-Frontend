@@ -1,9 +1,9 @@
 # FM-Frontend - The frontend for thisissoon.fm
 
-[![Build Status](https://travis-ci.org/thisissoon/FM-Frontend.svg?branch=master)](https://travis-ci.org/thisissoon/FM-Frontend)
-[![Coverage Status](https://coveralls.io/repos/thisissoon/FM-Frontend/badge.svg?branch=master)](https://coveralls.io/r/thisissoon/FM-Frontend?branch=master)
+[![Build Status](https://travis-ci.org/thisissoon/FM-Frontend.svg?branch=develop)](https://travis-ci.org/thisissoon/FM-Frontend)
+[![Coverage Status](https://coveralls.io/repos/thisissoon/FM-Frontend/badge.svg?branch=develop)](https://coveralls.io/r/thisissoon/FM-Frontend?branch=develop)
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/thisissoon-fm.svg)](https://saucelabs.com/u/thisissoon-fm)
+<!-- [![Sauce Test Status](https://saucelabs.com/browser-matrix/thisissoon-fm.svg)](https://saucelabs.com/u/thisissoon-fm) -->
 
 
 This project structure is based on the [angular-seed](https://github.com/angular/angular-seed) application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
