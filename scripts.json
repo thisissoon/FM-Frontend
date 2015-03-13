@@ -14,8 +14,10 @@
 
         "app/js/fm-api/app.js",
         "app/js/fm-api/config.js",
+        "app/js/fm-api/factories/PlayerMuteResource.js",
         "app/js/fm-api/factories/PlayerQueueResource.js",
         "app/js/fm-api/factories/PlayerTransportResource.js",
+        "app/js/fm-api/factories/PlayerVolumeResource.js",
         "app/js/fm-api/factories/TracksResource.js",
         "app/js/fm-api/factories/RequestInterceptor.js",
 

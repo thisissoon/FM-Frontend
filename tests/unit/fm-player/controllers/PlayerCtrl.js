@@ -2,7 +2,9 @@
 
 describe("sn.fm.player:PlayerCtrl", function() {
 
-    var $scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, TracksResource, spotifyCallback, queueCallback, trackCallback, _playlistData, _currentTrack;
+    var $scope, $q, Spotify, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource,
+        spotifyCallback, queueCallback, trackCallback, volumeCallback, mockPlayerVolumeResource,
+        _volumeInstance, _playlistData, _currentTrack, _initialVolume, _initialMute;
 
     beforeEach(function (){
         module("sn.fm.player");
@@ -43,10 +45,19 @@ describe("sn.fm.player:PlayerCtrl", function() {
             }
         }
 
+        _volumeInstance = { volume: 10, $save: function(){} }
+
+        mockPlayerVolumeResource = function(params, success){
+            success.apply(this, [_volumeInstance])
+        };
+
         Spotify = {
             search: function(){}
         }
         spyOn(Spotify, "search").and.callFake(spotifyCallback);
+
+        PlayerMuteResource = $injector.get("PlayerMuteResource");
+        spyOn(PlayerMuteResource, "get");
 
         PlayerQueueResource = $injector.get("PlayerQueueResource");
         spyOn(PlayerQueueResource, "save");
@@ -54,6 +65,10 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
         PlayerTransportResource = $injector.get("PlayerTransportResource");
         spyOn(PlayerTransportResource, "get").and.callFake(trackCallback);
+
+        PlayerVolumeResource = $injector.get("PlayerVolumeResource");
+        spyOn(PlayerVolumeResource, "get").and.callFake(mockPlayerVolumeResource);
+        spyOn(_volumeInstance, "$save");
 
         TracksResource = $injector.get("TracksResource");
         spyOn(TracksResource, "get").and.callFake(trackCallback);
@@ -156,8 +171,10 @@ describe("sn.fm.player:PlayerCtrl", function() {
             $scope: $scope,
             $q: $q,
             Spotify: Spotify,
+            PlayerMuteResource: PlayerMuteResource,
             PlayerQueueResource: PlayerQueueResource,
             PlayerTransportResource: PlayerTransportResource,
+            PlayerVolumeResource: PlayerVolumeResource,
             TracksResource: TracksResource,
             playlistData: _playlistData,
             currentTrack: _currentTrack
@@ -183,6 +200,76 @@ describe("sn.fm.player:PlayerCtrl", function() {
         var track = { uri: "foo" };
         $scope.onTrackSelected(track);
         expect(PlayerQueueResource.save).toHaveBeenCalledWith(track);
+    });
+
+    describe("volumeUp", function() {
+
+        it("should increment volume by 10", function() {
+            $scope.volumeUp();
+            expect(PlayerVolumeResource.get).toHaveBeenCalled();
+
+            expect(_volumeInstance.volume).toEqual(20);
+            expect(_volumeInstance.$save).toHaveBeenCalled();
+        });
+
+        it("should limit to 100", function() {
+            _volumeInstance.volume = 100;
+            $scope.volumeUp();
+            expect(PlayerVolumeResource.get).toHaveBeenCalled();
+
+            expect(_volumeInstance.volume).toEqual(100);
+            expect(_volumeInstance.$save).toHaveBeenCalled();
+        });
+
+    });
+
+    describe("volumeDown", function() {
+
+        it("should decrement volume by 10", function() {
+            $scope.volumeDown();
+            expect(PlayerVolumeResource.get).toHaveBeenCalled();
+
+            expect(_volumeInstance.volume).toEqual(0);
+            expect(_volumeInstance.$save).toHaveBeenCalled();
+        });
+
+        it("should limit minimum to 0", function() {
+            _volumeInstance.volume = 0;
+            $scope.volumeDown();
+            expect(PlayerVolumeResource.get).toHaveBeenCalled();
+
+            expect(_volumeInstance.volume).toEqual(0);
+            expect(_volumeInstance.$save).toHaveBeenCalled();
+        });
+
+    });
+
+    describe("toggleMute", function() {
+
+        it("should set mute state true and save", function() {
+            $scope.mute = {
+                mute: false,
+                $save: function(){}
+            }
+            spyOn($scope.mute, "$save");
+
+            $scope.toggleMute();
+            expect($scope.mute.mute).toEqual(true);
+            expect($scope.mute.$save).toHaveBeenCalled();
+        });
+
+        it("should set mute state false and delete", function() {
+            $scope.mute = {
+                mute: true,
+                $delete: function(){}
+            }
+            spyOn($scope.mute, "$delete");
+
+            $scope.toggleMute();
+            expect($scope.mute.mute).toEqual(false);
+            expect($scope.mute.$delete).toHaveBeenCalled();
+        });
+
     });
 
     describe("refreshPlaylist", function() {
@@ -264,6 +351,13 @@ describe("sn.fm.player:PlayerCtrl", function() {
             $scope.$broadcast("fm:player:add", eventData);
             expect($scope.playlist.length).toEqual(4);
             expect($scope.playlist[3]).toEqual(_currentTrack);
+        });
+
+        it("should set mute state on setMute event", function() {
+            var eventData = { mute: true };
+
+            $scope.$broadcast("fm:player:setMute", eventData);
+            expect($scope.mute.mute).toEqual(true);
         });
 
     });

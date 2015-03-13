@@ -10,6 +10,19 @@
 
     <h1>thisissoon.fm</h1>
 
+    <div class="volume">
+        <md-button ng-click="toggleMute()" aria-label="mute" ng-class="{ 'md-warn': mute.mute }">
+            <md-icon ng-hide="mute.mute" md-svg-src="img/icons/ic_volume_mute_24px.svg"></md-icon>
+            <md-icon ng-show="mute.mute" md-svg-src="img/icons/ic_volume_off_24px.svg"></md-icon>
+        </md-button>
+        <md-button ng-click="volumeDown()" aria-label="volume-down">
+            <md-icon md-svg-src="img/icons/ic_volume_down_24px.svg"></md-icon>
+        </md-button>
+        <md-button ng-click="volumeUp()" aria-label="volume-up">
+            <md-icon md-svg-src="img/icons/ic_volume_up_24px.svg"></md-icon>
+        </md-button>
+    </div>
+
 </md-toolbar>
 
 <div layout="row"

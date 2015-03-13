@@ -28,6 +28,9 @@ angular.module("sn.fm.player").config([
                     }],
                     currentTrack: ["PlayerTransportResource", function (PlayerTransportResource){
                         return PlayerTransportResource.get();
+                    }],
+                    PlayerMuteResource: ["PlayerMuteResource", function (PlayerMuteResource){
+                        return PlayerMuteResource.get();
                     }]
                 }
             })
