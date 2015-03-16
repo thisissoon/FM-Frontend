@@ -4,7 +4,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     var $scope, $q, Spotify, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource,
         spotifyCallback, queueCallback, trackCallback, volumeCallback, mockPlayerVolumeResource,
-        _volumeInstance, _playlistData, _currentTrack, _initialVolume, _initialMute;
+        _track, _volumeInstance, _playlistData, _currentTrack, _initialVolume, _initialMute;
 
     beforeEach(function (){
         module("sn.fm.player");
@@ -39,7 +39,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
             return {
                 $promise: {
                     then: function(fn){
-                        fn.apply(this,[_currentTrack])
+                        fn.apply(this,[_track])
                     }
                 }
             }
@@ -131,7 +131,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
             "spotify_uri" : "spotify:track:3dOAXUx7I1qnzWzxdnsyB8"
         }]
 
-        _currentTrack = {
+        _track = {
             "album": {
                 "artists": [
                     {
@@ -167,6 +167,11 @@ describe("sn.fm.player:PlayerCtrl", function() {
             "spotify_uri": "spotify:track:6FshvOVICpRVkwpYE5BYTD"
         }
 
+        _currentTrack = {
+            track: _track,
+            paused: 0
+        }
+
         $controller("PlayerCtrl", {
             $scope: $scope,
             $q: $q,
@@ -188,11 +193,12 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     it("should attach resolved data to scope", function() {
         expect($scope.playlist).toEqual(_playlistData);
-        expect($scope.current).toEqual(_currentTrack);
+        expect($scope.current).toEqual(_currentTrack.track);
+        expect($scope.paused).toEqual(_currentTrack.paused);
     });
 
     it("should add current track to playlist on init", function() {
-        expect($scope.playlist[0]).toEqual(_currentTrack);
+        expect($scope.playlist[0]).toEqual(_currentTrack.track);
         expect($scope.playlist.length).toEqual(3);
     });
 
@@ -287,19 +293,19 @@ describe("sn.fm.player:PlayerCtrl", function() {
         });
 
         it("should update playlist", function(){
-            _playlistData.unshift(_currentTrack);
+            _playlistData.unshift(_currentTrack.track);
             expect($scope.playlist).toEqual(_playlistData);
         });
 
         it("should update current", function(){
-            expect($scope.current).toEqual(_currentTrack);
+            expect($scope.current).toEqual(_currentTrack.track);
         });
     });
 
     describe("socket event handling", function(){
 
         it("should update playlist on end event", function() {
-            var eventData = { uri: _currentTrack.spotify_uri },
+            var eventData = { uri: _currentTrack.track.spotify_uri },
                 expectLength = $scope.playlist.length - 1;
 
             $scope.$broadcast("fm:player:end", eventData);
@@ -350,7 +356,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
             $scope.$broadcast("fm:player:add", eventData);
             expect($scope.playlist.length).toEqual(4);
-            expect($scope.playlist[3]).toEqual(_currentTrack);
+            expect($scope.playlist[3]).toEqual(_track);
         });
 
         it("should set mute state on setMute event", function() {
