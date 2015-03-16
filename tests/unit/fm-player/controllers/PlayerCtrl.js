@@ -4,7 +4,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     var $scope, $q, Spotify, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource,
         spotifyCallback, queueCallback, trackCallback, volumeCallback, mockPlayerVolumeResource,
-        _volumeInstance, _playlistData, _currentTrack, _initialVolume, _initialMute;
+        _volumeInstance, _playlistData, _currentTrack;
 
     beforeEach(function (){
         module("sn.fm.player");
@@ -65,6 +65,8 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
         PlayerTransportResource = $injector.get("PlayerTransportResource");
         spyOn(PlayerTransportResource, "get").and.callFake(trackCallback);
+        spyOn(PlayerTransportResource, "resume");
+        spyOn(PlayerTransportResource, "pause");
 
         PlayerVolumeResource = $injector.get("PlayerVolumeResource");
         spyOn(PlayerVolumeResource, "get").and.callFake(mockPlayerVolumeResource);
@@ -164,7 +166,8 @@ describe("sn.fm.player:PlayerCtrl", function() {
             "duration": 272906,
             "id": "4b170737-017c-4e85-965c-47b8a158c789",
             "name": "Dark Chest Of Wonders - Live @ Wacken 2013",
-            "spotify_uri": "spotify:track:6FshvOVICpRVkwpYE5BYTD"
+            "spotify_uri": "spotify:track:6FshvOVICpRVkwpYE5BYTD",
+            "paused": 0
         }
 
         $controller("PlayerCtrl", {
@@ -189,6 +192,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
     it("should attach resolved data to scope", function() {
         expect($scope.playlist).toEqual(_playlistData);
         expect($scope.current).toEqual(_currentTrack);
+        expect($scope.paused).toEqual(_currentTrack.paused);
     });
 
     it("should add current track to playlist on init", function() {
@@ -200,6 +204,18 @@ describe("sn.fm.player:PlayerCtrl", function() {
         var track = { uri: "foo" };
         $scope.onTrackSelected(track);
         expect(PlayerQueueResource.save).toHaveBeenCalledWith(track);
+    });
+
+    it("should set pause state true and make call to PlayerTransportResource.pause", function() {
+        $scope.pause();
+        expect(PlayerTransportResource.pause).toHaveBeenCalledWith({});
+        expect($scope.paused).toEqual(true);
+    });
+
+    it("should set pause state false and make call to PlayerTransportResource.resume", function() {
+        $scope.resume();
+        expect(PlayerTransportResource.resume).toHaveBeenCalledWith();
+        expect($scope.paused).toEqual(false);
     });
 
     describe("volumeUp", function() {

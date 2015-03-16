@@ -92,10 +92,10 @@
                                 </h4>
                             </div>
                             <span ng-if="$first" class="md-tile-right">
-                                <md-button class="md-fab md-primary" aria-label="Play" ng-show="paused" ng-click="transport.resume()">
+                                <md-button class="md-fab md-primary" aria-label="Play" ng-show="paused" ng-click="resume()">
                                     <md-icon md-svg-src="img/icons/ic_play_arrow_24px.svg"></md-icon>
                                 </md-button>
-                                <md-button class="md-fab md-primary" aria-label="Pause" ng-show="!paused" ng-click="transport.pause({})">
+                                <md-button class="md-fab md-primary" aria-label="Pause" ng-show="!paused" ng-click="pause()">
                                     <md-icon md-svg-src="img/icons/ic_pause_24px.svg"></md-icon>
                                 </md-button>
 <!--

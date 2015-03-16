@@ -40,15 +40,6 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         $scope.playlist = playlistData;
 
         /**
-         * An instance of the $resource PlayerTransportResource
-         * which provides player transport operations and information
-         * about the currently playing track
-         * @property transport
-         * @type     {Object}
-         */
-        $scope.transport = PlayerTransportResource;
-
-        /**
          * The currently playing track
          * @property current
          * @type     {Object}
@@ -60,7 +51,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @property paused
          * @type     {Boolean}
          */
-        $scope.paused = false;
+        $scope.paused = currentTrack.paused;
 
         /**
          * An instance of the $resource PlayerMuteResource
@@ -69,6 +60,24 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @type     {Object}
          */
         $scope.mute = PlayerMuteResource;
+
+        /**
+         * Set paused state and send request to API
+         * @method resume
+         */
+        $scope.resume = function resume() {
+            $scope.paused = false;
+            PlayerTransportResource.resume();
+        };
+
+        /**
+         * Set paused state and send request to API
+         * @method pause
+         */
+        $scope.pause = function pause() {
+            $scope.paused = true;
+            PlayerTransportResource.pause({});
+        };
 
         /**
          * Increment volume by 10
@@ -170,7 +179,9 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method init
          */
         $scope.init = function init() {
-            $scope.playlist.unshift($scope.current);
+            if ($scope.current.id){
+                $scope.playlist.unshift($scope.current);
+            }
         };
 
         /**
