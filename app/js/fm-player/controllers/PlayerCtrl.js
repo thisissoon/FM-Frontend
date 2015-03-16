@@ -44,7 +44,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @property current
          * @type     {Object}
          */
-        $scope.current = currentTrack.track;
+        $scope.current = currentTrack;
 
         /**
          * Tracks the state of playback

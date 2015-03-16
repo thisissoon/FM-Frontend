@@ -4,7 +4,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     var $scope, $q, Spotify, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource,
         spotifyCallback, queueCallback, trackCallback, volumeCallback, mockPlayerVolumeResource,
-        _track, _volumeInstance, _playlistData, _currentTrack;
+        _volumeInstance, _playlistData, _currentTrack;
 
     beforeEach(function (){
         module("sn.fm.player");
@@ -39,7 +39,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
             return {
                 $promise: {
                     then: function(fn){
-                        fn.apply(this,[_track])
+                        fn.apply(this,[_currentTrack])
                     }
                 }
             }
@@ -133,7 +133,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
             "spotify_uri" : "spotify:track:3dOAXUx7I1qnzWzxdnsyB8"
         }]
 
-        _track = {
+        _currentTrack = {
             "album": {
                 "artists": [
                     {
@@ -166,12 +166,8 @@ describe("sn.fm.player:PlayerCtrl", function() {
             "duration": 272906,
             "id": "4b170737-017c-4e85-965c-47b8a158c789",
             "name": "Dark Chest Of Wonders - Live @ Wacken 2013",
-            "spotify_uri": "spotify:track:6FshvOVICpRVkwpYE5BYTD"
-        }
-
-        _currentTrack = {
-            track: _track,
-            paused: 0
+            "spotify_uri": "spotify:track:6FshvOVICpRVkwpYE5BYTD",
+            "paused": 0
         }
 
         $controller("PlayerCtrl", {
@@ -195,12 +191,12 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     it("should attach resolved data to scope", function() {
         expect($scope.playlist).toEqual(_playlistData);
-        expect($scope.current).toEqual(_currentTrack.track);
+        expect($scope.current).toEqual(_currentTrack);
         expect($scope.paused).toEqual(_currentTrack.paused);
     });
 
     it("should add current track to playlist on init", function() {
-        expect($scope.playlist[0]).toEqual(_currentTrack.track);
+        expect($scope.playlist[0]).toEqual(_currentTrack);
         expect($scope.playlist.length).toEqual(3);
     });
 
@@ -307,19 +303,19 @@ describe("sn.fm.player:PlayerCtrl", function() {
         });
 
         it("should update playlist", function(){
-            _playlistData.unshift(_currentTrack.track);
+            _playlistData.unshift(_currentTrack);
             expect($scope.playlist).toEqual(_playlistData);
         });
 
         it("should update current", function(){
-            expect($scope.current).toEqual(_currentTrack.track);
+            expect($scope.current).toEqual(_currentTrack);
         });
     });
 
     describe("socket event handling", function(){
 
         it("should update playlist on end event", function() {
-            var eventData = { uri: _currentTrack.track.spotify_uri },
+            var eventData = { uri: _currentTrack.spotify_uri },
                 expectLength = $scope.playlist.length - 1;
 
             $scope.$broadcast("fm:player:end", eventData);
@@ -370,7 +366,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
             $scope.$broadcast("fm:player:add", eventData);
             expect($scope.playlist.length).toEqual(4);
-            expect($scope.playlist[3]).toEqual(_track);
+            expect($scope.playlist[3]).toEqual(_currentTrack);
         });
 
         it("should set mute state on setMute event", function() {
