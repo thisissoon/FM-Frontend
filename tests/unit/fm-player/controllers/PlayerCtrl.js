@@ -4,7 +4,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     var $scope, $q, Spotify, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource,
         spotifyCallback, queueCallback, trackCallback, volumeCallback, mockPlayerVolumeResource,
-        _track, _volumeInstance, _playlistData, _currentTrack, _initialVolume, _initialMute;
+        _track, _volumeInstance, _playlistData, _currentTrack;
 
     beforeEach(function (){
         module("sn.fm.player");
@@ -65,6 +65,8 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
         PlayerTransportResource = $injector.get("PlayerTransportResource");
         spyOn(PlayerTransportResource, "get").and.callFake(trackCallback);
+        spyOn(PlayerTransportResource, "resume");
+        spyOn(PlayerTransportResource, "pause");
 
         PlayerVolumeResource = $injector.get("PlayerVolumeResource");
         spyOn(PlayerVolumeResource, "get").and.callFake(mockPlayerVolumeResource);
@@ -206,6 +208,18 @@ describe("sn.fm.player:PlayerCtrl", function() {
         var track = { uri: "foo" };
         $scope.onTrackSelected(track);
         expect(PlayerQueueResource.save).toHaveBeenCalledWith(track);
+    });
+
+    it("should set pause state true and make call to PlayerTransportResource.pause", function() {
+        $scope.pause();
+        expect(PlayerTransportResource.pause).toHaveBeenCalledWith({});
+        expect($scope.paused).toEqual(true);
+    });
+
+    it("should set pause state false and make call to PlayerTransportResource.resume", function() {
+        $scope.resume();
+        expect(PlayerTransportResource.resume).toHaveBeenCalledWith();
+        expect($scope.paused).toEqual(false);
     });
 
     describe("volumeUp", function() {
