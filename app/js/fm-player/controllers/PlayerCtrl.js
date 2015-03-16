@@ -44,14 +44,14 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @property current
          * @type     {Object}
          */
-        $scope.current = currentTrack;
+        $scope.current = currentTrack.track;
 
         /**
          * Tracks the state of playback
          * @property paused
          * @type     {Boolean}
          */
-        $scope.paused = false;
+        $scope.paused = currentTrack.paused;
 
         /**
          * An instance of the $resource PlayerMuteResource
@@ -179,7 +179,9 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method init
          */
         $scope.init = function init() {
-            $scope.playlist.unshift($scope.current);
+            if ($scope.current.id){
+                $scope.playlist.unshift($scope.current);
+            }
         };
 
         /**

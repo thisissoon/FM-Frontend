@@ -26,8 +26,17 @@ angular.module("sn.fm.player").config([
                     playlistData: ["PlayerQueueResource", "$route", function (PlayerQueueResource, $route){
                         return PlayerQueueResource.query($route.current.params);
                     }],
-                    currentTrack: ["PlayerTransportResource", function (PlayerTransportResource){
-                        return PlayerTransportResource.get();
+                    currentTrack: ["$q", "PlayerTransportResource", function ($q, PlayerTransportResource){
+                        var deferred = $q.defer();
+
+                        PlayerTransportResource.get({}, function(data, headers){
+                            deferred.resolve({
+                                track: data,
+                                paused: headers("Paused")
+                            });
+                        });
+
+                        return deferred.promise;
                     }],
                     PlayerMuteResource: ["PlayerMuteResource", function (PlayerMuteResource){
                         return PlayerMuteResource.get();
