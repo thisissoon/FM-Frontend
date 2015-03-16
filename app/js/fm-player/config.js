@@ -27,7 +27,7 @@ angular.module("sn.fm.player").config([
                         return PlayerQueueResource.query($route.current.params);
                     }],
                     currentTrack: ["PlayerTransportResource", function (PlayerTransportResource){
-                        return PlayerTransportResource.get({});
+                        return PlayerTransportResource.get();
                     }],
                     PlayerMuteResource: ["PlayerMuteResource", function (PlayerMuteResource){
                         return PlayerMuteResource.get();
