@@ -1,15 +1,17 @@
 #
 # ThisissoonFM Frontend
-# Builds a docker image to build and run the frontend service for thisissoon.fm for production
+# Builds a docker image to build and run the production frontend service for thisissoon.fm
 #
 
-# Pull nginx base image.
-FROM nginx:1.7.10
+# Pull node base image
+FROM google/nodejs
 
-# Install node.js for build tools
-RUN apt-get update -y && apt-get install --no-install-recommends -y -q curl python build-essential git ca-certificates
-RUN mkdir /nodejs && curl http://nodejs.org/dist/v0.12.0/node-v0.12.0-linux-x64.tar.gz | tar xvzf - -C /nodejs --strip-components=1
-ENV PATH $PATH:/nodejs/bin
+# Install Nginx
+ADD nginx.sources.list /etc/apt/sources.list.d/nginx.list
+ADD http://nginx.org/keys/nginx_signing.key /nginx_signing.key
+RUN apt-key add /nginx_signing.key && \
+    apt-get update -y -q && \
+    apt-get install -y -q nginx
 
 # Install global build dependencies
 RUN npm install -g grunt-cli bower
@@ -27,7 +29,7 @@ ADD . /build
 # Build app
 RUN grunt build --env production && \
     mkdir /fm && \
-    mv /build/dist /fm
+    mv /build/dist/* /fm
 
 WORKDIR /fm
 
@@ -39,3 +41,5 @@ VOLUME ["/etc/nginx"]
 
 # Expose ports
 EXPOSE 80
+
+CMD nginx
