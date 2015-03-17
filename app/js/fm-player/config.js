@@ -9,14 +9,18 @@
 angular.module("sn.fm.player").config([
     "$routeProvider",
     "$locationProvider",
+    "HTML5_LOCATION",
     /**
      * @constructor
      * @param {Service} $routeProvider
      * @param {Service} $locationProvider
+     * @param {Boolean} HTML5_LOCATION
      */
-    function ($routeProvider, $locationProvider) {
+    function ($routeProvider, $locationProvider, HTML5_LOCATION) {
 
-        $locationProvider.html5Mode(true).hashPrefix = "!";
+        if (HTML5_LOCATION) {
+            $locationProvider.html5Mode(true).hashPrefix = "!";
+        }
 
         $routeProvider
             .when("/", {

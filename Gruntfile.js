@@ -16,6 +16,7 @@ module.exports = function (grunt) {
 
         config: {
             outputDir: "dist/",
+            env: grunt.file.readJSON("env.json")[env],
             applicationFiles: grunt.file.readJSON("scripts.json").application,
             vendorFiles: grunt.file.readJSON("scripts.json").vendor
         },
@@ -252,7 +253,10 @@ module.exports = function (grunt) {
 
         processhtml: {
             options: {
-                strip: true
+                strip: true,
+                data: {
+                    url: "<%= config.env.BASE_URL %>"
+                }
             },
             production: {
                 files: {
@@ -297,7 +301,7 @@ module.exports = function (grunt) {
             options: {
                 name: "ENV",
                 dest: "app/js/env/env.js",
-                constants: grunt.file.readJSON("env.json")[env]
+                constants: "<%= config.env %>"
             },
             dist: {}
         },
