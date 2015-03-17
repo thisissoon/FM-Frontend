@@ -45,7 +45,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
             }
         }
 
-        _volumeInstance = { volume: 10, $save: function(){} }
+        _volumeInstance = { volume: 50, $save: function(){} }
 
         mockPlayerVolumeResource = function(params, success){
             success.apply(this, [_volumeInstance])
@@ -230,11 +230,11 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     describe("volumeUp", function() {
 
-        it("should increment volume by 10", function() {
+        it("should increment volume by 5", function() {
             $scope.volumeUp();
             expect(PlayerVolumeResource.get).toHaveBeenCalled();
 
-            expect(_volumeInstance.volume).toEqual(20);
+            expect(_volumeInstance.volume).toEqual(55);
             expect(_volumeInstance.$save).toHaveBeenCalled();
         });
 
@@ -251,11 +251,11 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     describe("volumeDown", function() {
 
-        it("should decrement volume by 10", function() {
+        it("should decrement volume by 5", function() {
             $scope.volumeDown();
             expect(PlayerVolumeResource.get).toHaveBeenCalled();
 
-            expect(_volumeInstance.volume).toEqual(0);
+            expect(_volumeInstance.volume).toEqual(45);
             expect(_volumeInstance.$save).toHaveBeenCalled();
         });
 

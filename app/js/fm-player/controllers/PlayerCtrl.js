@@ -80,15 +80,22 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         };
 
         /**
-         * Increment volume by 10
+         * Value to increment/decrement volume by
+         * @property volumeStep
+         * @type     {Number}
+         */
+        $scope.volumeStep = 5;
+
+        /**
+         * Increment volume
          * @method volumeUp
          */
         $scope.volumeUp = function volumeUp() {
             PlayerVolumeResource.get({}, function(volume){
 
-                // round volume to nearest 10
-                volume.volume = Math.round(volume.volume / 10) * 10;
-                volume.volume = volume.volume + 10;
+                // round volume
+                volume.volume = Math.round(volume.volume / $scope.volumeStep) * $scope.volumeStep;
+                volume.volume = volume.volume + $scope.volumeStep;
 
                 if (volume.volume > 100) {
                     volume.volume = 100;
@@ -100,15 +107,15 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         };
 
         /**
-         * Decrement volume by 10
+         * Decrement volume
          * @method volumeDown
          */
         $scope.volumeDown = function volumeDown() {
             PlayerVolumeResource.get({}, function(volume){
 
-                // round volume to nearest 10
-                volume.volume = Math.round(volume.volume / 10) * 10;
-                volume.volume = volume.volume - 10;
+                // round volume
+                volume.volume = Math.round(volume.volume / $scope.volumeStep) * $scope.volumeStep;
+                volume.volume = volume.volume - $scope.volumeStep;
 
                 if (volume.volume < 0) {
                     volume.volume = 0;
