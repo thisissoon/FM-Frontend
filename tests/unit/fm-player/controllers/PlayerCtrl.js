@@ -186,7 +186,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     it("should add selected song to playlist", function() {
         $scope.search("foo");
-        expect(Spotify.search).toHaveBeenCalledWith("foo", "track", { limit: 20 });
+        expect(Spotify.search).toHaveBeenCalledWith("foo", "track", { limit: 20, market: "GB" });
     });
 
     it("should attach resolved data to scope", function() {
