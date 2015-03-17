@@ -24,8 +24,9 @@ angular.module("sn.fm.api").factory("PlayerTransportResource", [
                 get: {
                     method: "GET",
                     transformResponse: function (data, headers){
-                        data.paused = !!parseInt(headers("Paused"), 10);
-                        return data;
+                        var transformedResponse = angular.fromJson(data);
+                        transformedResponse.paused = !!parseInt(headers("Paused"), 10);
+                        return transformedResponse;
                     }
                 },
                 pause: {
