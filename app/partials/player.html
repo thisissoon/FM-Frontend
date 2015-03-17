@@ -64,6 +64,8 @@
             layout="column"
             flex>
 
+            <h2 ng-if="playlist.length > 0">Now Playing:</h2>
+
             <md-list>
                 <md-item
                     ng-repeat="song in playlist"
