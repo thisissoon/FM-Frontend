@@ -142,7 +142,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         $scope.search = function search(query){
             var deferred = $q.defer();
 
-            Spotify.search(query, "track", { limit: 20 }).then(function (response) {
+            Spotify.search(query, "track", { limit: 20, market: "GB" }).then(function (response) {
                 deferred.resolve(response.tracks.items);
             });
 
