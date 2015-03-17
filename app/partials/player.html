@@ -64,6 +64,8 @@
             layout="column"
             flex>
 
+            <h2 ng-if="playlist.length > 0">Now Playing:</h2>
+
             <md-list>
                 <md-item
                     ng-repeat="song in playlist"
@@ -84,11 +86,14 @@
                              layout-sm="column"
                              layout-align-sm="space-between center">
                             <div class="md-tile-content song-details">
-                                <h3>
+                                <h3 class="song-name">
                                     {{ song.name }}
                                 </h3>
-                                <h4 ng-repeat="artist in song.album.artists">
-                                    {{ artist.name }}
+                                <h4 class="song-artist" ng-repeat="artist in song.album.artists">
+                                    {{ artist.name }}<span ng-if="!$last">,</span>
+                                </h4>
+                                <h4 class="song-album">
+                                    {{ song.album.name }}
                                 </h4>
                             </div>
                             <span ng-if="$first" class="md-tile-right">

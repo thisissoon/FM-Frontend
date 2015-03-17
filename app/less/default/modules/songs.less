@@ -22,24 +22,23 @@
     width: 125px;
 }
 
-.song.current h3 {
+.song.current .song-name {
     font-size: 2em;
 }
 
-.song.current h4 {
-    display: inline-block;
+.song.current .song-artist,
+.song.current .song-album {
     font-size: 1.6em;
-
-    &:after {
-        content: "&#59;";
-    }
-
-    &:last-child:after {
-        content: none;
-    }
 }
 
-.song h3, h4 {
+.song .song-name {
+    display: inline-block;
+    padding-right: 1em;
+}
+
+.song .song-name,
+.song .song-artist
+.song .song-album {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
