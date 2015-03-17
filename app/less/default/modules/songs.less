@@ -31,17 +31,23 @@
     font-size: 1.6em;
 }
 
-.song .song-name {
-    display: inline-block;
+.song .song-name,
+.song .song-album {
+    display: block;
     padding-right: 1em;
 }
 
 .song .song-name,
-.song .song-artist
+.song .song-artist,
 .song .song-album {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.song .song-artist {
+    display: inline-block;
+    margin-right: 5px;
 }
 
 .song:last-child {
@@ -55,6 +61,11 @@
 .song .song-details {
     padding: 0 1em;
     width: 100%;
+}
+
+.song .controls {
+    -webkit-transition: all 0 ease 0 !important;
+    transition: all 0 ease 0 !important;
 }
 
 .track-length {
