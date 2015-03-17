@@ -61,7 +61,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
         PlayerQueueResource = $injector.get("PlayerQueueResource");
         spyOn(PlayerQueueResource, "save");
-        spyOn(PlayerQueueResource, "get").and.callFake(queueCallback);
+        spyOn(PlayerQueueResource, "query").and.callFake(queueCallback);
 
         PlayerTransportResource = $injector.get("PlayerTransportResource");
         spyOn(PlayerTransportResource, "get").and.callFake(trackCallback);
@@ -298,7 +298,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
         });
 
         it("should make request to Queue and Transport resource", function() {
-            expect(PlayerQueueResource.get).toHaveBeenCalledWith();
+            expect(PlayerQueueResource.query).toHaveBeenCalledWith();
             expect(PlayerTransportResource.get).toHaveBeenCalledWith();
         });
 

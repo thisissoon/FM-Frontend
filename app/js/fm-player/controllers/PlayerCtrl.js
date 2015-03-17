@@ -165,7 +165,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          */
         $scope.refreshPlaylist = function refreshPlaylistQueue(){
             $q.all([
-                PlayerQueueResource.get().$promise,
+                PlayerQueueResource.query().$promise,
                 PlayerTransportResource.get().$promise
             ]).then(function(response){
                 $scope.playlist = response[0];
