@@ -24,13 +24,13 @@ angular.module("sn.fm.player").config([
                 controller: "PlayerCtrl",
                 resolve: {
                     playlistData: ["PlayerQueueResource", "$route", function (PlayerQueueResource, $route){
-                        return PlayerQueueResource.query($route.current.params);
+                        return PlayerQueueResource.query($route.current.params).$promise;
                     }],
                     currentTrack: ["PlayerTransportResource", function (PlayerTransportResource){
-                        return PlayerTransportResource.get();
+                        return PlayerTransportResource.get().$promise;
                     }],
                     PlayerMuteResource: ["PlayerMuteResource", function (PlayerMuteResource){
-                        return PlayerMuteResource.get();
+                        return PlayerMuteResource.get().$promise;
                     }]
                 }
             })
