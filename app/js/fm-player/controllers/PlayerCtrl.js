@@ -156,7 +156,9 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @param  {Object} track The selected track from the spotify search
          */
         $scope.onTrackSelected = function onTrackSelected(track){
-            PlayerQueueResource.save({ uri: track.uri });
+            if (track && track.uri) {
+                PlayerQueueResource.save({ uri: track.uri });
+            }
         };
 
         /**

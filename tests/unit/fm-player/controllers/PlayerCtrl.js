@@ -206,6 +206,16 @@ describe("sn.fm.player:PlayerCtrl", function() {
         expect(PlayerQueueResource.save).toHaveBeenCalledWith(track);
     });
 
+    it("should NOT search for spotify track", function() {
+        var track = undefined;
+        $scope.onTrackSelected(track);
+        expect(PlayerQueueResource.save).not.toHaveBeenCalled();
+
+        var track = {};
+        $scope.onTrackSelected(track);
+        expect(PlayerQueueResource.save).not.toHaveBeenCalled();
+    });
+
     it("should set pause state true and make call to PlayerTransportResource.pause", function() {
         $scope.pause();
         expect(PlayerTransportResource.pause).toHaveBeenCalledWith({});
