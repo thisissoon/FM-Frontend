@@ -20,6 +20,7 @@ RUN npm install -g grunt-cli bower
 WORKDIR /build
 ADD package.json /build/package.json
 ADD bower.json /build/bower.json
+ADD .bowerrc /build/.bowerrc
 RUN npm install && \
     bower install --allow-root
 
