@@ -22,15 +22,6 @@
             </h4>
         </div>
 
-        <div ng-if="controls" class="controls md-tile-right" ng-init="PlayerCtrl = $parent.$parent">
-            <md-button class="md-fab md-primary control" aria-label="Play" ng-show="PlayerCtrl.paused" ng-click="PlayerCtrl.resume()">
-                <md-icon md-svg-src="img/icons/ic_play_arrow_24px.svg"></md-icon>
-            </md-button>
-            <md-button class="md-fab md-primary control" aria-label="Pause" ng-show="!PlayerCtrl.paused" ng-click="PlayerCtrl.pause()">
-                <md-icon md-svg-src="img/icons/ic_pause_24px.svg"></md-icon>
-            </md-button>
-        </div>
-
         <div class="length" hide-sm>
             {{ track.duration | date: 'm:ss' }}
         </div>

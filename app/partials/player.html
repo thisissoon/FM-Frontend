@@ -1,73 +1,75 @@
-<md-toolbar layout="row" class="header-menu">
+<div class="player-wrapper" layout="column">
 
-    <button ng-click="toggleSideNav('left')"
-            hide-gt-md
-            class="btn-menu">
-        <md-icon md-svg-src="img/icons/ic_playlist_add_48px.svg"></md-icon>
-    </button>
+    <div layout="row"
+         layout-fill
+         md-swipe-right="openSideNav('left')"
+         md-swipe-left="closeSideNav('left')"
+         flex>
 
-    <img class="logo" src="img/logo/soon.svg" height="50px" class="md-padding" alt="SOON_"/>
+        <md-sidenav
+            layout="column"
+            class="md-sidenav-left md-whiteframe-z2"
+            md-component-id="left"
+            md-is-locked-open="$mdMedia('gt-md')"
+            md-swipe-left="closeSideNav('left')">
 
-    <h1>thisissoon.fm</h1>
+            <md-autocomplete
+                class="spotify-search"
+                md-no-cache="false"
+                md-search-text="searchText"
+                md-items="item in search(searchText)"
+                md-min-length="3"
+                md-delay="300"
+                md-selected-item="selectedItem"
+                md-selected-item-change="onTrackSelected(selectedItem)"
+                placeholder="Add track">
 
-    <div class="volume">
-        <md-button ng-click="toggleMute()" aria-label="mute" ng-class="{ 'md-warn': mute.mute }">
-            <md-icon ng-hide="mute.mute" md-svg-src="img/icons/ic_volume_mute_24px.svg"></md-icon>
-            <md-icon ng-show="mute.mute" md-svg-src="img/icons/ic_volume_off_24px.svg"></md-icon>
-        </md-button>
-        <md-button ng-click="volumeDown()" aria-label="volume-down">
-            <md-icon md-svg-src="img/icons/ic_volume_down_24px.svg"></md-icon>
-        </md-button>
-        <md-button ng-click="volumeUp()" aria-label="volume-up">
-            <md-icon md-svg-src="img/icons/ic_volume_up_24px.svg"></md-icon>
-        </md-button>
-    </div>
+                <md-item class="md-item">
+                    <fm-track class="track" data-spotify-track="item"></fm-track>
+                </md-item>
 
-</md-toolbar>
+            </md-autocomplete>
 
-<div layout="row"
-     md-swipe-right="openSideNav('left')"
-     md-swipe-left="closeSideNav('left')"
-     flex>
+        </md-sidenav>
 
-    <md-sidenav
-        layout="column"
-        class="md-sidenav-left md-whiteframe-z2"
-        md-component-id="left"
-        md-is-locked-open="$mdMedia('gt-md')"
-        md-swipe-left="closeSideNav('left')"
-    >
-        <md-autocomplete
-            class="spotify-search"
-            md-no-cache="false"
-            md-search-text="searchText"
-            md-items="item in search(searchText)"
-            md-min-length="3"
-            md-delay="300"
-            md-selected-item="selectedItem"
-            md-selected-item-change="onTrackSelected(selectedItem)"
-            placeholder="Add track">
-
-            <md-item class="md-item">
-                <fm-track class="track" data-spotify-track="item"></fm-track>
-            </md-item>
-
-        </md-autocomplete>
-    </md-sidenav>
-
-    <div layout="column" flex>
-        <md-content class="md-padding player" layout="column" flex>
-
-            <h2 ng-if="playlist.length > 0">Now Playing:</h2>
-            <h2 ng-if="!playlist.length > 0">No tracks in playlist</h2>
+        <md-content class="md-padding player" layout="column" layout-fill flex>
+            <md-toolbar ng-if="playlist.length > 0">
+                <h2 class="md-toolbar-tools" layout="row" layout-align="space-between center">
+                    <span>Now Playing:</span>
+                    <div>
+                        <md-button aria-label="Play" ng-show="paused" ng-click="resume()">
+                            <md-icon md-svg-src="img/icons/ic_play_arrow_24px.svg"></md-icon>
+                        </md-button>
+                        <md-button aria-label="Pause" ng-show="!paused" ng-click="pause()">
+                            <md-icon md-svg-src="img/icons/ic_pause_24px.svg"></md-icon>
+                        </md-button>
+                        <md-button ng-click="toggleMute()" aria-label="mute" ng-class="{ 'md-warn': mute.mute }">
+                            <md-icon ng-hide="mute.mute" md-svg-src="img/icons/ic_volume_mute_24px.svg"></md-icon>
+                            <md-icon ng-show="mute.mute" md-svg-src="img/icons/ic_volume_off_24px.svg"></md-icon>
+                        </md-button>
+                        <md-button ng-click="volumeDown()" aria-label="volume-down">
+                            <md-icon md-svg-src="img/icons/ic_volume_down_24px.svg"></md-icon>
+                        </md-button>
+                        <md-button ng-click="volumeUp()" aria-label="volume-up">
+                            <md-icon md-svg-src="img/icons/ic_volume_up_24px.svg"></md-icon>
+                        </md-button>
+                    </div>
+                </h2>
+            </md-toolbar>
+            <md-toolbar ng-if="!playlist.length > 0">
+                <h2 class="md-toolbar-tools">
+                    <span>No tracks in playlist</span>
+                </h2>
+            </md-toolbar>
 
             <md-list>
-                <md-item class="md-item" ng-repeat="song in playlist">
-                    <fm-track class="track" ng-class="{ playing: $first }" data-controls="$first" data-spotify-track="song"></fm-track>
+                <md-item class="md-item" ng-repeat="track in playlist">
+                    <fm-track class="track" ng-class="{ playing: $first }" data-controls="$first" data-spotify-track="track"></fm-track>
                 </md-item>
             </md-list>
 
         </md-content>
 
     </div>
+
 </div>

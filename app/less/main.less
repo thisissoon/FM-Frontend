@@ -18,7 +18,7 @@
 @import "default/core/variables.less";
 @import "default/core/reset.less";
 
-@import "default/modules/menu.less";
+@import "default/modules/header.less";
 @import "default/modules/tracks.less";
 @import "default/modules/spotify-search.less";
 @import "default/modules/error.less";
@@ -50,7 +50,7 @@
  *      @import "tablet/modules/article.less";
  */
 @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-    @import "tablet/modules/menu.less";
+    @import "tablet/modules/header.less";
 }
 
 /**
@@ -65,6 +65,7 @@
  */
 @media (max-width: @screen-xs-max) {
     @import "mobile/modules/tracks.less";
-    @import "mobile/modules/menu.less";
+    @import "mobile/modules/header.less";
+    @import "mobile/modules/spotify-search.less";
 
 }
