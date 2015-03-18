@@ -47,75 +47,26 @@
             md-selected-item="selectedItem"
             md-selected-item-change="onTrackSelected(selectedItem)"
             placeholder="Add track">
-            <div layout="row" layout-align="start center">
-                <img ng-src="{{ item.album.images[0].url }}"
-                     class="artwork md-padding"
-                     alt="{{ item.album.name }}">
-                <span md-highlight-text="searchText" class="item-text">
-                    {{ item.name }} - {{ item.artists[0].name }}
-                </span>
-            </div>
+
+            <md-item class="md-item">
+                <fm-track class="track" data-spotify-track="item"></fm-track>
+            </md-item>
+
         </md-autocomplete>
     </md-sidenav>
 
     <div layout="column" flex>
-        <md-content
-            class="md-padding player"
-            layout="column"
-            flex>
+        <md-content class="md-padding player" layout="column" flex>
 
             <h2 ng-if="playlist.length > 0">Now Playing:</h2>
+            <h2 ng-if="!playlist.length > 0">No tracks in playlist</h2>
 
             <md-list>
-                <md-item
-                    ng-repeat="song in playlist"
-                    class="md-item song"
-                    ng-class="{ current: $first }">
-                    <md-item-content
-                        layout="row"
-                        layout-align="start center">
-                        <div class="md-tile-left">
-                            <img ng-src="{{ song.album.images[0].url }}"
-                                 class="artwork md-padding"
-                                 alt="{{ item.who }}">
-                        </div>
-
-                        <div class="md-tile-content"
-                             layout="row"
-                             layout-align="space-around center"
-                             layout-sm="column"
-                             layout-align-sm="space-between center">
-                            <div class="md-tile-content song-details">
-                                <h3 class="song-name">
-                                    {{ song.name }}
-                                </h3>
-                                <h4 class="song-artist" ng-repeat="artist in song.album.artists">
-                                    {{ artist.name }}<span ng-if="!$last">,</span>
-                                </h4>
-                                <h4 class="song-album">
-                                    {{ song.album.name }}
-                                </h4>
-                            </div>
-                            <span ng-if="$first" class="md-tile-right">
-                                <md-button class="md-fab md-primary controls" aria-label="Play" ng-show="paused" ng-click="resume()">
-                                    <md-icon md-svg-src="img/icons/ic_play_arrow_24px.svg"></md-icon>
-                                </md-button>
-                                <md-button class="md-fab md-primary controls" aria-label="Pause" ng-show="!paused" ng-click="pause()">
-                                    <md-icon md-svg-src="img/icons/ic_pause_24px.svg"></md-icon>
-                                </md-button>
-<!--
-                                <md-button class="md-fab md-primary controls" aria-label="Stop">
-                                    <md-icon md-svg-src="img/icons/ic_stop_24px.svg"></md-icon>
-                                </md-button>
--->
-                            </span>
-                            <span class="track-length" hide-sm>
-                                {{ song.duration | date: 'm:ss' }}
-                            </span>
-                        </div>
-                    </md-item-content>
+                <md-item class="md-item" ng-repeat="song in playlist">
+                    <fm-track class="track" ng-class="{ playing: $first }" data-controls="$first" data-spotify-track="song"></fm-track>
                 </md-item>
             </md-list>
+
         </md-content>
 
     </div>

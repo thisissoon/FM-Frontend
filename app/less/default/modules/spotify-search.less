@@ -5,22 +5,26 @@
  */
 
 .spotify-search ul {
+    margin-bottom: 20px;
     max-height: none;
 }
 
 .spotify-search ul li {
-    line-height: 70px;
+    line-height: 1em;
     height: 70px;
-    padding: 0 .5em;
+    padding: 0;
 }
 
-.spotify-search .item-text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.spotify-search img.artwork {
+.spotify-search .track .artwork {
     height: 50px;
     width: auto;
+}
+
+.spotify-search .track {
+    -webkit-box-shadow: none;
+    -box-shadow: none;
+}
+
+.spotify-search .track .length {
+    display: none;
 }

@@ -1,0 +1,40 @@
+<md-item-content layout="row" layout-align="start center">
+
+    <div class="md-tile-left">
+        <img ng-src="{{ track.album.images[0].url }}" class="artwork md-padding" alt="{{ item.album.name }}">
+    </div>
+
+    <div class="md-tile-content"
+         layout="row"
+         layout-align="space-around center"
+         layout-sm="column"
+         layout-align-sm="space-between center">
+
+        <div class="md-tile-content details">
+            <h3 class="name">
+                {{ track.name }}
+            </h3>
+            <h4 class="artist" ng-if="track.artists.length > 0">
+                <span ng-repeat="artist in track.artists">{{ artist.name }}<span ng-if="!$last">,</span></span>
+            </h4>
+            <h4 class="album">
+                {{ track.album.name }}
+            </h4>
+        </div>
+
+        <div ng-if="controls" class="controls md-tile-right">
+            <md-button class="md-fab md-primary control" aria-label="Play" ng-show="paused" ng-click="resume()">
+                <md-icon md-svg-src="img/icons/ic_play_arrow_24px.svg"></md-icon>
+            </md-button>
+            <md-button class="md-fab md-primary control" aria-label="Pause" ng-show="!paused" ng-click="pause()">
+                <md-icon md-svg-src="img/icons/ic_pause_24px.svg"></md-icon>
+            </md-button>
+        </div>
+
+        <div class="length" hide-sm>
+            {{ track.duration | date: 'm:ss' }}
+        </div>
+
+    </div>
+
+</md-item-content>
