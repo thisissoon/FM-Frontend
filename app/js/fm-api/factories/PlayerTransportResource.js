@@ -29,6 +29,11 @@ angular.module("sn.fm.api").factory("PlayerTransportResource", [
                         return transformedResponse;
                     }
                 },
+
+                skip: {
+                    method: "DELETE"
+                },
+
                 pause: {
                     method: "POST",
                     url: FM_API_SERVER_ADDRESS + "player/pause"

@@ -24,6 +24,7 @@
 
         <header ng-include="'partials/header.html'"></header>
         <ng-view></ng-view>
+        <fm-loading-screen></fm-loading-screen>
 
         <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
 
@@ -40,6 +41,8 @@
         <script src="js/env/env.js"></script>
 
         <script src="js/fm-socket/socket.js"></script>
+
+        <script src="js/fm-loading-screen/loadingScreen.js"></script>
 
         <script src="js/fm-api/app.js"></script>
         <script src="js/fm-api/config.js"></script>
