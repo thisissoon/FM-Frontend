@@ -44,7 +44,7 @@ angular.module("sn.fm.player").config([
 
         $mdThemingProvider.theme("default")
             .primaryPalette("black", {
-                "default": "400",
+                "default": "600",
                 "hue-1": "100",
                 "hue-2": "600",
                 "hue-3": "A100"
