@@ -7,4 +7,4 @@
  * @author   SOON_
  * @requires sn.fm.player Main FM player module that displays tracks
  */
-angular.module("sn.fm", ["sn.fm.player", "sn.fm.sockets"]);
+angular.module("sn.fm", ["sn.fm.player", "sn.fm.sockets", "sn.fm.loadingScreen"]);
