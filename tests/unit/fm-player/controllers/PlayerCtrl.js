@@ -67,6 +67,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
         spyOn(PlayerTransportResource, "get").and.callFake(trackCallback);
         spyOn(PlayerTransportResource, "resume");
         spyOn(PlayerTransportResource, "pause");
+        spyOn(PlayerTransportResource, "skip");
 
         PlayerVolumeResource = $injector.get("PlayerVolumeResource");
         spyOn(PlayerVolumeResource, "get").and.callFake(mockPlayerVolumeResource);
@@ -226,6 +227,11 @@ describe("sn.fm.player:PlayerCtrl", function() {
         $scope.resume();
         expect(PlayerTransportResource.resume).toHaveBeenCalledWith();
         expect($scope.paused).toEqual(false);
+    });
+
+    it("should make call to PlayerTransportResource.skip", function() {
+        $scope.skip();
+        expect(PlayerTransportResource.skip).toHaveBeenCalledWith();
     });
 
     describe("volumeUp", function() {

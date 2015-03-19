@@ -43,6 +43,9 @@
                         <md-button aria-label="Pause" ng-show="!paused" ng-click="pause()">
                             <md-icon md-svg-src="img/icons/ic_pause_24px.svg"></md-icon>
                         </md-button>
+                        <md-button aria-label="Skip" ng-click="skip()">
+                            <md-icon md-svg-src="img/icons/ic_skip_next_24px.svg"></md-icon>
+                        </md-button>
                         <md-button ng-click="toggleMute()" aria-label="mute" ng-class="{ 'md-warn': mute.mute }">
                             <md-icon ng-hide="mute.mute" md-svg-src="img/icons/ic_volume_mute_24px.svg"></md-icon>
                             <md-icon ng-show="mute.mute" md-svg-src="img/icons/ic_volume_off_24px.svg"></md-icon>
