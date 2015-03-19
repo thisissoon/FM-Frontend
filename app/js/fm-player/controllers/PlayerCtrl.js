@@ -80,6 +80,14 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         };
 
         /**
+         * Send DELETE request to API
+         * @method skip
+         */
+        $scope.skip = function skip() {
+            PlayerTransportResource.skip();
+        };
+
+        /**
          * Value to increment/decrement volume by
          * @property volumeStep
          * @type     {Number}
