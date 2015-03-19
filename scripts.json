@@ -12,6 +12,8 @@
     "application": [
         "app/js/fm-socket/socket.js",
 
+        "app/js/fm-loading-screen/loadingScreen.js",
+
         "app/js/fm-api/app.js",
         "app/js/fm-api/config.js",
         "app/js/fm-api/factories/PlayerMuteResource.js",
