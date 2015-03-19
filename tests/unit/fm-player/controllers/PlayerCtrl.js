@@ -4,7 +4,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     var $scope, $q, Spotify, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource,
         spotifyCallback, queueCallback, trackCallback, volumeCallback, mockPlayerVolumeResource,
-        _volumeInstance, _playlistData, _currentTrack;
+        _volumeInstance, _playlistData, _currentTrack, _muteState;
 
     beforeEach(function (){
         module("sn.fm.player");
@@ -58,6 +58,8 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
         PlayerMuteResource = $injector.get("PlayerMuteResource");
         spyOn(PlayerMuteResource, "get");
+        spyOn(PlayerMuteResource, "save");
+        spyOn(PlayerMuteResource, "delete");
 
         PlayerQueueResource = $injector.get("PlayerQueueResource");
         spyOn(PlayerQueueResource, "save");
@@ -170,6 +172,10 @@ describe("sn.fm.player:PlayerCtrl", function() {
             "paused": 0
         }
 
+        _muteState = {
+            mute: true
+        }
+
         $controller("PlayerCtrl", {
             $scope: $scope,
             $q: $q,
@@ -180,7 +186,8 @@ describe("sn.fm.player:PlayerCtrl", function() {
             PlayerVolumeResource: PlayerVolumeResource,
             TracksResource: TracksResource,
             playlistData: _playlistData,
-            currentTrack: _currentTrack
+            currentTrack: _currentTrack,
+            muteState: _muteState
         });
     }));
 
@@ -193,6 +200,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
         expect($scope.playlist).toEqual(_playlistData);
         expect($scope.current).toEqual(_currentTrack);
         expect($scope.paused).toEqual(_currentTrack.paused);
+        expect($scope.mute).toEqual(_muteState.mute);
     });
 
     it("should add current track to playlist on init", function() {
@@ -273,27 +281,19 @@ describe("sn.fm.player:PlayerCtrl", function() {
     describe("toggleMute", function() {
 
         it("should set mute state true and save", function() {
-            $scope.mute = {
-                mute: false,
-                $save: function(){}
-            }
-            spyOn($scope.mute, "$save");
+            $scope.mute = false;
 
             $scope.toggleMute();
-            expect($scope.mute.mute).toEqual(true);
-            expect($scope.mute.$save).toHaveBeenCalled();
+            expect($scope.mute).toEqual(true);
+            expect(PlayerMuteResource.save).toHaveBeenCalledWith({ mute: true });
         });
 
         it("should set mute state false and delete", function() {
-            $scope.mute = {
-                mute: true,
-                $delete: function(){}
-            }
-            spyOn($scope.mute, "$delete");
+            $scope.mute = true;
 
             $scope.toggleMute();
-            expect($scope.mute.mute).toEqual(false);
-            expect($scope.mute.$delete).toHaveBeenCalled();
+            expect($scope.mute).toEqual(false);
+            expect(PlayerMuteResource.delete).toHaveBeenCalled();
         });
 
     });
@@ -383,7 +383,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
             var eventData = { mute: true };
 
             $scope.$broadcast("fm:player:setMute", eventData);
-            expect($scope.mute.mute).toEqual(true);
+            expect($scope.mute).toEqual(true);
         });
 
     });
