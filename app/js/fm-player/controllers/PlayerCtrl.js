@@ -18,6 +18,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "PlayerVolumeResource",
     "playlistData",
     "currentTrack",
+    "muteState",
     /**
      * @constructor
      * @param {Object}  $scope
@@ -28,8 +29,9 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @param {Factory} TracksResource
      * @param {Array}   playlistData
      * @param {Object}  currentTrack
+     * @param {Object}  muteState
      */
-    function ($scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, TracksResource, PlayerMuteResource, PlayerVolumeResource, playlistData, currentTrack) {
+    function ($scope, $q, Spotify, PlayerQueueResource, PlayerTransportResource, TracksResource, PlayerMuteResource, PlayerVolumeResource, playlistData, currentTrack, muteState) {
 
         /**
          * An instance of the $resource PlayerQueueResource
@@ -54,12 +56,11 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         $scope.paused = currentTrack.paused;
 
         /**
-         * An instance of the $resource PlayerMuteResource
-         * which provides player mute operations
+         * Tracks the state of mute
          * @property mute
-         * @type     {Object}
+         * @type     {Boolean}
          */
-        $scope.mute = PlayerMuteResource;
+        $scope.mute = muteState.mute;
 
         /**
          * Set paused state and send request to API
@@ -138,12 +139,12 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method toggleMute
          */
         $scope.toggleMute = function toggleMute() {
-            if ($scope.mute.mute) {
-                $scope.mute.mute = false;
-                $scope.mute.$delete();
+            if ($scope.mute) {
+                $scope.mute = false;
+                PlayerMuteResource.delete();
             } else {
-                $scope.mute.mute = true;
-                $scope.mute.$save();
+                $scope.mute = true;
+                PlayerMuteResource.save({ mute: true });
             }
         };
 
@@ -261,7 +262,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method onSetMute
          */
         $scope.onSetMute = function onSetMute(event, data) {
-            $scope.mute.mute = data.mute;
+            $scope.mute = data.mute;
         };
 
         /**
