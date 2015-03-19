@@ -37,15 +37,25 @@ angular.module("sn.fm.loadingScreen", [])
             templateUrl: "partials/loading.html",
             link: function ($scope, $element){
 
-                $rootScope.$on(EVENTS.ROUTE_CHANGE_START, function(){
+                /**
+                 * display the loading screen
+                 * @method show
+                 */
+                var show = function show(){
                     $element.removeClass("hide");
-                });
-                $rootScope.$on(EVENTS.ROUTE_CHANGE_SUCCESS, function(){
+                };
+
+                /**
+                 * hide the loading screen
+                 * @method show
+                 */
+                var hide = function hide(){
                     $element.addClass("hide");
-                });
-                $rootScope.$on(EVENTS.ROUTE_CHANGE_ERROR, function(){
-                    $element.addClass("hide");
-                });
+                };
+
+                $rootScope.$on(EVENTS.ROUTE_CHANGE_START, show);
+                $rootScope.$on(EVENTS.ROUTE_CHANGE_SUCCESS, hide);
+                $rootScope.$on(EVENTS.ROUTE_CHANGE_ERROR, hide);
 
             }
         };
