@@ -62,7 +62,7 @@ angular.module("sn.fm.player").config([
                     currentTrack: ["PlayerTransportResource", function (PlayerTransportResource){
                         return PlayerTransportResource.get().$promise;
                     }],
-                    PlayerMuteResource: ["PlayerMuteResource", function (PlayerMuteResource){
+                    muteState: ["PlayerMuteResource", function (PlayerMuteResource){
                         return PlayerMuteResource.get().$promise;
                     }]
                 }

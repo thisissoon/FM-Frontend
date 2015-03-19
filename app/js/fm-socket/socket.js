@@ -18,24 +18,24 @@ angular.module("sn.fm.sockets", [
 
     .run([
         "fmSocket",
-        "EVENTS",
+        "FM_SOCKET_EVENTS",
         /**
          * @constructor
          * @param {Factory} fmSocket socket instance
-         * @param {Array}   EVENTS   list of available socket events
+         * @param {Array}   FM_SOCKET_EVENTS   list of available socket events
          */
-        function(fmSocket, EVENTS){
+        function(fmSocket, FM_SOCKET_EVENTS){
             /**
              * Forwards all fm.socket events to angular event system
              */
-            fmSocket.forward(EVENTS);
+            fmSocket.forward(FM_SOCKET_EVENTS);
         }
     ])
 
     /**
      * @constant {Array} list of available socket events
      */
-    .constant("EVENTS", [
+    .constant("FM_SOCKET_EVENTS", [
         "fm:player:play",
         "fm:player:end",
         "fm:player:pause",

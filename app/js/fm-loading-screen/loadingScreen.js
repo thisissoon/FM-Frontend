@@ -7,10 +7,10 @@
 angular.module("sn.fm.loadingScreen", [])
 /**
  * @constant
- * @property EVENTS
+ * @property ROUTE_EVENTS
  * @type {Object}
  */
-.constant("EVENTS", {
+.constant("ROUTE_EVENTS", {
     ROUTE_CHANGE_START: "$routeChangeStart",
     ROUTE_CHANGE_SUCCESS: "$routeChangeSuccess",
     ROUTE_CHANGE_ERROR: "$routeChangeError"
@@ -25,13 +25,13 @@ angular.module("sn.fm.loadingScreen", [])
  */
 .directive("fmLoadingScreen",[
     "$rootScope",
-    "EVENTS",
+    "ROUTE_EVENTS",
     /**
      * @constructor
      * @param {Service} $rootScope
-     * @param {Object}  EVENTS
+     * @param {Object}  ROUTE_EVENTS
      */
-    function ($rootScope, EVENTS){
+    function ($rootScope, ROUTE_EVENTS){
         return {
             restrict: "EA",
             templateUrl: "partials/loading.html",
@@ -53,9 +53,9 @@ angular.module("sn.fm.loadingScreen", [])
                     $element.addClass("hide");
                 };
 
-                $rootScope.$on(EVENTS.ROUTE_CHANGE_START, show);
-                $rootScope.$on(EVENTS.ROUTE_CHANGE_SUCCESS, hide);
-                $rootScope.$on(EVENTS.ROUTE_CHANGE_ERROR, hide);
+                $rootScope.$on(ROUTE_EVENTS.ROUTE_CHANGE_START, show);
+                $rootScope.$on(ROUTE_EVENTS.ROUTE_CHANGE_SUCCESS, hide);
+                $rootScope.$on(ROUTE_EVENTS.ROUTE_CHANGE_ERROR, hide);
 
             }
         };
