@@ -33,32 +33,48 @@
         </md-sidenav>
 
         <md-content class="md-padding player" layout="column" layout-fill flex>
-            <md-toolbar ng-if="playlist.length > 0">
-                <h2 class="md-toolbar-tools" layout="row" layout-align="space-between center">
+
+            <md-toolbar
+                ng-if="playlist.length > 0"
+                layout="row"
+                layout-sm="column"
+                layout-align="space-between center"
+                layout-align-sm="space-around center">
+
+                <h2 class="md-toolbar-tools now-playing">
                     <span>Now Playing:</span>
-                    <div>
-                        <md-button aria-label="Play" ng-show="paused" ng-click="resume()">
-                            <md-icon md-svg-src="img/icons/ic_play_arrow_24px.svg"></md-icon>
-                        </md-button>
-                        <md-button aria-label="Pause" ng-show="!paused" ng-click="pause()">
-                            <md-icon md-svg-src="img/icons/ic_pause_24px.svg"></md-icon>
-                        </md-button>
-                        <md-button aria-label="Skip" ng-click="skip()">
-                            <md-icon md-svg-src="img/icons/ic_skip_next_24px.svg"></md-icon>
-                        </md-button>
-                        <md-button ng-click="toggleMute()" aria-label="mute" ng-class="{ 'md-warn': mute }">
-                            <md-icon ng-hide="mute" md-svg-src="img/icons/ic_volume_mute_24px.svg"></md-icon>
-                            <md-icon ng-show="mute" md-svg-src="img/icons/ic_volume_off_24px.svg"></md-icon>
-                        </md-button>
-                        <md-button ng-click="volumeDown()" aria-label="volume-down">
-                            <md-icon md-svg-src="img/icons/ic_volume_down_24px.svg"></md-icon>
-                        </md-button>
-                        <md-button ng-click="volumeUp()" aria-label="volume-up">
-                            <md-icon md-svg-src="img/icons/ic_volume_up_24px.svg"></md-icon>
-                        </md-button>
-                    </div>
                 </h2>
+
+                <div class="controls">
+                    <md-button aria-label="Play" ng-show="paused" ng-click="resume()">
+                        <md-icon md-svg-src="img/icons/ic_play_arrow_24px.svg"></md-icon>
+                        <md-tooltip>Play</md-tooltip>
+                    </md-button>
+                    <md-button aria-label="Pause" ng-show="!paused" ng-click="pause()">
+                        <md-icon md-svg-src="img/icons/ic_pause_24px.svg"></md-icon>
+                        <md-tooltip>Pause</md-tooltip>
+                    </md-button>
+                    <md-button aria-label="Skip" ng-click="skip()">
+                        <md-icon md-svg-src="img/icons/ic_skip_next_24px.svg"></md-icon>
+                        <md-tooltip>Skip</md-tooltip>
+                    </md-button>
+                    <md-button ng-click="toggleMute()" aria-label="mute" ng-class="{ 'md-warn': mute }">
+                        <md-icon ng-hide="mute" md-svg-src="img/icons/ic_volume_mute_24px.svg"></md-icon>
+                        <md-icon ng-show="mute" md-svg-src="img/icons/ic_volume_off_24px.svg"></md-icon>
+                        <md-tooltip>Toggle Mute</md-tooltip>
+                    </md-button>
+                    <md-button ng-click="volumeDown()" aria-label="Volume Down">
+                        <md-icon md-svg-src="img/icons/ic_volume_down_24px.svg"></md-icon>
+                        <md-tooltip>Volume Down</md-tooltip>
+                    </md-button>
+                    <md-button ng-click="volumeUp()" aria-label="Volume Up">
+                        <md-icon md-svg-src="img/icons/ic_volume_up_24px.svg"></md-icon>
+                        <md-tooltip>Volume Up</md-tooltip>
+                    </md-button>
+                </div>
+
             </md-toolbar>
+
             <md-toolbar ng-if="!playlist.length > 0">
                 <h2 class="md-toolbar-tools">
                     <span>No tracks in playlist</span>
