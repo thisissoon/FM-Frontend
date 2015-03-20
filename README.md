@@ -1,6 +1,6 @@
 # FM-Frontend - The frontend for thisissoon.fm
 
-[![Build Status](https://travis-ci.org/thisissoon/FM-Frontend.svg?branch=develop)](https://travis-ci.org/thisissoon/FM-Frontend)
+[![Build Status](https://img.shields.io/circleci/project/thisissoon/FM-Frontend/develop.svg)](https://circleci.com/gh/thisissoon/FM-Frontend)
 [![Coverage Status](https://coveralls.io/repos/thisissoon/FM-Frontend/badge.svg?branch=develop)](https://coveralls.io/r/thisissoon/FM-Frontend?branch=develop)
 
 <!-- [![Sauce Test Status](https://saucelabs.com/browser-matrix/thisissoon-fm.svg)](https://saucelabs.com/u/thisissoon-fm) -->
