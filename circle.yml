@@ -1,0 +1,28 @@
+#
+# CircleCI Configuration
+#
+
+# Machine Settings
+
+machine:
+  node:
+    version: 0.10.28
+  environment:
+    COVERALLS_REPO_TOKEN: cA5f7BTUbh8vVqdJNc4KsP56oDiS5Zclc
+
+# Dependencies
+
+dependencies:
+  override:
+    - npm -d install
+    - npm install -g grunt-cli
+    - npm install -g protractor
+
+# Test Commands
+
+test:
+  override:
+    - grunt test:development
+    - grunt test
+  post:
+    - ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info
