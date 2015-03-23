@@ -5,18 +5,21 @@
  */
 
 header {
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
+    min-height: 64px;
 }
 
 .logo {
-    left: 10px;
-    height: 70px;
-    padding: .5em;
-    position: absolute;
     vertical-align: middle;
+    height: 100%;
+}
+
+.logo-wrapper {
+    display: block;
+    left: 0;
+    height: 64px;
+    padding: 5px 10px;
+    position: absolute;
+    top: 0;
 }
 
 .btn-menu {
@@ -32,6 +35,22 @@ header {
     font-size: 1.250em;
     font-weight: 400;
     margin: auto;
+}
+
+.sidebar-header {
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.header-menu,
+.sidebar-header {
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 9
 }
 
 .visually-hidden {
