@@ -9,17 +9,21 @@
  */
 angular.module("sn.fm.player").controller("SearchCtrl", [
     "$scope",
+    "$rootScope",
     "$q",
     "Spotify",
     "PlayerQueueResource",
+    "$mdToast",
     /**
      * @constructor
      * @param {Object}  $scope
+     * @param {Object}  $rootScope
      * @param {Service} $q
      * @param {Service} Spotify
      * @param {Factory} PlayerQueueResource
+     * @param {Service} $mdToast
      */
-    function ($scope, $q, Spotify, PlayerQueueResource) {
+    function ($scope, $rootScope, $q, Spotify, PlayerQueueResource, $mdToast) {
 
         /**
          * Searches the spotify api unsing angular-spotify and returns a
@@ -45,8 +49,20 @@ angular.module("sn.fm.player").controller("SearchCtrl", [
          * @param  {Object} track The selected track from the spotify search
          */
         $scope.onTrackSelected = function onTrackSelected(track){
+            $rootScope.closeSideNav("left");
+
             if (track && track.uri) {
-                PlayerQueueResource.save({ uri: track.uri });
+                PlayerQueueResource.save({ uri: track.uri })
+                    .$promise
+                    .then(function(){
+
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .content("Track: " + track.name + " added to playlist")
+                                .position("bottom right")
+                                .hideDelay(500000)
+                            );
+                    });
             }
         };
 

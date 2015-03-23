@@ -30,7 +30,15 @@ describe("sn.fm.player:SearchCtrl", function() {
         spyOn(Spotify, "search").and.callFake(spotifyCallback);
 
         PlayerQueueResource = $injector.get("PlayerQueueResource");
-        spyOn(PlayerQueueResource, "save");
+        spyOn(PlayerQueueResource, "save").and.callFake(function(){
+            return {
+                $promise: {
+                    then: function(fn){
+                        fn.apply(this,[]);
+                    }
+                }
+            }
+        });
 
         $controller("SearchCtrl", {
             $scope: $scope,
