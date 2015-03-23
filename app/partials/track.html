@@ -1,7 +1,11 @@
-<md-item-content layout="row" layout-align="start center">
+<md-item-content
+    layout="row"
+    layout-align="start center">
 
     <div class="md-tile-left">
-        <img ng-src="{{ track.album.images[0].url }}" class="artwork md-padding" alt="{{ item.album.name }}">
+        <img class="artwork md-padding"
+             ng-src="{{ track.album.images[0].url }}"
+             alt="{{ item.album.name }}">
     </div>
 
     <div class="md-tile-content"
@@ -15,7 +19,9 @@
                 {{ track.name }}
             </h3>
             <h4 class="artist" ng-if="track.artists.length > 0">
-                <span ng-repeat="artist in track.artists">{{ artist.name }}<span ng-if="!$last">,&nbsp;</span></span>
+                <span ng-repeat="artist in track.artists">
+                    {{ artist.name }}<span ng-if="!$last">,</span>
+                </span>
             </h4>
             <h4 class="album">
                 {{ track.album.name }}
@@ -23,7 +29,7 @@
         </div>
 
         <div class="length" hide-sm>
-            {{ track.duration | date: 'm:ss' }}
+            {{ track.duration | date: "m:ss" }}
         </div>
 
     </div>
