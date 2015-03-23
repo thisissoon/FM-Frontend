@@ -202,12 +202,7 @@ module.exports = function (grunt) {
             },
             production: {
                 files: {
-                    "<%= config.outputDir %>js/app.min.js":
-                    [
-                        "<%= config.vendorFiles %>",
-                        "<%= ngconstant.options.dest %>",
-                        "<%= config.applicationFiles %>"
-                    ]
+                    "<%= config.outputDir %>js/app.min.js": "<%= config.outputDir %>js/app.js"
                 }
             }
         },
@@ -329,6 +324,7 @@ module.exports = function (grunt) {
         "clean:beforeBuild",
         "less:production",
         "ngconstant",
+        "concat",
         "uglify",
         "copyBuild",
         "processhtml:production"
@@ -370,6 +366,7 @@ module.exports = function (grunt) {
         "clean:beforeBuild",
         "ngconstant",
         "jshint",
+        "concat",
         "uglify",
         "jasmine:production"
     ]);
@@ -383,6 +380,7 @@ module.exports = function (grunt) {
     grunt.registerTask("e2e", [
         "ngconstant",
         "less:production",
+        "concat",
         "uglify",
         "copy",
         "processhtml:e2e",
