@@ -20,8 +20,7 @@
         <!-- /build -->
         <link rel="shortcut icon" type="image/png" href="img/icons/favicon-16x16.png">
     </head>
-    <body class="player-wrapper"
-          layout="row"
+    <body layout="row"
           layout-fill
           md-swipe-right="openSideNav('left')"
           md-swipe-left="closeSideNav('left')"
@@ -37,15 +36,17 @@
 
         </md-sidenav>
 
-        <md-content class="player" layout="column" layout-fill flex>
+        <md-content
+            class="player"
+            layout="column"
+            layout-fill
+            flex>
 
             <header ng-include="'partials/header.html'"></header>
-
             <ng-view></ng-view>
+            <fm-loading-screen></fm-loading-screen>
 
         </md-content>
-
-        <fm-loading-screen></fm-loading-screen>
 
         <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
 
