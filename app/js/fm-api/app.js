@@ -8,4 +8,4 @@
  * @requires ENV        Angular environment variables
  * @requires ngResource {@link https://docs.angularjs.org/api/ngResource}
  */
-angular.module("sn.fm.api", ["ENV", "ngResource"]);
+angular.module("sn.fm.api", ["ENV", "ngResource", "satellizer"]);
