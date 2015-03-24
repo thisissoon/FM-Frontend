@@ -46,13 +46,13 @@ angular.module("sn.fm.api").factory("RequestInterceptor", [
              * @param {Object} response
              */
             responseError: function(response) {
-                console.log(response.status);
 
                 if (response.status === 401){
                     $location.path("/401");
                 } else if (response.status < 200 || response.status > 299){
                     $location.path("/500");
                 }
+
             }
         };
 
