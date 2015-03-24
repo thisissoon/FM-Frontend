@@ -2,7 +2,7 @@
 
 describe("sn.fm.player:LoginCtrl", function() {
 
-    var $scope, _route, _auth;
+    var $scope, _route, _auth, _mockTokenResponse;
 
     beforeEach(function (){
         module("sn.fm.player");
@@ -20,11 +20,15 @@ describe("sn.fm.player:LoginCtrl", function() {
         _auth.authenticate = function(provider){
             return {
                 then: function(fn){
-                    fn.apply(this, [{ data: { access_token: "mocktoken" }}]);
+                    fn.apply(this, [_mockTokenResponse]);
                 }
             };
         };
-        spyOn(_auth, "authenticate");
+        _auth.removeToken = function(){};
+        spyOn(_auth, "authenticate").and.callThrough();
+        spyOn(_auth, "removeToken");
+
+        _mockTokenResponse = { data: { access_token: "mocktoken" }};
 
         $controller("LoginCtrl", {
             $scope: $scope,
@@ -33,10 +37,16 @@ describe("sn.fm.player:LoginCtrl", function() {
         });
     }));
 
-    it("should call $auth.authenticate", function() {
+    it("should call $auth.authenticate and reload", function() {
         $scope.authenticate();
         expect(_auth.authenticate).toHaveBeenCalledWith("google");
         expect(_route.reload).toHaveBeenCalled();
+    });
+
+    it("should call remove token if no token is returned in auth", function() {
+        _mockTokenResponse.data.access_token = undefined;
+        $scope.authenticate();
+        expect(_auth.removeToken).toHaveBeenCalled();
     });
 
 });
