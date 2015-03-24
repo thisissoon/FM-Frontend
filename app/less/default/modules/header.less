@@ -5,19 +5,21 @@
  */
 
 header {
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 61;
+    min-height: 64px;
 }
 
 .logo {
-    left: 10px;
-    height: 70px;
-    padding: .5em;
-    position: absolute;
     vertical-align: middle;
+    height: 100%;
+}
+
+.logo-wrapper {
+    display: block;
+    left: 0;
+    height: 64px;
+    padding: 10px;
+    position: absolute;
+    top: 0;
 }
 
 .btn-menu {
@@ -31,17 +33,22 @@ header {
 
 .header-menu h1 {
     font-size: 1.250em;
-    font-weight: 400;
+    font-weight: normal;
     margin: auto;
 }
 
-.visually-hidden {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
+.sidebar-header {
+    left: 0;
     position: absolute;
-    width: 1px;
+    right: 0;
+    top: 0;
+}
+
+.header-menu,
+.sidebar-header {
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 9
 }

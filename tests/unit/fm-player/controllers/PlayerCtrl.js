@@ -2,7 +2,7 @@
 
 describe("sn.fm.player:PlayerCtrl", function() {
 
-    var $scope, $q, Spotify, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource,
+    var $scope, $q, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource,
         spotifyCallback, queueCallback, trackCallback, volumeCallback, mockPlayerVolumeResource,
         _volumeInstance, _playlistData, _currentTrack, _muteState;
 
@@ -17,14 +17,6 @@ describe("sn.fm.player:PlayerCtrl", function() {
     beforeEach(inject(function ( $rootScope, $injector, $controller ) {
         $scope = $rootScope.$new();
         $q = $injector.get("$q");
-
-        spotifyCallback = function(){
-            return {
-                then: function(fn){
-                    fn.apply(this,[{ tracks: { items: [] } }])
-                }
-            }
-        }
 
         queueCallback = function(){
             return {
@@ -50,11 +42,6 @@ describe("sn.fm.player:PlayerCtrl", function() {
         mockPlayerVolumeResource = function(params, success){
             success.apply(this, [_volumeInstance])
         };
-
-        Spotify = {
-            search: function(){}
-        }
-        spyOn(Spotify, "search").and.callFake(spotifyCallback);
 
         PlayerMuteResource = $injector.get("PlayerMuteResource");
         spyOn(PlayerMuteResource, "get");
@@ -180,7 +167,6 @@ describe("sn.fm.player:PlayerCtrl", function() {
         $controller("PlayerCtrl", {
             $scope: $scope,
             $q: $q,
-            Spotify: Spotify,
             PlayerMuteResource: PlayerMuteResource,
             PlayerQueueResource: PlayerQueueResource,
             PlayerTransportResource: PlayerTransportResource,
@@ -192,11 +178,6 @@ describe("sn.fm.player:PlayerCtrl", function() {
         });
     }));
 
-    it("should add selected song to playlist", function() {
-        $scope.search("foo");
-        expect(Spotify.search).toHaveBeenCalledWith("foo", "track", { limit: 20, market: "GB" });
-    });
-
     it("should attach resolved data to scope", function() {
         expect($scope.playlist).toEqual(_playlistData);
         expect($scope.current).toEqual(_currentTrack);
@@ -207,22 +188,6 @@ describe("sn.fm.player:PlayerCtrl", function() {
     it("should add current track to playlist on init", function() {
         expect($scope.playlist[0]).toEqual(_currentTrack);
         expect($scope.playlist.length).toEqual(3);
-    });
-
-    it("should search for spotify track", function() {
-        var track = { uri: "foo" };
-        $scope.onTrackSelected(track);
-        expect(PlayerQueueResource.save).toHaveBeenCalledWith(track);
-    });
-
-    it("should NOT search for spotify track", function() {
-        var track = undefined;
-        $scope.onTrackSelected(track);
-        expect(PlayerQueueResource.save).not.toHaveBeenCalled();
-
-        var track = {};
-        $scope.onTrackSelected(track);
-        expect(PlayerQueueResource.save).not.toHaveBeenCalled();
     });
 
     it("should set pause state true and make call to PlayerTransportResource.pause", function() {

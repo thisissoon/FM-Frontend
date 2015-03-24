@@ -1,0 +1,25 @@
+<md-toolbar class="sidebar-header">
+
+    <a href="!" class="logo-wrapper">
+        <img class="logo" src="img/logo/soon.svg" class="md-padding" alt="SOON_">
+    </a>
+
+</md-toolbar>
+
+<md-content class="spotify-search" ng-controller="SearchCtrl">
+    <md-autocomplete
+        md-no-cache="false"
+        md-search-text="searchText"
+        md-items="item in search(searchText)"
+        md-min-length="3"
+        md-delay="300"
+        md-selected-item="selectedItem"
+        md-selected-item-change="onTrackSelected(selectedItem)"
+        placeholder="Add track">
+
+        <md-item class="md-item">
+            <fm-track class="track" data-spotify-track="item"></fm-track>
+        </md-item>
+
+    </md-autocomplete>
+</md-content>
