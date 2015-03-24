@@ -82,17 +82,17 @@ describe("sn.fm.player:PlayerCtrl", function() {
                     "width" : 64
                 } ],
                 "name" : "Brothers (Deluxe Edition)",
-                "spotify_uri" : "spotify:album:0gVxPZ2tcMgyzLxyw8k1z7"
+                "uri" : "spotify:album:0gVxPZ2tcMgyzLxyw8k1z7"
             },
             "artists" : [ {
                 "id" : "4b170737-017c-4e85-965c-47b8a158c787",
                 "name" : "The Black Keys",
-                "spotify_uri" : "spotify:artist:7mnBLXK823vNxN3UWB7Gfz"
+                "uri" : "spotify:artist:7mnBLXK823vNxN3UWB7Gfz"
             } ],
             "duration" : 204626,
             "id" : "4b170737-017c-4e85-965c-47b8a158c784",
             "name" : "Everlasting Light",
-            "spotify_uri" : "spotify:track:3OYPskZPKnOcHZ9fUDwmCK"
+            "uri" : "spotify:track:3OYPskZPKnOcHZ9fUDwmCK"
         }, {
             "album" : {
                 "id" : "4b170737-017c-4e85-965c-47b8a158c786",
@@ -115,12 +115,12 @@ describe("sn.fm.player:PlayerCtrl", function() {
             "artists" : [ {
                 "id" : "4b170737-017c-4e85-965c-47b8a158c787",
                 "name" : "The Black Keys",
-                "spotify_uri" : "spotify:artist:7mnBLXK823vNxN3UWB7Gfz"
+                "uri" : "spotify:artist:7mnBLXK823vNxN3UWB7Gfz"
             } ],
             "duration" : 193173,
             "id" : "4b170737-017c-4e85-965c-47b8a158c788",
             "name" : "Lonely Boy",
-            "spotify_uri" : "spotify:track:3dOAXUx7I1qnzWzxdnsyB8"
+            "uri" : "spotify:track:3dOAXUx7I1qnzWzxdnsyB8"
         }]
 
         _currentTrack = {
@@ -129,7 +129,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
                     {
                         "id": "26556f7e-3304-4e51-8243-dd2199fcf6fa",
                         "name": "Nightwish",
-                        "spotify_uri": "spotify:artist:2NPduAUeLVsfIauhRwuft1"
+                        "uri": "spotify:artist:2NPduAUeLVsfIauhRwuft1"
                     }
                 ],
                 "id": "7f8bda77-5364-4902-9a98-208f1cdd7643",
@@ -151,12 +151,12 @@ describe("sn.fm.player:PlayerCtrl", function() {
                     }
                 ],
                 "name": "Showtime, Storytime",
-                "spotify_uri": "spotify:album:1tZlCjdI2dcfBXP8iSDsSI"
+                "uri": "spotify:album:1tZlCjdI2dcfBXP8iSDsSI"
             },
             "duration": 272906,
             "id": "4b170737-017c-4e85-965c-47b8a158c789",
             "name": "Dark Chest Of Wonders - Live @ Wacken 2013",
-            "spotify_uri": "spotify:track:6FshvOVICpRVkwpYE5BYTD",
+            "uri": "spotify:track:6FshvOVICpRVkwpYE5BYTD",
             "paused": 0
         }
 
@@ -296,7 +296,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
     describe("socket event handling", function(){
 
         it("should update playlist on end event", function() {
-            var eventData = { uri: _currentTrack.spotify_uri },
+            var eventData = { uri: _currentTrack.uri },
                 expectLength = $scope.playlist.length - 1;
 
             $scope.$broadcast("fm:player:end", eventData);
@@ -314,13 +314,13 @@ describe("sn.fm.player:PlayerCtrl", function() {
         });
 
         it("should update playlist and current on play event", function() {
-            var eventData = { uri: _playlistData[0].spotify_uri };
+            var eventData = { uri: _playlistData[0].uri };
 
             $scope.$broadcast("fm:player:play", eventData);
 
             expect($scope.paused).toEqual(false);
             expect($scope.current).toEqual($scope.playlist[0]);
-            expect($scope.current.spotify_uri).toEqual(eventData.uri);
+            expect($scope.current.uri).toEqual(eventData.uri);
         });
 
         it("should call refreshPlaylist on play event if track doesn't match playlist", function() {
