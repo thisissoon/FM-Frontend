@@ -157,7 +157,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
             ]).then(function(response){
                 $scope.playlist = response[0];
                 $scope.current = response[1];
-                $scope.playlist.unshift($scope.current);
+                $scope.init();
             });
         };
 
@@ -177,7 +177,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method onPlay
          */
         $scope.onPlay = function onPlay(event, data) {
-            if ($scope.playlist[0].spotify_uri === data.uri) { // jshint ignore:line
+            if ($scope.playlist[0].uri === data.uri) { // jshint ignore:line
                 $scope.paused = false;
                 $scope.current = $scope.playlist[0];
             } else {
@@ -192,7 +192,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method onEnd
          */
         $scope.onEnd = function onEnd(event, data) {
-            if ($scope.playlist[0].spotify_uri === data.uri) { // jshint ignore:line
+            if ($scope.playlist[0].uri === data.uri) { // jshint ignore:line
                 $scope.playlist.splice(0, 1);
             } else {
                 $scope.refreshPlaylist();
