@@ -23,7 +23,7 @@ angular.module("sn.fm.player").controller("SearchCtrl", [
      * @param {Factory} PlayerQueueResource
      * @param {Service} $mdToast
      */
-    function ($scope, $rootScope, $q, Spotify, PlayerQueueResource, $mdToast) {
+    function ($scope, $rootScope, $q, Spotify, PlayerQueueResource) {
 
         /**
          * Searches the spotify api unsing angular-spotify and returns a
@@ -52,17 +52,7 @@ angular.module("sn.fm.player").controller("SearchCtrl", [
             $rootScope.closeSideNav("left");
 
             if (track && track.uri) {
-                PlayerQueueResource.save({ uri: track.uri })
-                    .$promise
-                    .then(function(){
-
-                        $mdToast.show(
-                            $mdToast.simple()
-                                .content("Track: " + track.name + " added to playlist")
-                                .position("bottom right")
-                                .hideDelay(5000)
-                            );
-                    });
+                PlayerQueueResource.save({ uri: track.uri });
             }
         };
 

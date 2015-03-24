@@ -10,6 +10,7 @@
 angular.module("sn.fm.player").controller("PlayerCtrl", [
     "$scope",
     "$q",
+    "$mdToast",
     "PlayerQueueResource",
     "PlayerTransportResource",
     "TracksResource",
@@ -22,6 +23,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @constructor
      * @param {Object}  $scope
      * @param {Service} $q
+     * @param {Service} $mdToast
      * @param {Factory} PlayerQueueResource
      * @param {Factory} PlayerTranportResource
      * @param {Factory} TracksResource
@@ -29,7 +31,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @param {Object}  currentTrack
      * @param {Object}  muteState
      */
-    function ($scope, $q, PlayerQueueResource, PlayerTransportResource, TracksResource, PlayerMuteResource, PlayerVolumeResource, playlistData, currentTrack, muteState) {
+    function ($scope, $q, $mdToast, PlayerQueueResource, PlayerTransportResource, TracksResource, PlayerMuteResource, PlayerVolumeResource, playlistData, currentTrack, muteState) {
 
         /**
          * An instance of the $resource PlayerQueueResource
@@ -221,8 +223,14 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          */
         $scope.onAdd = function onAdd(event, data) {
             TracksResource.get({ id: data.uri }).$promise
-                .then(function(track){
+                .then(function (track){
                     $scope.playlist.push(track);
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .content("Track: " + track.name + " added to playlist")
+                            .position("bottom right")
+                            .hideDelay(5000)
+                        );
                 });
         };
 
