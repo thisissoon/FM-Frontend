@@ -7,16 +7,15 @@
  */
 angular.module("sn.fm.player").controller("LoginCtrl", [
     "$scope",
-    "$rootScope",
-    "$auth",
     "$route",
+    "$auth",
     /**
      * @constructor
-     * @param {Object}  $scope
-     * @param {Object}  $rootScope
-     * @param {Service} $auth      satellizer $auth service
+     * @param {Object}   $scope
+     * @param {Service}  $route
+     * @param {Service}  $auth  satellizer $auth service
      */
-    function ($scope, $rootScope, $auth, $route) {
+    function ($scope, $route, $auth) {
 
         /**
          * Authenticate with google oauth
@@ -25,7 +24,7 @@ angular.module("sn.fm.player").controller("LoginCtrl", [
         $scope.authenticate = function() {
 
             $auth.authenticate("google").then(function(response) {
-                if (response.data.access_token) {
+                if (response.data.access_token) { // jshint ignore:line
                     $route.reload();
                 } else {
                     $auth.removeToken();
