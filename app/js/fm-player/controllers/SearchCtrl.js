@@ -60,7 +60,7 @@ angular.module("sn.fm.player").controller("SearchCtrl", [
                             $mdToast.simple()
                                 .content("Track: " + track.name + " added to playlist")
                                 .position("bottom right")
-                                .hideDelay(500000)
+                                .hideDelay(5000)
                             );
                     });
             }
