@@ -6,7 +6,22 @@
 
 </md-toolbar>
 
-<md-content class="spotify-search" ng-controller="SearchCtrl">
+<md-content
+    ng-controller="LoginCtrl"
+    ng-if="!isAuthenticated()"
+    class="md-padding"
+    layout="column"
+    layout-align="center center">
+    <p>Join the party</p>
+    <md-button
+        class="md-raised md-accent"
+        ng-click="authenticate()">
+        Login with Google
+    </md-button>
+</md-content>
+
+
+<md-content ng-if="isAuthenticated()" class="spotify-search" ng-controller="SearchCtrl">
     <md-autocomplete
         md-no-cache="false"
         md-search-text="searchText"

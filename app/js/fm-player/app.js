@@ -11,12 +11,13 @@
  * @requires spotify    {@link https://github.com/eddiemoore/angular-spotify}
  * @requires sn.fm.api
  */
-angular.module("sn.fm.player", ["ENV", "ngRoute", "ngMaterial", "spotify", "sn.fm.api"])
+angular.module("sn.fm.player", ["ENV", "ngRoute", "ngMaterial", "spotify", "satellizer", "sn.fm.api"])
 
 .run([
     "$rootScope",
     "$mdSidenav",
-    function ($rootScope, $mdSidenav){
+    "$auth",
+    function ($rootScope, $mdSidenav, $auth){
 
         /**
          * Toggles the state of the sidebar
@@ -43,6 +44,14 @@ angular.module("sn.fm.player", ["ENV", "ngRoute", "ngMaterial", "spotify", "sn.f
          */
         $rootScope.closeSideNav = function closeSideNav(menuId){
             return $mdSidenav(menuId).close();
+        };
+
+        /**
+         * Set isAuthenticated if token exists
+         * @returns {Boolean} user is authenticated
+         */
+        $rootScope.isAuthenticated = function() {
+            return Boolean($auth.getToken());
         };
 
     }

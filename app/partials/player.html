@@ -10,7 +10,7 @@
         <span>Now Playing:</span>
     </h2>
 
-    <div class="controls" ng-include="'partials/controls.html'"></div>
+    <div class="controls" ng-if="isAuthenticated()" ng-include="'partials/controls.html'"></div>
 
 </md-toolbar>
 
