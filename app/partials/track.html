@@ -11,8 +11,8 @@
     <div class="md-tile-content"
          layout="row"
          layout-align="space-around center"
-         layout-sm="column"
-         layout-align-sm="space-between center">
+         layout-sm="row"
+         layout-align-sm="space-between start">
 
         <div class="md-tile-content details">
             <h3 class="name">
@@ -30,6 +30,13 @@
 
         <div class="length" hide-sm>
             {{ track.duration | date: "m:ss" }}
+        </div>
+
+        <div class="md-tile-content avatar" ng-if="user">
+            <img ng-src="{{ user.avatar_url }}">
+            <md-tooltip>
+                {{ user.display_name }}
+            </md-tooltip>
         </div>
 
     </div>

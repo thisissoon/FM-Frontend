@@ -16,7 +16,8 @@ angular.module("sn.fm.player").directive("fmTrack",[
         return {
             restrict: "EA",
             scope: {
-                track: "=spotifyTrack"
+                track: "=spotifyTrack",
+                user: "="
             },
             templateUrl: "partials/track.html"
         };
