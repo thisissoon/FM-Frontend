@@ -34,6 +34,11 @@ describe("sn.fm.api:RequestInterceptor", function (){
         expect($location.path).not.toHaveBeenCalled();
     });
 
+    it("should redirect to 401 page on 401 response status", function(){
+        interceptor.responseError({ status: 401 })
+        expect($location.path).toHaveBeenCalledWith("/401");
+    });
+
     it("should set Access-Token header from local storage", function(){
         localStorage.setItem("sn_fm_access_token", "mockAccessToken")
         var httpConfig = {
