@@ -2,9 +2,9 @@
 
 describe("sn.fm.player:PlayerCtrl", function() {
 
-    var $scope, $q, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource,
-        spotifyCallback, queueCallback, trackCallback, volumeCallback, mockPlayerVolumeResource,
-        _volumeInstance, _playlistData, _currentTrack, _muteState;
+    var $scope, $q, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource, UsersResource,
+        spotifyCallback, queueCallback, currentCallback, trackCallback, userCallback, volumeCallback, mockPlayerVolumeResource,
+        _volumeInstance, _playlistData, _currentTrack, _track, _user, _muteState;
 
     beforeEach(function (){
         module("sn.fm.player");
@@ -27,11 +27,29 @@ describe("sn.fm.player:PlayerCtrl", function() {
                 }
             }
         }
-        trackCallback = function(){
+        currentCallback = function(){
             return {
                 $promise: {
                     then: function(fn){
                         fn.apply(this,[_currentTrack])
+                    }
+                }
+            }
+        }
+        trackCallback = function(){
+            return {
+                $promise: {
+                    then: function(fn){
+                        fn.apply(this,[_track])
+                    }
+                }
+            }
+        }
+        userCallback = function(){
+            return {
+                $promise: {
+                    then: function(fn){
+                        fn.apply(this,[_user])
                     }
                 }
             }
@@ -53,7 +71,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
         spyOn(PlayerQueueResource, "query").and.callFake(queueCallback);
 
         PlayerTransportResource = $injector.get("PlayerTransportResource");
-        spyOn(PlayerTransportResource, "get").and.callFake(trackCallback);
+        spyOn(PlayerTransportResource, "get").and.callFake(currentCallback);
         spyOn(PlayerTransportResource, "resume");
         spyOn(PlayerTransportResource, "pause");
         spyOn(PlayerTransportResource, "skip");
@@ -65,65 +83,74 @@ describe("sn.fm.player:PlayerCtrl", function() {
         TracksResource = $injector.get("TracksResource");
         spyOn(TracksResource, "get").and.callFake(trackCallback);
 
+        UsersResource = $injector.get("UsersResource");
+        spyOn(UsersResource, "get").and.callFake(userCallback);
+
         _playlistData = [{
-            "album" : {
-                "id" : "4b170737-017c-4e85-965c-47b8a158c785",
-                "images" : [ {
-                    "height" : 640,
-                    "url" : "https://i.scdn.co/image/e1c8594562d35cd8d4338bfeb6c6b23bd41fd942",
-                    "width" : 640
-                }, {
-                    "height" : 300,
-                    "url" : "https://i.scdn.co/image/ca4b85e01309d843d615b8ab93d312742650e46d",
-                    "width" : 300
-                }, {
-                    "height" : 64,
-                    "url" : "https://i.scdn.co/image/e76deee80fb59daef5f531d08e2fc156c9bdff9a",
-                    "width" : 64
+            "track": {
+                "album" : {
+                    "id" : "4b170737-017c-4e85-965c-47b8a158c785",
+                    "images" : [ {
+                        "height" : 640,
+                        "url" : "https://i.scdn.co/image/e1c8594562d35cd8d4338bfeb6c6b23bd41fd942",
+                        "width" : 640
+                    }, {
+                        "height" : 300,
+                        "url" : "https://i.scdn.co/image/ca4b85e01309d843d615b8ab93d312742650e46d",
+                        "width" : 300
+                    }, {
+                        "height" : 64,
+                        "url" : "https://i.scdn.co/image/e76deee80fb59daef5f531d08e2fc156c9bdff9a",
+                        "width" : 64
+                    } ],
+                    "name" : "Brothers (Deluxe Edition)",
+                    "uri" : "spotify:album:0gVxPZ2tcMgyzLxyw8k1z7"
+                },
+                "artists" : [ {
+                    "id" : "4b170737-017c-4e85-965c-47b8a158c787",
+                    "name" : "The Black Keys",
+                    "uri" : "spotify:artist:7mnBLXK823vNxN3UWB7Gfz"
                 } ],
-                "name" : "Brothers (Deluxe Edition)",
-                "uri" : "spotify:album:0gVxPZ2tcMgyzLxyw8k1z7"
+                "duration" : 204626,
+                "id" : "4b170737-017c-4e85-965c-47b8a158c784",
+                "name" : "Everlasting Light",
+                "uri" : "spotify:track:3OYPskZPKnOcHZ9fUDwmCK"
             },
-            "artists" : [ {
-                "id" : "4b170737-017c-4e85-965c-47b8a158c787",
-                "name" : "The Black Keys",
-                "uri" : "spotify:artist:7mnBLXK823vNxN3UWB7Gfz"
-            } ],
-            "duration" : 204626,
-            "id" : "4b170737-017c-4e85-965c-47b8a158c784",
-            "name" : "Everlasting Light",
-            "uri" : "spotify:track:3OYPskZPKnOcHZ9fUDwmCK"
+            "user": _user,
         }, {
-            "album" : {
-                "id" : "4b170737-017c-4e85-965c-47b8a158c786",
-                "images" : [ {
-                    "height" : 640,
-                    "url" : "https://i.scdn.co/image/b26866432cca1c107c3fa6f5fee5c80995d99e75",
-                    "width" : 640
-                }, {
-                    "height" : 300,
-                    "url" : "https://i.scdn.co/image/db5b7075ed0d352dae4d36e5f1af9d1c57d4c046",
-                    "width" : 300
-                }, {
-                    "height" : 64,
-                    "url" : "https://i.scdn.co/image/ccf3a54fae2aa343a4bab5b75279c70f889c6612",
-                    "width" : 64
+            "track": {
+                "album" : {
+                    "id" : "4b170737-017c-4e85-965c-47b8a158c786",
+                    "images" : [ {
+                        "height" : 640,
+                        "url" : "https://i.scdn.co/image/b26866432cca1c107c3fa6f5fee5c80995d99e75",
+                        "width" : 640
+                    }, {
+                        "height" : 300,
+                        "url" : "https://i.scdn.co/image/db5b7075ed0d352dae4d36e5f1af9d1c57d4c046",
+                        "width" : 300
+                    }, {
+                        "height" : 64,
+                        "url" : "https://i.scdn.co/image/ccf3a54fae2aa343a4bab5b75279c70f889c6612",
+                        "width" : 64
+                    } ],
+                    "name" : "Lonely Boy",
+                    "sptofy_uri" : "spotify:album:2uGi7bQZU5My0k1UGJQRz2"
+                },
+                "artists" : [ {
+                    "id" : "4b170737-017c-4e85-965c-47b8a158c787",
+                    "name" : "The Black Keys",
+                    "uri" : "spotify:artist:7mnBLXK823vNxN3UWB7Gfz"
                 } ],
+                "duration" : 193173,
+                "id" : "4b170737-017c-4e85-965c-47b8a158c788",
                 "name" : "Lonely Boy",
-                "sptofy_uri" : "spotify:album:2uGi7bQZU5My0k1UGJQRz2"
+                "uri" : "spotify:track:3dOAXUx7I1qnzWzxdnsyB8"
             },
-            "artists" : [ {
-                "id" : "4b170737-017c-4e85-965c-47b8a158c787",
-                "name" : "The Black Keys",
-                "uri" : "spotify:artist:7mnBLXK823vNxN3UWB7Gfz"
-            } ],
-            "duration" : 193173,
-            "id" : "4b170737-017c-4e85-965c-47b8a158c788",
-            "name" : "Lonely Boy",
-            "uri" : "spotify:track:3dOAXUx7I1qnzWzxdnsyB8"
+            "user": _user,
         }]
 
-        _currentTrack = {
+        _track = {
             "album": {
                 "artists": [
                     {
@@ -156,7 +183,20 @@ describe("sn.fm.player:PlayerCtrl", function() {
             "duration": 272906,
             "id": "4b170737-017c-4e85-965c-47b8a158c789",
             "name": "Dark Chest Of Wonders - Live @ Wacken 2013",
-            "uri": "spotify:track:6FshvOVICpRVkwpYE5BYTD",
+            "uri": "spotify:track:6FshvOVICpRVkwpYE5BYTD"
+        }
+
+        _user = {
+            "avatar_url": "https://lh5.googleusercontent.com/-8zjhd-e4yZA/AAAAAAAAAAI/AAAAAAAAAFU/NiS1oH4gAKo/photo.jpg",
+            "display_name": "Chris Reeves",
+            "family_name": "Reeves",
+            "given_name": "Chris",
+            "id": "8258be6b-ee53-4186-8bbd-55bc0a3a6f24"
+        }
+
+        _currentTrack = {
+            "track": _track,
+            "user": _user,
             "paused": 0
         }
 
@@ -296,7 +336,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
     describe("socket event handling", function(){
 
         it("should update playlist on end event", function() {
-            var eventData = { uri: _currentTrack.uri },
+            var eventData = { uri: _currentTrack.track.uri },
                 expectLength = $scope.playlist.length - 1;
 
             $scope.$broadcast("fm:player:end", eventData);
@@ -314,13 +354,13 @@ describe("sn.fm.player:PlayerCtrl", function() {
         });
 
         it("should update playlist and current on play event", function() {
-            var eventData = { uri: _playlistData[0].uri };
+            var eventData = { uri: _playlistData[0].track.uri };
 
             $scope.$broadcast("fm:player:play", eventData);
 
             expect($scope.paused).toEqual(false);
             expect($scope.current).toEqual($scope.playlist[0]);
-            expect($scope.current.uri).toEqual(eventData.uri);
+            expect($scope.current.track.uri).toEqual(eventData.uri);
         });
 
         it("should call refreshPlaylist on play event if track doesn't match playlist", function() {
@@ -343,11 +383,16 @@ describe("sn.fm.player:PlayerCtrl", function() {
         });
 
         it("should add track to playlist on add event", function() {
-            var eventData = { uri: "spotify:track:3OYPskZPKnOcHZ9fUDwmCK" };
+            var eventData = { uri: _track.uri, user: _user.id },
+                expectedLength = $scope.playlist.length + 1;
 
             $scope.$broadcast("fm:player:add", eventData);
-            expect($scope.playlist.length).toEqual(4);
-            expect($scope.playlist[3]).toEqual(_currentTrack);
+            $scope.$apply();
+
+            expect(TracksResource.get).toHaveBeenCalledWith({ id: _track.uri });
+            expect(UsersResource.get).toHaveBeenCalledWith({ id: _user.id });
+            expect($scope.playlist.length).toEqual(expectedLength);
+            expect($scope.playlist[3]).toEqual({ track: _track, user: _user });
         });
 
         it("should set mute state on setMute event", function() {

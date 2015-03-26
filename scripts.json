@@ -22,6 +22,7 @@
         "app/js/fm-api/factories/PlayerTransportResource.js",
         "app/js/fm-api/factories/PlayerVolumeResource.js",
         "app/js/fm-api/factories/TracksResource.js",
+        "app/js/fm-api/factories/UsersResource.js",
         "app/js/fm-api/factories/RequestInterceptor.js",
 
         "app/js/fm-player/app.js",

@@ -14,6 +14,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "PlayerQueueResource",
     "PlayerTransportResource",
     "TracksResource",
+    "UsersResource",
     "PlayerMuteResource",
     "PlayerVolumeResource",
     "playlistData",
@@ -27,11 +28,12 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @param {Factory} PlayerQueueResource
      * @param {Factory} PlayerTranportResource
      * @param {Factory} TracksResource
+     * @param {Factory} UsersResource
      * @param {Array}   playlistData
      * @param {Object}  currentTrack
      * @param {Object}  muteState
      */
-    function ($scope, $q, $mdToast, PlayerQueueResource, PlayerTransportResource, TracksResource, PlayerMuteResource, PlayerVolumeResource, playlistData, currentTrack, muteState) {
+    function ($scope, $q, $mdToast, PlayerQueueResource, PlayerTransportResource, TracksResource, UsersResource, PlayerMuteResource, PlayerVolumeResource, playlistData, currentTrack, muteState) {
 
         /**
          * An instance of the $resource PlayerQueueResource
@@ -168,7 +170,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method init
          */
         $scope.init = function init() {
-            if ($scope.current.id){
+            if ($scope.current.track && $scope.current.track.id){
                 $scope.playlist.unshift($scope.current);
             }
         };
@@ -179,7 +181,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method onPlay
          */
         $scope.onPlay = function onPlay(event, data) {
-            if ($scope.playlist[0].uri === data.uri) { // jshint ignore:line
+            if ($scope.playlist[0].track.uri === data.uri) { // jshint ignore:line
                 $scope.paused = false;
                 $scope.current = $scope.playlist[0];
             } else {
@@ -194,7 +196,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method onEnd
          */
         $scope.onEnd = function onEnd(event, data) {
-            if ($scope.playlist[0].uri === data.uri) { // jshint ignore:line
+            if ($scope.playlist[0].track.uri === data.uri) { // jshint ignore:line
                 $scope.playlist.splice(0, 1);
             } else {
                 $scope.refreshPlaylist();
@@ -222,16 +224,23 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method onAdd
          */
         $scope.onAdd = function onAdd(event, data) {
-            TracksResource.get({ id: data.uri }).$promise
-                .then(function (track){
-                    $scope.playlist.push(track);
-                    $mdToast.show(
-                        $mdToast.simple()
-                            .content("Track: " + track.name + " added to playlist")
-                            .position("bottom right")
-                            .hideDelay(5000)
-                        );
-                });
+            $q.all([
+                TracksResource.get({ id: data.uri }).$promise,
+                UsersResource.get({ id: data.user }).$promise
+            ]).then(function(response){
+                var item = {
+                    track: response[0],
+                    user: response[1]
+                };
+                $scope.playlist.push(item);
+
+                $mdToast.show(
+                    $mdToast.simple()
+                        .content(item.user.display_name + " added " + item.track.name + " to the playlist") // jshint ignore:line
+                        .position("bottom right")
+                        .hideDelay(5000)
+                    );
+            });
         };
 
         /**
