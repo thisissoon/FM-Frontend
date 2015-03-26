@@ -170,7 +170,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method init
          */
         $scope.init = function init() {
-            if ($scope.current.track.id){
+            if ($scope.current.track && $scope.current.track.id){
                 $scope.playlist.unshift($scope.current);
             }
         };
