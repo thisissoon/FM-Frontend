@@ -3,18 +3,20 @@
  * @class RequestInterceptor
  */
 angular.module("sn.fm.api").factory("RequestInterceptor", [
+    "$rootScope",
     "$q",
     "$location",
     "satellizer.config",
     "FM_API_SERVER_ADDRESS",
     /**
      * @constructor
+     * @param {Service} $rootScope
      * @param {Service} $q
      * @param {Service} $location
-     * @param {Object}  config                   satellizer configuration
-     * @param {String}  FM_API_SERVER_ADDRESS    API server url
+     * @param {Object}  config                satellizer configuration
+     * @param {String}  FM_API_SERVER_ADDRESS API server url
      */
-    function ($q, $location, config, FM_API_SERVER_ADDRESS) {
+    function ($rootScope, $q, $location, config, FM_API_SERVER_ADDRESS) {
 
         var tokenName = config.tokenPrefix ? config.tokenPrefix + "_" + config.tokenName : config.tokenName;
 
@@ -52,10 +54,13 @@ angular.module("sn.fm.api").factory("RequestInterceptor", [
                     localStorage.removeItem(tokenName);
                 }
 
-                if (response.status === 401){
-                    $location.path("/401");
-                } else if (response.status < 200 || response.status > 299){
-                    $location.path("/500");
+                // Navigate to error pages if server returns error code whilst FE route is changing
+                if($rootScope.routeChanging){
+                    if (response.status === 401){
+                        $location.path("/401");
+                    } else if (response.status < 200 || response.status > 299){
+                        $location.path("/500");
+                    }
                 }
 
                 return response;
