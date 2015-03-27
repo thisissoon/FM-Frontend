@@ -16,6 +16,8 @@ angular.module("sn.fm.api").factory("RequestInterceptor", [
      */
     function ($q, $location, config, FM_API_SERVER_ADDRESS) {
 
+        var tokenName = config.tokenPrefix ? config.tokenPrefix + "_" + config.tokenName : config.tokenName;
+
         return {
 
             /**
@@ -24,8 +26,6 @@ angular.module("sn.fm.api").factory("RequestInterceptor", [
              * @returns {Object} modified httpConfig
              */
             request: function(httpConfig) {
-
-                var tokenName = config.tokenPrefix ? config.tokenPrefix + "_" + config.tokenName : config.tokenName;
 
                 if(httpConfig.url.match(FM_API_SERVER_ADDRESS)) {
 
@@ -47,11 +47,18 @@ angular.module("sn.fm.api").factory("RequestInterceptor", [
              */
             responseError: function(response) {
 
+                // Clear auth token if FM API returns "Unauthorised" status code
+                if (response.config.url.match(FM_API_SERVER_ADDRESS) && response.status === 401) {
+                    localStorage.removeItem(tokenName);
+                }
+
                 if (response.status === 401){
                     $location.path("/401");
                 } else if (response.status < 200 || response.status > 299){
                     $location.path("/500");
                 }
+
+                return response;
 
             }
         };
