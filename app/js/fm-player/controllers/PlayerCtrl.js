@@ -11,6 +11,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "$scope",
     "$q",
     "$mdToast",
+    "$mdDialog",
     "PlayerQueueResource",
     "PlayerTransportResource",
     "TracksResource",
@@ -25,15 +26,21 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @param {Object}  $scope
      * @param {Service} $q
      * @param {Service} $mdToast
+     * @param {Service} $mdDialog
      * @param {Factory} PlayerQueueResource
      * @param {Factory} PlayerTranportResource
      * @param {Factory} TracksResource
      * @param {Factory} UsersResource
+     * @param {Factory} PlayerMuteResource
+     * @param {Factory} PlayerVolumeResource
      * @param {Array}   playlistData
      * @param {Object}  currentTrack
      * @param {Object}  muteState
      */
-    function ($scope, $q, $mdToast, PlayerQueueResource, PlayerTransportResource, TracksResource, UsersResource, PlayerMuteResource, PlayerVolumeResource, playlistData, currentTrack, muteState) {
+    function (
+        $scope, $q, $mdToast, $mdDialog,
+        PlayerQueueResource, PlayerTransportResource, TracksResource, UsersResource, PlayerMuteResource, PlayerVolumeResource,
+        playlistData, currentTrack, muteState) {
 
         /**
          * An instance of the $resource PlayerQueueResource
@@ -146,8 +153,39 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
                 PlayerMuteResource.delete();
             } else {
                 $scope.mute = true;
-                PlayerMuteResource.save({ mute: true });
+
+                PlayerMuteResource.save({ mute: true }).$promise
+                    .then(function(response){
+                        // Check if mute was successfully set, if not revert mute state
+                        if (!response.message.match("201")) {
+                            $scope.mute = false;
+                        }
+
+                        // Handle unauthorised error in-view
+                        if (response.message.match("401")) {
+                            $scope.showAlert("Unauthorised", "You need to be logged in to do that.");
+                        }
+                    })
+                    .catch(function(error){
+                        $scope.mute = false;
+                        $scope.showAlert("Error", error.message);
+                    });
             }
+        };
+
+        /**
+         * Show alert dialog with mdDialog service
+         * @param {String} title   title to display in dialog
+         * @param {String} content content to display in dialog
+         */
+        $scope.showAlert = function showAlert(title, content) {
+            $mdDialog.show(
+                $mdDialog.alert()
+                    .title(title)
+                    .content(content)
+                    .ariaLabel("Alert")
+                    .ok("Ok")
+            );
         };
 
         /**
