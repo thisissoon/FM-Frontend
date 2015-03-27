@@ -21,6 +21,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "playlistData",
     "currentTrack",
     "muteState",
+    "ERRORS",
     /**
      * @constructor
      * @param {Object}  $scope
@@ -36,11 +37,12 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @param {Array}   playlistData
      * @param {Object}  currentTrack
      * @param {Object}  muteState
+     * @param {Object}  ERRORS
      */
     function (
         $scope, $q, $mdToast, $mdDialog,
         PlayerQueueResource, PlayerTransportResource, TracksResource, UsersResource, PlayerMuteResource, PlayerVolumeResource,
-        playlistData, currentTrack, muteState) {
+        playlistData, currentTrack, muteState, ERRORS) {
 
         /**
          * An instance of the $resource PlayerQueueResource
@@ -150,7 +152,19 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         $scope.toggleMute = function toggleMute() {
             if ($scope.mute) {
                 $scope.mute = false;
-                PlayerMuteResource.delete();
+
+                PlayerMuteResource.delete().$promise
+                    .then(function(response){
+                        // Check if mute was successfully set, if not revert mute state
+                        if (!response.message.match("200")) {
+                            $scope.mute = true;
+                        }
+
+                        // Handle unauthorised response status in-view
+                        if (response.message.match("401")) {
+                            $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
+                        }
+                    });
             } else {
                 $scope.mute = true;
 
@@ -161,14 +175,10 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
                             $scope.mute = false;
                         }
 
-                        // Handle unauthorised error in-view
+                        // Handle unauthorised response status in-view
                         if (response.message.match("401")) {
-                            $scope.showAlert("Unauthorised", "You need to be logged in to do that.");
+                            $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
                         }
-                    })
-                    .catch(function(error){
-                        $scope.mute = false;
-                        $scope.showAlert("Error", error.message);
                     });
             }
         };

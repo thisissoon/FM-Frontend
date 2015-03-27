@@ -27,6 +27,7 @@
 
         "app/js/fm-player/app.js",
         "app/js/fm-player/config.js",
+        "app/js/fm-player/constants/errors.js",
         "app/js/fm-player/controllers/LoginCtrl.js",
         "app/js/fm-player/controllers/PlayerCtrl.js",
         "app/js/fm-player/controllers/SearchCtrl.js",

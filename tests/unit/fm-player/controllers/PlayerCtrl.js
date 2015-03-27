@@ -3,8 +3,8 @@
 describe("sn.fm.player:PlayerCtrl", function() {
 
     var $scope, $q, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource, UsersResource,
-        spotifyCallback, queueCallback, currentCallback, trackCallback, userCallback, volumeCallback, mockPlayerVolumeResource,
-        _volumeInstance, _playlistData, _currentTrack, _track, _user, _muteState;
+        spotifyCallback, queueCallback, currentCallback, trackCallback, userCallback, volumeCallback, mockPlayerVolumeResource, muteSaveCallback, muteSaveResponse, muteDeleteCallback, muteDeleteResponse,
+        ERRORS, _volumeInstance, _playlistData, _currentTrack, _track, _user, _muteState;
 
     beforeEach(function (){
         module("sn.fm.player");
@@ -17,6 +17,8 @@ describe("sn.fm.player:PlayerCtrl", function() {
     beforeEach(inject(function ( $rootScope, $injector, $controller ) {
         $scope = $rootScope.$new();
         $q = $injector.get("$q");
+
+        ERRORS = $injector.get("ERRORS");
 
         queueCallback = function(){
             return {
@@ -55,6 +57,34 @@ describe("sn.fm.player:PlayerCtrl", function() {
             }
         }
 
+        muteSaveResponse = { message: "201 Created" };
+        muteSaveCallback = function(){
+            var $promise = {
+                then: function(fn){
+                    fn.apply(this,[muteSaveResponse]); return $promise;
+                },
+                catch: function(){}
+            };
+
+            return {
+                $promise: $promise
+            }
+        }
+
+        muteDeleteResponse = { message: "200 Success" };
+        muteDeleteCallback = function(){
+            var $promise = {
+                then: function(fn){
+                    fn.apply(this,[muteDeleteResponse]); return $promise;
+                },
+                catch: function(){}
+            };
+
+            return {
+                $promise: $promise
+            }
+        }
+
         _volumeInstance = { volume: 50, $save: function(){} }
 
         mockPlayerVolumeResource = function(params, success){
@@ -63,8 +93,8 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
         PlayerMuteResource = $injector.get("PlayerMuteResource");
         spyOn(PlayerMuteResource, "get");
-        spyOn(PlayerMuteResource, "save");
-        spyOn(PlayerMuteResource, "delete");
+        spyOn(PlayerMuteResource, "save").and.callFake(muteSaveCallback);
+        spyOn(PlayerMuteResource, "delete").and.callFake(muteDeleteCallback);
 
         PlayerQueueResource = $injector.get("PlayerQueueResource");
         spyOn(PlayerQueueResource, "save");
@@ -214,7 +244,8 @@ describe("sn.fm.player:PlayerCtrl", function() {
             TracksResource: TracksResource,
             playlistData: _playlistData,
             currentTrack: _currentTrack,
-            muteState: _muteState
+            muteState: _muteState,
+            ERRORS: ERRORS
         });
     }));
 
@@ -291,22 +322,51 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     describe("toggleMute", function() {
 
-        it("should set mute state true and save", function() {
-            $scope.mute = false;
+        describe("mute", function(){
 
-            $scope.toggleMute();
-            expect($scope.mute).toEqual(true);
-            expect(PlayerMuteResource.save).toHaveBeenCalledWith({ mute: true });
+            beforeEach(function(){
+                $scope.mute = false;
+            });
+
+            it("should set mute state true and save", function() {
+                $scope.toggleMute();
+                expect($scope.mute).toEqual(true);
+                expect(PlayerMuteResource.save).toHaveBeenCalledWith({ mute: true });
+            });
+
+            it("should catch unauthorised error on save", function() {
+                spyOn($scope, "showAlert");
+                muteSaveResponse = { message: "401 Unauthorised" };
+
+                $scope.toggleMute();
+                expect($scope.mute).toEqual(false);
+                expect(PlayerMuteResource.save).toHaveBeenCalled();
+                expect($scope.showAlert).toHaveBeenCalledWith(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
+            });
         });
 
-        it("should set mute state false and delete", function() {
-            $scope.mute = true;
+        describe("un mute", function(){
 
-            $scope.toggleMute();
-            expect($scope.mute).toEqual(false);
-            expect(PlayerMuteResource.delete).toHaveBeenCalled();
+            beforeEach(function(){
+                $scope.mute = true;
+            });
+
+            it("should set mute state false and delete", function() {
+                $scope.toggleMute();
+                expect($scope.mute).toEqual(false);
+                expect(PlayerMuteResource.delete).toHaveBeenCalled();
+            });
+
+            it("should catch unauthorised error on delete", function() {
+                spyOn($scope, "showAlert");
+                muteDeleteResponse = { message: "401 Unauthorised" };
+
+                $scope.toggleMute();
+                expect($scope.mute).toEqual(true);
+                expect(PlayerMuteResource.delete).toHaveBeenCalled();
+                expect($scope.showAlert).toHaveBeenCalledWith(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
+            });
         });
-
     });
 
     describe("refreshPlaylist", function() {

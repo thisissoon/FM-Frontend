@@ -10,13 +10,16 @@ angular.module("sn.fm.player").controller("LoginCtrl", [
     "$route",
     "$auth",
     "$mdDialog",
+    "ERRORS",
     /**
      * @constructor
-     * @param {Object}   $scope
-     * @param {Service}  $route
-     * @param {Service}  $auth  satellizer $auth service
+     * @param {Object}  $scope
+     * @param {Service} $route
+     * @param {Service} $auth     satellizer $auth service
+     * @param {Service} $mdDialog angular material dialog service
+     * @param {Object}  ERRORS    error message copy
      */
-    function ($scope, $route, $auth, $mdDialog) {
+    function ($scope, $route, $auth, $mdDialog, ERRORS) {
 
         /**
          * Authenticate with google oauth
@@ -25,15 +28,15 @@ angular.module("sn.fm.player").controller("LoginCtrl", [
         $scope.authenticate = function() {
 
             $auth.authenticate("google")
-                .then(function(response) {
+                .then(function() {
                     $route.reload();
                 })
                 .catch(function(error){
                     // Satellizer returns an error if there is no token, parse the error to get the original API response
                     var response = JSON.parse(error.message.match(/\{.*\}/));
 
-                    if (response.message === "Validation Error") {
-                        $scope.showAlert("Sorry guys...", response.errors.code[0]);
+                    if (response && response.message === "Validation Error") {
+                        $scope.showAlert(ERRORS.AUTH_VALIDATION_TITLE, response.errors.code[0]);
                     }
 
                     $auth.removeToken();
