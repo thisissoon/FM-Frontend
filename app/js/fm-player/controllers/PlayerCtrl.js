@@ -18,6 +18,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "UsersResource",
     "PlayerMuteResource",
     "PlayerVolumeResource",
+    "PlayerRandomResource",
     "playlistData",
     "currentTrack",
     "muteState",
@@ -34,6 +35,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      * @param {Factory} UsersResource
      * @param {Factory} PlayerMuteResource
      * @param {Factory} PlayerVolumeResource
+     * @param {Factory} PlayerRandomResource
      * @param {Array}   playlistData
      * @param {Object}  currentTrack
      * @param {Object}  muteState
@@ -41,7 +43,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
      */
     function (
         $scope, $q, $mdToast, $mdDialog,
-        PlayerQueueResource, PlayerTransportResource, TracksResource, UsersResource, PlayerMuteResource, PlayerVolumeResource,
+        PlayerQueueResource, PlayerTransportResource, TracksResource, UsersResource, PlayerMuteResource, PlayerVolumeResource, PlayerRandomResource,
         playlistData, currentTrack, muteState, ERRORS) {
 
         /**
@@ -124,6 +126,20 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
                 .then(function(response){
                     // Handle unauthorised response status in-view
                     if (response.message.match("401")) {
+                        $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
+                    }
+                });
+        };
+
+        /**
+         * Add random song to playlist
+         * @method random
+         */
+        $scope.random = function random() {
+            PlayerRandomResource.save({ tracks: 1 }).$promise
+                .then(function(response){
+                    // Handle unauthorised response status in-view
+                    if (response.message && response.message.match("401")) {
                         $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
                     }
                 });
