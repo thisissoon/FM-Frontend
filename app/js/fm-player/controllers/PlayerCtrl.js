@@ -11,6 +11,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "$scope",
     "$q",
     "$mdToast",
+    "$mdDialog",
     "PlayerQueueResource",
     "PlayerTransportResource",
     "TracksResource",
@@ -20,20 +21,28 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
     "playlistData",
     "currentTrack",
     "muteState",
+    "ERRORS",
     /**
      * @constructor
      * @param {Object}  $scope
      * @param {Service} $q
      * @param {Service} $mdToast
+     * @param {Service} $mdDialog
      * @param {Factory} PlayerQueueResource
      * @param {Factory} PlayerTranportResource
      * @param {Factory} TracksResource
      * @param {Factory} UsersResource
+     * @param {Factory} PlayerMuteResource
+     * @param {Factory} PlayerVolumeResource
      * @param {Array}   playlistData
      * @param {Object}  currentTrack
      * @param {Object}  muteState
+     * @param {Object}  ERRORS
      */
-    function ($scope, $q, $mdToast, PlayerQueueResource, PlayerTransportResource, TracksResource, UsersResource, PlayerMuteResource, PlayerVolumeResource, playlistData, currentTrack, muteState) {
+    function (
+        $scope, $q, $mdToast, $mdDialog,
+        PlayerQueueResource, PlayerTransportResource, TracksResource, UsersResource, PlayerMuteResource, PlayerVolumeResource,
+        playlistData, currentTrack, muteState, ERRORS) {
 
         /**
          * An instance of the $resource PlayerQueueResource
@@ -70,7 +79,19 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          */
         $scope.resume = function resume() {
             $scope.paused = false;
-            PlayerTransportResource.resume();
+
+            PlayerTransportResource.resume().$promise
+                .then(function(response){
+                    // Check if resume was successfully set, if not revert local state
+                    if (!response.message.match("200")) {
+                        $scope.paused = true;
+                    }
+
+                    // Handle unauthorised response status in-view
+                    if (response.message.match("401")) {
+                        $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
+                    }
+                });
         };
 
         /**
@@ -79,7 +100,19 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          */
         $scope.pause = function pause() {
             $scope.paused = true;
-            PlayerTransportResource.pause({});
+
+            PlayerTransportResource.pause({}).$promise
+                .then(function(response){
+                    // Check if pause was successfully set, if not revert local state
+                    if (!response.message.match("200")) {
+                        $scope.mute = false;
+                    }
+
+                    // Handle unauthorised response status in-view
+                    if (response.message.match("401")) {
+                        $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
+                    }
+                });
         };
 
         /**
@@ -87,7 +120,13 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method skip
          */
         $scope.skip = function skip() {
-            PlayerTransportResource.skip();
+            PlayerTransportResource.skip().$promise
+                .then(function(response){
+                    // Handle unauthorised response status in-view
+                    if (response.message.match("401")) {
+                        $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
+                    }
+                });
         };
 
         /**
@@ -142,12 +181,53 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          */
         $scope.toggleMute = function toggleMute() {
             if ($scope.mute) {
+                // un-mute
                 $scope.mute = false;
-                PlayerMuteResource.delete();
+
+                PlayerMuteResource.delete().$promise
+                    .then(function(response){
+                        // Check if mute was successfully set, if not revert mute state
+                        if (!response.message.match("200")) {
+                            $scope.mute = true;
+                        }
+
+                        // Handle unauthorised response status in-view
+                        if (response.message.match("401")) {
+                            $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
+                        }
+                    });
             } else {
+                // mute
                 $scope.mute = true;
-                PlayerMuteResource.save({ mute: true });
+
+                PlayerMuteResource.save({ mute: true }).$promise
+                    .then(function(response){
+                        // Check if mute was successfully set, if not revert mute state
+                        if (!response.message.match("201")) {
+                            $scope.mute = false;
+                        }
+
+                        // Handle unauthorised response status in-view
+                        if (response.message.match("401")) {
+                            $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
+                        }
+                    });
             }
+        };
+
+        /**
+         * Show alert dialog with mdDialog service
+         * @param {String} title   title to display in dialog
+         * @param {String} content content to display in dialog
+         */
+        $scope.showAlert = function showAlert(title, content) {
+            $mdDialog.show(
+                $mdDialog.alert()
+                    .title(title)
+                    .content(content)
+                    .ariaLabel("Alert")
+                    .ok("Ok")
+            );
         };
 
         /**

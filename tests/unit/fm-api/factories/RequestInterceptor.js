@@ -1,7 +1,7 @@
 "use strict";
 
 describe("sn.fm.api:RequestInterceptor", function (){
-    var interceptor, httpProvider, $location, resource, requestHandler, spy, FM_API_SERVER_ADDRESS;
+    var interceptor, httpProvider, $location, rootScope, resource, requestHandler, spy, FM_API_SERVER_ADDRESS;
 
     beforeEach(function (){
         module("sn.fm.api", function ($httpProvider){
@@ -9,7 +9,10 @@ describe("sn.fm.api:RequestInterceptor", function (){
         });
     });
 
-    beforeEach(inject(function ( $injector, $resource ){
+    beforeEach(inject(function ( $rootScope, $injector, $resource ){
+
+        $rootScope.routeChanging = true;
+        rootScope = $rootScope;
 
         FM_API_SERVER_ADDRESS = $injector.get("FM_API_SERVER_ADDRESS");
 
@@ -25,18 +28,24 @@ describe("sn.fm.api:RequestInterceptor", function (){
     });
 
     it("should redirect to 500 page on response error", function(){
-        interceptor.responseError({ status: 500 })
+        interceptor.responseError({ status: 500, config: { url: FM_API_SERVER_ADDRESS } })
         expect($location.path).toHaveBeenCalledWith("/500");
     });
 
     it("should NOT redirect to 500 page on response success", function(){
-        interceptor.responseError({ status: 200 })
+        interceptor.responseError({ status: 200, config: { url: FM_API_SERVER_ADDRESS } })
         expect($location.path).not.toHaveBeenCalled();
     });
 
     it("should redirect to 401 page on 401 response status", function(){
-        interceptor.responseError({ status: 401 })
+        interceptor.responseError({ status: 401, config: { url: FM_API_SERVER_ADDRESS } })
         expect($location.path).toHaveBeenCalledWith("/401");
+    });
+
+    it("should NOT redirect to error pages if route is not changing", function(){
+        rootScope.routeChanging = false;
+        interceptor.responseError({ status: 401, config: { url: FM_API_SERVER_ADDRESS } })
+        expect($location.path).not.toHaveBeenCalled();
     });
 
     it("should set Access-Token header from local storage", function(){

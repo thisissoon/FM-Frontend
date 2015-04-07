@@ -54,5 +54,15 @@ angular.module("sn.fm.player", ["ENV", "ngRoute", "ngMaterial", "spotify", "sate
             return Boolean($auth.getToken());
         };
 
+        $rootScope.$on("$routeChangeStart", function(){
+            $rootScope.routeChanging = true;
+        });
+        $rootScope.$on("$routeChangeSuccess", function(){
+            $rootScope.routeChanging = false;
+        });
+        $rootScope.$on("$routeChangeError", function(){
+            $rootScope.routeChanging = false;
+        });
+
     }
 ]);
