@@ -13,6 +13,11 @@
     <md-tooltip>Skip</md-tooltip>
 </md-button>
 
+<md-button aria-label="Random" ng-click="random()">
+    <md-icon md-svg-src="img/icons/ic_shuffle_24px.svg"></md-icon>
+    <md-tooltip>Random</md-tooltip>
+</md-button>
+
 <md-button ng-click="toggleMute()" aria-label="mute" ng-class="{ 'md-warn': mute }">
     <md-icon ng-hide="mute" md-svg-src="img/icons/ic_volume_mute_24px.svg"></md-icon>
     <md-icon ng-show="mute" md-svg-src="img/icons/ic_volume_off_24px.svg"></md-icon>

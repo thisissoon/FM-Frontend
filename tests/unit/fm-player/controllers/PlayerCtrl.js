@@ -2,7 +2,7 @@
 
 describe("sn.fm.player:PlayerCtrl", function() {
 
-    var $scope, $q, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource, UsersResource,
+    var $scope, $q, PlayerMuteResource, PlayerQueueResource, PlayerTransportResource, PlayerVolumeResource, TracksResource, UsersResource, PlayerRandomResource,
         queueCallback, currentCallback, trackCallback, userCallback, mockPlayerVolumeResource,
         genericCallback, response,
         ERRORS, _volumeInstance, _playlistData, _currentTrack, _track, _user, _muteState;
@@ -88,6 +88,9 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
         UsersResource = $injector.get("UsersResource");
         spyOn(UsersResource, "get").and.callFake(userCallback);
+
+        PlayerRandomResource = $injector.get("PlayerRandomResource");
+        spyOn(PlayerRandomResource, "save").and.callFake(genericCallback);
 
         _playlistData = [{
             "track": {
@@ -215,6 +218,7 @@ describe("sn.fm.player:PlayerCtrl", function() {
             PlayerTransportResource: PlayerTransportResource,
             PlayerVolumeResource: PlayerVolumeResource,
             TracksResource: TracksResource,
+            PlayerRandomResource: PlayerRandomResource,
             playlistData: _playlistData,
             currentTrack: _currentTrack,
             muteState: _muteState,
@@ -287,6 +291,26 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
             $scope.skip();
             expect(PlayerTransportResource.skip).toHaveBeenCalled();
+            expect($scope.showAlert).toHaveBeenCalledWith(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
+        });
+
+    });
+
+    describe("random", function() {
+
+        it("should make call to PlayerRandomResource.save", function() {
+            response = [ _currentTrack ];
+
+            $scope.random();
+            expect(PlayerRandomResource.save).toHaveBeenCalledWith({ tracks: 1 });
+        });
+
+        it("should show alert if API returns unauthorised status", function() {
+            spyOn($scope, "showAlert");
+            response = { message: "401 Unauthorised" };
+
+            $scope.random();
+            expect(PlayerRandomResource.save).toHaveBeenCalled();
             expect($scope.showAlert).toHaveBeenCalledWith(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
         });
 
