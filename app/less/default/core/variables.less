@@ -105,12 +105,27 @@
 @header-horizontal-padding:     30px;
 @header-border-bottom-color:    @light-black;
 
+//== Footer
+//
+//##
+
+@footer-height:             90px;
+
 //== Sidebar
 //
 //##
 
 @sidebar-bg:                @light-black;
 @sidebar-padding:           30px;
-@sidebar-position-bottom:   90px;
+@sidebar-position-bottom:   @footer-height;
 @sidebar-position-top:      @header-height;
 @sidebar-width:             347px;
+
+//== Queue
+//
+//##
+
+@queue-padding:           30px;
+@queue-position-bottom:   @footer-height;
+@queue-position-left:     @sidebar-width;
+@queue-position-top:      @header-height;
