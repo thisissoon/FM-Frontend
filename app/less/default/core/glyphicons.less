@@ -2,6 +2,7 @@
 // Glyphicons
 // --------------------------------------------------
 
+// Import the fonts
 @font-face {
     font-family: "icomoon";
     src:url("@{icon-font-path}@{icon-font-name}.eot?-x4susv");
@@ -13,6 +14,7 @@
     font-style: normal;
 }
 
+// Catchall baseclass
 .icon {
     font-family: "icomoon";
     font-size: 1.625em;
@@ -29,5 +31,6 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+// Individual icons
 .icon-history           { &:before { content: "\e600"; }}
 .icon-settings          { &:before { content: "\e601"; }}
