@@ -1,0 +1,18 @@
+//
+// Buttons
+// --------------------------------------------------
+
+.btn {
+    &.btn-icon {
+        .button-size(0; 0; @font-size-base; 28px; 50%);
+        .square(30px);
+
+        .icon {
+            line-height: 30px;
+        }
+    }
+
+    &.btn-transparent {
+        .button-variant(@text-muted; transparent; @text-muted);
+    }
+}
