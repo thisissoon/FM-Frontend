@@ -1,0 +1,19 @@
+// Mixins
+// --------------------------------------------------
+
+// input[type="range"] styles
+.input-range-track() {
+    animate: 0.2s;
+    cursor: pointer;
+    height: @track-height;
+    width: @track-width;
+}
+
+.input-range-thumb() {
+    background-color: @thumb-color;
+    border: @thumb-border-width solid @thumb-border-color;
+    border-radius: @thumb-radius;
+    cursor: pointer;
+    height: @thumb-height;
+    width: @thumb-width;
+}
