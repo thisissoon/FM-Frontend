@@ -11,6 +11,9 @@
 @white:             #ffffff;
 
 @light-black:       #1a1a1a;
+@yellow:            #fffb37;
+
+@brand-primary:     @yellow;
 
 //== Typography
 //
@@ -26,8 +29,6 @@
 @padding-base-horizontal:  20px;
 
 
-@border-radius-base:       20px;
-
 //== Scaffolding
 //
 //## Settings for some of the most global styles.
@@ -40,6 +41,12 @@
 @link-color:            @white;
 //** Link hover decoration.
 @link-hover-decoration: none;
+
+//== Buttons
+//
+//## For each of Bootstrap's buttons, define text, background and border color.
+
+@btn-primary-color:           @black;
 
 //== Media queries breakpoints
 //
@@ -88,23 +95,26 @@
 //== Forms
 //
 //##
-//
-@track-color: transparent;
-@thumb-color: @gray-light;
 
-@thumb-radius: 8px;
-@thumb-height: 8px;
-@thumb-width: 24px;
-@thumb-border-width: 0px;
-@thumb-border-color: transparent;
+@input-border-radius:            20px;
 
-@track-width: 100%;
-@track-height: 8px;
-@track-border-width: 1px;
-@track-border-color: @gray-light;
+// input[type="range"] properties
+@track-color:                   transparent;
+@thumb-color:                   @gray-light;
 
-@track-radius: 5px;
-@contrast: 5%;
+@thumb-radius:                  8px;
+@thumb-height:                  8px;
+@thumb-width:                   24px;
+@thumb-border-width:            0px;
+@thumb-border-color:            transparent;
+
+@track-width:                   100%;
+@track-height:                  8px;
+@track-border-width:            1px;
+@track-border-color:            @gray-light;
+
+@track-radius:                  5px;
+@contrast:                      5%;
 
 //== Iconography
 //
