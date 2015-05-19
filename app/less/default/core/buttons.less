@@ -16,4 +16,16 @@
     &.btn-transparent {
         .button-variant(@gray-light; transparent; @gray-light);
     }
+
+    .separator {
+        &:after {
+            .size(1px, 24px);
+            .opacity(.5);
+            background-color: @gray-light;
+            content: "";
+            display: inline-block;
+            margin: 0 7px;
+            vertical-align: middle;
+        }
+    }
 }
