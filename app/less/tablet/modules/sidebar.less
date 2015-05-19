@@ -3,6 +3,10 @@
 // --------------------------------------------------
 
 .sidebar {
-    padding: 0;
-    width: 0;
+    left: -@sidebar-width-sm;
+    width: @sidebar-width-sm;
+
+    &.open {
+        left: 0;
+    }
 }

@@ -148,11 +148,16 @@
 @header-horizontal-padding:     30px;
 @header-border-bottom-color:    @light-black;
 
+@header-height-xs:              75px;
+@header-line-height-xs:         @header-height-xs;
+@header-horizontal-padding-xs:  10px;
+
 //== Footer
 //
 //##
 
 @footer-height:             90px;
+@footer-height-xs:          75px;
 
 //== Sidebar
 //
@@ -164,6 +169,12 @@
 @sidebar-position-top:      @header-height;
 @sidebar-width:             347px;
 
+@sidebar-width-sm:          @sidebar-width;
+
+@sidebar-width-xs:              300px;
+@sidebar-position-bottom-xs:    0;
+@sidebar-position-top-xs:       @header-height-xs;
+
 //== Queue
 //
 //##
@@ -172,6 +183,10 @@
 @queue-position-bottom:   @footer-height + (@grid-gutter-width / 2);
 @queue-position-left:     @sidebar-width;
 @queue-position-top:      @header-height;
+
+@queue-position-bottom-xs:  @footer-height-xs + (@grid-gutter-width / 2);
+@queue-position-left-xs:    0;
+@queue-position-top-xs:     @header-height-xs;
 
 //== Media
 //
