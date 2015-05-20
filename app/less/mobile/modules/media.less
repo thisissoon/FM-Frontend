@@ -5,7 +5,7 @@
 .media-controls {
     display: none;
     left: 0;
-    padding: 0 10px;
+    padding: 0 20px;
     text-align: center;
     width: 100%;
     white-space: normal;
@@ -25,10 +25,6 @@
     .size(75px, auto);
 }
 
-.footer .media-info {
-    width: 130px;
-}
-
 .media-info {
     font-size: 0.733em;
     width: 160px;
@@ -36,4 +32,45 @@
 
 .media-heading {
     font-size: 0.867em;
+}
+
+.footer {
+    .media-info {
+        width: 130px;
+    }
+
+    &.open .media-left,
+    &.open .media-body,
+    &.open .media-right {
+        display: block;
+        padding: 0;
+
+        .img-album {
+            .size(100%, auto);
+            margin-bottom: 10px;
+        }
+
+        .media-info {
+            width: 100%;
+            padding: 0;
+        }
+    }
+
+    &.open .media-right {
+        display: inline-block;
+    }
+
+    &.open .media-body {
+        padding: 10px 20px;
+    }
+
+    &.open .media-controls {
+        margin-left: -64px;
+        padding: 0 10px 0 64px;
+        text-align: left;
+    }
+
+    &.open .playing-animation {
+        padding-left: 10px;
+    }
 }
