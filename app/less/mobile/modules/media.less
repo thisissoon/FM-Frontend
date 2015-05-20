@@ -3,16 +3,20 @@
 // --------------------------------------------------
 
 .media-controls {
-    display: none;
-    left: 0;
-    padding: 0 20px;
+    background-color: @lighter-black;
+    bottom: 0;
+    display: block;
+    margin-top: -40px;
+    padding: 10px 20px 10px 20px;
+    position: absolute;
     text-align: center;
     width: 100%;
     white-space: normal;
 
-    input[type="range"]{
-        margin: 0 0 0 10px;
-        width: 129px;
+    .volume-control {
+        display: block;
+        margin: 20px 0 10px;
+        width: 100%;
     }
 }
 
@@ -35,72 +39,72 @@
 }
 
 .footer {
-    .selected,
-    .playing-animation,
+    .media {
+        background-color: @lighter-black;
+    }
+
+    .media-time,
+    .playing-animation {
+        bottom: 45px;
+        display: inline-block;
+        padding: 0;
+        position: absolute;
+        z-index: 2;
+    }
+
     .media-time {
-        display: none;
+        bottom: 60px;
+        display: inline-block;
+        font-size: .8em;
+        margin-left: -4px;
+        right: 20px;
         width: auto;
+    }
+
+    .playing-animation {
+        left: 20px;
+    }
+
+    .btn {
+        margin-left: 5px;
+        margin-right: 5px;
     }
 }
 
 .footer.open {
 
     .media {
-        overflow: auto;
         position: relative;
     }
 
-    .media-left,
-    .media-body,
-    .media-right {
-        display: block;
-        width: 100%;
-        padding: 0;
-
-        .img-album {
-            .size(100%, auto);
-            margin-bottom: 10px;
-        }
-
-        .media-info {
-            width: 100%;
-            padding: 0;
-        }
-    }
-
     .media-controls {
-        padding: 0 20px 10px 20px;
+
     }
 
-    .media-body,
-    .media-time,
-    .playing-animation {
+    .media-left {
+        display: block;
+        padding-right: 0;
+        width: 100%;
+    }
+
+    .media-body,{
+        display: block;
         padding: 10px 20px 0;
-    }
-
-    .media-time,
-    .playing-animation,
-    .selected {
-        display: inline-block;
-    }
-
-    .media-time,
-    .playing-animation {
-        width: 50%;
-    }
-
-    .media-time {
-        margin-left: -4px;
-        font-size: .8em;
+        width: 100%;
     }
 
     .media-user {
-        background-color: rgba(red(@light-black), green(@light-black), blue(@light-black), 0.8);
+        background-color: @lighter-black;
         left: 0;
         padding: 10px 0;
         position: absolute;
         right: 0;
-        top: 1;
+        top: 0;
+    }
+
+    .img-album {
+        .size(100%, auto);
+        margin-bottom: 10px;
     }
 
     .media-heading,
@@ -108,14 +112,18 @@
         font-size: 1em;
     }
 
-    .volume-control {
-        display: block;
-        margin: 20px 0;
+    .media-info {
+        display: none;
+        padding: 0;
         width: 100%;
     }
 
-    .btn {
-        margin-left: 5px;
-        margin-right: 5px;
+    .media-info:last-child {
+        display: none;
     }
+
+    .selected {
+        display: inline-block;
+    }
+
 }
