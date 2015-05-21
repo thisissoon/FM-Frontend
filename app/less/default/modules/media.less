@@ -4,6 +4,7 @@
 
 .media {
     background-color: @media-bg;
+    display: block;
     margin-top: 10px;
 
     &:first-child {
@@ -20,7 +21,7 @@ input[type=range].volume-control {
     width: 129px;
 }
 
-&.footer {
+.footer & {
     .selected {
         display: none;
     }

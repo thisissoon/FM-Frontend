@@ -4,10 +4,10 @@
  * the spotify api for songs using ngMaterial autocomplete and
  * angular-spotify
  * @class  SearchCtrl
- * @module sn.fm.player
+ * @module FM.player
  * @author SOON_
  */
-angular.module("sn.fm.player").controller("SearchCtrl", [
+angular.module("FM.player").controller("SearchCtrl", [
     "$scope",
     "$rootScope",
     "$q",

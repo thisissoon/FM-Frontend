@@ -1,11 +1,35 @@
-<md-toolbar layout="row" class="header-menu">
+<div class="container-fluid">
+    <div class="row">
 
-    <button ng-click="toggleSideNav('left')"
-            hide-gt-md
-            class="btn-menu">
-        <md-icon md-svg-src="img/icons/ic_playlist_add_48px.svg"></md-icon>
-    </button>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <img src="img/logo/soon-fm.svg" class="soon-fm-logo hidden-xs" alt="SOON FM_ logo">
+            <img src="img/logo/soon-fm-mobile.svg" class="soon-fm-logo-xs visible-xs-inline-block" alt="SFM_ logo">
+        </div>
 
-    <h1>thisissoon.fm</h1>
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 text-right">
 
-</md-toolbar>
+            <button type="button" class="btn btn-primary" ng-if="!isAuthenticated()">
+                <span class="icon icon-google-plus"></span>
+                <span class="separator"></span>
+                Sign in with Gmail
+            </button>
+
+            <button class="btn btn-link hidden-lg hidden-md" ng-if="isAuthenticated()">
+                <span class="h3 icon icon-playlist-add text-muted"></span>
+                <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Add to playlist</span>
+            </button>
+
+            <!-- <button class="btn btn-link">
+                <span class="h3 icon icon-history text-muted"></span>
+                <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Track history</span>
+            </button>
+
+            <button class="btn btn-link">
+                <span class="h3 icon icon-settings text-muted"></span>
+                <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Settings</span>
+            </button> -->
+
+        </div>
+
+    </div>
+</div>

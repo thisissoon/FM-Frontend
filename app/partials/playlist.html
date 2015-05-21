@@ -1,0 +1,15 @@
+<div class="queue">
+
+    <h2 class="h5" ng-if="playlist.length > 0">Coming up:</h2>
+    <h2 class="h5" ng-if="!playlist.length > 0">Playlist is empty</h2>
+
+    <ul class="list-unstyled media-list">
+        <li class="media"
+            ng-repeat="track in playlist"
+            data-spotify-track="track.track"
+            data-user="track.user"
+            fm-track>
+        </li>
+    </ul>
+
+</div>

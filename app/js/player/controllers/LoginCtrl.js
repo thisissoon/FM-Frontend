@@ -2,10 +2,10 @@
 /**
  * Controller for thisissoon FM authentication actions
  * @class  LoginCtrl
- * @module sn.fm.player
+ * @module FM.player
  * @author SOON_
  */
-angular.module("sn.fm.player").controller("LoginCtrl", [
+angular.module("FM.player").controller("LoginCtrl", [
     "$scope",
     "$route",
     "$auth",

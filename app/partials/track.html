@@ -1,44 +1,74 @@
-<md-item-content
-    layout="row"
-    layout-align="start center">
+<div class="media-left media-middle text-center">
+    <span ng-if="current" class="selected">Selected by: </span>
+    <img ng-src="{{ user.avatar_url }}" alt="{{ user.display_name }}" class="img-circle img-user">
+</div>
 
-    <div class="md-tile-left">
-        <img class="artwork md-padding"
-             ng-src="{{ track.album.images[0].url }}"
-             alt="{{ item.album.name }}">
-    </div>
+<div class="media-left">
+    <a href>
+        <img class="media-object img-album" ng-src="{{ track.album.images[0].url }}" alt="{{ item.album.name }}">
+    </a>
+</div>
 
-    <div class="md-tile-content"
-         layout="row"
-         layout-align="space-around center"
-         layout-sm="row"
-         layout-align-sm="space-between start">
+<div class="media-body media-middle">
+    <h4 class="media-heading text-overflow media-info">{{ track.name }}</h4>
+    <p class="text-muted text-overflow media-info">
+        <span ng-repeat="artist in track.artists">
+            {{ artist.name }}<span ng-if="!$last">,</span>
+        </span>
+    </p>
+    <p class="text-muted text-overflow media-info">{{ track.album.name }}</p>
+</div>
 
-        <div class="md-tile-content details">
-            <h3 class="name">
-                {{ track.name }}
-            </h3>
-            <h4 class="artist" ng-if="track.artists.length > 0">
-                <span ng-repeat="artist in track.artists">
-                    {{ artist.name }}<span ng-if="!$last">,</span>
-                </span>
-            </h4>
-            <h4 class="album">
-                {{ track.album.name }}
-            </h4>
-        </div>
+<div ng-if="current"
+     class="media-right media-middle playing-animation"
+     ng-switch="track.paused">
+    <img ng-switch-when="false" src="img/icons/playing-animation.gif" alt="music playing animation">
+    <img ng-switch-default src="img/icons/playing-stoped.png" alt="music stopped animation">
+</div>
 
-        <div class="length" hide-sm>
-            {{ track.duration | date: "m:ss" }}
-        </div>
+<div class="media-right media-time text-right"
+     ng-class="{
+        'media-middle': current,
+        'media-bottom hidden-xs': !current
+     }">
+    <p class="text-muted">{{ track.duration | date: "m:ss" }}</p>
+</div>
 
-        <div class="md-tile-content avatar" ng-if="user">
-            <img ng-src="{{ user.avatar_url }}">
-            <md-tooltip>
-                {{ user.display_name }}
-            </md-tooltip>
-        </div>
+<div ng-if="current" class="media-right media-controls media-middle text-right">
 
-    </div>
+    <form class="form-inline">
 
-</md-item-content>
+        <button ng-show="track.paused" ng-click="resume()" class="btn btn-icon btn-transparent">
+            <span class="icon icon-play"></span>
+        </button>
+
+        <button ng-show="!track.paused" ng-click="pause()" class="btn btn-icon btn-transparent">
+            <span class="icon icon-pause"></span>
+        </button>
+
+        <button ng-click="skip()" class="btn btn-icon btn-transparent">
+            <span class="icon icon-skip"></span>
+        </button>
+
+        <button ng-click="toggleMute()" class="btn btn-icon btn-transparent" ng-switch="mute.mute">
+            <span ng-switch-when="true" class="icon icon-muted"></span>
+            <span ng-switch-default="false" class="icon icon-unmuted"></span>
+        </button>
+
+        <input  class="volume-control"
+                ng-model="volume.volume"
+                ng-model-options="{
+                    updateOn: 'default blur',
+                    debounce: {
+                        'default': 500,
+                        'blur': 0
+                    }
+                }"
+                ng-change="volume.$save()"
+                type="range"
+                min="0"
+                max="100">
+
+    </form>
+
+</div>

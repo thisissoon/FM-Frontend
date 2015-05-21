@@ -3,90 +3,82 @@
  * Controller for thisissoon FM player view, handles searching
  * the spotify api for songs using ngMaterial autocomplete and
  * angular-spotify
- * @class  PlayerCtrl
- * @module sn.fm.player
+ * @module FM.player.PlayerCtrl
  * @author SOON_
  */
-angular.module("sn.fm.player").controller("PlayerCtrl", [
+angular.module("FM.player.PlayerCtrl",[
+    "sn.fm.api",
+    "FM.player.ERRORS"
+])
+/**
+ * @class PlayerCtrl
+ * @param {Object}  $scope
+ * @param {Srvice}  $q
+ * @param {Factory} PlayerTransportResource
+ * @param {Factory} UsersResource
+ * @param {Factory} PlayerMuteResource
+ * @param {Factory} PlayerVolumeResource
+ * @param {Object}  ERRORS
+ */
+.controller("PlayerCtrl", [
     "$scope",
     "$q",
-    "$mdToast",
-    "$mdDialog",
-    "PlayerQueueResource",
     "PlayerTransportResource",
-    "TracksResource",
     "UsersResource",
     "PlayerMuteResource",
     "PlayerVolumeResource",
-    "PlayerRandomResource",
-    "playlistData",
-    "currentTrack",
-    "muteState",
     "ERRORS",
     /**
      * @constructor
      * @param {Object}  $scope
      * @param {Service} $q
-     * @param {Service} $mdToast
-     * @param {Service} $mdDialog
-     * @param {Factory} PlayerQueueResource
      * @param {Factory} PlayerTranportResource
-     * @param {Factory} TracksResource
      * @param {Factory} UsersResource
      * @param {Factory} PlayerMuteResource
      * @param {Factory} PlayerVolumeResource
-     * @param {Factory} PlayerRandomResource
-     * @param {Array}   playlistData
-     * @param {Object}  currentTrack
-     * @param {Object}  muteState
      * @param {Object}  ERRORS
      */
-    function (
-        $scope, $q, $mdToast, $mdDialog,
-        PlayerQueueResource, PlayerTransportResource, TracksResource, UsersResource, PlayerMuteResource, PlayerVolumeResource, PlayerRandomResource,
-        playlistData, currentTrack, muteState, ERRORS) {
-
-        /**
-         * An instance of the $resource PlayerQueueResource
-         * which contains a list of the thisissoon FM queue
-         * @property playlist
-         * @type     {Object}
-         */
-        $scope.playlist = playlistData;
+    function ($scope, $q, PlayerTransportResource, UsersResource, PlayerMuteResource, PlayerVolumeResource, ERRORS) {
 
         /**
          * The currently playing track
-         * @property current
+         * @property track
          * @type     {Object}
          */
-        $scope.current = currentTrack;
-
-        /**
-         * Tracks the state of playback
-         * @property paused
-         * @type     {Boolean}
-         */
-        $scope.paused = currentTrack.paused;
+        $scope.track = PlayerTransportResource.get();
 
         /**
          * Tracks the state of mute
          * @property mute
          * @type     {Boolean}
          */
-        $scope.mute = muteState.mute;
+        $scope.mute = PlayerMuteResource.get();
+
+        /**
+         * @property volume
+         * @type     {Integer}
+         */
+        $scope.volume = PlayerVolumeResource.get();
+
+        /**
+         * Value to increment/decrement volume by
+         * @property volumeStep
+         * @type     {Number}
+         */
+        $scope.volumeStep = 5;
 
         /**
          * Set paused state and send request to API
          * @method resume
          */
         $scope.resume = function resume() {
-            $scope.paused = false;
 
-            PlayerTransportResource.resume().$promise
-                .then(function(response){
+
+            $scope.track.$resume().$promise
+                .then(function (response){
                     // Check if resume was successfully set, if not revert local state
                     if (!response.message.match("200")) {
-                        $scope.paused = true;
+                        $scope.track.get();
                     }
 
                     // Handle unauthorised response status in-view
@@ -103,11 +95,11 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
         $scope.pause = function pause() {
             $scope.paused = true;
 
-            PlayerTransportResource.pause({}).$promise
-                .then(function(response){
+            $scope.track.$pause().$promise
+                .then(function (response){
                     // Check if pause was successfully set, if not revert local state
                     if (!response.message.match("200")) {
-                        $scope.mute = false;
+                        $scope.mute.get();
                     }
 
                     // Handle unauthorised response status in-view
@@ -122,35 +114,14 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method skip
          */
         $scope.skip = function skip() {
-            PlayerTransportResource.skip().$promise
-                .then(function(response){
+            $scope.track.$skip().$promise
+                .then(function (response){
                     // Handle unauthorised response status in-view
                     if (response.message.match("401")) {
                         $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
                     }
                 });
         };
-
-        /**
-         * Add random song to playlist
-         * @method random
-         */
-        $scope.random = function random() {
-            PlayerRandomResource.save({ tracks: 1 }).$promise
-                .then(function(response){
-                    // Handle unauthorised response status in-view
-                    if (response.message && response.message.match("401")) {
-                        $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
-                    }
-                });
-        };
-
-        /**
-         * Value to increment/decrement volume by
-         * @property volumeStep
-         * @type     {Number}
-         */
-        $scope.volumeStep = 5;
 
         /**
          * Increment volume
@@ -196,7 +167,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method toggleMute
          */
         $scope.toggleMute = function toggleMute() {
-            if ($scope.mute) {
+            if ($scope.mute.mute) {
                 // un-mute
                 $scope.mute = false;
 
@@ -236,54 +207,14 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @param {String} title   title to display in dialog
          * @param {String} content content to display in dialog
          */
-        $scope.showAlert = function showAlert(title, content) {
-            $mdDialog.show(
-                $mdDialog.alert()
-                    .title(title)
-                    .content(content)
-                    .ariaLabel("Alert")
-                    .ok("Ok")
-            );
-        };
-
-        /**
-         * Update `playlist` and `current` with queue data and currently playing track from the API
-         * @method refreshPlaylist
-         */
-        $scope.refreshPlaylist = function refreshPlaylistQueue(){
-            $q.all([
-                PlayerQueueResource.query().$promise,
-                PlayerTransportResource.get().$promise
-            ]).then(function(response){
-                $scope.playlist = response[0];
-                $scope.current = response[1];
-                $scope.init();
-            });
-        };
-
-        /**
-         * Add currently playing track to playlist
-         * @method init
-         */
-        $scope.init = function init() {
-            if ($scope.current.track && $scope.current.track.id){
-                $scope.playlist.unshift($scope.current);
-            }
-        };
-
-        /**
-         * On play event, set playback state variables
-         * refresh playlist if song URI doesn't match the playlist
-         * @method onPlay
-         */
-        $scope.onPlay = function onPlay(event, data) {
-            if ($scope.playlist[0].track.uri === data.uri) { // jshint ignore:line
-                $scope.paused = false;
-                $scope.current = $scope.playlist[0];
-            } else {
-                $scope.refreshPlaylist();
-                $scope.paused = false;
-            }
+        $scope.showAlert = function showAlert() {
+            // $mdDialog.show(
+            //     $mdDialog.alert()
+            //         .title(title)
+            //         .content(content)
+            //         .ariaLabel("Alert")
+            //         .ok("Ok")
+            // );
         };
 
         /**
@@ -291,12 +222,8 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * refresh playlist if song URI doesn't match the playlist
          * @method onEnd
          */
-        $scope.onEnd = function onEnd(event, data) {
-            if ($scope.playlist[0].track.uri === data.uri) { // jshint ignore:line
-                $scope.playlist.splice(0, 1);
-            } else {
-                $scope.refreshPlaylist();
-            }
+        $scope.onEnd = function onEnd() {
+            $scope.track.get();
         };
 
         /**
@@ -304,7 +231,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method onPause
          */
         $scope.onPause = function onPause() {
-            $scope.paused = true;
+            $scope.track.get();
         };
 
         /**
@@ -312,72 +239,24 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @method onResume
          */
         $scope.onResume = function onResume() {
-            $scope.paused = false;
-        };
-
-        /**
-         * On add event, get track data and push to playlist
-         * @method onAdd
-         */
-        $scope.onAdd = function onAdd(event, data) {
-            $q.all([
-                TracksResource.get({ id: data.uri }).$promise,
-                UsersResource.get({ id: data.user }).$promise
-            ]).then(function(response){
-                var item = {
-                    track: response[0],
-                    user: response[1]
-                };
-                $scope.playlist.push(item);
-
-                $mdToast.show(
-                    $mdToast.simple()
-                        .content(item.user.display_name + " added " + item.track.name + " to the playlist") // jshint ignore:line
-                        .position("bottom right")
-                        .hideDelay(5000)
-                    );
-            });
+            $scope.track.get();
         };
 
         /**
          * On setMute event, set mute status
          * @method onSetMute
          */
-        $scope.onSetMute = function onSetMute(event, data) {
-            $scope.mute = data.mute;
+        $scope.onSetMute = function onSetMute() {
+            $scope.mute.get();
         };
 
-        /**
-         * @listens fm:player:play
-         */
-        $scope.$on("fm:player:play", $scope.onPlay);
 
-        /**
-         * @listens fm:player:end
-         */
         $scope.$on("fm:player:end", $scope.onEnd);
-
-        /**
-         * @listens fm:player:pause
-         */
         $scope.$on("fm:player:pause", $scope.onPause);
-
-        /**
-         * @listens fm:player:resume
-         */
         $scope.$on("fm:player:resume", $scope.onResume);
-
-        /**
-         * @listens fm:player:pause
-         */
-        $scope.$on("fm:player:add", $scope.onAdd);
-
-        /**
-         * @listens fm:player:setMute
-         */
         $scope.$on("fm:player:setMute", $scope.onSetMute);
 
-        $scope.init();
+        console.log($scope);
 
     }
 

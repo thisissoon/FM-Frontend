@@ -5,10 +5,10 @@
  * @example
     <fm-track spotify-track="mySpotifyTrackObject"></fm-track>
  * @class  fmTrack
- * @module sn.fm.player
+ * @module FM.player
  * @author SOON_
  */
-angular.module("sn.fm.player").directive("fmTrack",[
+angular.module("FM.player").directive("fmTrack",[
     /**
      * @constructor
      */
@@ -17,6 +17,7 @@ angular.module("sn.fm.player").directive("fmTrack",[
             restrict: "EA",
             scope: {
                 track: "=spotifyTrack",
+                current: "=",
                 user: "="
             },
             templateUrl: "partials/track.html"
