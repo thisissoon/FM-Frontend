@@ -6,7 +6,9 @@
  * @requires ngRoute
  */
 angular.module("FM.playlist.PlaylistCtrl", [
-    "sn.fm.api",
+    "FM.api.TracksResource",
+    "FM.api.UsersResource",
+    "FM.api.PlayerQueueResource",
     "ngRoute"
 ])
 /**

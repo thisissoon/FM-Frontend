@@ -2,16 +2,22 @@
 /**
  * Factory which provides methods to perform on thisisoon FM API
  * /users endpoint. Gets user data.
- * @class UserResource
+ * @module FM.api.TracksResource
+ * @author SOON_
  */
-angular.module("sn.fm.api").factory("UsersResource", [
+angular.module("FM.api.UsersResource",[
+    "ENV",
+    "ngResource"
+])
+/**
+ * @constructor
+ * @class UsersResource
+ * @param {Service} $resource
+ * @param {String}  FM_API_SERVER_ADDRESS
+ */
+.factory("UsersResource", [
     "$resource",
     "FM_API_SERVER_ADDRESS",
-    /**
-     * @constructor
-     * @param {Service} $resource
-     * @param {String}  FM_API_SERVER_ADDRESS
-     */
     function ($resource, FM_API_SERVER_ADDRESS) {
 
         return $resource(

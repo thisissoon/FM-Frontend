@@ -1,17 +1,20 @@
 "use strict";
 /**
- * An instance of a song for the fm.player, data format
- * is the same as from the spotitfy api.
- * @example
-    <fm-track spotify-track="mySpotifyTrackObject"></fm-track>
- * @class  fmTrack
- * @module FM.player
+ * An instance of a song for the FM.player.
+ * Data format is the same as from the spotitfy api.
+ * @module FM.player.trackDirective
  * @author SOON_
  */
-angular.module("FM.player").directive("fmTrack",[
-    /**
-     * @constructor
-     */
+angular.module("FM.player.trackDirective", [
+
+])
+/**
+ * @example
+    <fm-track spotify-track="mySpotifyTrackObject"></fm-track>
+ * @constructor
+ * @class fmTrack
+ */
+.directive("fmTrack",[
     function (){
         return {
             restrict: "EA",

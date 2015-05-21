@@ -2,36 +2,42 @@
 /**
  * Controller for thisissoon FM authentication actions
  * @class  LoginCtrl
- * @module FM.player
+ * @module FM.auth.LoginCtrl
  * @author SOON_
  */
-angular.module("FM.player").controller("LoginCtrl", [
+angular.module("FM.auth.LoginCtrl", [
+    "satellizer",
+    "FM.api.ERRORS"
+])
+/**
+ * @class  LoginCtrl
+ * @author SOON_
+ */
+.controller("LoginCtrl", [
     "$scope",
     "$route",
     "$auth",
-    "$mdDialog",
     "ERRORS",
     /**
      * @constructor
      * @param {Object}  $scope
      * @param {Service} $route
-     * @param {Service} $auth     satellizer $auth service
-     * @param {Service} $mdDialog angular material dialog service
-     * @param {Object}  ERRORS    error message copy
+     * @param {Service} $auth    satellizer $auth service
+     * @param {Object}  ERRORS   rror message copy
      */
-    function ($scope, $route, $auth, $mdDialog, ERRORS) {
+    function ($scope, $route, $auth, ERRORS) {
 
         /**
          * Authenticate with google oauth
          * @method authenticate
          */
-        $scope.authenticate = function() {
+        $scope.authenticate = function authenticate() {
 
             $auth.authenticate("google")
                 .then(function() {
                     $route.reload();
                 })
-                .catch(function(error){
+                .catch(function (error){
                     // Satellizer returns an error if there is no token, parse the error to get the original API response
                     var response = JSON.parse(error.message.match(/\{.*\}/));
 
@@ -49,14 +55,14 @@ angular.module("FM.player").controller("LoginCtrl", [
          * @param {String} title   title to display in dialog
          * @param {String} content content to display in dialog
          */
-        $scope.showAlert = function showAlert(title, content) {
-            $mdDialog.show(
-                $mdDialog.alert()
-                    .title(title)
-                    .content(content)
-                    .ariaLabel("Alert")
-                    .ok("Ok")
-            );
+        $scope.showAlert = function showAlert() {
+            // $mdDialog.show(
+            //     $mdDialog.alert()
+            //         .title(title)
+            //         .content(content)
+            //         .ariaLabel("Alert")
+            //         .ok("Ok")
+            // );
         };
 
     }

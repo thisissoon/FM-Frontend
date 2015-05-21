@@ -1,22 +1,57 @@
 "use strict";
 /**
- * @class RequestInterceptor
+ * @module FM.api.RequestInterceptor
+ * @author SOON_
  */
-angular.module("sn.fm.api").factory("RequestInterceptor", [
+angular.module("FM.api.RequestInterceptor", [
+    "ENV",
+    "satellizer",
+    "ngRoute"
+])
+/**
+ * @method config
+ * @param  {Provider} $httpProvider
+ */
+.config([
+    "$httpProvider",
+    function ($httpProvider) {
+
+        $httpProvider.interceptors.push("RequestInterceptor");
+
+    }
+])
+/**
+ * @method run
+ * @param  {Service} $rootScope
+ */
+.run([
     "$rootScope",
-    "$q",
+    function ($rootScope){
+        $rootScope.$on("$routeChangeStart", function(){
+            $rootScope.routeChanging = true;
+        });
+        $rootScope.$on("$routeChangeSuccess", function(){
+            $rootScope.routeChanging = false;
+        });
+        $rootScope.$on("$routeChangeError", function(){
+            $rootScope.routeChanging = false;
+        });
+    }
+])
+/**
+ * @constructor
+ * @class RequestInterceptor
+ * @param {Service} $rootScope
+ * @param {Service} $location
+ * @param {Object}  satellizer.config     satellizer configuration
+ * @param {String}  FM_API_SERVER_ADDRESS API server url
+ */
+.factory("RequestInterceptor", [
+    "$rootScope",
     "$location",
     "satellizer.config",
     "FM_API_SERVER_ADDRESS",
-    /**
-     * @constructor
-     * @param {Service} $rootScope
-     * @param {Service} $q
-     * @param {Service} $location
-     * @param {Object}  config                satellizer configuration
-     * @param {String}  FM_API_SERVER_ADDRESS API server url
-     */
-    function ($rootScope, $q, $location, config, FM_API_SERVER_ADDRESS) {
+    function ($rootScope, $location, config, FM_API_SERVER_ADDRESS) {
 
         var tokenName = config.tokenPrefix ? config.tokenPrefix + "_" + config.tokenName : config.tokenName;
 
@@ -24,7 +59,8 @@ angular.module("sn.fm.api").factory("RequestInterceptor", [
 
             /**
              * Intercepts FM API requests to add auth header
-             * @param   {Object}   httpConfig
+             * @method  request
+             * @param   {Object} httpConfig
              * @returns {Object} modified httpConfig
              */
             request: function(httpConfig) {
@@ -45,7 +81,8 @@ angular.module("sn.fm.api").factory("RequestInterceptor", [
              * Intercepts all api requests to perform actions on the FE
              * if the api returns certain status codes e.g. navigate to
              * 500 page if server returns 500 code for any request.
-             * @param {Object} response
+             * @method responseError
+             * @param  {Object} response
              */
             responseError: function(response) {
 

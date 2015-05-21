@@ -2,16 +2,22 @@
 /**
  * Factory which provides methods to perform on thisisoon FM API
  * /player/random endpoint
- * @class PlayerRandomResource
+ * @class  FM.api.PlayerRandomResource
+ * @author SOON_
  */
-angular.module("sn.fm.api").factory("PlayerRandomResource", [
+angular.module("FM.api.PlayerRandomResource", [
+    "ENV",
+    "ngResource"
+])
+/**
+ * @constructor
+ * @class PlayerRandomResource
+ * @param {Service} $resource
+ * @param {String}  FM_API_SERVER_ADDRESS
+ */
+.factory("PlayerRandomResource", [
     "$resource",
     "FM_API_SERVER_ADDRESS",
-    /**
-     * @constructor
-     * @param {Service} $resource
-     * @param {String}  SERVER_ADDRESS
-     */
     function ($resource, FM_API_SERVER_ADDRESS) {
 
         return $resource(

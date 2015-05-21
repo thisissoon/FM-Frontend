@@ -7,8 +7,10 @@
  * @author SOON_
  */
 angular.module("FM.player.PlayerCtrl",[
-    "sn.fm.api",
-    "FM.player.ERRORS"
+    "FM.api.PlayerTransportResource",
+    "FM.api.PlayerMuteResource",
+    "FM.api.PlayerVolumeResource",
+    "FM.api.ERRORS"
 ])
 /**
  * @class PlayerCtrl

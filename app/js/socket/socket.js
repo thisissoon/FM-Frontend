@@ -8,10 +8,10 @@
  * this will contain event and track data. The handlers can be removed by
  * using 'fmSocket.removeListener("fm:player:play", eventHandler)'
  *
- * @module sn.fm.sockets
+ * @module FM.sockets
  * @author SOON_
  */
-angular.module("sn.fm.sockets", [
+angular.module("FM.sockets", [
     "ENV",
     "btford.socket-io"
 ])

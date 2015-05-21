@@ -1,9 +1,9 @@
 "use strict";
 /**
- * @module   FM.player.ERRORS
+ * @module   FM.api.ERRORS
  * @author   SOON_
  */
-angular.module("FM.player.ERRORS", [
+angular.module("FM.api.ERRORS", [
 
 ])
 /**

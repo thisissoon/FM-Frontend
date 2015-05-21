@@ -2,16 +2,22 @@
 /**
  * Factory which provides methods to perform on thisisoon FM API
  * /player/volume endpoint
- * @class PlayerVolumeResource
+ * @module FM.api.PlayerVolumeResource
+ * @author SOON_
  */
-angular.module("sn.fm.api").factory("PlayerVolumeResource", [
+angular.module("FM.api.PlayerVolumeResource", [
+    "ENV",
+    "ngResource"
+])
+/**
+ * @constructor
+ * @class PlayerVolumeResource
+ * @param {Service} $resource
+ * @param {String}  FM_API_SERVER_ADDRESS
+ */
+.factory("PlayerVolumeResource", [
     "$resource",
     "FM_API_SERVER_ADDRESS",
-    /**
-     * @constructor
-     * @param {Service} $resource
-     * @param {String}  SERVER_ADDRESS
-     */
     function ($resource, FM_API_SERVER_ADDRESS) {
 
         return $resource(FM_API_SERVER_ADDRESS + "player/volume");

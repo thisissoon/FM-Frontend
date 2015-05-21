@@ -5,26 +5,26 @@
  * @module   FM
  * @main     FM
  * @author   SOON_
- * @requires FM.playlist
- * @requires FM.player
  */
 angular.module("FM", [
+    "FM.api",
+    "FM.auth",
     "FM.playlist",
     "FM.player",
-    "sn.fm.sockets",
-    "sn.fm.loadingScreen"
+    "FM.search",
+    "FM.sockets",
+    "FM.loadingScreen"
 ])
-
+/**
+ * @method config
+ * @param  {Provider} $routeProvider
+ * @param  {Provider} $locationProvider
+ * @param  {String}   HTML5_LOCATION
+ */
 .config([
     "$routeProvider",
     "$locationProvider",
     "HTML5_LOCATION",
-    /**
-     * @constructor
-     * @param {Service} $routeProvider
-     * @param {Service} $locationProvider
-     * @param {Boolean} HTML5_LOCATION
-     */
     function ($routeProvider, $locationProvider, HTML5_LOCATION) {
 
         if (HTML5_LOCATION) {
@@ -32,15 +32,9 @@ angular.module("FM", [
         }
 
         $routeProvider
-            .when("/500", {
-                templateUrl: "partials/500.html"
-            })
-            .when("/401", {
-                templateUrl: "partials/401.html"
-            })
-            .otherwise({
-                redirectTo: "/"
-            });
+            .when("/401", { templateUrl: "partials/401.html" })
+            .when("/500", { templateUrl: "partials/500.html" })
+            .otherwise({ redirectTo: "/" });
 
     }
 ]);

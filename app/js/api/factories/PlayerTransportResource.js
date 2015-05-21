@@ -2,16 +2,22 @@
 /**
  * Factory which provides methods to perform on thisisoon FM API
  * transport endpoint. Which controls the playback of the current song
- * @class PlayerTransportResource
+ * @module FM.api.PlayerTransportResource
+ * @author SOON_
  */
-angular.module("sn.fm.api").factory("PlayerTransportResource", [
+angular.module("FM.api.PlayerTransportResource", [
+    "ENV",
+    "ngResource"
+])
+/**
+ * @constructor
+ * @class PlayerTransportResource
+ * @param {Service} $resource
+ * @param {String}  FM_API_SERVER_ADDRESS
+ */
+.factory("PlayerTransportResource", [
     "$resource",
     "FM_API_SERVER_ADDRESS",
-    /**
-     * @constructor
-     * @param {Service} $resource
-     * @param {String}  FM_API_SERVER_ADDRESS
-     */
     function ($resource, FM_API_SERVER_ADDRESS) {
 
         return $resource(
