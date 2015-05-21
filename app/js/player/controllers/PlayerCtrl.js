@@ -13,9 +13,7 @@ angular.module("FM.player.PlayerCtrl",[
 /**
  * @class PlayerCtrl
  * @param {Object}  $scope
- * @param {Srvice}  $q
  * @param {Factory} PlayerTransportResource
- * @param {Factory} UsersResource
  * @param {Factory} PlayerMuteResource
  * @param {Factory} PlayerVolumeResource
  * @param {Object}  ERRORS
@@ -24,68 +22,54 @@ angular.module("FM.player.PlayerCtrl",[
     "$scope",
     "$q",
     "PlayerTransportResource",
-    "UsersResource",
     "PlayerMuteResource",
     "PlayerVolumeResource",
     "ERRORS",
-    /**
-     * @constructor
-     * @param {Object}  $scope
-     * @param {Service} $q
-     * @param {Factory} PlayerTranportResource
-     * @param {Factory} UsersResource
-     * @param {Factory} PlayerMuteResource
-     * @param {Factory} PlayerVolumeResource
-     * @param {Object}  ERRORS
-     */
-    function ($scope, $q, PlayerTransportResource, UsersResource, PlayerMuteResource, PlayerVolumeResource, ERRORS) {
+    function ($scope, $q, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, ERRORS) {
 
         /**
          * The currently playing track
          * @property track
          * @type     {Object}
          */
-        $scope.track = PlayerTransportResource.get();
+        $scope.track = {};
 
         /**
          * Tracks the state of mute
          * @property mute
          * @type     {Boolean}
          */
-        $scope.mute = PlayerMuteResource.get();
+        $scope.mute = false;
 
         /**
          * @property volume
          * @type     {Integer}
          */
-        $scope.volume = PlayerVolumeResource.get();
+        $scope.volume = 0;
 
         /**
-         * Value to increment/decrement volume by
-         * @property volumeStep
-         * @type     {Number}
+         * Get all the data
+         * @method getAllData
          */
-        $scope.volumeStep = 5;
+        $scope.getAllData = function getAllData(){
+            $q.all([
+                PlayerTransportResource.get().$promise,
+                PlayerMuteResource.get().$promise,
+                PlayerVolumeResource.get().$promise
+            ]).then(function (response){
+                $scope.track = response[0];
+                $scope.mute = response[1].mute;
+                $scope.volume = response[2].volume;
+            });
+        };
 
         /**
          * Set paused state and send request to API
          * @method resume
          */
         $scope.resume = function resume() {
-
-
-            $scope.track.$resume().$promise
-                .then(function (response){
-                    // Check if resume was successfully set, if not revert local state
-                    if (!response.message.match("200")) {
-                        $scope.track.get();
-                    }
-
-                    // Handle unauthorised response status in-view
-                    if (response.message.match("401")) {
-                        $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
-                    }
-                });
+            PlayerTransportResource.resume().$promise
+                .then($scope.onSuccess);
         };
 
         /**
@@ -93,20 +77,8 @@ angular.module("FM.player.PlayerCtrl",[
          * @method pause
          */
         $scope.pause = function pause() {
-            $scope.paused = true;
-
-            $scope.track.$pause().$promise
-                .then(function (response){
-                    // Check if pause was successfully set, if not revert local state
-                    if (!response.message.match("200")) {
-                        $scope.mute.get();
-                    }
-
-                    // Handle unauthorised response status in-view
-                    if (response.message.match("401")) {
-                        $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
-                    }
-                });
+            PlayerTransportResource.pause().$promise
+                .then($scope.onSuccess);
         };
 
         /**
@@ -114,52 +86,17 @@ angular.module("FM.player.PlayerCtrl",[
          * @method skip
          */
         $scope.skip = function skip() {
-            $scope.track.$skip().$promise
-                .then(function (response){
-                    // Handle unauthorised response status in-view
-                    if (response.message.match("401")) {
-                        $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
-                    }
-                });
+            PlayerTransportResource.skip().$promise
+                .then($scope.onSuccess);
         };
 
         /**
-         * Increment volume
-         * @method volumeUp
+         * send POST request to update volume
+         * @method skip
          */
-        $scope.volumeUp = function volumeUp() {
-            PlayerVolumeResource.get({}, function(volume){
-
-                // round volume
-                volume.volume = Math.round(volume.volume / $scope.volumeStep) * $scope.volumeStep;
-                volume.volume = volume.volume + $scope.volumeStep;
-
-                if (volume.volume > 100) {
-                    volume.volume = 100;
-                }
-
-                volume.$save();
-
-            });
-        };
-
-        /**
-         * Decrement volume
-         * @method volumeDown
-         */
-        $scope.volumeDown = function volumeDown() {
-            PlayerVolumeResource.get({}, function(volume){
-
-                // round volume
-                volume.volume = Math.round(volume.volume / $scope.volumeStep) * $scope.volumeStep;
-                volume.volume = volume.volume - $scope.volumeStep;
-
-                if (volume.volume < 0) {
-                    volume.volume = 0;
-                }
-
-                volume.$save();
-            });
+        $scope.updateVol = function updateVol() {
+            PlayerVolumeResource.save({ volume: $scope.volume }).$promise
+                .then($scope.onSuccess);
         };
 
         /**
@@ -167,97 +104,32 @@ angular.module("FM.player.PlayerCtrl",[
          * @method toggleMute
          */
         $scope.toggleMute = function toggleMute() {
-            if ($scope.mute.mute) {
-                // un-mute
-                $scope.mute = false;
-
-                PlayerMuteResource.delete().$promise
-                    .then(function(response){
-                        // Check if mute was successfully set, if not revert mute state
-                        if (!response.message.match("200")) {
-                            $scope.mute = true;
-                        }
-
-                        // Handle unauthorised response status in-view
-                        if (response.message.match("401")) {
-                            $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
-                        }
-                    });
+            if ($scope.mute) {
+                PlayerMuteResource.remove().$promise
+                    .then($scope.onSuccess);
             } else {
-                // mute
-                $scope.mute = true;
-
-                PlayerMuteResource.save({ mute: true }).$promise
-                    .then(function(response){
-                        // Check if mute was successfully set, if not revert mute state
-                        if (!response.message.match("201")) {
-                            $scope.mute = false;
-                        }
-
-                        // Handle unauthorised response status in-view
-                        if (response.message.match("401")) {
-                            $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
-                        }
-                    });
+                PlayerMuteResource.save().$promise
+                    .then($scope.onSuccess);
             }
         };
 
-        /**
-         * Show alert dialog with mdDialog service
-         * @param {String} title   title to display in dialog
-         * @param {String} content content to display in dialog
-         */
-        $scope.showAlert = function showAlert() {
-            // $mdDialog.show(
-            //     $mdDialog.alert()
-            //         .title(title)
-            //         .content(content)
-            //         .ariaLabel("Alert")
-            //         .ok("Ok")
-            // );
-        };
-
-        /**
-         * On end event, remove track from playlist
-         * refresh playlist if song URI doesn't match the playlist
-         * @method onEnd
-         */
-        $scope.onEnd = function onEnd() {
-            $scope.track.get();
-        };
-
-        /**
-         * On pause event, update paused state
-         * @method onPause
-         */
-        $scope.onPause = function onPause() {
-            $scope.track.get();
-        };
-
-        /**
-         * On resume event, update paused state
-         * @method onResume
-         */
-        $scope.onResume = function onResume() {
-            $scope.track.get();
-        };
-
-        /**
-         * On setMute event, set mute status
-         * @method onSetMute
-         */
-        $scope.onSetMute = function onSetMute() {
-            $scope.mute.get();
+        $scope.onSuccess = function onSuccess(response){
+            if (response && response.message && response.message.match && !response.message.match("200")) {
+                $scope.getAllData();
+            }
+            // Handle unauthorised response status in-view
+            if (response && response.message && response.message.match && response.message.match("401")) {
+                $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
+            }
         };
 
 
-        $scope.$on("fm:player:end", $scope.onEnd);
-        $scope.$on("fm:player:pause", $scope.onPause);
-        $scope.$on("fm:player:resume", $scope.onResume);
-        $scope.$on("fm:player:setMute", $scope.onSetMute);
+        $scope.$on("fm:player:end", $scope.getAllData);
+        $scope.$on("fm:player:pause", $scope.getAllData);
+        $scope.$on("fm:player:resume", $scope.getAllData);
+        $scope.$on("fm:player:setMute", $scope.getAllData);
 
-        console.log($scope);
-
+        $scope.getAllData();
     }
 
 ]);
