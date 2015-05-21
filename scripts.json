@@ -1,45 +1,43 @@
 {
     "vendor": [
         "app/components/angular/angular.js",
-        "app/components/angular-aria/angular-aria.js",
         "app/components/angular-route/angular-route.js",
         "app/components/angular-animate/angular-animate.js",
-        "app/components/angular-material/angular-material.js",
         "app/components/angular-resource/angular-resource.js",
         "app/components/angular-spotify/src/angular-spotify.js",
         "app/components/angular-socket-io/socket.js",
         "app/components/satellizer/satellizer.js"
     ],
     "application": [
-        "app/js/env/env.js"
+        "app/js/env/env.js",
 
-        "app/js/socket/socket.js"
+        "app/js/socket/socket.js",
 
-        "app/js/loading-screen/loadingScreen.js"
+        "app/js/loading-screen/loadingScreen.js",
 
-        "app/js/auth/auth.js"
-        "app/js/auth/controllers/LoginCtrl.js"
+        "app/js/auth/auth.js",
+        "app/js/auth/controllers/LoginCtrl.js",
 
-        "app/js/api/api.js"
-        "app/js/api/constants/errors.js"
-        "app/js/api/factories/PlayerMuteResource.js"
-        "app/js/api/factories/PlayerQueueResource.js"
-        "app/js/api/factories/PlayerRandomResource.js"
-        "app/js/api/factories/PlayerTransportResource.js"
-        "app/js/api/factories/PlayerVolumeResource.js"
-        "app/js/api/factories/TracksResource.js"
-        "app/js/api/factories/UsersResource.js"
-        "app/js/api/factories/RequestInterceptor.js"
+        "app/js/api/api.js",
+        "app/js/api/constants/errors.js",
+        "app/js/api/factories/PlayerMuteResource.js",
+        "app/js/api/factories/PlayerQueueResource.js",
+        "app/js/api/factories/PlayerRandomResource.js",
+        "app/js/api/factories/PlayerTransportResource.js",
+        "app/js/api/factories/PlayerVolumeResource.js",
+        "app/js/api/factories/TracksResource.js",
+        "app/js/api/factories/UsersResource.js",
+        "app/js/api/factories/RequestInterceptor.js",
 
-        "app/js/player/player.js"
-        "app/js/player/controllers/PlayerCtrl.js"
-        "app/js/player/directives/track.js"
+        "app/js/player/player.js",
+        "app/js/player/controllers/PlayerCtrl.js",
+        "app/js/player/directives/track.js",
 
-        "app/js/playlist/playlist.js"
-        "app/js/playlist/controllers/PlaylistCtrl.js"
+        "app/js/playlist/playlist.js",
+        "app/js/playlist/controllers/PlaylistCtrl.js",
 
-        "app/js/search/search.js"
-        "app/js/search/controllers/SearchCtrl.js"
+        "app/js/search/search.js",
+        "app/js/search/controllers/SearchCtrl.js",
 
         "app/js/app.js"
     ]

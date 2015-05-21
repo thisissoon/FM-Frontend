@@ -8,6 +8,7 @@
  */
 angular.module("FM.search.SearchCtrl", [
     "FM.api.PlayerQueueResource",
+    "ui.bootstrap",
     "spotify"
 ])
 /**
@@ -53,6 +54,7 @@ angular.module("FM.search.SearchCtrl", [
             if (track && track.uri) {
                 PlayerQueueResource.save({ uri: track.uri });
             }
+            $scope.selectedItem = null;
         };
 
     }

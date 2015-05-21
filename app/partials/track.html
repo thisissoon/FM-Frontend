@@ -1,4 +1,4 @@
-<div class="media-left media-middle text-center">
+<div ng-if="user" class="media-left media-middle text-center">
     <span ng-if="current" class="selected">Selected by: </span>
     <img ng-src="{{ user.avatar_url }}" alt="{{ user.display_name }}" class="img-circle img-user">
 </div>
@@ -10,13 +10,12 @@
 </div>
 
 <div class="media-body media-middle">
-    <h4 class="media-heading text-overflow media-info">{{ track.name }}</h4>
+    <h4 class="media-heading text-overflow media-info" bind-html-unsafe="track.name | typeaheadHighlight:$parent.query"></h4>
     <p class="text-muted text-overflow media-info">
-        <span ng-repeat="artist in track.artists">
-            {{ artist.name }}<span ng-if="!$last">,</span>
-        </span>
+        <span ng-repeat-start="artist in track.artists" bind-html-unsafe="artist.name | typeaheadHighlight:$parent.$parent.query"></span
+        ><span ng-repeat-end ng-if="!$last">,&nbsp;</span>
     </p>
-    <p class="text-muted text-overflow media-info">{{ track.album.name }}</p>
+    <p class="text-muted text-overflow media-info" bind-html-unsafe="track.album.name | typeaheadHighlight:$parent.query"></p>
 </div>
 
 <div ng-if="current"
