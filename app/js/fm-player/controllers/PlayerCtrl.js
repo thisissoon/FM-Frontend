@@ -150,7 +150,7 @@ angular.module("sn.fm.player").controller("PlayerCtrl", [
          * @property volumeStep
          * @type     {Number}
          */
-        $scope.volumeStep = 5;
+        $scope.volumeStep = 1;
 
         /**
          * Increment volume
