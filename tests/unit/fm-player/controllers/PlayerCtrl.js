@@ -318,11 +318,11 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     describe("volumeUp", function() {
 
-        it("should increment volume by 5", function() {
+        it("should increment volume by 1", function() {
             $scope.volumeUp();
             expect(PlayerVolumeResource.get).toHaveBeenCalled();
 
-            expect(_volumeInstance.volume).toEqual(55);
+            expect(_volumeInstance.volume).toEqual(51);
             expect(_volumeInstance.$save).toHaveBeenCalled();
         });
 
@@ -339,11 +339,11 @@ describe("sn.fm.player:PlayerCtrl", function() {
 
     describe("volumeDown", function() {
 
-        it("should decrement volume by 5", function() {
+        it("should decrement volume by 1", function() {
             $scope.volumeDown();
             expect(PlayerVolumeResource.get).toHaveBeenCalled();
 
-            expect(_volumeInstance.volume).toEqual(45);
+            expect(_volumeInstance.volume).toEqual(49);
             expect(_volumeInstance.$save).toHaveBeenCalled();
         });
 
