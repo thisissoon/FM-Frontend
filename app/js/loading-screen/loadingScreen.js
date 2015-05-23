@@ -40,7 +40,7 @@ angular.module("FM.loadingScreen", [
                  * @method show
                  */
                 var show = function show(){
-                    $element.removeClass("hide");
+                    $element.removeClass("hidden");
                 };
 
                 /**
@@ -48,7 +48,7 @@ angular.module("FM.loadingScreen", [
                  * @method hide
                  */
                 var hide = function hide(){
-                    $element.addClass("hide");
+                    $element.addClass("hidden");
                 };
 
                 $rootScope.$on(ROUTE_EVENTS.ROUTE_CHANGE_START, show);

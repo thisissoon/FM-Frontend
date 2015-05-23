@@ -3,21 +3,25 @@
 // --------------------------------------------------
 
 fm-loading-screen {
-    background-color: white;
+    background-color: @loading-screen-bg;
     bottom: 0;
     left: 0;
     position: absolute;
     right: 0;
-    top: 64px;
+    top: @loading-screen-position-top;
     text-align: center;
-    z-index: 1;
-
-    &.hide {
-        display: none;
-    }
+    z-index: @zindex-loading-screen;
 }
 
 .loading-screen-container {
     height: 100%;
     width: 100%;
+}
+
+fm-loading-screen .loading-animation {
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+    position: absolute;
+    top: 50%;
 }
