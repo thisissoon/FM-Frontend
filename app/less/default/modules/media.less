@@ -23,8 +23,12 @@
 
     .dropdown-menu & {
         cursor: pointer;
-        padding-left: 10px;
+        padding-left: 0;
         padding-right: 10px;
+    }
+
+    li.active & {
+        background-color: lighten(@media-bg, 10%);
     }
 }
 
