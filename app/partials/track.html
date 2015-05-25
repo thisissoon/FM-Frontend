@@ -1,39 +1,36 @@
-<div ng-if="user" class="media-left media-middle text-center">
+<div ng-if="user" class="media-left media-user text-center">
     <span ng-if="current" class="selected">Selected by: </span>
     <img ng-src="{{ user.avatar_url }}" alt="{{ user.display_name }}" class="img-circle img-user">
 </div>
 
-<div class="media-left">
+<div class="media-left media-album">
     <img class="media-object img-album" ng-src="{{ track.album.images[0].url }}" alt="{{ item.album.name }}">
 </div>
 
-<div class="media-body media-middle">
-    <h4 class="media-heading text-overflow media-info" bind-html-unsafe="track.name | typeaheadHighlight:$parent.query"></h4>
-    <p class="text-muted text-overflow media-info">
+<div class="media-body">
+    <h4 class="media-heading media-info" bind-html-unsafe="track.name | typeaheadHighlight:$parent.query"></h4>
+    <p class="text-muted media-info">
         <span ng-repeat-start="artist in track.artists" bind-html-unsafe="artist.name | typeaheadHighlight:$parent.$parent.query"></span
         ><span ng-repeat-end ng-if="!$last">,&nbsp;</span>
     </p>
-    <p class="text-muted text-overflow media-info" bind-html-unsafe="track.album.name | typeaheadHighlight:$parent.query"></p>
+    <p class="text-muted media-info" bind-html-unsafe="track.album.name | typeaheadHighlight:$parent.query"></p>
 </div>
 
 <div ng-if="current"
-     class="media-right media-middle playing-animation"
+     class="media-right playing-animation"
      ng-switch="track.paused">
     <img ng-switch-when="false" src="img/icons/playing-animation.gif" alt="music playing animation">
     <img ng-switch-default src="img/icons/playing-stoped.png" alt="music stopped animation">
 </div>
 
 <div class="media-right media-time text-right"
-     ng-class="{
-        'media-middle': current,
-        'media-bottom hidden-xs': !current
-     }">
+     ng-if="track.duration">
     <p class="text-muted">{{ track.duration | date: "m:ss" }}</p>
 </div>
 
 <div ng-if="current"
      ng-init="PlayerCtrl = $parent.$parent"
-     class="media-right media-controls media-middle text-right">
+     class="media-right media-controls text-right">
 
     <form class="form-inline">
 
@@ -54,20 +51,21 @@
             <span ng-switch-default class="icon icon-unmuted"></span>
         </button>
 
-        <input  class="volume-control"
-                ng-model="PlayerCtrl.volume"
-                ng-model-options="{
-                    updateOn: 'default blur',
-                    debounce: {
-                        'default': 500,
-                        'blur': 0
-                    }
-                }"
-                ng-change="PlayerCtrl.updateVol()"
-                type="range"
-                min="0"
-                max="100">
+        <input class="volume-control"
+               ng-model="PlayerCtrl.volume"
+               ng-model-options="{
+               updateOn: 'default blur',
+                   debounce: {
+                       'default': 500,
+                       'blur': 0
+                   }
+               }"
+               ng-change="PlayerCtrl.updateVol()"
+               type="range"
+               min="0"
+               max="100">
 
     </form>
 
 </div>
+

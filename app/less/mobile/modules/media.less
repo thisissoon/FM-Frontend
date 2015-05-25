@@ -2,128 +2,52 @@
 // Media
 // --------------------------------------------------
 
-.media-controls {
-    background-color: @lighter-black;
-    bottom: 0;
-    display: block;
-    margin-top: -40px;
-    padding: 10px 20px 10px 20px;
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    white-space: normal;
+.media {
+    padding-left: 10px;
+    padding-right: 10px;
 
-    input[type=range].volume-control {
-        display: block;
-        margin: 20px 0 10px;
-        width: 100%;
+    .footer & {
+        .flex-wrap(wrap);
+        height: @footer-height-xs;
     }
+}
+
+.media-user {
+    align-self: center;
+    min-width: 40px;
+}
+
+.media-album {
+    min-width: 75px;
 }
 
 .img-user {
     .size(30px, auto);
-    margin: 0 0 0 5px;
+    margin-right: 10px;
 }
 
 .img-album {
     .size(75px, auto);
 }
 
-.media-info {
-    font-size: 0.733em;
-    width: 160px;
+.media-time,
+.playing-animation {
+    display: none;
 }
 
 .media-heading {
-    font-size: 0.867em;
+    font-size: 0.933em; // 14px
 }
 
-.footer {
-    .media {
-        background-color: @lighter-black;
-    }
-
-    .media-time,
-    .playing-animation {
-        bottom: 45px;
-        display: inline-block;
-        padding: 0;
-        position: absolute;
-        z-index: 2;
-    }
-
-    .media-time {
-        bottom: 60px;
-        display: inline-block;
-        font-size: .8em;
-        margin-left: -4px;
-        right: 20px;
-        width: auto;
-    }
-
-    .playing-animation {
-        left: 20px;
-    }
-
-    .btn {
-        margin-left: 5px;
-        margin-right: 5px;
-    }
+.media-info {
+    font-size: 0.867em; // 13px
 }
 
-.footer.open {
-
-    .media {
-        position: relative;
-    }
-
-    .media-controls {
-
-    }
-
-    .media-left {
-        display: block;
-        padding-right: 0;
-        width: 100%;
-    }
-
-    .media-body,{
-        display: block;
-        padding: 10px 20px 0;
-        width: 100%;
-    }
-
-    .media-user {
-        background-color: @lighter-black;
-        left: 0;
-        padding: 10px 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-
-    .img-album {
-        .size(100%, auto);
-        margin-bottom: 10px;
-    }
-
-    .media-heading,
-    .media-info {
-        font-size: 1em;
-    }
-
-    .media-info {
-        display: none;
-        padding: 0;
-        width: 100%;
-    }
-
-    .media-info:last-child {
-        display: none;
-    }
-
-    .selected {
-        display: inline-block;
-    }
-
+.media-controls {
+    line-height: @footer-height-xs - 75px;
+    min-height: @footer-height-xs - 75px;
+    min-width: 330px;
+    padding-left: 0;
+    text-align: center;
+    width: 100%;
 }

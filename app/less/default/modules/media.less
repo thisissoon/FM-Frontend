@@ -3,68 +3,97 @@
 // --------------------------------------------------
 
 .media {
+    .flex-box();
+    .align-items(stretch);
+    .flex-direction(row);
+    .flex-wrap(nowrap);
+    .justify-content(flex-start);
     background-color: @media-bg;
-    display: block;
-    margin-top: 10px;
-
-    &:first-child {
-        margin-top: 0;
-    }
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 5px;
 
     .footer & {
         height: 100%;
+
+        .selected {
+            display: none;
+        }
+    }
+
+    .dropdown-menu & {
+        cursor: pointer;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }
 
-input[type=range].volume-control {
-    margin: 0 0 0 10px;
-    width: 129px;
+.media-left,
+.media-right {
+    .flex-grow(1);
 }
 
-.footer & {
-    .selected {
-        display: none;
-    }
+.media-body {
+    .flex-grow(100);
+    .align-self(center);
+    overflow: hidden;
+    padding: 0 10px;
 }
 
-li {
-    .media,
-    .media:first-child {
-        margin-top: 10px;
-    }
-
-    &:first-child .media {
-        margin-top: 0;
-    }
-}
-
-.dropdown-menu .media {
-    cursor: pointer;
-}
-
-.media-middle p {
+.media-info {
+    .text-overflow();
+    line-height: 1.4;
+    margin-top: 0;
     margin-bottom: 0;
 }
 
-.media-right {
-    padding-right: 20px;
+.media-user {
+    .align-self(center);
+    min-width: 56px;
+}
+
+.media-album {
+    min-width: 90px;
+}
+
+.media-time {
+    .align-self(flex-end);
+    min-width: 40px;
+
+    .current & {
+        .align-self(center);
+
+        p {
+            margin-bottom: 0;
+        }
+    }
 }
 
 .media-controls {
-    padding-right: 40px;
-    width: 10px;
-    white-space: nowrap;
+    .flex-grow(1);
+    .align-self(center);
+    padding: 0 20px;
+    min-width: 300px;
+}
+
+.playing-animation {
+    .align-self(center);
+    margin-left: -7px;
+    min-width: 40px;
 }
 
 .img-user {
     .size(36px, auto);
-    margin: 0 10px 0 20px;
+    margin-right: 20px;
 }
 
 .img-album {
     .size(90px, auto);
 }
 
-.playing-animation {
-    margin-left: -7px;
+input[type=range].volume-control {
+    margin: 0 10px;
+    line-height: 30px;
+    vertical-align: middle;
+    width: 129px;
 }
