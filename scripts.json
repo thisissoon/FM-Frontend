@@ -9,8 +9,6 @@
         "app/components/satellizer/satellizer.js"
     ],
     "application": [
-        "app/js/env/env.js",
-
         "app/js/socket/socket.js",
 
         "app/js/loading-screen/loadingScreen.js",

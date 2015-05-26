@@ -9,5 +9,5 @@
  */
 angular.module("FM.player", [
     "FM.player.PlayerCtrl",
-    "FM.player.trackDirective",
-])
+    "FM.player.trackDirective"
+]);

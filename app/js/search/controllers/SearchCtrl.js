@@ -15,16 +15,18 @@ angular.module("FM.search.SearchCtrl", [
  * @constructor
  * @class SearchCtrl
  * @param {Object}  $scope
+ * @param {Service} $rootScope
  * @param {Service} $q
  * @param {Service} Spotify
  * @param {Factory} PlayerQueueResource
  */
 .controller("SearchCtrl", [
     "$scope",
+    "$rootScope",
     "$q",
     "Spotify",
     "PlayerQueueResource",
-    function ($scope, $q, Spotify, PlayerQueueResource) {
+    function ($scope, $rootScope, $q, Spotify, PlayerQueueResource) {
 
         /**
          * Searches the spotify api unsing angular-spotify and returns a
@@ -55,6 +57,7 @@ angular.module("FM.search.SearchCtrl", [
                 PlayerQueueResource.save({ uri: track.uri });
             }
             $scope.selectedItem = null;
+            $rootScope.toogleSidebar();
         };
 
     }

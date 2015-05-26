@@ -25,7 +25,7 @@
     <body>
 
         <header class="header" ng-include="'partials/header.html'"></header>
-        <div class="sidebar" ng-include="'partials/sidebar.html'"></div>
+        <div class="sidebar" ng-include="'partials/sidebar.html'" ng-class="{ 'open': sidebarOpen }"></div>
         <ng-view></ng-view>
         <footer class="footer" ng-include="'partials/footer.html'"></footer>
 
