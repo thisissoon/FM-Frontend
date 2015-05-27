@@ -50,6 +50,12 @@ angular.module("FM.player.PlayerCtrl",[
         $scope.volume = 0;
 
         /**
+         * @property paused
+         * @type     {Boolean}
+         */
+        $scope.paused = false;
+
+        /**
          * Get all the data
          * @method getAllData
          */
@@ -110,27 +116,59 @@ angular.module("FM.player.PlayerCtrl",[
                 PlayerMuteResource.remove().$promise
                     .then($scope.onSuccess);
             } else {
-                PlayerMuteResource.save().$promise
+                PlayerMuteResource.save({ mute: true }).$promise
                     .then($scope.onSuccess);
             }
         };
 
+        /**
+         * On pause event, update paused state
+         * @method onPause
+         */
+        $scope.onPause = function onPause() {
+            $scope.paused = true;
+        };
+
+        /**
+         * On resume event, update paused state
+         * @method onResume
+         */
+        $scope.onResume = function onResume() {
+            $scope.paused = false;
+        };
+
+        /**
+         * On setMute event, set mute status
+         * @method onSetMute
+         */
+        $scope.onSetMute = function onSetMute(event, data) {
+            $scope.mute = data.mute;
+        };
+
+        /**
+         * On setVolume event, set mute status
+         * @method onSetVolume
+         */
+        $scope.onSetVolume = function onSetVolume(event, data) {
+            $scope.volume = data.volume;
+        };
+
+        /**
+         * @method onSuccess
+         * @param  {Object} response
+         */
         $scope.onSuccess = function onSuccess(response){
             if (response && response.message && response.message.match && !response.message.match("200")) {
                 $scope.getAllData();
             }
-            // Handle unauthorised response status in-view
-            // if (response && response.message && response.message.match && response.message.match("401")) {
-            //     $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
-            // }
         };
 
 
         $scope.$on("fm:player:end", $scope.getAllData);
-        $scope.$on("fm:player:pause", $scope.getAllData);
-        $scope.$on("fm:player:resume", $scope.getAllData);
-        $scope.$on("fm:player:setMute", $scope.getAllData);
-        $scope.$on("fm:player:setVolume", $scope.getAllData);
+        $scope.$on("fm:player:pause", $scope.onPause);
+        $scope.$on("fm:player:resume", $scope.onResume);
+        $scope.$on("fm:player:setMute", $scope.onSetMute);
+        $scope.$on("fm:player:setVolume", $scope.onSetVolume);
 
         $scope.getAllData();
     }
