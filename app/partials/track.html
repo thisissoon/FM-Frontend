@@ -8,7 +8,7 @@
 </div>
 
 <div class="media-body">
-    <h4 class="media-heading media-info" bind-html-unsafe="track.name | typeaheadHighlight:$parent.query"></h4>
+    <p class="lead media-heading media-info" bind-html-unsafe="track.name | typeaheadHighlight:$parent.query"></p>
     <p class="text-muted media-info">
         <span ng-repeat-start="artist in track.artists" bind-html-unsafe="artist.name | typeaheadHighlight:$parent.$parent.query"></span
         ><span ng-repeat-end ng-if="!$last">,&nbsp;</span>
