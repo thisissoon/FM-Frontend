@@ -130,6 +130,7 @@ angular.module("FM.player.PlayerCtrl",[
         $scope.$on("fm:player:pause", $scope.getAllData);
         $scope.$on("fm:player:resume", $scope.getAllData);
         $scope.$on("fm:player:setMute", $scope.getAllData);
+        $scope.$on("fm:player:setVolume", $scope.getAllData);
 
         $scope.getAllData();
     }
