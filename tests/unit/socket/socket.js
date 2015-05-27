@@ -17,8 +17,8 @@ describe("FM.sockets", function() {
         $httpBackend.whenGET(/.*/).respond(200);
     }));
 
-    // it("should have socket events", function() {
-    //     expect(FM_SOCKET_EVENTS).toEqual(jasmine.any(Array));
-    // });
+    it("should have socket events", function() {
+        expect(FM_SOCKET_EVENTS).toEqual(jasmine.any(Array));
+    });
 
 });

@@ -12,7 +12,7 @@ angular.module("FM", [
     "FM.playlist",
     "FM.player",
     "FM.search",
-    // "FM.sockets",
+    "FM.sockets",
     "FM.loadingScreen",
     "ngRoute",
     "ENV"
