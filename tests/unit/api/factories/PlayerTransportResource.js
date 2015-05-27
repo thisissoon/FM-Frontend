@@ -1,10 +1,10 @@
 "use strict";
 
-describe("sn.fm.api:PlayerTransportResource", function (){
+describe("FM.api.PlayerTransportResource", function (){
     var $httpBackend, PlayerTransportResource;
 
     beforeEach(function (){
-        module("sn.fm.api");
+        module("FM.api.PlayerTransportResource");
     });
 
     beforeEach(inject(function ( $injector, $resource ){

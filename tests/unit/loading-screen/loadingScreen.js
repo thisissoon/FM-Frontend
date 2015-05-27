@@ -1,9 +1,9 @@
 "use strict";
 
-describe("fm.loadingScreen:loadingScreen directive", function() {
+describe("FM.loadingScreen", function() {
     var element, $scope, $rootScope, $templateCache;
 
-    beforeEach(module("sn.fm.loadingScreen"));
+    beforeEach(module("FM.loadingScreen"));
 
     beforeEach(inject(function (_$rootScope_, $compile, $injector) {
         $rootScope = _$rootScope_;
@@ -21,25 +21,25 @@ describe("fm.loadingScreen:loadingScreen directive", function() {
     }));
 
     it("should hide the loading screen on $routeChangeSuccess event", function(){
-        expect(element.hasClass("hide")).toBe(false);
+        expect(element.hasClass("hidden")).toBe(false);
 
         $rootScope.$broadcast("$routeChangeSuccess");
-        expect(element.hasClass("hide")).toBe(true);
+        expect(element.hasClass("hidden")).toBe(true);
     });
 
     it("should hide the loading screen on $routeChangeError event", function(){
-        expect(element.hasClass("hide")).toBe(false);
+        expect(element.hasClass("hidden")).toBe(false);
 
         $rootScope.$broadcast("$routeChangeError");
-        expect(element.hasClass("hide")).toBe(true);
+        expect(element.hasClass("hidden")).toBe(true);
     });
 
     it("should show the loading screen on $routeChangeStart event", function(){
         $rootScope.$broadcast("$routeChangeError");
-        expect(element.hasClass("hide")).toBe(true);
+        expect(element.hasClass("hidden")).toBe(true);
 
         $rootScope.$broadcast("$routeChangeStart");
-        expect(element.hasClass("hide")).toBe(false);
+        expect(element.hasClass("hidden")).toBe(false);
     });
 
 });

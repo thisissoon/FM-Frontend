@@ -1,11 +1,11 @@
 "use strict";
 
-describe("sn.fm.player:LoginCtrl", function() {
+describe("FM.auth.LoginCtrl", function() {
 
-    var $scope, _route, _auth, _mdDialog, _mockTokenResponse, _mockAuthError, ERRORS;
+    var $scope, _route, _auth, _mockTokenResponse, _mockAuthError, ERRORS;
 
     beforeEach(function (){
-        module("sn.fm.player");
+        module("FM.auth.LoginCtrl");
     });
 
     beforeEach(inject(function ( $rootScope, $injector, $controller ) {
@@ -35,8 +35,6 @@ describe("sn.fm.player:LoginCtrl", function() {
         spyOn(_auth, "authenticate").and.callThrough();
         spyOn(_auth, "removeToken");
 
-        _mdDialog = $injector.get("$mdDialog");
-
         _mockAuthError = { message: "Expecting a token named \"access_token\" but instead got: {\"message\":\"Validation Error\",\"errors\":{\"code\":[\"You need be a member of SOON_ or This Here\"]}}" };
         _mockTokenResponse = { data: { access_token: "mocktoken" }};
 
@@ -46,7 +44,6 @@ describe("sn.fm.player:LoginCtrl", function() {
             $scope: $scope,
             $auth: _auth,
             $route: _route,
-            $mdDialog: _mdDialog,
             ERRORS: ERRORS
         });
     }));

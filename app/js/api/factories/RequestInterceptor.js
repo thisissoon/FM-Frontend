@@ -49,9 +49,10 @@ angular.module("FM.api.RequestInterceptor", [
 .factory("RequestInterceptor", [
     "$rootScope",
     "$location",
+    "$window",
     "satellizer.config",
     "FM_API_SERVER_ADDRESS",
-    function ($rootScope, $location, config, FM_API_SERVER_ADDRESS) {
+    function ($rootScope, $location, $window, config, FM_API_SERVER_ADDRESS) {
 
         var tokenName = config.tokenPrefix ? config.tokenPrefix + "_" + config.tokenName : config.tokenName;
 
@@ -67,7 +68,7 @@ angular.module("FM.api.RequestInterceptor", [
 
                 if(httpConfig.url.match(FM_API_SERVER_ADDRESS)) {
 
-                    var token = localStorage.getItem(tokenName);
+                    var token = $window.localStorage.getItem(tokenName);
                     if (token) {
                         httpConfig.headers[config.authHeader] = token;
                     }
@@ -88,7 +89,7 @@ angular.module("FM.api.RequestInterceptor", [
 
                 // Clear auth token if FM API returns "Unauthorised" status code
                 if (response.config.url.match(FM_API_SERVER_ADDRESS) && response.status === 401) {
-                    localStorage.removeItem(tokenName);
+                    $window.localStorage.removeItem(tokenName);
                 }
 
                 // Navigate to error pages if server returns error code whilst FE route is changing

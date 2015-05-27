@@ -12,24 +12,24 @@ angular.module("FM", [
     "FM.playlist",
     "FM.player",
     "FM.search",
-    "FM.sockets",
-    "FM.loadingScreen"
+    // "FM.sockets",
+    "FM.loadingScreen",
+    "ngRoute",
+    "ENV"
 ])
 /**
  * @method config
  * @param  {Provider} $routeProvider
  * @param  {Provider} $locationProvider
- * @param  {String}   HTML5_LOCATION
+ * @param  {Boolean}  HTML5_LOCATION
  */
 .config([
     "$routeProvider",
     "$locationProvider",
     "HTML5_LOCATION",
-    function ($routeProvider, $locationProvider, HTML5_LOCATION) {
+    function ($routeProvider, $locationProvider, HTML5_LOCATION_ENABLED) {
 
-        if (HTML5_LOCATION) {
-            $locationProvider.html5Mode(true).hashPrefix = "!";
-        }
+        $locationProvider.html5Mode(HTML5_LOCATION_ENABLED).hashPrefix = "!";
 
         $routeProvider
             .when("/401", { templateUrl: "partials/401.html" })

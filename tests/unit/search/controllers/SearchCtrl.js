@@ -1,11 +1,11 @@
 "use strict";
 
-describe("sn.fm.player:SearchCtrl", function() {
+describe("FM.search.SearchCtrl", function() {
 
-    var $scope, $q, Spotify, PlayerQueueResource, spotifyCallback;
+    var $scope, $rootScope, $q, Spotify, PlayerQueueResource, spotifyCallback;
 
     beforeEach(function (){
-        module("sn.fm.player");
+        module("FM.search.SearchCtrl");
     });
 
     beforeEach(inject(function ($httpBackend) {
@@ -14,6 +14,10 @@ describe("sn.fm.player:SearchCtrl", function() {
 
     beforeEach(inject(function ( $rootScope, $injector, $controller ) {
         $scope = $rootScope.$new();
+        $rootScope = $rootScope;
+
+        $rootScope.toogleSidebar = function(){}
+
         $q = $injector.get("$q");
 
         spotifyCallback = function(){
@@ -42,6 +46,7 @@ describe("sn.fm.player:SearchCtrl", function() {
 
         $controller("SearchCtrl", {
             $scope: $scope,
+            $rootScope: $rootScope,
             $q: $q,
             Spotify: Spotify,
             PlayerQueueResource: PlayerQueueResource

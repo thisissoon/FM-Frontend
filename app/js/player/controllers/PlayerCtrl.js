@@ -27,7 +27,7 @@ angular.module("FM.player.PlayerCtrl",[
     "PlayerMuteResource",
     "PlayerVolumeResource",
     "ERRORS",
-    function ($scope, $q, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, ERRORS) {
+    function ($scope, $q, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource) {
 
         /**
          * The currently playing track
@@ -120,9 +120,9 @@ angular.module("FM.player.PlayerCtrl",[
                 $scope.getAllData();
             }
             // Handle unauthorised response status in-view
-            if (response && response.message && response.message.match && response.message.match("401")) {
-                $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
-            }
+            // if (response && response.message && response.message.match && response.message.match("401")) {
+            //     $scope.showAlert(ERRORS.STATUS_401_TITLE, ERRORS.STATUS_401_MESSAGE);
+            // }
         };
 
 

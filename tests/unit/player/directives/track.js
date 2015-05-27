@@ -1,9 +1,9 @@
 "use strict";
 
-describe("fm.player:track directive", function() {
+describe("FM.player.trackDirective", function() {
     var element, $scope, $rootScope, $templateCache;
 
-    beforeEach(module("sn.fm.player"));
+    beforeEach(module("FM.player.trackDirective"));
 
     beforeEach(inject(function (_$rootScope_, $compile, $injector) {
         $rootScope = _$rootScope_;

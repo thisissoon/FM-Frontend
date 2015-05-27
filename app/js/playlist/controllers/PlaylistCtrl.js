@@ -69,14 +69,9 @@ angular.module("FM.playlist.PlaylistCtrl", [
          * refresh playlist if song URI doesn't match the playlist
          * @method onPlay
          */
-        $scope.onPlay = function onPlay(event, data) {
-            if ($scope.playlist[0].track.uri === data.uri) { // jshint ignore:line
-                $scope.paused = false;
-                $scope.current = $scope.playlist[0];
-            } else {
-                $scope.refreshPlaylist();
-                $scope.paused = false;
-            }
+        $scope.onPlay = function onPlay() {
+            $scope.paused = false;
+            $scope.refreshPlaylist();
         };
 
         /**
