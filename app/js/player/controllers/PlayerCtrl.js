@@ -122,6 +122,14 @@ angular.module("FM.player.PlayerCtrl",[
         };
 
         /**
+         * On end event, remove the current track
+         * @method onEnd
+         */
+        $scope.onEnd = function onEnd() {
+            $scope.track = null;
+        };
+
+        /**
          * On pause event, update paused state
          * @method onPause
          */
@@ -165,7 +173,7 @@ angular.module("FM.player.PlayerCtrl",[
 
 
         $scope.$on("fm:player:play", $scope.getAllData);
-        $scope.$on("fm:player:end", $scope.getAllData);
+        $scope.$on("fm:player:end", $scope.onEnd);
         $scope.$on("fm:player:pause", $scope.onPause);
         $scope.$on("fm:player:resume", $scope.onResume);
         $scope.$on("fm:player:setMute", $scope.onSetMute);

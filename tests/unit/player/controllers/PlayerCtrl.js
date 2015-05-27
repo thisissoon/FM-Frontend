@@ -142,4 +142,10 @@ describe("FM.player.PlayerCtrl", function() {
         expect($scope.volume).toEqual(70);
     });
 
+    it("should clear the current track on end event", function() {
+        expect($scope.track).not.toBeNull();
+        $scope.$broadcast("fm:player:end");
+        expect($scope.track).toBeNull();;
+    });
+
 });
