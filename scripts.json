@@ -1,5 +1,6 @@
 {
     "vendor": [
+        "app/components/socket.io-client/socket.io.js",
         "app/components/angular/angular.js",
         "app/components/angular-aria/angular-aria.js",
         "app/components/angular-route/angular-route.js",
