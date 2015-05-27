@@ -5,12 +5,20 @@
 # Machine Settings
 
 machine:
+  services:
+    - docker
   node:
     version: 0.10.28
+  environment:
+    REPO: soon/doit-frontend
+    TAG: $(sed 's/master/latest/;s/\//\-/' <<<$CIRCLE_BRANCH)
 
 # Dependencies
 
 dependencies:
+  pre:
+    - docker pull google/nodejs
+    - sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" < .dockercfg.template > ~/.dockercfg
   override:
     - npm -d install
     - npm install -g grunt-cli
@@ -24,3 +32,12 @@ test:
     - grunt test
   post:
     - ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info
+
+# Deployment
+
+deployment:
+  latest:
+    branch: master
+    commands:
+        - docker build -t soon/fm-frontend:latest .
+        - docker push soon/fm-frontend:latest
