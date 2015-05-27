@@ -60,18 +60,19 @@
 // Import less files for tablet sized devices here
 // eg. device width >= 768px and <= 1024px
 @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    @import "tablet/core/normalize.less";
+
     @import "tablet/modules/sidebar.less";
-    @import "tablet/modules/queue.less";
 }
 
 // Import less files for mobile sized devices here
 // eg. device width < 768px
 @media (max-width: @screen-xs-max) {
+    @import "mobile/core/normalize.less";
     @import "mobile/core/buttons.less";
 
     @import "mobile/modules/header.less";
     @import "mobile/modules/footer.less";
     @import "mobile/modules/sidebar.less";
-    @import "mobile/modules/queue.less";
     @import "mobile/modules/media.less";
 }
