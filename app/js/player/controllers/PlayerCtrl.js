@@ -164,6 +164,7 @@ angular.module("FM.player.PlayerCtrl",[
         };
 
 
+        $scope.$on("fm:player:play", $scope.getAllData);
         $scope.$on("fm:player:end", $scope.getAllData);
         $scope.$on("fm:player:pause", $scope.onPause);
         $scope.$on("fm:player:resume", $scope.onResume);
