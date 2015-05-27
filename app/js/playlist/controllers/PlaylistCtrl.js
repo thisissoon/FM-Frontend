@@ -70,7 +70,6 @@ angular.module("FM.playlist.PlaylistCtrl", [
          * @method onPlay
          */
         $scope.onPlay = function onPlay() {
-            $scope.paused = false;
             $scope.refreshPlaylist();
         };
 

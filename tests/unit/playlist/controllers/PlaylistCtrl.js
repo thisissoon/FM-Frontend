@@ -90,8 +90,9 @@ describe("FM.playlist.PlaylistCtrl", function() {
     });
 
     it("should refresh playlist data on play event", function(){
+        spyOn($scope, "refreshPlaylist");
         $scope.onPlay();
-        expect($scope.paused).toBe(false);
+        expect($scope.refreshPlaylist).toHaveBeenCalled();
     });
 
     it("should remove item from playlist on end event", function(){
