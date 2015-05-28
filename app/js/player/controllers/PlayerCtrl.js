@@ -103,7 +103,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method skip
          */
         $scope.updateVol = function updateVol() {
-            PlayerVolumeResource.save({ volume: $scope.volume });
+            PlayerVolumeResource.save({ volume: parseInt($scope.volume) });
         };
 
         /**
