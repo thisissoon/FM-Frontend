@@ -13,6 +13,10 @@ angular.module("FM.player", [
     "FM.player.PlayerService",
     "FM.player.trackDirective"
 ])
+/**
+ * @method run
+ * @param  {Service} PlayerService
+ */
 .run([
     "PlayerService",
     function (PlayerService) {
