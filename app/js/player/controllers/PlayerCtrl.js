@@ -76,7 +76,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method resume
          */
         $scope.resume = function resume() {
-            PlayerTransportResource.resume().$promise
+            PlayerTransportResource.resume({}).$promise
                 .then($scope.onResume);
         };
 
@@ -85,7 +85,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method pause
          */
         $scope.pause = function pause() {
-            PlayerTransportResource.pause().$promise
+            PlayerTransportResource.pause({}).$promise
                 .then($scope.onPause);
         };
 
