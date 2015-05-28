@@ -66,7 +66,7 @@ angular.module("FM.api.RequestInterceptor", [
              */
             request: function(httpConfig) {
 
-                if(httpConfig.url.match(FM_API_SERVER_ADDRESS)) {
+                if (httpConfig.url.match(FM_API_SERVER_ADDRESS)) {
 
                     var token = $window.localStorage.getItem(tokenName);
                     if (token) {

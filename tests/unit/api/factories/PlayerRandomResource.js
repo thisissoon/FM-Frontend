@@ -11,13 +11,13 @@ describe("FM.api.PlayerRandomResource", function (){
         PlayerRandomResource = $injector.get("PlayerRandomResource");
 
         $httpBackend = $injector.get("$httpBackend");
-        $httpBackend.whenGET(/.*/).respond({ volume: 70 });
+        $httpBackend.whenPOST(/.*/).respond([{ track: { uri: "foo" } },{ track: { uri: "foo" } }]);
     }));
 
-    it("should get volume", function(){
-        var response = PlayerRandomResource.get();
+    it("should add random track to playlist", function(){
+        var response = PlayerRandomResource.save();
         $httpBackend.flush();
-        expect(response.volume).toEqual(70);
+        expect(response.length).toBe(2);
     });
 
 });

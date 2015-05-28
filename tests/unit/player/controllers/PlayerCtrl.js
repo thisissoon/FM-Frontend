@@ -2,63 +2,48 @@
 
 describe("FM.player.PlayerCtrl", function() {
 
-    var $scope, $q, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, ERRORS,
-        muteCallback, transportCallback, volumeCallback;
+    var $scope, $q, $httpBackend, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, ERRORS;
 
     beforeEach(function (){
         module("FM.player.PlayerCtrl");
     });
 
+    beforeEach(inject(function (_$httpBackend_) {
+        $httpBackend = _$httpBackend_
+
+        $httpBackend.whenGET(/.*player\/mute/).respond(200, { mute: true });
+        $httpBackend.whenDELETE(/.*player\/mute/).respond(200, { message: "200 OK" });
+        $httpBackend.whenPOST(/.*player\/mute/).respond(200, { message: "200 OK" });
+
+        $httpBackend.whenGET(/.*player\/current/).respond(200, { "name": "some track name" }, { "Paused": 1 });
+        $httpBackend.whenDELETE(/.*player\/current/).respond(200, { message: "200 OK" });
+        $httpBackend.whenPOST(/.*player\/pause/).respond(200, { message: "200 OK" });
+        $httpBackend.whenDELETE(/.*player\/pause/).respond(200, { message: "200 OK" });
+
+        $httpBackend.whenGET(/.*player\/volume/).respond(200, { volume: 70 });
+        $httpBackend.whenPOST(/.*player\/volume/).respond(200, { message: "200 OK" });
+    }));
+
     beforeEach(inject(function ( $rootScope, $injector, $controller ) {
         $scope = $rootScope.$new();
         $q = $injector.get("$q");
 
-        muteCallback = function(){
-            return {
-                $promise: {
-                    then: function(fn){
-                        fn.apply(this, [{ mute: true }]);
-                    }
-                }
-            }
-        }
-
-        transportCallback = function(){
-            return {
-                $promise: {
-                    then: function(fn){
-                        fn.apply(this, [{ track: { uri: "foo" } }]);
-                    }
-                }
-            }
-        }
-
-        volumeCallback = function(){
-            return {
-                $promise: {
-                    then: function(fn){
-                        fn.apply(this, [{ volume: 70 }]);
-                    }
-                }
-            }
-        }
-
         ERRORS = $injector.get("ERRORS");
 
         PlayerMuteResource = $injector.get("PlayerMuteResource");
-        spyOn(PlayerMuteResource, "get").and.callFake(muteCallback);
-        spyOn(PlayerMuteResource, "remove").and.callFake(muteCallback);
-        spyOn(PlayerMuteResource, "save").and.callFake(muteCallback);
+        spyOn(PlayerMuteResource, "get").and.callThrough();
+        spyOn(PlayerMuteResource, "remove").and.callThrough();
+        spyOn(PlayerMuteResource, "save").and.callThrough();
 
         PlayerTransportResource = $injector.get("PlayerTransportResource");
-        spyOn(PlayerTransportResource, "get").and.callFake(transportCallback);
-        spyOn(PlayerTransportResource, "resume").and.callFake(transportCallback);
-        spyOn(PlayerTransportResource, "pause").and.callFake(transportCallback);
-        spyOn(PlayerTransportResource, "skip").and.callFake(transportCallback);
+        spyOn(PlayerTransportResource, "get").and.callThrough();
+        spyOn(PlayerTransportResource, "resume").and.callThrough();
+        spyOn(PlayerTransportResource, "pause").and.callThrough();
+        spyOn(PlayerTransportResource, "skip").and.callThrough();
 
         PlayerVolumeResource = $injector.get("PlayerVolumeResource");
-        spyOn(PlayerVolumeResource, "get").and.callFake(volumeCallback);
-        spyOn(PlayerVolumeResource, "save").and.callFake(volumeCallback);
+        spyOn(PlayerVolumeResource, "get").and.callThrough();
+        spyOn(PlayerVolumeResource, "save").and.callThrough();
 
         $controller("PlayerCtrl", {
             $scope: $scope,
@@ -68,7 +53,15 @@ describe("FM.player.PlayerCtrl", function() {
             PlayerVolumeResource: PlayerVolumeResource,
             ERRORS: ERRORS
         });
+
+        $httpBackend.flush();
+
     }));
+
+    afterEach(function() {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    });
 
     it("should get all current track data", function(){
         $scope.getAllData();
@@ -76,26 +69,32 @@ describe("FM.player.PlayerCtrl", function() {
         expect(PlayerTransportResource.get).toHaveBeenCalled();
         expect(PlayerMuteResource.get).toHaveBeenCalled();
         expect(PlayerVolumeResource.get).toHaveBeenCalled();
+
+        $httpBackend.flush();
     });
 
     it("should make request to resume playback", function(){
         $scope.resume();
+        $httpBackend.flush();
         expect(PlayerTransportResource.resume).toHaveBeenCalled();
     });
 
     it("should make request to pause playback", function(){
         $scope.pause();
+        $httpBackend.flush();
         expect(PlayerTransportResource.pause).toHaveBeenCalled();
     });
 
     it("should make request to skip playback", function(){
         $scope.skip();
+        $httpBackend.flush();
         expect(PlayerTransportResource.skip).toHaveBeenCalled();
     });
 
     it("should make request to update volume", function(){
         $scope.volume = 70;
         $scope.updateVol();
+        $httpBackend.flush();
         expect(PlayerVolumeResource.save).toHaveBeenCalledWith({ volume: 70 });
     });
 
@@ -104,9 +103,13 @@ describe("FM.player.PlayerCtrl", function() {
         $scope.toggleMute();
         expect(PlayerMuteResource.remove).toHaveBeenCalled();
 
+        $httpBackend.flush();
+
         $scope.mute = false;
         $scope.toggleMute();
         expect(PlayerMuteResource.save).toHaveBeenCalled();
+
+        $httpBackend.flush();
     });
 
     it("should set paused state `true` on pause event", function() {
@@ -136,7 +139,17 @@ describe("FM.player.PlayerCtrl", function() {
     it("should clear the current track on end event", function() {
         expect($scope.track).not.toBeNull();
         $scope.$broadcast("fm:player:end");
-        expect($scope.track).toBeNull();;
+        expect($scope.track).toBeNull();
+    });
+
+    it("should set mute status to true", function() {
+        $scope.onMute();
+        expect($scope.mute).toBe(true);
+    });
+
+    it("should set mute status to false", function() {
+        $scope.onUnmute();
+        expect($scope.mute).toBe(false);
     });
 
 });

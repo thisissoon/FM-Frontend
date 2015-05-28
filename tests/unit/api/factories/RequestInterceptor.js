@@ -1,7 +1,7 @@
 "use strict";
 
 describe("FM.api.RequestInterceptor", function (){
-    var interceptor, httpProvider, $window, $location, rootScope, spy, FM_API_SERVER_ADDRESS;
+    var interceptor, httpProvider, config, $window, $location, rootScope, spy, fakeCallback, localStorageValue, FM_API_SERVER_ADDRESS;
 
     beforeEach(function (){
         module("FM.api.RequestInterceptor", function ($httpProvider){
@@ -11,26 +11,38 @@ describe("FM.api.RequestInterceptor", function (){
 
     beforeEach(inject(function ( $rootScope, $injector ){
 
-        interceptor = $injector.get("RequestInterceptor");
-
-        spyOn(interceptor, "request").and.callThrough();
-
         $rootScope.routeChanging = true;
         rootScope = $rootScope;
+
+        config = $injector.get("satellizer.config");
+
+        config.tokenPrefix = undefined;
+        config.tokenName = "bar";
+        config.authHeader = "Access-Token";
+
+        localStorageValue = "mockAccessToken";
+
+        fakeCallback = function(){ return localStorageValue };
 
         $window = $injector.get("$window");
 
         $window.localStorage = {
-            getItem: function(){ return "mockAccessToken" },
-            setItem: function(){ return "mockAccessToken" },
-            clear: function(){ return undefined }
+            getItem: function(){},
+            setItem: function(){},
+            clear: function(){}
         }
-        spyOn($window.localStorage, "getItem").and.callThrough();
+        spyOn($window.localStorage, "getItem").and.callFake(fakeCallback);
+        spyOn($window.localStorage, "setItem").and.callFake(fakeCallback);
+        spyOn($window.localStorage, "clear").and.callFake(function(){ localStorageValue = undefined });
 
         FM_API_SERVER_ADDRESS = $injector.get("FM_API_SERVER_ADDRESS");
 
         $location = $injector.get("$location");
         spy = spyOn($location, "path");
+
+        interceptor = $injector.get("RequestInterceptor");
+
+        spyOn(interceptor, "request").and.callThrough();
 
     }));
 
@@ -59,15 +71,15 @@ describe("FM.api.RequestInterceptor", function (){
         expect($location.path).not.toHaveBeenCalled();
     });
 
-    // it("should set Access-Token header from local storage", function(){
-    //     var httpConfig = {
-    //         url: FM_API_SERVER_ADDRESS,
-    //         headers: {}
-    //     };
-    //     var request = interceptor.request(httpConfig);
-    //     expect($window.localStorage.getItem).toHaveBeenCalled();
-    //     expect(request.headers["Access-Token"]).toEqual("mockAccessToken");
-    // });
+    it("should set Access-Token header from local storage", function(){
+        var httpConfig = {
+            url: FM_API_SERVER_ADDRESS,
+            headers: {}
+        };
+        var request = interceptor.request(httpConfig);
+        expect($window.localStorage.getItem).toHaveBeenCalled();
+        expect(request.headers["Access-Token"]).toEqual("mockAccessToken");
+    });
 
     it("should NOT set Access-Token header if no token saved", function(){
         $window.localStorage.clear();

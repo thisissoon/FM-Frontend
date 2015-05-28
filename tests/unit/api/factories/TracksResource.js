@@ -14,7 +14,7 @@ describe("FM.api.TracksResource", function (){
         $httpBackend.whenGET(/.*/).respond({ id: 123 });
     }));
 
-    it("should get volume", function(){
+    it("should get track", function(){
         var response = TracksResource.get();
         $httpBackend.flush();
         expect(response.id).toEqual(123);
