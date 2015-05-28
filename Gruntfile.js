@@ -224,6 +224,14 @@ module.exports = function (grunt) {
                     dest: "<%= config.outputDir %>partials/"
                 }]
             },
+            fonts: {
+                files: [{
+                    expand: true,
+                    cwd: "app/fonts",
+                    src: ["*","**/*"],
+                    dest: "<%= config.outputDir %>fonts/"
+                }]
+            },
             e2e: {
                 files: [{
                     expand: true,

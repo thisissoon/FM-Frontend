@@ -1,40 +1,17 @@
-<md-toolbar class="sidebar-header">
+<form ng-controller="SearchCtrl">
+    <div class="form-group">
+        <input type="text"
+               class="form-control"
+               autofocus
+               ng-model="selectedItem"
+               placeholder="Add track"
+               typeahead="track for track in search($viewValue)"
+               typeahead-loading="loadingTracks"
+               typeahead-template-url="partials/search-result.html"
+               typeahead-min-length="2"
+               typeahead-wait-ms="300"
+               typeahead-on-select="onTrackSelected($item)">
+        <img ng-show="loadingTracks" class="center-block loading-animation" src="img/icons/loading-animation.gif" alt="loading" width="30">
+    </div>
+</form>
 
-    <a href="!" class="logo-wrapper">
-        <img class="logo" src="img/logo/soon.svg" class="md-padding" alt="SOON_">
-    </a>
-
-</md-toolbar>
-
-<md-content
-    ng-controller="LoginCtrl"
-    ng-if="!isAuthenticated()"
-    class="md-padding"
-    layout="column"
-    layout-align="center center">
-    <p>Join the party</p>
-    <md-button
-        class="md-raised md-accent"
-        ng-click="authenticate()">
-        Login with Google
-    </md-button>
-</md-content>
-
-
-<md-content ng-if="isAuthenticated()" class="spotify-search" ng-controller="SearchCtrl">
-    <md-autocomplete
-        md-no-cache="false"
-        md-search-text="searchText"
-        md-items="item in search(searchText)"
-        md-min-length="3"
-        md-delay="300"
-        md-selected-item="selectedItem"
-        md-selected-item-change="onTrackSelected(selectedItem)"
-        placeholder="Add track">
-
-        <md-item class="md-item">
-            <fm-track class="track" data-spotify-track="item"></fm-track>
-        </md-item>
-
-    </md-autocomplete>
-</md-content>

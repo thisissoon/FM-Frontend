@@ -1,0 +1,53 @@
+//
+// Media
+// --------------------------------------------------
+
+.media {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    .footer & {
+        .flex-wrap(wrap);
+        height: @footer-height-xs;
+    }
+}
+
+.media-user {
+    align-self: center;
+    min-width: 40px;
+}
+
+.media-album {
+    min-width: 75px;
+}
+
+.img-user {
+    .size(30px, auto);
+    margin-right: 10px;
+}
+
+.img-album {
+    .size(75px, auto);
+}
+
+.media-time,
+.playing-animation {
+    display: none;
+}
+
+.media-heading {
+    font-size: 0.933em; // 14px
+}
+
+.media-info {
+    font-size: 0.867em; // 13px
+}
+
+.media-controls {
+    line-height: @footer-height-xs - 75px;
+    min-height: @footer-height-xs - 75px;
+    min-width: 330px;
+    padding-left: 0;
+    text-align: center;
+    width: 100%;
+}

@@ -1,54 +1,25 @@
-/**
- *  @class          header
- *  @author         SOON_
- *  @description    Styling for site header
- */
+//
+// Header
+// --------------------------------------------------
 
-header {
-    min-height: 64px;
+.header {
+    .transition(all .5s);
+    border-bottom: 1px solid @header-border-bottom-color;
+    height: @header-height;
+    line-height: @header-line-height;
+    padding-left: @header-horizontal-padding;
+    padding-right: @header-horizontal-padding;
 }
 
-.logo {
-    vertical-align: middle;
-    height: 100%;
+.soon-fm-logo {
+    .size(142px, auto);
 }
 
-.logo-wrapper {
-    display: block;
-    left: 0;
-    height: 64px;
-    padding: 10px;
-    position: absolute;
-    top: 0;
+.soon-fm-logo-xs {
+    .size(77px, auto);
 }
 
-.btn-menu {
-    background-color: transparent;
-    border: none;
-    height: 38px;
-    margin: 16px;
-    position: absolute;
-    width: 36px;
-}
-
-.header-menu h1 {
-    font-size: 1.250em;
-    font-weight: normal;
-    margin: auto;
-}
-
-.sidebar-header {
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
-.header-menu,
-.sidebar-header {
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 9
+.header .btn-link {
+    padding-left: 10px;
+    padding-right: 0;
 }

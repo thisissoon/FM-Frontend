@@ -1,0 +1,32 @@
+//
+// Buttons
+// --------------------------------------------------
+
+.btn {
+    &.btn-icon {
+        .button-size(0; 0; @font-size-base; 28px; 50%);
+        .square(30px);
+
+        .icon {
+            font-size: .8em;
+            line-height: 30px;
+            vertical-align: top;
+        }
+    }
+
+    &.btn-transparent {
+        .button-variant(@gray-light; transparent; @gray-light);
+    }
+
+    .separator {
+        &:after {
+            .size(1px, 24px);
+            .opacity(.5);
+            background-color: @gray-light;
+            content: "";
+            display: inline-block;
+            margin: 0 7px;
+            vertical-align: middle;
+        }
+    }
+}

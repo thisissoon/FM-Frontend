@@ -1,0 +1,66 @@
+//
+// Mixins
+// --------------------------------------------------
+
+// input[type="range"] styles
+.input-range-track() {
+    animate: 0.2s;
+    cursor: pointer;
+    height: @track-height;
+    width: @track-width;
+}
+
+.input-range-thumb() {
+    background-color: @thumb-color;
+    border: @thumb-border-width solid @thumb-border-color;
+    border-radius: @thumb-radius;
+    cursor: pointer;
+    height: @thumb-height;
+    width: @thumb-width;
+}
+
+// vendor prefixes
+.flex(@size) {
+    -webkit-flex: @size; /* Safari 6.1+ */
+        -ms-flex: @size; /* IE 10 */
+            flex: @size;
+}
+
+.flex-grow(@size) {
+    -webkit-flex-grow: @size; /* Safari 6.1+ */
+        -ms-flex-grow: @size; /* IE 10 */
+            flex-grow: @size;
+}
+
+.flex-direction(@direction){
+    -webkit-flex-direction: @direction; /* Safari 6.1+ */
+            flex-direction: @direction;
+}
+
+.flex-wrap(@direction){
+    -webkit-flex-wrap: @direction; /* Safari 6.1+ */
+            flex-wrap: @direction;
+}
+
+.align-items(@alignment){
+    -webkit-align-items: @alignment; /* Safari 7.0+ */
+            align-items: @alignment;
+}
+
+.align-self(@alignment){
+    -webkit-align-self: @alignment; /* Safari 7.0+ */
+            align-self: @alignment;
+}
+
+.justify-content(@justification){
+    -webkit-justify-content: @justification; /* Safari 6.1+ */
+            justify-content: @justification;
+}
+
+.flex-box() {
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -webkit-flex; /* NEW - Chrome */
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}

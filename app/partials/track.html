@@ -1,44 +1,71 @@
-<md-item-content
-    layout="row"
-    layout-align="start center">
+<div ng-if="user" class="media-left media-user text-center">
+    <span ng-if="current" class="selected">Selected by: </span>
+    <img ng-src="{{ user.avatar_url }}" alt="{{ user.display_name }}" class="img-circle img-user">
+</div>
 
-    <div class="md-tile-left">
-        <img class="artwork md-padding"
-             ng-src="{{ track.album.images[0].url }}"
-             alt="{{ item.album.name }}">
-    </div>
+<div class="media-left media-album">
+    <img class="media-object img-album" ng-src="{{ track.album.images[0].url }}" alt="{{ item.album.name }}">
+</div>
 
-    <div class="md-tile-content"
-         layout="row"
-         layout-align="space-around center"
-         layout-sm="row"
-         layout-align-sm="space-between start">
+<div class="media-body">
+    <p class="lead media-heading media-info" bind-html-unsafe="track.name | typeaheadHighlight:$parent.query"></p>
+    <p class="text-muted media-info">
+        <span ng-repeat-start="artist in track.artists" bind-html-unsafe="artist.name | typeaheadHighlight:$parent.$parent.query"></span
+        ><span ng-repeat-end ng-if="!$last">,&nbsp;</span>
+    </p>
+    <p class="text-muted media-info" bind-html-unsafe="track.album.name | typeaheadHighlight:$parent.query"></p>
+</div>
 
-        <div class="md-tile-content details">
-            <h3 class="name">
-                {{ track.name }}
-            </h3>
-            <h4 class="artist" ng-if="track.artists.length > 0">
-                <span ng-repeat="artist in track.artists">
-                    {{ artist.name }}<span ng-if="!$last">,</span>
-                </span>
-            </h4>
-            <h4 class="album">
-                {{ track.album.name }}
-            </h4>
-        </div>
+<div ng-if="current"
+     class="media-right playing-animation"
+     ng-switch="track.paused">
+    <img ng-switch-when="false" src="img/icons/playing-animation.gif" alt="music playing animation">
+    <img ng-switch-default src="img/icons/playing-stoped.png" alt="music stopped animation">
+</div>
 
-        <div class="length" hide-sm>
-            {{ track.duration | date: "m:ss" }}
-        </div>
+<div class="media-right media-time text-right"
+     ng-if="track.duration">
+    <p class="text-muted">{{ track.duration | date: "m:ss" }}</p>
+</div>
 
-        <div class="md-tile-content avatar" ng-if="user">
-            <img ng-src="{{ user.avatar_url }}">
-            <md-tooltip>
-                {{ user.display_name }}
-            </md-tooltip>
-        </div>
+<div ng-if="current"
+     ng-init="PlayerCtrl = $parent.$parent"
+     class="media-right media-controls text-right">
 
-    </div>
+    <form class="form-inline">
 
-</md-item-content>
+        <button ng-show="PlayerCtrl.track.paused" ng-click="PlayerCtrl.resume()" class="btn btn-icon btn-transparent">
+            <span class="icon icon-play text-primary"></span>
+        </button>
+
+        <button ng-show="!PlayerCtrl.track.paused" ng-click="PlayerCtrl.pause()" class="btn btn-icon btn-transparent">
+            <span class="icon icon-pause text-primary"></span>
+        </button>
+
+        <button ng-click="PlayerCtrl.skip()" class="btn btn-icon btn-transparent">
+            <span class="icon icon-skip"></span>
+        </button>
+
+        <button ng-click="PlayerCtrl.toggleMute()" class="btn btn-icon btn-transparent" ng-switch="PlayerCtrl.mute">
+            <span ng-switch-when="true" class="icon icon-muted"></span>
+            <span ng-switch-default class="icon icon-unmuted"></span>
+        </button>
+
+        <input class="volume-control"
+               ng-model="PlayerCtrl.volume"
+               ng-model-options="{
+               updateOn: 'default blur',
+                   debounce: {
+                       'default': 500,
+                       'blur': 0
+                   }
+               }"
+               ng-change="PlayerCtrl.updateVol()"
+               type="range"
+               min="0"
+               max="100">
+
+    </form>
+
+</div>
+

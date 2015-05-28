@@ -1,0 +1,42 @@
+//
+// Glyphicons
+// --------------------------------------------------
+
+// Import the fonts
+@font-face {
+    font-family: "icomoon";
+    src:url("@{icon-font-path}@{icon-font-name}.eot?-x4susv");
+    src:url("@{icon-font-path}@{icon-font-name}.eot?#iefix-x4susv") format("embedded-opentype"),
+        url("@{icon-font-path}@{icon-font-name}.woff?-x4susv") format("woff"),
+        url("@{icon-font-path}@{icon-font-name}.ttf?-x4susv") format("truetype"),
+        url("@{icon-font-path}@{icon-font-name}.svg?-x4susv#@{icon-font-svg-id}") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+// Catchall baseclass
+.icon {
+    font-family: "icomoon";
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    line-height: 1;
+    speak: none;
+    text-transform: none;
+    vertical-align: middle;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// Individual icons
+.icon-google-plus   { &:before { content: "\e600"; }}
+.icon-history       { &:before { content: "\e601"; }}
+.icon-pause         { &:before { content: "\e602"; }}
+.icon-settings      { &:before { content: "\e603"; }}
+.icon-skip          { &:before { content: "\e604"; }}
+.icon-unmuted       { &:before { content: "\e605"; }}
+.icon-muted         { &:before { content: "\e606"; }}
+.icon-play          { &:before { content: "\e607"; }}
+.icon-playlist-add  { &:before { content: "\e608"; }}

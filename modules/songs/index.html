@@ -1,179 +1,170 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <title>thisissoonFM - Modules</title>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>SOON FM_ - Modules</title>
 
-        <base href="/app/">
-        <link rel="stylesheet" href="components/angular-material/angular-material.css"/>
+    <base href="/app/">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css">
+    <link rel="stylesheet" href="css/all.css">
 
-        <style>
+</head>
 
-            .artwork {
-                margin: .5em;
-                width: 75px;
-            }
+<body>
 
-            .song {
-                border: 1px solid #F0F0F0;
-                box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
-                display: block;
-                margin-bottom: 3px;
-            }
+    <header class="header">
 
-            .song.current .artwork {
-                margin: 0 1em -4px 0;
-                width: 125px;
-            }
+        <div class="container-fluid">
+            <div class="row">
 
-            .song.current h3 {
-                font-size: 2em;
-            }
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <img src="img/logo/soon-fm.svg" class="soon-fm-logo hidden-xs" alt="">
+                    <img src="img/logo/soon-fm-mobile.svg" class="soon-fm-logo-xs visible-xs-inline-block" alt="">
+                </div>
 
-            .song.current h4 {
-                font-size: 1.6em;
-            }
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 text-right">
 
-            @media (max-width: 600px) {
-                .song.current h3 {
-                    font-size: 1.5em;
-                }
+                    <!-- <button type="button" class="btn btn-primary">
+                        <span class="icon icon-google-plus"></span>
+                        <span class="separator"></span>
+                        Sign in with Gmail
+                    </button> -->
 
-                .song.current h4 {
-                    font-size: 1.2em;
-                }
-            }
+                    <button class="btn btn-link hidden-lg hidden-md">
+                        <span class="h3 icon icon-playlist-add text-muted"></span>
+                        <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Add to playlist</span>
+                    </button>
 
-            .song:last-child {
-                margin-bottom: 0px;
-            }
+                    <button class="btn btn-link">
+                        <span class="h3 icon icon-history text-muted"></span>
+                        <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Track history</span>
+                    </button>
 
-            .track-length {
-                padding: 1em;
-            }
+                    <button class="btn btn-link">
+                        <span class="h3 icon icon-settings text-muted"></span>
+                        <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Settings</span>
+                    </button>
 
-            .btn-menu {
-                background-color: transparent;
-                border: none;
-                height: 38px;
-                margin: 16px;
-                position: absolute;
-                width: 36px;
-            }
-            md-toolbar h1 {
-                font-size: 1.250em;
-                font-weight: 400;
-                margin: auto;
-            }
-            .visually-hidden {
-                border: 0;
-                clip: rect(0 0 0 0);
-                height: 1px;
-                margin: -1px;
-                overflow: hidden;
-                padding: 0;
-                position: absolute;
-                width: 1px;
-            }
+                </div>
 
-            /* Using Data-URI converted from svg until <md-icon> becomes available
-            https://github.com/google/material-design-icons
-            */
-            .btn-menu {
-                background: transparent url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyNHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IkhlYWRlciI+CiAgICA8Zz4KICAgICAgICA8cmVjdCB4PSItNjE4IiB5PSItMjIzMiIgZmlsbD0ibm9uZSIgd2lkdGg9IjE0MDAiIGhlaWdodD0iMzYwMCIvPgogICAgPC9nPgo8L2c+CjxnIGlkPSJMYWJlbCI+CjwvZz4KPGcgaWQ9Ikljb24iPgogICAgPGc+CiAgICAgICAgPHJlY3QgZmlsbD0ibm9uZSIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+CiAgICAgICAgPHBhdGggZD0iTTMsMThoMTh2LTJIM1YxOHogTTMsMTNoMTh2LTJIM1YxM3ogTTMsNnYyaDE4VjZIM3oiIHN0eWxlPSJmaWxsOiNmM2YzZjM7Ii8+CiAgICA8L2c+CjwvZz4KPGcgaWQ9IkdyaWQiIGRpc3BsYXk9Im5vbmUiPgogICAgPGcgZGlzcGxheT0iaW5saW5lIj4KICAgIDwvZz4KPC9nPgo8L3N2Zz4=) no-repeat  center center;
-            }
-
-        </style>
-    </head>
-
-    <body layout="column" ng-controller="AppCtrl">
-
-        <md-toolbar layout="row">
-            <button ng-click="toggleSidenav('left')" hide-gt-sm class="btn-menu">
-                <span class="visually-hidden">Menu</span>
-            </button>
-            <h1>thisissoon.fm</h1>
-        </md-toolbar>
-
-        <div layout="row" flex>
-            <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$media('gt-sm')">
-
-            </md-sidenav>
-            <div layout="column" flex id="content">
-                <md-content layout="column" flex class="md-padding">
-                    <md-list>
-                        <md-item ng-repeat="item in todos" class="md-item song" ng-class="{ current: $first }">
-                            <md-item-content layout="row" layout-align="start center">
-                                <div class="md-tile-left">
-                                    <img ng-src="{{ item.face }}" class="artwork md-padding" alt="{{ item.who }}">
-                                </div>
-                                <div class="md-tile-content">
-                                    <h3>{{ item.what }}</h3>
-                                    <h4>{{ item.who }}</h4>
-                                </div>
-                                <div class="md-tile-right" hide-sm>
-                                    <span class="track-length">3:16</span>
-                                </div>
-                            </md-item-content>
-                        </md-item>
-                    </md-list>
-                </md-content>
             </div>
         </div>
 
-        <script src="components/angular/angular.js"></script>
-        <script src="components/angular-aria/angular-aria.js"></script>
-        <script src="components/angular-animate/angular-animate.js"></script>
-        <script src="components/angular-material/angular-material.js"></script>
+    </header>
 
-        <script>
-            angular.module('myApp', ['ngMaterial'])
-                .controller('AppCtrl', function ($scope, $mdSidenav) {
+    <div class="sidebar">
+        <form>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Add track">
+            </div>
+        </form>
+    </div>
 
-                    $scope.toggleSidenav = function(menuId) {
-                        $mdSidenav(menuId).toggle();
-                    };
+    <div class="queue">
 
-                    $scope.todos = [
-                        {
-                            face : 'http://upload.wikimedia.org/wikipedia/en/b/b9/Nothing_Was_the_Same_cover_2.png',
-                            what: 'Brunch this weekend?',
-                            who: 'Min Li Chan',
-                            when: '3:08PM',
-                            notes: " I'll be in your neighborhood doing errands"
-                        },
-                        {
-                            face : 'http://upload.wikimedia.org/wikipedia/en/b/b9/Nothing_Was_the_Same_cover_2.png',
-                            what: 'Brunch this weekend?',
-                            who: 'Min Li Chan',
-                            when: '3:08PM',
-                            notes: " I'll be in your neighborhood doing errands"
-                        },
-                        {
-                            face : 'http://upload.wikimedia.org/wikipedia/en/b/b9/Nothing_Was_the_Same_cover_2.png',
-                            what: 'Brunch this weekend?',
-                            who: 'Min Li Chan',
-                            when: '3:08PM',
-                            notes: " I'll be in your neighborhood doing errands"
-                        },
-                        {
-                            face : 'http://upload.wikimedia.org/wikipedia/en/b/b9/Nothing_Was_the_Same_cover_2.png',
-                            what: 'Brunch this weekend?',
-                            who: 'Min Li Chan',
-                            when: '3:08PM',
-                            notes: " I'll be in your neighborhood doing errands"
-                        },
-                        {
-                            face : 'http://upload.wikimedia.org/wikipedia/en/b/b9/Nothing_Was_the_Same_cover_2.png',
-                            what: 'Brunch this weekend?',
-                            who: 'Min Li Chan',
-                            when: '3:08PM',
-                            notes: " I'll be in your neighborhood doing errands"
-                        }
-                    ];
-                });
-        </script>
+        <h2 class="h5">Coming up:</h2>
 
-    </body>
+        <ul class="list-unstyled media-list">
+            <li class="media">
+                <div class="media-left media-middle text-center">
+                    <img src="https://lh4.googleusercontent.com/-28HClpLQXVg/AAAAAAAAAAI/AAAAAAAAABI/8FS35wQA8to/photo.jpg" alt class="img-circle img-user">
+                </div>
+
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-album" src="https://i.scdn.co/image/f031d1d3def9eaac45ac26a7bc0abfe25f809305" alt="">
+                    </a>
+                </div>
+                <div class="media-body media-middle">
+                    <h4 class="media-heading text-overflow media-info">Beautiful - feat. Pharrell, Uncle Charlie Wilson</h4>
+                    <p class="text-muted text-overflow media-info">Pharrell Williams, Uncle Charlie Wilson, Snoop Dogg</p>
+                    <p class="text-muted text-overflow media-info">The Best Of Snoop Dogg</p>
+                </div>
+                <div class="media-right media-bottom text-right hidden-xs">
+                    <p class="text-muted">7:34</p>
+                </div>
+            </li>
+            <li class="media">
+                <div class="media-left media-middle text-center">
+                    <img src="https://lh4.googleusercontent.com/-28HClpLQXVg/AAAAAAAAAAI/AAAAAAAAABI/8FS35wQA8to/photo.jpg" alt class="img-circle img-user">
+                </div>
+
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-album" src="https://i.scdn.co/image/b54ffad57da81ab019ca7b23638e57b4d39c29f8" alt="">
+                    </a>
+                </div>
+                <div class="media-body media-middle">
+                    <h4 class="media-heading text-overflow media-info">Drop It Like It's Hot</h4>
+                    <p class="text-muted text-overflow media-info">Pharrell Williams, Snoop Dogg</p>
+                    <p class="text-muted text-overflow media-info">R&G (Rhythm & Gangsta): The Masterpiece</p>
+                </div>
+                <div class="media-right media-bottom text-right hidden-xs">
+                    <p class="text-muted">7:34</p>
+                </div>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <footer class="footer">
+
+        <div class="media">
+            <div class="media-left media-middle media-user text-center">
+                <span class="selected">Selected by: </span>
+                <img src="https://lh4.googleusercontent.com/-28HClpLQXVg/AAAAAAAAAAI/AAAAAAAAABI/8FS35wQA8to/photo.jpg" alt class="img-circle img-user">
+            </div>
+
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object img-album" src="https://i.scdn.co/image/f031d1d3def9eaac45ac26a7bc0abfe25f809305" alt="">
+                </a>
+            </div>
+            <div class="media-body media-middle">
+                <h4 class="media-heading text-overflow media-info">Beautiful - feat. Pharrell, Uncle Charlie Wilson</h4>
+                <p class="text-muted text-overflow media-info">Pharrell Williams, Uncle Charlie Wilson, Snoop Dogg</p>
+                <p class="text-muted text-overflow media-info">The Best Of Snoop Dogg</p>
+            </div>
+            <div class="media-right media-middle playing-animation">
+                <img src="img/icons/playing-animation.gif" alt="">
+            </div>
+            <div class="media-right media-middle media-time text-right">
+                <p class="text-muted">7:34</p>
+            </div>
+            <div class="media-right media-controls media-middle text-right">
+
+                <form class="form-inline">
+
+                    <!-- <button class="btn btn-icon btn-transparent">
+                        <span class="icon icon-play"></span>
+                    </button> -->
+
+                    <button class="btn btn-icon btn-transparent">
+                        <span class="icon icon-pause"></span>
+                    </button>
+
+                    <button class="btn btn-icon btn-transparent">
+                        <span class="icon icon-skip"></span>
+                    </button>
+
+                    <!-- <button class="btn btn-icon btn-transparent">
+                        <span class="icon icon-muted"></span>
+                    </button> -->
+
+                    <button class="btn btn-icon btn-transparent">
+                        <span class="icon icon-unmuted"></span>
+                    </button>
+
+                    <input class="volume-control" type="range" min="0" max="100">
+
+                </form>
+
+            </div>
+        </div>
+
+    </footer>
+
+</body>
 </html>

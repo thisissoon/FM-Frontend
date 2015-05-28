@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- build:[ng-app]:e2e sn.example.e2e -->
-<html lang="en" ng-app="sn.fm" ng-strict-di>
+<!-- build:[ng-app]:e2e FM.e2e -->
+<html lang="en" ng-app="FM" ng-strict-di>
 <!-- /build -->
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="fragment" content="!">
-        <title>SOON_ FM</title>
+        <title>SOON FM_</title>
 
         <!-- build:template
         <base href="<%= url %>">
@@ -15,75 +15,81 @@
         <base href="/app/">
         <!-- /build -->
 
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css">
+        <link rel='stylesheet' href="//fonts.googleapis.com/css?family=Nixie+One"  type="text/css">
+
         <!-- build:css css/all.min.css -->
         <link rel="stylesheet" href="css/all.css">
         <!-- /build -->
-        <link rel="shortcut icon" type="image/png" href="img/icons/favicon-16x16.png">
+
+        <link rel="apple-touch-icon" sizes="57x57" href="img/favicons/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="img/favicons/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="img/favicons/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="img/favicons/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="img/favicons/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="img/favicons/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="img/favicons/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="img/favicons/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="img/favicons/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="img/favicons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="img/favicons/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="img/favicons/favicon-16x16.png">
+        <link rel="manifest" href="img/favicons/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="img/favicons/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
     </head>
-    <body layout="row"
-          layout-fill
-          md-swipe-right="openSideNav('left')"
-          md-swipe-left="closeSideNav('left')"
-          flex>
+    <body>
 
-        <md-sidenav
-            layout="column"
-            class="md-sidenav-left md-whiteframe-z2"
-            md-component-id="left"
-            md-is-locked-open="$mdMedia('gt-md')"
-            md-swipe-left="closeSideNav('left')"
-            ng-include="'partials/sidebar.html'">
+        <header class="header" ng-include="'partials/header.html'"></header>
+        <div class="sidebar" ng-include="'partials/sidebar.html'" ng-class="{ 'open': sidebarOpen }"></div>
+        <ng-view></ng-view>
+        <footer class="footer" ng-include="'partials/footer.html'"></footer>
 
-        </md-sidenav>
+        <fm-loading-screen></fm-loading-screen>
 
-        <md-content
-            class="player"
-            layout="column"
-            layout-fill
-            flex>
-
-            <header ng-include="'partials/header.html'"></header>
-            <ng-view></ng-view>
-            <fm-loading-screen></fm-loading-screen>
-
-        </md-content>
 
         <!-- build:js js/app.min.js -->
         <script src="components/socket.io-client/socket.io.js"></script>
         <script src="components/angular/angular.js"></script>
-        <script src="components/angular-aria/angular-aria.js"></script>
         <script src="components/angular-route/angular-route.js"></script>
         <script src="components/angular-animate/angular-animate.js"></script>
-        <script src="components/angular-material/angular-material.js"></script>
         <script src="components/angular-resource/angular-resource.js"></script>
+        <script src="components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         <script src="components/angular-spotify/src/angular-spotify.js"></script>
         <script src="components/angular-socket-io/socket.js"></script>
         <script src="components/satellizer/satellizer.js"></script>
 
         <script src="js/env/env.js"></script>
 
-        <script src="js/fm-socket/socket.js"></script>
+        <script src="js/socket/socket.js"></script>
 
-        <script src="js/fm-loading-screen/loadingScreen.js"></script>
+        <script src="js/loading-screen/loadingScreen.js"></script>
 
-        <script src="js/fm-api/app.js"></script>
-        <script src="js/fm-api/config.js"></script>
-        <script src="js/fm-api/factories/PlayerMuteResource.js"></script>
-        <script src="js/fm-api/factories/PlayerQueueResource.js"></script>
-        <script src="js/fm-api/factories/PlayerRandomResource.js"></script>
-        <script src="js/fm-api/factories/PlayerTransportResource.js"></script>
-        <script src="js/fm-api/factories/PlayerVolumeResource.js"></script>
-        <script src="js/fm-api/factories/TracksResource.js"></script>
-        <script src="js/fm-api/factories/UsersResource.js"></script>
-        <script src="js/fm-api/factories/RequestInterceptor.js"></script>
+        <script src="js/auth/auth.js"></script>
+        <script src="js/auth/controllers/LoginCtrl.js"></script>
 
-        <script src="js/fm-player/app.js"></script>
-        <script src="js/fm-player/config.js"></script>
-        <script src="js/fm-player/constants/errors.js"></script>
-        <script src="js/fm-player/controllers/LoginCtrl.js"></script>
-        <script src="js/fm-player/controllers/PlayerCtrl.js"></script>
-        <script src="js/fm-player/controllers/SearchCtrl.js"></script>
-        <script src="js/fm-player/directives/track.js"></script>
+        <script src="js/api/api.js"></script>
+        <script src="js/api/constants/errors.js"></script>
+        <script src="js/api/factories/PlayerMuteResource.js"></script>
+        <script src="js/api/factories/PlayerQueueResource.js"></script>
+        <script src="js/api/factories/PlayerRandomResource.js"></script>
+        <script src="js/api/factories/PlayerTransportResource.js"></script>
+        <script src="js/api/factories/PlayerVolumeResource.js"></script>
+        <script src="js/api/factories/TracksResource.js"></script>
+        <script src="js/api/factories/UsersResource.js"></script>
+        <script src="js/api/factories/RequestInterceptor.js"></script>
+
+        <script src="js/player/player.js"></script>
+        <script src="js/player/controllers/PlayerCtrl.js"></script>
+        <script src="js/player/directives/track.js"></script>
+
+        <script src="js/playlist/playlist.js"></script>
+        <script src="js/playlist/controllers/PlaylistCtrl.js"></script>
+
+        <script src="js/search/search.js"></script>
+        <script src="js/search/controllers/SearchCtrl.js"></script>
 
         <script src="js/app.js"></script>
         <!-- /build -->
