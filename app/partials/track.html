@@ -34,19 +34,19 @@
 
     <form class="form-inline">
 
-        <button ng-show="track.paused" ng-click="PlayerCtrl.resume()" class="btn btn-icon btn-transparent">
-            <span class="icon icon-play"></span>
+        <button ng-show="PlayerCtrl.track.paused" ng-click="PlayerCtrl.resume()" class="btn btn-icon btn-transparent">
+            <span class="icon icon-play text-primary"></span>
         </button>
 
-        <button ng-show="!track.paused" ng-click="PlayerCtrl.pause()" class="btn btn-icon btn-transparent">
-            <span class="icon icon-pause"></span>
+        <button ng-show="!PlayerCtrl.track.paused" ng-click="PlayerCtrl.pause()" class="btn btn-icon btn-transparent">
+            <span class="icon icon-pause text-primary"></span>
         </button>
 
         <button ng-click="PlayerCtrl.skip()" class="btn btn-icon btn-transparent">
             <span class="icon icon-skip"></span>
         </button>
 
-        <button ng-click="PlayerCtrl.toggleMute()" class="btn btn-icon btn-transparent" ng-switch="mute">
+        <button ng-click="PlayerCtrl.toggleMute()" class="btn btn-icon btn-transparent" ng-switch="PlayerCtrl.mute">
             <span ng-switch-when="true" class="icon icon-muted"></span>
             <span ng-switch-default class="icon icon-unmuted"></span>
         </button>
