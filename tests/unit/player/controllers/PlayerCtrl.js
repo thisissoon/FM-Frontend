@@ -109,15 +109,6 @@ describe("FM.player.PlayerCtrl", function() {
         expect(PlayerMuteResource.save).toHaveBeenCalled();
     });
 
-    it("should get updated track data if request is successful", function(){
-        spyOn($scope, "getAllData");
-        $scope.onSuccess({ message: "200 OK" })
-        expect($scope.getAllData).not.toHaveBeenCalled();
-
-        $scope.onSuccess({ message: "201 OK" })
-        expect($scope.getAllData).toHaveBeenCalled();
-    });
-
     it("should set paused state `true` on pause event", function() {
         $scope.$broadcast("fm:player:pause");
         expect($scope.paused).toEqual(true);

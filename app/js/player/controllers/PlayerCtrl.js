@@ -77,7 +77,7 @@ angular.module("FM.player.PlayerCtrl",[
          */
         $scope.resume = function resume() {
             PlayerTransportResource.resume().$promise
-                .then($scope.onSuccess);
+                .then($scope.onResume);
         };
 
         /**
@@ -86,7 +86,7 @@ angular.module("FM.player.PlayerCtrl",[
          */
         $scope.pause = function pause() {
             PlayerTransportResource.pause().$promise
-                .then($scope.onSuccess);
+                .then($scope.onPause);
         };
 
         /**
@@ -95,7 +95,7 @@ angular.module("FM.player.PlayerCtrl",[
          */
         $scope.skip = function skip() {
             PlayerTransportResource.skip().$promise
-                .then($scope.onSuccess);
+                .then($scope.onEnd);
         };
 
         /**
@@ -103,8 +103,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method skip
          */
         $scope.updateVol = function updateVol() {
-            PlayerVolumeResource.save({ volume: $scope.volume }).$promise
-                .then($scope.onSuccess);
+            PlayerVolumeResource.save({ volume: $scope.volume });
         };
 
         /**
@@ -114,10 +113,10 @@ angular.module("FM.player.PlayerCtrl",[
         $scope.toggleMute = function toggleMute() {
             if ($scope.mute) {
                 PlayerMuteResource.remove().$promise
-                    .then($scope.onSuccess);
+                    .then($scope.onUnmute);
             } else {
                 PlayerMuteResource.save({ mute: true }).$promise
-                    .then($scope.onSuccess);
+                    .then($scope.onMute);
             }
         };
 
@@ -154,21 +153,27 @@ angular.module("FM.player.PlayerCtrl",[
         };
 
         /**
+         * Set mute to true
+         * @method onMute
+         */
+        $scope.onMute = function onMute() {
+            $scope.mute = true;
+        };
+
+        /**
+         * Set mute to false
+         * @method onMute
+         */
+        $scope.onUnmute = function onUnmute() {
+            $scope.mute = false;
+        };
+
+        /**
          * On setVolume event, set mute status
          * @method onSetVolume
          */
         $scope.onSetVolume = function onSetVolume(event, data) {
             $scope.volume = data.volume;
-        };
-
-        /**
-         * @method onSuccess
-         * @param  {Object} response
-         */
-        $scope.onSuccess = function onSuccess(response){
-            if (response && response.message && response.message.match && !response.message.match("200")) {
-                $scope.getAllData();
-            }
         };
 
 
