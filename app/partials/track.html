@@ -17,8 +17,9 @@
 </div>
 
 <div ng-if="current"
+     ng-init="PlayerCtrl = $parent.$parent"
      class="media-right playing-animation"
-     ng-switch="track.paused">
+     ng-switch="PlayerCtrl.paused">
     <img ng-switch-when="false" src="img/icons/playing-animation.gif" alt="music playing animation">
     <img ng-switch-default src="img/icons/playing-stoped.png" alt="music stopped animation">
 </div>
@@ -34,11 +35,11 @@
 
     <form class="form-inline">
 
-        <button ng-show="PlayerCtrl.track.paused" ng-click="PlayerCtrl.resume()" class="btn btn-icon btn-transparent">
+        <button ng-show="PlayerCtrl.paused" ng-click="PlayerCtrl.resume()" class="btn btn-icon btn-transparent">
             <span class="icon icon-play text-primary"></span>
         </button>
 
-        <button ng-show="!PlayerCtrl.track.paused" ng-click="PlayerCtrl.pause()" class="btn btn-icon btn-transparent">
+        <button ng-show="!PlayerCtrl.paused" ng-click="PlayerCtrl.pause()" class="btn btn-icon btn-transparent">
             <span class="icon icon-pause text-primary"></span>
         </button>
 
