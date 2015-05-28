@@ -346,7 +346,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask("copyBuild", [
         "copy:images",
-        "copy:partials"
+        "copy:partials",
+        "copy:fonts"
     ]);
 
     grunt.registerTask("server", [
