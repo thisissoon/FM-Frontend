@@ -15,12 +15,23 @@ angular.module("FM.alert", [
     function(){
         var AlertService = {
 
+            /**
+             * Set new alert
+             * @method set
+             * @param {String} message  alert message to set
+             * @param {String} type     bootstrap style class (warning|danger|success|info)
+             */
             set: function set (message, type) {
                 AlertService.alerts.push({
                     message: message,
                     type: type
                 });
             },
+
+            /**
+             * List of alerts
+             * @property {Array} alerts
+             */
             alerts: []
 
         };
