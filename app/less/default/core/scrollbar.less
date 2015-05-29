@@ -2,17 +2,31 @@
 // Scrollbar
 // --------------------------------------------------
 
-::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 8px;
-    height: 8px;
-}
+@import (css,inline) "@{bower}ng-scrollable/assets/ng-scrollable.css";
 
-::-webkit-scrollbar-thumb {
-    background-color: @gray-light;
-    border-radius: 4px;
-}
+//::-webkit-scrollbar {
+//    -webkit-appearance: none;
+//    width: 8px;
+//    height: 8px;
+//}
+//
+//::-webkit-scrollbar-thumb {
+//    background-color: @gray-light;
+//    border-radius: 4px;
+//}
+//
+//::-webkit-scrollbar-track {
+//    background-color: transparent;
+//}
 
-::-webkit-scrollbar-track {
+.scrollable .scrollable-bar {
     background-color: transparent;
+    .transition(opacity 0.3s ease-in-out);
+}
+
+.scrollable .scrollable-slider {
+    background-color: @gray-light;
+    background-image: none;
+    border-radius: 4px;
+    border: 0;
 }

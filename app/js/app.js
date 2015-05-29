@@ -15,7 +15,8 @@ angular.module("FM", [
     "FM.sockets",
     "FM.loadingScreen",
     "ngRoute",
-    "ENV"
+    "ENV",
+    "ngScrollable"
 ])
 /**
  * @method config
@@ -36,5 +37,14 @@ angular.module("FM", [
             .when("/500", { templateUrl: "partials/500.html" })
             .otherwise({ redirectTo: "/" });
 
+    }
+])
+
+.run([
+    "$rootScope",
+    function($rootScope){
+        $rootScope.$on("routeChangeSuccess", function(){
+            $rootScope.$broadcast("content.changed");
+        });
     }
 ]);
