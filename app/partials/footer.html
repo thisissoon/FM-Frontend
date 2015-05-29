@@ -1,46 +1,48 @@
-<fm-track class="media" data-spotify-track="track.track" data-user="track.user"></fm-track>
+<div ng-controller="PlayerCtrl">
+    <fm-track class="media" data-spotify-track="track.track" data-user="track.user"></fm-track>
 
-<div class="controls" ng-show="track">
+    <div class="controls" ng-show="track">
 
-    <div class="playing-animation"
-         ng-switch="paused">
-        <img ng-switch-when="false" src="img/icons/playing-animation.gif" alt="music playing animation">
-        <img ng-switch-default src="img/icons/playing-stoped.png" alt="music stopped animation">
+        <div class="playing-animation"
+             ng-switch="paused">
+            <img ng-switch-when="false" src="img/icons/playing-animation.gif" alt="music playing animation">
+            <img ng-switch-default src="img/icons/playing-stoped.png" alt="music stopped animation">
+        </div>
+
+        <form class="form-inline">
+
+            <button ng-show="paused" ng-click="resume()" class="btn btn-icon btn-transparent">
+                <span class="icon icon-play text-primary"></span>
+            </button>
+
+            <button ng-show="!paused" ng-click="pause()" class="btn btn-icon btn-transparent">
+                <span class="icon icon-pause text-primary"></span>
+            </button>
+
+            <button ng-click="skip()" class="btn btn-icon btn-transparent">
+                <span class="icon icon-skip"></span>
+            </button>
+
+            <button ng-click="toggleMute()" class="btn btn-icon btn-transparent" ng-switch="mute">
+                <span ng-switch-when="true" class="icon icon-muted"></span>
+                <span ng-switch-default class="icon icon-unmuted"></span>
+            </button>
+
+            <input class="volume-control"
+                   ng-model="volume"
+                   ng-model-options="{
+                       updateOn: 'default blur',
+                       debounce: {
+                           'default': 500,
+                           'blur': 0
+                       }
+                   }"
+                   ng-change="updateVol()"
+                   type="range"
+                   min="0"
+                   max="100">
+
+        </form>
+
     </div>
-
-    <form class="form-inline">
-
-        <button ng-show="paused" ng-click="resume()" class="btn btn-icon btn-transparent">
-            <span class="icon icon-play text-primary"></span>
-        </button>
-
-        <button ng-show="!paused" ng-click="pause()" class="btn btn-icon btn-transparent">
-            <span class="icon icon-pause text-primary"></span>
-        </button>
-
-        <button ng-click="skip()" class="btn btn-icon btn-transparent">
-            <span class="icon icon-skip"></span>
-        </button>
-
-        <button ng-click="toggleMute()" class="btn btn-icon btn-transparent" ng-switch="mute">
-            <span ng-switch-when="true" class="icon icon-muted"></span>
-            <span ng-switch-default class="icon icon-unmuted"></span>
-        </button>
-
-        <input class="volume-control"
-               ng-model="volume"
-               ng-model-options="{
-                   updateOn: 'default blur',
-                   debounce: {
-                       'default': 500,
-                       'blur': 0
-                   }
-               }"
-               ng-change="updateVol()"
-               type="range"
-               min="0"
-               max="100">
-
-    </form>
-
 </div>
