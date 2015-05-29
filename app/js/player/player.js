@@ -5,6 +5,7 @@
  * @module   FM.player
  * @author   SOON_
  * @requires FM.player.PlayerCtrl
+ * @requires FM.player.PlayerService
  * @requires FM.player.trackDirective
  */
 angular.module("FM.player", [

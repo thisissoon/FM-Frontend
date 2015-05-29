@@ -1,16 +1,13 @@
 "use strict";
 /**
- * Controller for thisissoon FM player view, handles searching
- * the spotify api for songs using ngMaterial autocomplete and
- * angular-spotify
+ * Controller for thisissoon FM player
  * @module FM.player.PlayerCtrl
  * @author SOON_
  */
 angular.module("FM.player.PlayerCtrl",[
     "FM.api.PlayerTransportResource",
     "FM.api.PlayerMuteResource",
-    "FM.api.PlayerVolumeResource",
-    "FM.api.ERRORS"
+    "FM.api.PlayerVolumeResource"
 ])
 /**
  * @class PlayerCtrl
@@ -18,7 +15,6 @@ angular.module("FM.player.PlayerCtrl",[
  * @param {Factory} PlayerTransportResource
  * @param {Factory} PlayerMuteResource
  * @param {Factory} PlayerVolumeResource
- * @param {Object}  ERRORS
  */
 .controller("PlayerCtrl", [
     "$scope",
@@ -26,7 +22,6 @@ angular.module("FM.player.PlayerCtrl",[
     "PlayerTransportResource",
     "PlayerMuteResource",
     "PlayerVolumeResource",
-    "ERRORS",
     function ($scope, $q, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource) {
 
         /**

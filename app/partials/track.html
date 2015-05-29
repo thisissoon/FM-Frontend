@@ -3,70 +3,19 @@
     <img ng-src="{{ user.avatar_url }}" alt="{{ user.display_name }}" class="img-circle img-user">
 </div>
 
-<div class="media-left media-album">
+<div ng-if="track" class="media-left media-album">
     <img class="media-object img-album" ng-src="{{ track.album.images[0].url }}" alt="{{ item.album.name }}">
 </div>
 
-<div class="media-body">
-    <p class="lead media-heading media-info" bind-html-unsafe="track.name | typeaheadHighlight:$parent.query"></p>
+<div ng-if="track" class="media-body">
+    <p class="lead media-heading media-info" bind-html-unsafe="track.name"></p>
     <p class="text-muted media-info">
-        <span ng-repeat-start="artist in track.artists" bind-html-unsafe="artist.name | typeaheadHighlight:$parent.$parent.query"></span
+        <span ng-repeat-start="artist in track.artists" bind-html-unsafe="artist.name"></span
         ><span ng-repeat-end ng-if="!$last">,&nbsp;</span>
     </p>
-    <p class="text-muted media-info" bind-html-unsafe="track.album.name | typeaheadHighlight:$parent.query"></p>
+    <p class="text-muted media-info" bind-html-unsafe="track.album.name"></p>
 </div>
 
-<div ng-if="current"
-     ng-init="PlayerCtrl = $parent.$parent"
-     class="media-right playing-animation"
-     ng-switch="PlayerCtrl.paused">
-    <img ng-switch-when="false" src="img/icons/playing-animation.gif" alt="music playing animation">
-    <img ng-switch-default src="img/icons/playing-stoped.png" alt="music stopped animation">
-</div>
-
-<div class="media-right media-time text-right"
-     ng-if="track.duration">
+<div ng-if="track.duration" class="media-right media-time text-right">
     <p class="text-muted">{{ track.duration | date: "m:ss" }}</p>
 </div>
-
-<div ng-if="current"
-     ng-init="PlayerCtrl = $parent.$parent"
-     class="media-right media-controls text-right">
-
-    <form class="form-inline">
-
-        <button ng-show="PlayerCtrl.paused" ng-click="PlayerCtrl.resume()" class="btn btn-icon btn-transparent">
-            <span class="icon icon-play text-primary"></span>
-        </button>
-
-        <button ng-show="!PlayerCtrl.paused" ng-click="PlayerCtrl.pause()" class="btn btn-icon btn-transparent">
-            <span class="icon icon-pause text-primary"></span>
-        </button>
-
-        <button ng-click="PlayerCtrl.skip()" class="btn btn-icon btn-transparent">
-            <span class="icon icon-skip"></span>
-        </button>
-
-        <button ng-click="PlayerCtrl.toggleMute()" class="btn btn-icon btn-transparent" ng-switch="PlayerCtrl.mute">
-            <span ng-switch-when="true" class="icon icon-muted"></span>
-            <span ng-switch-default class="icon icon-unmuted"></span>
-        </button>
-
-        <input class="volume-control"
-               ng-model="PlayerCtrl.volume"
-               ng-model-options="{
-               updateOn: 'default blur',
-                   debounce: {
-                       'default': 500,
-                       'blur': 0
-                   }
-               }"
-               ng-change="PlayerCtrl.updateVol()"
-               type="range"
-               min="0"
-               max="100">
-
-    </form>
-
-</div>
-

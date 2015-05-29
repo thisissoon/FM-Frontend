@@ -2,7 +2,7 @@
 
 describe("FM.player.PlayerCtrl", function() {
 
-    var $scope, $q, $httpBackend, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, ERRORS;
+    var $scope, $q, $httpBackend, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource;
 
     beforeEach(function (){
         module("FM.player.PlayerCtrl");
@@ -28,8 +28,6 @@ describe("FM.player.PlayerCtrl", function() {
         $scope = $rootScope.$new();
         $q = $injector.get("$q");
 
-        ERRORS = $injector.get("ERRORS");
-
         PlayerMuteResource = $injector.get("PlayerMuteResource");
         spyOn(PlayerMuteResource, "get").and.callThrough();
         spyOn(PlayerMuteResource, "remove").and.callThrough();
@@ -50,8 +48,7 @@ describe("FM.player.PlayerCtrl", function() {
             $q: $q,
             PlayerTransportResource: PlayerTransportResource,
             PlayerMuteResource: PlayerMuteResource,
-            PlayerVolumeResource: PlayerVolumeResource,
-            ERRORS: ERRORS
+            PlayerVolumeResource: PlayerVolumeResource
         });
 
         $httpBackend.flush();
