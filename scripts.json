@@ -32,7 +32,6 @@
         "app/js/player/player.js",
         "app/js/player/controllers/PlayerCtrl.js",
         "app/js/player/directives/track.js",
-        "app/js/player/services/PlayerService.js",
 
         "app/js/playlist/playlist.js",
         "app/js/playlist/controllers/PlaylistCtrl.js",
