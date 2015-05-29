@@ -173,7 +173,7 @@
 
 @sidebar-bg:                    @light-black;
 @sidebar-padding:               30px;
-@sidebar-position-bottom:       @footer-height;
+@sidebar-position-bottom:       @footer-height + (@grid-gutter-width / 2);
 @sidebar-position-top:          @header-height;
 @sidebar-width:                 347px;
 
@@ -185,7 +185,7 @@
 
 // ng-view
 @view-padding:                 30px;
-@view-position-bottom:         @footer-height;
+@view-position-bottom:         @footer-height + (@grid-gutter-width / 2);
 @view-position-left:           @sidebar-width;
 @view-position-right:          0;
 @view-position-top:            @header-height;

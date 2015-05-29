@@ -2,24 +2,14 @@
 // Normalize
 // --------------------------------------------------
 
-.main-view {
+ng-view {
     .transition(all .5s);
     display: block;
     bottom: @view-position-bottom;
     left: @view-position-left;
     right: @view-position-right;
+    overflow: auto;
     padding: @view-padding;
+    position: fixed;
     top: @view-position-top;
-
-    &.scrollable {
-        position: fixed;
-    }
-}
-
-ng-view {
-    display: block;
-}
-
-body {
-    overflow: hidden;
 }

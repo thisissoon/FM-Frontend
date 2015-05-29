@@ -2,31 +2,17 @@
 // Scrollbar
 // --------------------------------------------------
 
-@import (css,inline) "@{bower}ng-scrollable/assets/ng-scrollable.css";
-
-//::-webkit-scrollbar {
-//    -webkit-appearance: none;
-//    width: 8px;
-//    height: 8px;
-//}
-//
-//::-webkit-scrollbar-thumb {
-//    background-color: @gray-light;
-//    border-radius: 4px;
-//}
-//
-//::-webkit-scrollbar-track {
-//    background-color: transparent;
-//}
-
-.scrollable .scrollable-bar {
-    background-color: transparent;
-    .transition(opacity 0.3s ease-in-out);
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 8px;
+    height: 8px;
 }
 
-.scrollable .scrollable-slider {
+::-webkit-scrollbar-thumb {
     background-color: @gray-light;
-    background-image: none;
     border-radius: 4px;
-    border: 0;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
 }
