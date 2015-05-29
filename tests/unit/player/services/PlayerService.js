@@ -83,7 +83,8 @@ describe("FM.player.PlayerService", function() {
     });
 
     it("should make request to update volume", function(){
-        service.updateVol("70");
+        service.volume = "70";
+        service.updateVol();
         $httpBackend.flush();
         expect(PlayerVolumeResource.save).toHaveBeenCalledWith({ volume: 70 });
     });

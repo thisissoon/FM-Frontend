@@ -117,8 +117,8 @@ angular.module("FM.player.PlayerService",[
          * @method updateVol
          * @param {Integer} vol Updated ew value of volume
          */
-        this.updateVol = function updateVol(vol) {
-            PlayerVolumeResource.save({ volume: parseInt(vol) });
+        this.updateVol = function updateVol() {
+            PlayerVolumeResource.save({ volume: parseInt(_this.volume) });
         };
 
         /**
