@@ -108,8 +108,19 @@ angular.module("FM.api.RequestInterceptor", [
                 } else {
 
                     // Trigger alert if server returns error for in-view requests
-                    if (response.status === 401) {
-                        AlertService.set(ERRORS.STATUS_401_MESSAGE, "warning");
+                    switch(response.status) {
+                        case 401:
+                            AlertService.set(ERRORS.STATUS_401_MESSAGE, "warning");
+                            break;
+                        case 403:
+                            AlertService.set(ERRORS.STATUS_403_MESSAGE, "danger");
+                            break;
+                        case 404:
+                            AlertService.set(ERRORS.STATUS_404_MESSAGE, "info");
+                            break;
+                        default:
+                            AlertService.set(response.statusText + ": " + response.data.message, "warning");
+                            break;
                     }
 
                 }
