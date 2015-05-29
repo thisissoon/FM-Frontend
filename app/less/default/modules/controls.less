@@ -1,0 +1,29 @@
+//
+// Player controls
+// --------------------------------------------------
+
+.controls {
+    .flex-box();
+    .align-items(center);
+    .flex-direction(row);
+    .flex-wrap(nowrap);
+    .justify-content(space-between);
+    background-color: @controls-bg;
+    height: @controls-height;
+    min-width: 340px;
+    padding-right: 30px;
+    text-align: right;
+}
+
+.playing-animation {
+    display: inline-block;
+    margin-left: -7px;
+    min-width: 40px;
+}
+
+input[type=range].volume-control {
+    line-height: 30px;
+    margin: 0 10px;
+    vertical-align: middle;
+    width: 129px;
+}

@@ -13,12 +13,8 @@
     padding-right: 20px;
     margin-bottom: 5px;
 
-    .footer & {
-        height: 100%;
-
-        .selected {
-            display: none;
-        }
+    .footer .selected {
+        display: none;
     }
 
     .dropdown-menu & {
@@ -29,6 +25,16 @@
 
     li.active & {
         background-color: lighten(@media-bg, 10%);
+    }
+
+    .sidebar & {
+        .media-heading {
+            font-size: 0.933em; // 14px
+        }
+
+        .media-info {
+            font-size: 0.867em; // 13px
+        }
     }
 }
 
@@ -64,26 +70,14 @@
     .align-self(flex-end);
     min-width: 40px;
 
-    .current & {
+    .footer & {
         .align-self(center);
 
         p {
             margin-bottom: 0;
+            margin-top: 10px;
         }
     }
-}
-
-.media-controls {
-    .flex-grow(1);
-    .align-self(center);
-    padding: 0 20px;
-    min-width: 300px;
-}
-
-.playing-animation {
-    .align-self(center);
-    margin-left: -7px;
-    min-width: 40px;
 }
 
 .img-user {
@@ -93,11 +87,4 @@
 
 .img-album {
     .size(90px, auto);
-}
-
-input[type=range].volume-control {
-    margin: 0 10px;
-    line-height: 30px;
-    vertical-align: middle;
-    width: 129px;
 }

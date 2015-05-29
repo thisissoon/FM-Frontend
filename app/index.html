@@ -45,7 +45,7 @@
         <header class="header" ng-include="'partials/header.html'"></header>
         <div class="sidebar" ng-include="'partials/sidebar.html'" ng-class="{ 'open': sidebarOpen }"></div>
         <ng-view></ng-view>
-        <footer class="footer" ng-include="'partials/footer.html'"></footer>
+        <footer class="footer" ng-include="'partials/footer.html'" ng-controller="PlayerCtrl"></footer>
 
         <fm-loading-screen></fm-loading-screen>
 

@@ -7,8 +7,8 @@
     padding-right: 10px;
 
     .footer & {
-        .flex-wrap(wrap);
-        height: @footer-height-xs;
+        height: @media-footer-height-xs;
+        margin-bottom: 0;
     }
 }
 
@@ -27,11 +27,10 @@
 }
 
 .img-album {
-    .size(75px, auto);
+    .size(@media-footer-height-xs, auto);
 }
 
-.media-time,
-.playing-animation {
+.media-time {
     display: none;
 }
 
@@ -41,13 +40,4 @@
 
 .media-info {
     font-size: 0.867em; // 13px
-}
-
-.media-controls {
-    line-height: @footer-height-xs - 75px;
-    min-height: @footer-height-xs - 75px;
-    min-width: 330px;
-    padding-left: 0;
-    text-align: center;
-    width: 100%;
 }
