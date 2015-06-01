@@ -44,8 +44,8 @@
 
         <header class="header" ng-include="'partials/header.html'"></header>
         <div class="alerts" ng-include="'partials/alert.html'" ng-controller="AlertCtrl"></div>
-        <div class="sidebar" ng-include="'partials/sidebar.html'" ng-class="{ 'open': sidebarOpen }"></div>
-        <ng-view></ng-view>
+        <div class="sidebar" ng-include="'partials/sidebar.html'" ng-class="{ 'open': sidebarOpen, 'alert-active': alertActive }"></div>
+        <ng-view ng-class="{ 'alert-active': alertActive }"></ng-view>
         <footer class="footer" ng-include="'partials/footer.html'"></footer>
 
         <fm-loading-screen></fm-loading-screen>

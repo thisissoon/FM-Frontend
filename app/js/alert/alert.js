@@ -4,7 +4,8 @@
  * @author   SOON_
  */
 angular.module("FM.alert", [
-    "ui.bootstrap.alert"
+    "ui.bootstrap.alert",
+    "ngAnimate"
 ])
 /**
  * @class AlertService
@@ -12,7 +13,8 @@ angular.module("FM.alert", [
  *     AlertService.set("Woah there, you'll need to login", "warning");
  */
 .service("AlertService", [
-    function(){
+    "$rootScope",
+    function($rootScope){
         var AlertService = {
 
             /**
@@ -26,6 +28,21 @@ angular.module("FM.alert", [
                     message: message,
                     type: type
                 });
+
+                $rootScope.alertActive = true;
+            },
+
+            /**
+             * Remove alert from list
+             * @method remove
+             * @param {Number} index   index of alert to remove
+             */
+            remove: function remove (index) {
+                AlertService.alerts.splice(index, 1);
+
+                if (AlertService.alerts.length === 0) {
+                    $rootScope.alertActive = false;
+                }
             },
 
             /**
@@ -60,9 +77,7 @@ angular.module("FM.alert", [
          * @method closeAlert
          * @param {Number} index   of alert to close
          */
-        $scope.closeAlert = function closeAlert (index) {
-            $scope.alerts.splice(index, 1);
-        };
+        $scope.closeAlert = AlertService.remove;
 
     }
 ]);

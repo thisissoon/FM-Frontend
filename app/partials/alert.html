@@ -3,8 +3,8 @@
     <div class="row">
         <div class="col-xs-12">
 
-            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
-                {{ alert.message }}
+            <alert class="slide-down" type="{{alerts[alerts.length-1].type}}" close="closeAlert(alerts.length-1)" ng-show="alerts.length > 0">
+                {{ alerts[alerts.length-1].message }}
             </alert>
 
         </div>
