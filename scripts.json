@@ -18,6 +18,10 @@
         "app/js/auth/auth.js",
         "app/js/auth/controllers/LoginCtrl.js",
 
+        "app/js/alert/alert.js",
+        "app/js/alert/controllers/AlertCtrl.js",
+        "app/js/alert/services/AlertService.js",
+
         "app/js/api/api.js",
         "app/js/api/constants/errors.js",
         "app/js/api/factories/PlayerMuteResource.js",

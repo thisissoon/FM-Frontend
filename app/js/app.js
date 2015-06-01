@@ -7,6 +7,7 @@
  * @author   SOON_
  */
 angular.module("FM", [
+    "FM.alert",
     "FM.api",
     "FM.auth",
     "FM.playlist",

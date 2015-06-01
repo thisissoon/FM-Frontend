@@ -4,6 +4,8 @@
  * @author SOON_
  */
 angular.module("FM.api.RequestInterceptor", [
+    "FM.alert",
+    "FM.api.ERRORS",
     "ENV",
     "satellizer",
     "ngRoute"
@@ -52,7 +54,9 @@ angular.module("FM.api.RequestInterceptor", [
     "$window",
     "satellizer.config",
     "FM_API_SERVER_ADDRESS",
-    function ($rootScope, $location, $window, config, FM_API_SERVER_ADDRESS) {
+    "AlertService",
+    "ERRORS",
+    function ($rootScope, $location, $window, config, FM_API_SERVER_ADDRESS, AlertService, ERRORS) {
 
         var tokenName = config.tokenPrefix ? config.tokenPrefix + "_" + config.tokenName : config.tokenName;
 
@@ -92,13 +96,33 @@ angular.module("FM.api.RequestInterceptor", [
                     $window.localStorage.removeItem(tokenName);
                 }
 
-                // Navigate to error pages if server returns error code whilst FE route is changing
                 if($rootScope.routeChanging){
+
+                    // Navigate to error pages if server returns error code whilst FE route is changing
                     if (response.status === 401){
                         $location.path("/401");
                     } else if (response.status < 200 || response.status > 299){
                         $location.path("/500");
                     }
+
+                } else {
+
+                    // Trigger alert if server returns error for in-view requests
+                    switch(response.status) {
+                        case 401:
+                            AlertService.set(ERRORS.STATUS_401_MESSAGE, "warning");
+                            break;
+                        case 403:
+                            AlertService.set(ERRORS.STATUS_403_MESSAGE, "danger");
+                            break;
+                        case 404:
+                            AlertService.set(ERRORS.STATUS_404_MESSAGE, "info");
+                            break;
+                        default:
+                            AlertService.set(response.statusText + ": " + response.data.message, "warning");
+                            break;
+                    }
+
                 }
 
                 return response;
