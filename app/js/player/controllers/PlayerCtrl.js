@@ -7,11 +7,14 @@
 angular.module("FM.player.PlayerCtrl",[
     "FM.api.PlayerTransportResource",
     "FM.api.PlayerMuteResource",
-    "FM.api.PlayerVolumeResource"
+    "FM.api.PlayerVolumeResource",
+    "notification"
 ])
 /**
  * @class PlayerCtrl
  * @param {Object}  $scope
+ * @param {Service} $q
+ * @parma {Service} $notification
  * @param {Factory} PlayerTransportResource
  * @param {Factory} PlayerMuteResource
  * @param {Factory} PlayerVolumeResource
@@ -19,10 +22,11 @@ angular.module("FM.player.PlayerCtrl",[
 .controller("PlayerCtrl", [
     "$scope",
     "$q",
+    "$notification",
     "PlayerTransportResource",
     "PlayerMuteResource",
     "PlayerVolumeResource",
-    function ($scope, $q, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource) {
+    function ($scope, $q, $notification, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource) {
 
         /**
          * The currently playing track
@@ -63,6 +67,10 @@ angular.module("FM.player.PlayerCtrl",[
                 $scope.track = response[0];
                 $scope.mute = response[1].mute;
                 $scope.volume = response[2].volume;
+
+                $notification("Now Playing", {
+                    body: $scope.track.artists[0].name + " - " + $scope.track.album.name + ": " + $scope.track.name
+                });
             });
         };
 

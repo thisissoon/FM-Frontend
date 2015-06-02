@@ -9,7 +9,8 @@ angular.module("FM.playlist.PlaylistCtrl", [
     "FM.api.TracksResource",
     "FM.api.UsersResource",
     "FM.api.PlayerQueueResource",
-    "ngRoute"
+    "ngRoute",
+    "notification"
 ])
 /**
  * @method config
@@ -35,17 +36,23 @@ angular.module("FM.playlist.PlaylistCtrl", [
 /**
  * @constructor
  * @class PlaylistCtrl
- * @param {Object} $scope
- * @param {Array}  playlistData
+ * @param {Object}  $scope
+ * @param {Service} $q
+ * @param {Service} $notification
+ * @param {Factory} TracksResource
+ * @param {Factory} UsersResource
+ * @param {Factory} PlayerQueueResource
+ * @param {Array}   playlistData
  */
 .controller("PlaylistCtrl", [
     "$scope",
     "$q",
+    "$notification",
     "TracksResource",
     "UsersResource",
     "PlayerQueueResource",
     "playlistData",
-    function ($scope, $q, TracksResource, UsersResource, PlayerQueueResource, playlistData) {
+    function ($scope, $q, $notification, TracksResource, UsersResource, PlayerQueueResource, playlistData) {
 
         /**
          * @property playlist
@@ -100,6 +107,10 @@ angular.module("FM.playlist.PlaylistCtrl", [
                     user: response[1]
                 };
                 $scope.playlist.push(item);
+
+                $notification("Track added", {
+                    body: item.user.name + " added " + item.track.artists[0].name + " - " + item.track.album.name + ": " + item.track.name
+                });
             });
         };
 
