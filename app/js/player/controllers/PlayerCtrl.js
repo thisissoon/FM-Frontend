@@ -69,7 +69,8 @@ angular.module("FM.player.PlayerCtrl",[
                 $scope.volume = response[2].volume;
 
                 $notification("Now Playing", {
-                    body: $scope.track.artists[0].name + " - " + $scope.track.album.name + ": " + $scope.track.name
+                    body: $scope.track.artists[0].name + " - " + $scope.track.album.name + ": " + $scope.track.name,
+                    icon: $scope.track.album.images[0].url
                 });
             });
         };

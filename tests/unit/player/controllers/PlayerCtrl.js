@@ -16,7 +16,7 @@ describe("FM.player.PlayerCtrl", function() {
         $httpBackend.whenDELETE(/.*player\/mute/).respond(200, { message: "200 OK" });
         $httpBackend.whenPOST(/.*player\/mute/).respond(200, { message: "200 OK" });
 
-        $httpBackend.whenGET(/.*player\/current/).respond(200, { "name": "some track name", album: { name: "some album name" }, artists: [{ name: "some artist name" }] }, { "Paused": 1 });
+        $httpBackend.whenGET(/.*player\/current/).respond(200, { "name": "some track name", album: { name: "some album name", images: [{ url: "track/image.png" }] }, artists: [{ name: "some artist name" }] }, { "Paused": 1 });
         $httpBackend.whenDELETE(/.*player\/current/).respond(200, { message: "200 OK" });
         $httpBackend.whenPOST(/.*player\/pause/).respond(200, { message: "200 OK" });
         $httpBackend.whenDELETE(/.*player\/pause/).respond(200, { message: "200 OK" });
@@ -71,7 +71,7 @@ describe("FM.player.PlayerCtrl", function() {
         expect(PlayerVolumeResource.get).toHaveBeenCalled();
 
         $httpBackend.flush();
-        expect($notification).toHaveBeenCalledWith("Now Playing", { body: "some artist name - some album name: some track name" });
+        expect($notification).toHaveBeenCalledWith("Now Playing", { body: "some artist name - some album name: some track name", icon: "track/image.png" });
     });
 
     it("should make request to resume playback", function(){

@@ -108,8 +108,9 @@ angular.module("FM.playlist.PlaylistCtrl", [
                 };
                 $scope.playlist.push(item);
 
-                $notification("Track added", {
-                    body: item.user.name + " added " + item.track.artists[0].name + " - " + item.track.album.name + ": " + item.track.name
+                $notification("Track Added", {
+                    body: item.user.name + " added " + item.track.artists[0].name + " - " + item.track.album.name + ": " + item.track.name,
+                    icon: item.track.album.images[0].url
                 });
             });
         };

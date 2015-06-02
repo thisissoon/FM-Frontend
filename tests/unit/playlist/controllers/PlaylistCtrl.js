@@ -14,7 +14,7 @@ describe("FM.playlist.PlaylistCtrl", function() {
 
         $httpBackend.whenGET(/.*player\/queue/).respond(200, [{ track: { uri: "foo" } },{ track: { uri: "bar" } }]);
         $httpBackend.whenGET(/.*users.*/).respond(200, { "id": 123 });
-        $httpBackend.whenGET(/.*tracks.*/).respond(200, { uri: "foo", album: { name: "some album name" }, artists: [{ name: "some artist name" }] });
+        $httpBackend.whenGET(/.*tracks.*/).respond(200, { uri: "foo", album: { name: "some album name", images: [{ url: "track/image.png" }] }, artists: [{ name: "some artist name" }] });
         $httpBackend.whenGET(/partials\/.*/).respond(200);
     }));
 
@@ -98,7 +98,7 @@ describe("FM.playlist.PlaylistCtrl", function() {
         $scope.onAdd({},{ uri: "foo", user: 123 });
         $httpBackend.flush();
         expect($scope.playlist.length).toBe(3);
-        expect($notification).toHaveBeenCalledWith("Track added", { body: "undefined added some artist name - some album name: undefined" });
+        expect($notification).toHaveBeenCalledWith("Track Added", { body: "undefined added some artist name - some album name: undefined", icon: "track/image.png" });
     });
 
 
