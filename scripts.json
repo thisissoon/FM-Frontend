@@ -1,6 +1,7 @@
 {
     "vendor": [
         "app/components/socket.io-client/socket.io.js",
+        "app/components/jquery/dist/jquery.js",
         "app/components/angular/angular.js",
         "app/components/angular-route/angular-route.js",
         "app/components/angular-animate/angular-animate.js",
@@ -8,7 +9,8 @@
         "app/components/angular-bootstrap/ui-bootstrap-tpls.js",
         "app/components/angular-spotify/src/angular-spotify.js",
         "app/components/angular-socket-io/socket.js",
-        "app/components/satellizer/satellizer.js"
+        "app/components/satellizer/satellizer.js",
+        "app/components/ngInfiniteScroll/build/ng-infinite-scroll.js"
     ],
     "application": [
         "app/js/socket/socket.js",
@@ -24,6 +26,7 @@
 
         "app/js/api/api.js",
         "app/js/api/constants/errors.js",
+        "app/js/api/factories/PlayerHistoryResource.js",
         "app/js/api/factories/PlayerMuteResource.js",
         "app/js/api/factories/PlayerQueueResource.js",
         "app/js/api/factories/PlayerRandomResource.js",
@@ -32,6 +35,9 @@
         "app/js/api/factories/TracksResource.js",
         "app/js/api/factories/UsersResource.js",
         "app/js/api/factories/RequestInterceptor.js",
+
+        "app/js/history/history.js",
+        "app/js/history/controllers/HistoryCtrl.js",
 
         "app/js/player/player.js",
         "app/js/player/controllers/PlayerCtrl.js",
