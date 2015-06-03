@@ -1,7 +1,8 @@
 "use strict";
 
 describe("FM.api.RequestInterceptor", function (){
-    var interceptor, httpProvider, config, $window, $location, rootScope, spy, fakeCallback, localStorageValue, FM_API_SERVER_ADDRESS;
+    var interceptor, httpProvider, config, $window, $location, rootScope, spy, AlertService,
+        fakeCallback, localStorageValue, FM_API_SERVER_ADDRESS, ERRORS;
 
     beforeEach(function (){
         module("FM.api.RequestInterceptor", function ($httpProvider){
@@ -21,11 +22,9 @@ describe("FM.api.RequestInterceptor", function (){
         config.authHeader = "Access-Token";
 
         localStorageValue = "mockAccessToken";
-
         fakeCallback = function(){ return localStorageValue };
 
         $window = $injector.get("$window");
-
         $window.localStorage = {
             getItem: function(){},
             setItem: function(){},
@@ -36,12 +35,15 @@ describe("FM.api.RequestInterceptor", function (){
         spyOn($window.localStorage, "clear").and.callFake(function(){ localStorageValue = undefined });
 
         FM_API_SERVER_ADDRESS = $injector.get("FM_API_SERVER_ADDRESS");
+        ERRORS = $injector.get("ERRORS");
 
         $location = $injector.get("$location");
         spy = spyOn($location, "path");
 
-        interceptor = $injector.get("RequestInterceptor");
+        AlertService = $injector.get("AlertService");
+        spyOn(AlertService, "set");
 
+        interceptor = $injector.get("RequestInterceptor");
         spyOn(interceptor, "request").and.callThrough();
 
     }));
@@ -50,25 +52,55 @@ describe("FM.api.RequestInterceptor", function (){
         expect(httpProvider.interceptors).toContain("RequestInterceptor");
     });
 
-    it("should redirect to 500 page on response error", function(){
-        interceptor.responseError({ status: 500, config: { url: FM_API_SERVER_ADDRESS } })
-        expect($location.path).toHaveBeenCalledWith("/500");
+    describe("Redirect to error pages", function(){
+
+        it("should redirect to 500 page on response error", function(){
+            interceptor.responseError({ status: 500, config: { url: FM_API_SERVER_ADDRESS } })
+            expect($location.path).toHaveBeenCalledWith("/500");
+        });
+
+        it("should NOT redirect to 500 page on response success", function(){
+            interceptor.responseError({ status: 200, config: { url: FM_API_SERVER_ADDRESS } })
+            expect($location.path).not.toHaveBeenCalled();
+        });
+
+        it("should redirect to 401 page on 401 response status", function(){
+            interceptor.responseError({ status: 401, config: { url: FM_API_SERVER_ADDRESS } })
+            expect($location.path).toHaveBeenCalledWith("/401");
+        });
+
+        it("should NOT redirect to error pages if route is not changing", function(){
+            rootScope.routeChanging = false;
+            interceptor.responseError({ status: 401, config: { url: FM_API_SERVER_ADDRESS } })
+            expect($location.path).not.toHaveBeenCalled();
+        });
     });
 
-    it("should NOT redirect to 500 page on response success", function(){
-        interceptor.responseError({ status: 200, config: { url: FM_API_SERVER_ADDRESS } })
-        expect($location.path).not.toHaveBeenCalled();
-    });
+    describe("Trigger AlertService for in-view errors", function(){
 
-    it("should redirect to 401 page on 401 response status", function(){
-        interceptor.responseError({ status: 401, config: { url: FM_API_SERVER_ADDRESS } })
-        expect($location.path).toHaveBeenCalledWith("/401");
-    });
+        it("should call AlertService for 401 in view error", function(){
+            rootScope.routeChanging = false;
+            interceptor.responseError({ status: 401, config: { url: FM_API_SERVER_ADDRESS } })
+            expect(AlertService.set).toHaveBeenCalledWith(ERRORS.STATUS_401_MESSAGE, "warning");
+        });
 
-    it("should NOT redirect to error pages if route is not changing", function(){
-        rootScope.routeChanging = false;
-        interceptor.responseError({ status: 401, config: { url: FM_API_SERVER_ADDRESS } })
-        expect($location.path).not.toHaveBeenCalled();
+        it("should call AlertService for 403 in view error", function(){
+            rootScope.routeChanging = false;
+            interceptor.responseError({ status: 403, config: { url: FM_API_SERVER_ADDRESS } })
+            expect(AlertService.set).toHaveBeenCalledWith(ERRORS.STATUS_403_MESSAGE, "danger");
+        });
+
+        it("should call AlertService for 404 in view error", function(){
+            rootScope.routeChanging = false;
+            interceptor.responseError({ status: 404, config: { url: FM_API_SERVER_ADDRESS } })
+            expect(AlertService.set).toHaveBeenCalledWith(ERRORS.STATUS_404_MESSAGE, "info");
+        });
+
+        it("should call AlertService for unknown in view error", function(){
+            rootScope.routeChanging = false;
+            interceptor.responseError({ status: 405, statusText: "unknown", data: { message: "some error" }, config: { url: FM_API_SERVER_ADDRESS } })
+            expect(AlertService.set).toHaveBeenCalledWith("unknown: some error", "warning");
+        });
     });
 
     it("should set Access-Token header from local storage", function(){
