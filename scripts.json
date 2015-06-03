@@ -8,7 +8,8 @@
         "app/components/angular-bootstrap/ui-bootstrap-tpls.js",
         "app/components/angular-spotify/src/angular-spotify.js",
         "app/components/angular-socket-io/socket.js",
-        "app/components/satellizer/satellizer.js"
+        "app/components/satellizer/satellizer.js",
+        "app/components/angular-notification/angular-notification.js"
     ],
     "application": [
         "app/js/socket/socket.js",
