@@ -1,7 +1,6 @@
 {
     "vendor": [
         "app/components/socket.io-client/socket.io.js",
-        "app/components/jquery/dist/jquery.js",
         "app/components/angular/angular.js",
         "app/components/angular-route/angular-route.js",
         "app/components/angular-animate/angular-animate.js",
@@ -9,13 +8,14 @@
         "app/components/angular-bootstrap/ui-bootstrap-tpls.js",
         "app/components/angular-spotify/src/angular-spotify.js",
         "app/components/angular-socket-io/socket.js",
-        "app/components/satellizer/satellizer.js",
-        "app/components/ngInfiniteScroll/build/ng-infinite-scroll.js"
+        "app/components/satellizer/satellizer.js"
     ],
     "application": [
         "app/js/socket/socket.js",
 
         "app/js/loading-screen/loadingScreen.js",
+
+        "app/js/infinite-scroll/infiniteScroll.js",
 
         "app/js/auth/auth.js",
         "app/js/auth/controllers/LoginCtrl.js",

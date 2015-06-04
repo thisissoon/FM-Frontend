@@ -7,7 +7,7 @@
  */
 angular.module("FM.history.HistoryCtrl", [
     "FM.api.PlayerHistoryResource",
-    "infinite-scroll",
+    "sn.infiniteScroll",
     "ngRoute"
 ])
 /**
