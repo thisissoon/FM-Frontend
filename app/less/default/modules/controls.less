@@ -21,9 +21,28 @@
     min-width: 40px;
 }
 
-input[type=range].volume-control {
-    line-height: 30px;
+.volume-control {
     margin: 0 10px;
     vertical-align: middle;
     width: 129px;
+}
+
+fm-slider {
+    display: inline-block;
+    height: max(@thumb-height, @track-height);
+    position: relative;
+
+    input[type="range"],
+    .slider-fill {
+        display: block;
+        margin: 0;
+        position: absolute;
+    }
+
+    .slider-fill {
+        background-color: @track-fill;
+        border-radius: @track-radius;
+        height: @track-height;
+        min-width: @track-radius * 2;
+    }
 }
