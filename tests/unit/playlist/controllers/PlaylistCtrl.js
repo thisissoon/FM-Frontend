@@ -13,8 +13,8 @@ describe("FM.playlist.PlaylistCtrl", function() {
         $httpBackend = _$httpBackend_
 
         $httpBackend.whenGET(/.*player\/queue/).respond(200, [{ track: { uri: "foo" } },{ track: { uri: "bar" } }]);
-        $httpBackend.whenGET(/.*users.*/).respond(200, { "id": 123 });
-        $httpBackend.whenGET(/.*tracks.*/).respond(200, { uri: "foo", album: { name: "some album name", images: [{ url: "track/image.png" }] }, artists: [{ name: "some artist name" }] });
+        $httpBackend.whenGET(/.*users.*/).respond(200, {"family_name": "Light", "display_name": "Alex Light", "avatar_url": "http://placehold.it/400", "spotify_playlists": null, "given_name": "Alex", "id": "16369f65-6aa5-4d04-8927-a77016d0d721"});
+        $httpBackend.whenGET(/.*tracks.*/).respond(200, {"album": {"id": "d7b737a9-d70b-49a9-9f42-8c204b342000", "images": [{"url": "http://placehold.it/640x629?text=Album+Art", "width": 640, "height": 629}, {"url": "http://placehold.it/300x295?text=Album+Art", "width": 300, "height": 295}, {"url": "http://placehold.it/64x63?text=Album+Art", "width": 64, "height": 63}], "name": "Boston", "uri": "spotify:album:2QLp07RO6anZHmtcKTEvSC"}, "name": "More Than a Feeling", "uri": "spotify:track:1QEEqeFIZktqIpPI4jSVSF", "play_count": 0, "artists": [{"id": "8c22640a-02ef-4ee0-90eb-87c9c9a2534f", "uri": "spotify:artist:29kkCKKGXheHuoO829FxWK", "name": "Boston"}], "duration": 285133, "id": "0739b113-ad3a-47a4-bea9-edb00ba192f5"});
         $httpBackend.whenGET(/partials\/.*/).respond(200);
     }));
 
@@ -98,7 +98,7 @@ describe("FM.playlist.PlaylistCtrl", function() {
         $scope.onAdd({},{ uri: "foo", user: 123 });
         $httpBackend.flush();
         expect($scope.playlist.length).toBe(3);
-        expect($notification).toHaveBeenCalledWith("Track Added", { body: "undefined added some artist name - some album name: undefined", icon: "track/image.png" });
+        expect($notification).toHaveBeenCalledWith("Track Added", { body: "Alex Light added Boston - Boston: More Than a Feeling", icon: "http://placehold.it/640x629?text=Album+Art" });
     });
 
 
