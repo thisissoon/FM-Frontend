@@ -17,6 +17,7 @@ angular.module("FM", [
     "FM.sockets",
     "FM.loadingScreen",
     "ngRoute",
+    "notification",
     "ENV"
 ])
 /**
@@ -28,8 +29,9 @@ angular.module("FM", [
 .config([
     "$routeProvider",
     "$locationProvider",
+    "$notificationProvider",
     "HTML5_LOCATION",
-    function ($routeProvider, $locationProvider, HTML5_LOCATION_ENABLED) {
+    function ($routeProvider, $locationProvider, $notificationProvider, HTML5_LOCATION_ENABLED) {
 
         $locationProvider.html5Mode(HTML5_LOCATION_ENABLED).hashPrefix = "!";
 
@@ -37,6 +39,8 @@ angular.module("FM", [
             .when("/401", { templateUrl: "partials/401.html" })
             .when("/500", { templateUrl: "partials/500.html" })
             .otherwise({ redirectTo: "/" });
+
+        $notificationProvider.setOptions({ delay: 5000 });
 
     }
 ]);

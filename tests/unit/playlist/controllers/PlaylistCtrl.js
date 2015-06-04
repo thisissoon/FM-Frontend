@@ -2,7 +2,7 @@
 
 describe("FM.playlist.PlaylistCtrl", function() {
 
-    var $rootScope, $location, $route, $scope, $q, $httpBackend,
+    var $rootScope, $location, $route, $scope, $q, $httpBackend, $notification, notificationSpy,
         TracksResource, UsersResource, PlayerQueueResource, playlistData;
 
     beforeEach(function (){
@@ -14,7 +14,7 @@ describe("FM.playlist.PlaylistCtrl", function() {
 
         $httpBackend.whenGET(/.*player\/queue/).respond(200, [{ track: { uri: "foo" } },{ track: { uri: "bar" } }]);
         $httpBackend.whenGET(/.*users.*/).respond(200, { "id": 123 });
-        $httpBackend.whenGET(/.*tracks.*/).respond(200, { uri: "foo" });
+        $httpBackend.whenGET(/.*tracks.*/).respond(200, { uri: "foo", album: { name: "some album name", images: [{ url: "track/image.png" }] }, artists: [{ name: "some artist name" }] });
         $httpBackend.whenGET(/partials\/.*/).respond(200);
     }));
 
@@ -23,6 +23,7 @@ describe("FM.playlist.PlaylistCtrl", function() {
         $rootScope = _$rootScope_;
         $scope = $rootScope.$new();
         $q = $injector.get("$q");
+        $notification = jasmine.createSpy();
 
         $location = $injector.get("$location");
         $route = $injector.get("$route");
@@ -42,6 +43,7 @@ describe("FM.playlist.PlaylistCtrl", function() {
         $controller("PlaylistCtrl", {
             $scope: $scope,
             $q: $q,
+            $notification: $notification,
             TracksResource: TracksResource,
             UsersResource: UsersResource,
             PlayerQueueResource: PlayerQueueResource,
@@ -96,6 +98,7 @@ describe("FM.playlist.PlaylistCtrl", function() {
         $scope.onAdd({},{ uri: "foo", user: 123 });
         $httpBackend.flush();
         expect($scope.playlist.length).toBe(3);
+        expect($notification).toHaveBeenCalledWith("Track Added", { body: "undefined added some artist name - some album name: undefined", icon: "track/image.png" });
     });
 
 

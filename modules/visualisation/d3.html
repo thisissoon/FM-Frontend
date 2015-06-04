@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>thisissoonFM - Modules</title>
+
+        <link rel="stylesheet" href="/app/components/bootstrap/dist/css/bootstrap.css"/>
+
+        <base href="/app/">
+        <!--        <link rel="stylesheet" href="css/all.css"/>-->
+
+        <style>
+            #chart {
+                height: 500px;
+                width: 500px;
+            }
+        </style>
+
+    </head>
+    <body ng-app="VisualDemo">
+        <main>
+            <div class="container" ng-controller="ChartsCtrl">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <div ac-chart="'bar'" ac-data="data" ac-config="config" id="chart" class="chart"></div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="components/angular/angular.js"></script>
+        <script src="components/d3/d3.js"></script>
+        <script src="components/angular-charts/dist/angular-charts.js"></script>
+        <script>
+            angular.module("VisualDemo", ["angularCharts"])
+
+                .controller("ChartsCtrl", [
+                "$scope",
+                "$timeout",
+                function($scope, $timeout){
+
+                    $scope.data = {
+                        "data": [
+                            {
+                                "x": "Ryan",
+                                "y": [
+                                    54182220
+                                ]
+                            },
+                            {
+                                "x": "Florence",
+                                "y": [
+                                    36590064
+                                ]
+                            },
+                            {
+                                "x": "Edward",
+                                "y": [
+                                    32315515
+                                ]
+                            }
+                        ]
+                    };
+
+                    $timeout(function(){
+                        $scope.data.data[0].y[0] = 54182220 / 2;
+                    }, 2000);
+
+                    $scope.config = {
+                        title: "",
+                        tooltips: true,
+                        labels: false,
+                        mouseover: function() {},
+                        mouseout: function() {},
+                        click: function() {},
+                        legend: {
+                            display: true,
+                            position: "left"
+                        }
+                    };
+
+                }
+            ]);
+        </script>
+
+    </body>
+</html>
