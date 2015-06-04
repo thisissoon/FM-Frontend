@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>thisissoonFM - Modules</title>
+
+        <link rel="stylesheet" href="/app/components/bootstrap/dist/css/bootstrap.css"/>
+
+        <base href="/app/">
+        <link rel="stylesheet" href="components/angular-chart.js/dist/angular-chart.css">
+
+        <style>
+            .container {
+                max-width: 800px;
+            }
+
+            #chart {
+                height: 500px;
+                width: 500px;
+            }
+
+            ul[class$="-legend"] li {
+                list-style: none;
+            }
+
+            ul[class$="-legend"] li span {
+                display: inline-block;
+                width: 0.8em;
+                height: 0.8em;
+                margin-right: 5px;
+            }
+        </style>
+
+    </head>
+    <body ng-app="VisualDemo">
+        <main>
+            <div class="container">
+                <div class="row" ng-controller="BarCtrl">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <h1>Play time by user</h1>
+                        <canvas id="bar" class="chart chart-bar" data="data" labels="labels" legend="true" series="series"></canvas>
+
+                    </div>
+                </div>
+                <div class="row" ng-controller="BarCtrl">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <h1>Play time by user</h1>
+                        <canvas id="line" class="chart chart-line" data="data" labels="labels" legend="true" series="series"></canvas>
+
+                    </div>
+                </div>
+                <div class="row" ng-controller="RadarCtrl">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <h1>Current track analysis <small>(with data from echonest)</small></h1>
+                        <canvas id="radar" class="chart chart-radar" data="data" labels="labels" legend="true" series="series"></canvas>
+
+                    </div>
+                </div>
+                <div class="row" ng-controller="PieCtrl">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <h1>Most active DJ</h1>
+                        <canvas id="polar-area" class="chart chart-polar-area" data="data" labels="labels" legend="true"></canvas>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="components/angular/angular.js"></script>
+        <script src="components/Chart.js/Chart.js"></script>
+        <script src="components/angular-chart.js/dist/angular-chart.js"></script>
+        <script>
+            angular.module("VisualDemo", ["chart.js"])
+
+                .controller("BarCtrl", [
+                    "$scope",
+                    "$timeout",
+                    function ($scope, $timeout) {
+                        $scope.labels = ["17th May","Today"];
+                        $scope.series = ["Ryan", "Florence", "Edward", "James", "Chris"];
+
+                        $scope.data = [
+                            [24182220,54182220],
+                            [26590064,36590064],
+                            [22315515,32315515],
+                            [1858760,5858760],
+                            [1601968,2601968]
+                        ];
+
+                        $scope.options = {
+                            multiTooltipTemplate: "<%= datasetLabel %>: <%= value %>"
+                        };
+
+                        // mock chart update
+                        $timeout(function(){
+                            $scope.data[3][1] = $scope.data[3][1] + 10000000;
+                            $scope.data[4][1] = $scope.data[4][1] + 20000000;
+                        }, 2000);
+                    }
+                ])
+
+                .controller("PieCtrl", [
+                    "$scope",
+                    function ($scope) {
+                        $scope.labels = ["Ryan", "Florence", "Edward", "James", "Chris"];
+
+                        $scope.data = [
+                            201,
+                            150,
+                            130,
+                            21,
+                            12
+                        ];
+                    }
+                ])
+
+                .controller("RadarCtrl", [
+                    "$scope",
+                    function($scope){
+
+                        $scope.labels = ["Danceability", "Energy", "Speechiness", "Acousticness", "Liveness"];
+                        $scope.series = ["El Scorcho - Weezer", "Another Track"];
+
+                        $scope.data = [
+                            [0.52, 0.66, 0.16, 0.13, 0.053],
+                            [0.3, 0.4, 0.1, 0.6, 0.5]
+                        ];
+
+                    }
+                ]);
+        </script>
+
+    </body>
+</html>

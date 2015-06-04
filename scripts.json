@@ -8,7 +8,8 @@
         "app/components/angular-bootstrap/ui-bootstrap-tpls.js",
         "app/components/angular-spotify/src/angular-spotify.js",
         "app/components/angular-socket-io/socket.js",
-        "app/components/satellizer/satellizer.js"
+        "app/components/satellizer/satellizer.js",
+        "app/components/angular-notification/angular-notification.js"
     ],
     "application": [
         "app/js/socket/socket.js",
@@ -17,6 +18,10 @@
 
         "app/js/auth/auth.js",
         "app/js/auth/controllers/LoginCtrl.js",
+
+        "app/js/alert/alert.js",
+        "app/js/alert/controllers/AlertCtrl.js",
+        "app/js/alert/services/AlertService.js",
 
         "app/js/api/api.js",
         "app/js/api/constants/errors.js",
@@ -32,6 +37,7 @@
         "app/js/player/player.js",
         "app/js/player/controllers/PlayerCtrl.js",
         "app/js/player/directives/track.js",
+        "app/js/player/directives/slider.js",
 
         "app/js/playlist/playlist.js",
         "app/js/playlist/controllers/PlaylistCtrl.js",

@@ -1,0 +1,18 @@
+//
+// Animations
+// --------------------------------------------------
+
+.slide-down {
+    .transition(all 0.5s);
+    position: relative;
+    overflow: hidden;
+
+    &.ng-hide-remove {
+        .translate(0, 0%);
+    }
+
+    &.ng-hide,
+    &.ng-hide-add.ng-hide-active {
+        .translate(0, -100%);
+    }
+}

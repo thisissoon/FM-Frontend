@@ -43,8 +43,9 @@
     <body>
 
         <header class="header" ng-include="'partials/header.html'"></header>
-        <div class="sidebar" ng-include="'partials/sidebar.html'" ng-class="{ 'open': sidebarOpen }"></div>
-        <ng-view></ng-view>
+        <div class="alerts" ng-include="'partials/alert.html'" ng-controller="AlertCtrl"></div>
+        <div class="sidebar" ng-include="'partials/sidebar.html'" ng-class="{ 'open': sidebarOpen, 'alert-active': AlertService.alerts.length }"></div>
+        <ng-view ng-class="{ 'alert-active': AlertService.alerts.length }"></ng-view>
         <footer class="footer" ng-include="'partials/footer.html'"></footer>
 
         <fm-loading-screen></fm-loading-screen>
@@ -60,6 +61,7 @@
         <script src="components/angular-spotify/src/angular-spotify.js"></script>
         <script src="components/angular-socket-io/socket.js"></script>
         <script src="components/satellizer/satellizer.js"></script>
+        <script src="components/angular-notification/angular-notification.js"></script>
 
         <script src="js/env/env.js"></script>
 
@@ -69,6 +71,10 @@
 
         <script src="js/auth/auth.js"></script>
         <script src="js/auth/controllers/LoginCtrl.js"></script>
+
+        <script src="js/alert/alert.js"></script>
+        <script src="js/alert/controllers/AlertCtrl.js"></script>
+        <script src="js/alert/services/AlertService.js"></script>
 
         <script src="js/api/api.js"></script>
         <script src="js/api/constants/errors.js"></script>
@@ -83,6 +89,7 @@
 
         <script src="js/player/player.js"></script>
         <script src="js/player/controllers/PlayerCtrl.js"></script>
+        <script src="js/player/directives/slider.js"></script>
         <script src="js/player/directives/track.js"></script>
 
         <script src="js/playlist/playlist.js"></script>

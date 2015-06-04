@@ -28,19 +28,20 @@
                 <span ng-switch-default class="icon icon-unmuted"></span>
             </button>
 
-            <input class="volume-control"
-                   ng-model="volume"
-                   ng-model-options="{
-                       updateOn: 'default blur',
-                       debounce: {
-                           'default': 500,
-                           'blur': 0
-                       }
-                   }"
-                   ng-change="updateVol()"
-                   type="range"
-                   min="0"
-                   max="100">
+            <fm-slider
+                class="volume-control"
+                ng-model="volume"
+                ng-change="updateVol()"
+                ng-model-options="{
+                    updateOn: 'default blur',
+                    debounce: {
+                        'default': 500,
+                        'blur': 0
+                    }
+                }"
+                data-min="0"
+                data-max="100">
+            </fm-slider>
 
         </form>
 
