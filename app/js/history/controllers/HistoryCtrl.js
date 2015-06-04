@@ -23,23 +23,8 @@ angular.module("FM.history.HistoryCtrl", [
                 templateUrl: "partials/history.html",
                 controller: "HistoryCtrl",
                 resolve: {
-                    historyData: ["PlayerHistoryResource", "$q", "$route", function (PlayerHistoryResource, $q, $route){
-                        var deferred = $q.defer();
-
-                        // resolve headers from query
-                        PlayerHistoryResource.query($route.current.params, function(response, headers){
-                            deferred.resolve({
-                                data: response,
-                                headers: headers
-                            });
-                        }, function(response, headers) {
-                            deferred.resolve({
-                                data: response,
-                                headers: headers
-                            });
-                        });
-
-                        return deferred.promise;
+                    historyData: ["PlayerHistoryResource", "$route", function (PlayerHistoryResource, $route){
+                        return PlayerHistoryResource.query($route.current.params);
                     }]
                 }
             });
@@ -62,7 +47,7 @@ angular.module("FM.history.HistoryCtrl", [
          * @property history
          * @type {Array}
          */
-        $scope.history = historyData.data;
+        $scope.history = historyData;
 
         /**
          * Paging properties
@@ -71,7 +56,7 @@ angular.module("FM.history.HistoryCtrl", [
         $scope.page = {
             loading: false,
             pages: 1,
-            total: historyData.headers("Total-Pages")
+            total: historyData.totalPages
         };
 
         /**
@@ -84,11 +69,11 @@ angular.module("FM.history.HistoryCtrl", [
             $scope.page.pages++;
 
             PlayerHistoryResource.query({ page: $scope.page.pages },
-                function(response, headers){
+                function(response){
                     $scope.history = $scope.history.concat(response);
 
                     $scope.page.loading = false;
-                    $scope.page.total = headers("Total-Pages") || 0;
+                    $scope.page.total = response.totalPages || 0;
                 });
         };
 
