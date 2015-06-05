@@ -32,7 +32,7 @@ angular.module("FM.api.PlayerHistoryResource", [
                     isArray: true,
                     transformResponse: function (data, headers){
                         var transformedResponse = angular.fromJson(data);
-                        transformedResponse.totalPages = !!parseInt(headers("Total-Pages"));
+                        transformedResponse.totalPages = parseInt(headers("Total-Pages"));
                         return transformedResponse;
                     }
                 }
