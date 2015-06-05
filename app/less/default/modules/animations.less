@@ -16,3 +16,17 @@
         .translate(0, -100%);
     }
 }
+
+.fade-in-out {
+    .transition(opacity 0.3s linear);
+
+    &.ng-enter,
+    &.ng-leave.ng-leave-active {
+        .opacity(0);
+    }
+
+    &.ng-enter.ng-enter-active,
+    &.ng-leave {
+        .opacity(1);
+    }
+}
