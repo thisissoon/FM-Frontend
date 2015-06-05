@@ -10,6 +10,7 @@ angular.module("FM", [
     "FM.alert",
     "FM.api",
     "FM.auth",
+    "FM.history",
     "FM.playlist",
     "FM.player",
     "FM.search",

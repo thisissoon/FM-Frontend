@@ -1,0 +1,17 @@
+<div class="queue" sn-infinite-scroll="loadMore()" data-container="ng-view" data-disabled="page.loading || page.total <= page.pages">
+
+    <h2 class="h4" ng-if="history.length > 0">Previous tracks:</h2>
+    <h2 class="h1" ng-if="!history.length > 0">No tracks in the history.</h2>
+
+    <ul class="list-unstyled media-list">
+        <li class="media"
+            ng-repeat="track in history track by $index"
+            data-spotify-track="track.track"
+            data-user="track.user"
+            fm-track>
+        </li>
+    </ul>
+
+    <img ng-show="page.loading" class="center-block loading-animation" src="img/icons/loading-animation.gif" width="50" height="50">
+
+</div>

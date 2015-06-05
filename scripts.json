@@ -16,6 +16,8 @@
 
         "app/js/loading-screen/loadingScreen.js",
 
+        "app/js/infinite-scroll/infiniteScroll.js",
+
         "app/js/auth/auth.js",
         "app/js/auth/controllers/LoginCtrl.js",
 
@@ -25,6 +27,7 @@
 
         "app/js/api/api.js",
         "app/js/api/constants/errors.js",
+        "app/js/api/factories/PlayerHistoryResource.js",
         "app/js/api/factories/PlayerMuteResource.js",
         "app/js/api/factories/PlayerQueueResource.js",
         "app/js/api/factories/PlayerRandomResource.js",
@@ -33,6 +36,9 @@
         "app/js/api/factories/TracksResource.js",
         "app/js/api/factories/UsersResource.js",
         "app/js/api/factories/RequestInterceptor.js",
+
+        "app/js/history/history.js",
+        "app/js/history/controllers/HistoryCtrl.js",
 
         "app/js/player/player.js",
         "app/js/player/controllers/PlayerCtrl.js",

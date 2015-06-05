@@ -45,7 +45,7 @@
         <header class="header" ng-include="'partials/header.html'"></header>
         <div class="alerts" ng-include="'partials/alert.html'" ng-controller="AlertCtrl"></div>
         <div class="sidebar" ng-include="'partials/sidebar.html'" ng-class="{ 'open': sidebarOpen, 'alert-active': AlertService.alerts.length }"></div>
-        <ng-view ng-class="{ 'alert-active': AlertService.alerts.length }"></ng-view>
+        <ng-view class="fade-in-out" ng-class="{ 'alert-active': AlertService.alerts.length }"></ng-view>
         <footer class="footer" ng-include="'partials/footer.html'"></footer>
 
         <fm-loading-screen></fm-loading-screen>
@@ -69,6 +69,8 @@
 
         <script src="js/loading-screen/loadingScreen.js"></script>
 
+        <script src="js/infinite-scroll/infiniteScroll.js"></script>
+
         <script src="js/auth/auth.js"></script>
         <script src="js/auth/controllers/LoginCtrl.js"></script>
 
@@ -78,6 +80,7 @@
 
         <script src="js/api/api.js"></script>
         <script src="js/api/constants/errors.js"></script>
+        <script src="js/api/factories/PlayerHistoryResource.js"></script>
         <script src="js/api/factories/PlayerMuteResource.js"></script>
         <script src="js/api/factories/PlayerQueueResource.js"></script>
         <script src="js/api/factories/PlayerRandomResource.js"></script>
@@ -86,6 +89,9 @@
         <script src="js/api/factories/TracksResource.js"></script>
         <script src="js/api/factories/UsersResource.js"></script>
         <script src="js/api/factories/RequestInterceptor.js"></script>
+
+        <script src="js/history/history.js"></script>
+        <script src="js/history/controllers/HistoryCtrl.js"></script>
 
         <script src="js/player/player.js"></script>
         <script src="js/player/controllers/PlayerCtrl.js"></script>
