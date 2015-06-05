@@ -68,10 +68,12 @@ angular.module("FM.player.PlayerCtrl",[
                 $scope.mute = response[1].mute;
                 $scope.volume = response[2].volume;
 
-                $notification("Now Playing", {
-                    body: $scope.track.artists[0].name + " - " + $scope.track.album.name + ": " + $scope.track.name,
-                    icon: $scope.track.album.images[0].url
-                });
+                if ($scope.track && $scope.track.track) {
+                    $notification("Now Playing", {
+                        body: $scope.track.track.artists[0].name + " - " + $scope.track.track.album.name + ": " + $scope.track.track.name,
+                        icon: $scope.track.track.album.images[0].url
+                    });
+                }
             });
         };
 
