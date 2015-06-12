@@ -36,6 +36,7 @@
         "app/js/api/factories/TracksResource.js",
         "app/js/api/factories/UsersResource.js",
         "app/js/api/factories/RequestInterceptor.js",
+        "app/js/api/factories/PaginationInterceptor.js",
 
         "app/js/history/history.js",
         "app/js/history/controllers/HistoryCtrl.js",
