@@ -33,13 +33,17 @@ angular.module("FM.api.PaginationInterceptor", [
              */
             response: function(response){
 
-                if(response.config.isArray || response.data.length ) {
-                    response.data.meta = {
-                        totalPages: parseInt(response.headers("Total-Pages")),
-                        totalCount: parseInt(response.headers("Total-Count"))
+                var newResponse = response;
+                if(response.data && angular.isArray(response.data)) {
+                    newResponse.data = {
+                        items: response.data,
+                        meta: {
+                            totalPages: parseInt(response.headers("Total-Pages")),
+                            totalCount: parseInt(response.headers("Total-Count"))
+                        }
                     };
                 }
-                return response;
+                return newResponse;
             }
         };
 

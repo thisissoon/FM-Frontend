@@ -14,7 +14,6 @@ angular.module("FM.api", [
     "FM.api.TracksResource",
     "FM.api.UsersResource",
     "FM.api.RequestInterceptor",
-    "FM.api.PaginationInterceptor",
     "FM.api.ERRORS"
 ])
 /**

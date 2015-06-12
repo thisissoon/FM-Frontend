@@ -47,7 +47,7 @@ angular.module("FM.history.HistoryCtrl", [
          * @property history
          * @type {Array}
          */
-        $scope.history = historyData;
+        $scope.history = historyData.items;
 
         /**
          * Paging properties
@@ -70,7 +70,7 @@ angular.module("FM.history.HistoryCtrl", [
 
             PlayerHistoryResource.query({ page: $scope.page.pages }).$promise
                 .then(function(response){
-                    $scope.history = $scope.history.concat(response);
+                    $scope.history = $scope.history.concat(response.items);
 
                     $scope.page.loading = false;
                     $scope.page.total = response.meta.totalPages || 0;

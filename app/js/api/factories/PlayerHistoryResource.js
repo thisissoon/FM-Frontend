@@ -7,6 +7,7 @@
  */
 angular.module("FM.api.PlayerHistoryResource", [
     "ENV",
+    "FM.api.PaginationInterceptor",
     "ngResource"
 ])
 /**
@@ -20,7 +21,15 @@ angular.module("FM.api.PlayerHistoryResource", [
     "FM_API_SERVER_ADDRESS",
     function ($resource, FM_API_SERVER_ADDRESS) {
 
-        return $resource(FM_API_SERVER_ADDRESS + "player/history");
+        return $resource(
+            FM_API_SERVER_ADDRESS + "player/history",
+            {},
+            {
+                query: {
+                    isArray: false
+                }
+            }
+        );
 
     }
 ]);
