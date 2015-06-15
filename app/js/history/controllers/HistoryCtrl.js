@@ -24,7 +24,7 @@ angular.module("FM.history.HistoryCtrl", [
                 controller: "HistoryCtrl",
                 resolve: {
                     historyData: ["PlayerHistoryResource", "$route", function (PlayerHistoryResource, $route){
-                        return PlayerHistoryResource.query($route.current.params);
+                        return PlayerHistoryResource.query($route.current.params).$promise;
                     }]
                 }
             });
