@@ -7,6 +7,7 @@
  */
 angular.module("FM.api.PlayerQueueResource", [
     "ENV",
+    "FM.api.PaginationInterceptor",
     "ngResource"
 ])
 /**
@@ -20,7 +21,15 @@ angular.module("FM.api.PlayerQueueResource", [
     "FM_API_SERVER_ADDRESS",
     function ($resource, FM_API_SERVER_ADDRESS) {
 
-        return $resource(FM_API_SERVER_ADDRESS + "player/queue");
+        return $resource(
+            FM_API_SERVER_ADDRESS + "player/queue",
+            {},
+            {
+                query: {
+                    isArray: false
+                }
+            }
+        );
 
     }
 ]);
