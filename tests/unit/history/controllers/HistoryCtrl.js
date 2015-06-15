@@ -12,7 +12,7 @@ describe("FM.history.HistoryCtrl", function() {
      beforeEach(inject(function (_$httpBackend_) {
         $httpBackend = _$httpBackend_
 
-        $httpBackend.whenGET(/.*player\/history/).respond(200, [{ track: { uri: "foo" } },{ track: { uri: "bar" } }]);
+        $httpBackend.whenGET(/.*player\/history/).respond(200, [{ track: { uri: "foo" } },{ track: { uri: "bar" } }], { "Total-Pages": "10", "Total-Count": "10" });
         $httpBackend.whenGET(/partials\/.*/).respond(200);
     }));
 
@@ -27,7 +27,8 @@ describe("FM.history.HistoryCtrl", function() {
         PlayerHistoryResource = $injector.get("PlayerHistoryResource");
         spyOn(PlayerHistoryResource, "query").and.callThrough();
 
-        historyData = [{ track: { uri: "foo" } },{ track: { uri: "bar" } }];
+        historyData = { items: [{ track: { uri: "foo" } },{ track: { uri: "bar" } }] };
+        historyData.meta = { totalPages: 10, totalCount: 10 }
 
         $controller("HistoryCtrl", {
             $scope: $scope,
@@ -49,7 +50,7 @@ describe("FM.history.HistoryCtrl", function() {
     });
 
     it("should attach data to $scope", function(){
-        expect($scope.history).toEqual(historyData);
+        expect($scope.history).toEqual(historyData.items);
     });
 
     it("should query next page from PlayerHistoryResource and add data to scope", function(){
@@ -59,6 +60,7 @@ describe("FM.history.HistoryCtrl", function() {
         $httpBackend.flush();
         expect($scope.page.loading).toBe(false);
         expect($scope.history.length).toEqual(4);
+        expect($scope.page.total).toEqual(10);
     });
 
 });

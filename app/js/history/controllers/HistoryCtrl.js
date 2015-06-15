@@ -47,7 +47,7 @@ angular.module("FM.history.HistoryCtrl", [
          * @property history
          * @type {Array}
          */
-        $scope.history = historyData;
+        $scope.history = historyData.items;
 
         /**
          * Paging properties
@@ -56,7 +56,7 @@ angular.module("FM.history.HistoryCtrl", [
         $scope.page = {
             loading: false,
             pages: 1,
-            total: historyData.totalPages
+            total: historyData.meta.totalPages
         };
 
         /**
@@ -68,12 +68,12 @@ angular.module("FM.history.HistoryCtrl", [
             $scope.page.loading = true;
             $scope.page.pages++;
 
-            PlayerHistoryResource.query({ page: $scope.page.pages },
-                function(response){
-                    $scope.history = $scope.history.concat(response);
+            PlayerHistoryResource.query({ page: $scope.page.pages }).$promise
+                .then(function(response){
+                    $scope.history = $scope.history.concat(response.items);
 
                     $scope.page.loading = false;
-                    $scope.page.total = response.totalPages || 0;
+                    $scope.page.total = response.meta.totalPages || 0;
                 });
         };
 
