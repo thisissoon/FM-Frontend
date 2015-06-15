@@ -1,3 +1,8 @@
+## Changes in 0.1.3
+
+ * @jamesjwarren: Fix: PlayerHistoryResource promise resolve (#93)
+ * @jamesjwarren: Fix: PlayerQueueResource pagination (#92)
+
 ## Changes in 0.1.2
 
  * @jamesjwarren: Fix: volume slider styling on FF (#90)
