@@ -38,7 +38,7 @@ describe("FM.playlist.PlaylistCtrl", function() {
         UsersResource = $injector.get("UsersResource");
         spyOn(UsersResource, "get").and.callThrough();
 
-        playlistData = [{ track: { uri: "foo" } },{ track: { uri: "bar" } }];
+        playlistData = { items: [{ track: { uri: "foo" } },{ track: { uri: "bar" } }]};
 
         $controller("PlaylistCtrl", {
             $scope: $scope,
@@ -65,7 +65,7 @@ describe("FM.playlist.PlaylistCtrl", function() {
 
     it("should attach data to $scope", function(){
         $httpBackend.flush();
-        expect($scope.playlist).toEqual(playlistData);
+        expect($scope.playlist).toEqual(playlistData.items);
     });
 
     it("should refresh playlist data", function(){

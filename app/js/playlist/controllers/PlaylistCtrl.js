@@ -58,7 +58,7 @@ angular.module("FM.playlist.PlaylistCtrl", [
          * @property playlist
          * @type {Array}
          */
-        $scope.playlist = playlistData;
+        $scope.playlist = playlistData.items;
 
         /**
          * Update `playlist` with queue data from the API
@@ -67,7 +67,7 @@ angular.module("FM.playlist.PlaylistCtrl", [
         $scope.refreshPlaylist = function refreshPlaylistQueue(){
             PlayerQueueResource.query().$promise
                 .then(function (response){
-                    $scope.playlist = response;
+                    $scope.playlist = response.items;
                 });
         };
 
