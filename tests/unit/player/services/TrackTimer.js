@@ -12,6 +12,7 @@ describe("FM.player.TrackTimer", function() {
         $scope = $rootScope.$new();
         $interval = $injector.get("$interval");
         TrackTimer = $injector.get("TrackTimer");
+        jasmine.clock().uninstall();
         jasmine.clock().install();
 
         spyOn($interval, "cancel");
