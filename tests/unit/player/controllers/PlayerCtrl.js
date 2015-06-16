@@ -74,6 +74,15 @@ describe("FM.player.PlayerCtrl", function() {
         expect($notification).toHaveBeenCalledWith("Now Playing", { body: "Boston - Boston: More Than a Feeling", icon: "http://placehold.it/640x629?text=Album+Art" });
     });
 
+    it("should start timer", function(){
+        spyOn($scope.trackPositionTimer, "start");
+        $scope.getAllData();
+        $scope.$apply();
+
+        $httpBackend.flush();
+        expect($scope.trackPositionTimer.start).toHaveBeenCalledWith(285133, 0);
+    });
+
     it("should make request to resume playback", function(){
         $scope.resume();
         $httpBackend.flush();
@@ -151,6 +160,12 @@ describe("FM.player.PlayerCtrl", function() {
     it("should set mute status to false", function() {
         $scope.onUnmute();
         expect($scope.mute).toBe(false);
+    });
+
+    it("should set mute status to false", function() {
+        spyOn($scope.trackPositionTimer, "stop");
+        $scope.$broadcast("$destroy");
+        expect($scope.trackPositionTimer.stop).toHaveBeenCalled();
     });
 
 });
