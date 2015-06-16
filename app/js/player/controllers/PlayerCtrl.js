@@ -8,6 +8,7 @@ angular.module("FM.player.PlayerCtrl",[
     "FM.api.PlayerTransportResource",
     "FM.api.PlayerMuteResource",
     "FM.api.PlayerVolumeResource",
+    "FM.player.TrackTimer",
     "notification"
 ])
 /**
@@ -27,7 +28,8 @@ angular.module("FM.player.PlayerCtrl",[
     "PlayerTransportResource",
     "PlayerMuteResource",
     "PlayerVolumeResource",
-    function ($scope, $q, $notification, $interval, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource) {
+    "TrackTimer",
+    function ($scope, $q, $notification, $interval, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, TrackTimer) {
 
         /**
          * The currently playing track
@@ -56,32 +58,8 @@ angular.module("FM.player.PlayerCtrl",[
         $scope.paused = false;
 
         /**
-         * Timer to track elapsed time of current track
-         * @method trackPositionTimer
          */
-        $scope.trackPositionTimer = {
-            elapsed: 0,
-            percent: 0,
-            start: function start(duration, elapsed){
-                var _this = this;
-
-                this.elapsed = elapsed || this.elapsed;
-
-                this.timer = $interval(function(){
-                    _this.elapsed += 1000;
-                    _this.percent = (_this.elapsed / duration) * 100;
-
-                    if (_this.elapsed >= duration) {
-                        _this.stop();
-                    }
-
-                    console.log(_this.percent);
-                }, 1000);
-            },
-            stop: function stop(){
-                $interval.cancel(this.timer);
-            }
-        };
+        $scope.trackPositionTimer = TrackTimer;
 
         /**
          * Get all the data
@@ -173,6 +151,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method onPause
          */
         $scope.onPause = function onPause() {
+            $scope.trackPositionTimer.stop();
             $scope.paused = true;
         };
 
@@ -181,6 +160,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method onResume
          */
         $scope.onResume = function onResume() {
+            $scope.trackPositionTimer.start($scope.track.track.duration);
             $scope.paused = false;
         };
 
