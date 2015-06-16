@@ -3,7 +3,7 @@
 describe("FM.player.PlayerCtrl", function() {
 
     var $scope, $q, $httpBackend, $notification,
-        PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource;
+        PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, TrackTimer;
 
     beforeEach(function (){
         module("FM.player.PlayerCtrl");
@@ -45,13 +45,17 @@ describe("FM.player.PlayerCtrl", function() {
         spyOn(PlayerVolumeResource, "get").and.callThrough();
         spyOn(PlayerVolumeResource, "save").and.callThrough();
 
+        TrackTimer = $injector.get("TrackTimer");
+        spyOn(TrackTimer, "stop").and.callThrough();
+
         $controller("PlayerCtrl", {
             $scope: $scope,
             $q: $q,
             $notification: $notification,
             PlayerTransportResource: PlayerTransportResource,
             PlayerMuteResource: PlayerMuteResource,
-            PlayerVolumeResource: PlayerVolumeResource
+            PlayerVolumeResource: PlayerVolumeResource,
+            TrackTimer: TrackTimer
         });
 
         $httpBackend.flush();
@@ -162,10 +166,9 @@ describe("FM.player.PlayerCtrl", function() {
         expect($scope.mute).toBe(false);
     });
 
-    it("should set mute status to false", function() {
-        spyOn($scope.trackPositionTimer, "stop");
+    it("should stop timer on destroy", function() {
         $scope.$broadcast("$destroy");
-        expect($scope.trackPositionTimer.stop).toHaveBeenCalled();
+        expect(TrackTimer.stop).toHaveBeenCalled();
     });
 
 });

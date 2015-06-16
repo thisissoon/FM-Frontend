@@ -25,7 +25,7 @@ angular.module("FM.player.TrackTimer", [
          * @property {Number} lastStopTime
          * @private
          */
-        var	lastStopTime = 0;
+        var lastStopTime = 0;
 
         /**
          * @method now
@@ -46,7 +46,6 @@ angular.module("FM.player.TrackTimer", [
         };
 
         /**
-         *
          * @property {Number} elapsedTime
          * @public
          */
@@ -104,7 +103,9 @@ angular.module("FM.player.TrackTimer", [
             startTime = 0;
 
             // Clear timer instance
-            $interval.cancel(this.timerInstance);
+            if (_this.timerInstance){
+                $interval.cancel(_this.timerInstance);
+            }
         };
 
         /**

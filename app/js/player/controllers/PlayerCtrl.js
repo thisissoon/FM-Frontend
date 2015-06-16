@@ -24,12 +24,11 @@ angular.module("FM.player.PlayerCtrl",[
     "$scope",
     "$q",
     "$notification",
-    "$interval",
     "PlayerTransportResource",
     "PlayerMuteResource",
     "PlayerVolumeResource",
     "TrackTimer",
-    function ($scope, $q, $notification, $interval, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, TrackTimer) {
+    function ($scope, $q, $notification, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, TrackTimer) {
 
         /**
          * The currently playing track
@@ -206,9 +205,7 @@ angular.module("FM.player.PlayerCtrl",[
 
         $scope.getAllData();
 
-        $scope.$on("$destroy", function(){
-            $scope.trackPositionTimer.stop();
-        });
+        $scope.$on("$destroy", $scope.trackPositionTimer.stop);
     }
 
 ]);
