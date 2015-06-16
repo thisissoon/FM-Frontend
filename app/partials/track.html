@@ -16,6 +16,14 @@
     <p class="text-muted media-info" bind-html-unsafe="track.album.name"></p>
 </div>
 
+<div class="media-progress" ng-show="timer">
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{ timer.elapsed }}" aria-valuemin="0" aria-valuemax="{{ track.duration }}" ng-style="{ width: timer.percent + '%' }">
+            <span class="sr-only"></span>
+        </div>
+    </div>
+</div>
+
 <div ng-if="track.duration" class="media-right media-time text-right">
-    <p class="text-muted">{{ track.duration | date: "m:ss" }}</p>
+    <p><span ng-show="timer">{{ timer.elapsed | date: "m:ss" }} / </span><span class="text-muted">{{ track.duration | date: "m:ss" }}</span></p>
 </div>

@@ -23,10 +23,11 @@ angular.module("FM.player.PlayerCtrl",[
     "$scope",
     "$q",
     "$notification",
+    "$interval",
     "PlayerTransportResource",
     "PlayerMuteResource",
     "PlayerVolumeResource",
-    function ($scope, $q, $notification, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource) {
+    function ($scope, $q, $notification, $interval, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource) {
 
         /**
          * The currently playing track
@@ -55,6 +56,34 @@ angular.module("FM.player.PlayerCtrl",[
         $scope.paused = false;
 
         /**
+         * Timer to track elapsed time of current track
+         * @method trackPositionTimer
+         */
+        $scope.trackPositionTimer = {
+            elapsed: 0,
+            percent: 0,
+            start: function start(duration, elapsed){
+                var _this = this;
+
+                this.elapsed = elapsed || this.elapsed;
+
+                this.timer = $interval(function(){
+                    _this.elapsed += 1000;
+                    _this.percent = (_this.elapsed / duration) * 100;
+
+                    if (_this.elapsed >= duration) {
+                        _this.stop();
+                    }
+
+                    console.log(_this.percent);
+                }, 1000);
+            },
+            stop: function stop(){
+                $interval.cancel(this.timer);
+            }
+        };
+
+        /**
          * Get all the data
          * @method getAllData
          */
@@ -69,6 +98,11 @@ angular.module("FM.player.PlayerCtrl",[
                 $scope.volume = response[2].volume;
 
                 if ($scope.track && $scope.track.track) {
+
+                    // Start track position timer
+                    var elapsed = parseInt(response[0].elapsed_time) || 0; // jshint ignore:line
+                    $scope.trackPositionTimer.start($scope.track.track.duration, elapsed);
+
                     $notification("Now Playing", {
                         body: $scope.track.track.artists[0].name + " - " + $scope.track.track.album.name + ": " + $scope.track.track.name,
                         icon: $scope.track.track.album.images[0].url
@@ -191,6 +225,10 @@ angular.module("FM.player.PlayerCtrl",[
         $scope.$on("fm:player:setVolume", $scope.onSetVolume);
 
         $scope.getAllData();
+
+        $scope.$on("$destroy", function(){
+            $scope.trackPositionTimer.stop();
+        });
     }
 
 ]);

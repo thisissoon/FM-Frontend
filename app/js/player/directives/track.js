@@ -21,7 +21,8 @@ angular.module("FM.player.trackDirective", [
             scope: {
                 track: "=spotifyTrack",
                 current: "=",
-                user: "="
+                user: "=",
+                timer: "=?"
             },
             templateUrl: "partials/track.html"
         };
