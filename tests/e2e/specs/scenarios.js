@@ -8,6 +8,18 @@ describe("FM", function() {
         return "angular.element(document).find('ng-view')[0].scrollTop =" + y;
     };
 
+    describe("playlist", function() {
+        beforeEach(function(){
+            browser.get("http://127.0.0.1:8000/");
+            browser.waitForAngular();
+            browser.driver.sleep(2000);
+        });
+
+        it("should render playlist partial when user navigates to /", function() {
+            expect(element.all(by.repeater("track in playlist")).count()).toEqual(4);
+        });
+    });
+
     describe("history", function() {
 
         beforeEach(function(){
