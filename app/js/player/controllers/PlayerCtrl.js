@@ -142,6 +142,8 @@ angular.module("FM.player.PlayerCtrl",[
          * @method onEnd
          */
         $scope.onEnd = function onEnd() {
+            $scope.trackPositionTimer.stop();
+            $scope.trackPositionTimer.reset();
             $scope.track = null;
         };
 

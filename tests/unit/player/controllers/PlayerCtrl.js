@@ -48,6 +48,7 @@ describe("FM.player.PlayerCtrl", function() {
         TrackTimer = $injector.get("TrackTimer");
         spyOn(TrackTimer, "stop").and.callThrough();
         spyOn(TrackTimer, "start").and.callThrough();
+        spyOn(TrackTimer, "reset").and.callThrough();
 
         $controller("PlayerCtrl", {
             $scope: $scope,
@@ -160,6 +161,12 @@ describe("FM.player.PlayerCtrl", function() {
         expect($scope.track).not.toBeNull();
         $scope.$broadcast("fm:player:end");
         expect($scope.track).toBeNull();
+    });
+
+    it("should stop and reset timer on end event", function() {
+        $scope.$broadcast("fm:player:end");
+        expect(TrackTimer.stop).toHaveBeenCalled();
+        expect(TrackTimer.reset).toHaveBeenCalled();
     });
 
     it("should set mute status to true", function() {
