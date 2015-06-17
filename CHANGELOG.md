@@ -1,3 +1,7 @@
+## Changes in 0.2.1
+
+ * @jamesjwarren: Fix: track timer (#97)
+
 ## Changes in 0.2.0
 
  * @jamesjwarren: Feature: Playback position (#94)
