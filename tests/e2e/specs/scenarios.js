@@ -65,4 +65,70 @@ describe("FM", function() {
 
     });
 
+    describe("track timer", function() {
+
+        var elapsedTime = 0;
+
+        beforeEach(function(){
+            browser.driver.manage().window().setSize(1630, 800);
+            browser.get("http://127.0.0.1:8000/");
+            browser.waitForAngular();
+            browser.driver.sleep(2000);
+        });
+
+        it("should start track timer with current elapsed time", function() {
+            element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
+                expect(value > 5000).toBeTruthy();
+            });
+        });
+
+        it("should increment elapsed time", function() {
+            var startProgressWidth = 0;
+            var startTime = 0;
+            element(by.css("footer fm-track .progress-bar")).getCssValue("width").then(function(width){
+                startProgressWidth = parseInt(width);
+            });
+            element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
+                startTime = parseInt(value);
+            });
+            browser.driver.sleep(5000);
+
+            // check elapsed time value in progress bar
+            element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
+                expect(parseInt(value) > startTime).toBeTruthy();
+            });
+            // check width of progress bar has increased
+            element(by.css("footer fm-track .progress-bar")).getCssValue("width").then(function(width){
+                expect(parseInt(width) > startProgressWidth).toBeTruthy();
+            });
+
+        });
+
+        it("should pause and resume", function() {
+
+            // pause
+            element(by.css(".controls button:nth-child(2)")).click();
+
+            var startTime = 0;
+            element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
+                startTime = value;
+            });
+
+            browser.driver.sleep(2000);
+
+            element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
+                expect(value).toEqual(startTime);
+            });
+
+            // resume
+            element(by.css(".controls button:nth-child(1)")).click();
+            browser.driver.sleep(2000);
+
+            element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
+                expect(value > startTime).toBeTruthy();
+            });
+        });
+
+    });
+
 });
