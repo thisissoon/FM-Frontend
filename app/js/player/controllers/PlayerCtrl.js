@@ -77,7 +77,7 @@ angular.module("FM.player.PlayerCtrl",[
                 if ($scope.track && $scope.track.track) {
 
                     // Start track position timer
-                    var elapsed = parseInt(response[0].elapsed_time) || 0; // jshint ignore:line
+                    var elapsed = parseInt(response[0].player.elapsed_time) || 0; // jshint ignore:line
                     $scope.trackPositionTimer.start($scope.track.track.duration, elapsed);
 
                     $notification("Now Playing", {
