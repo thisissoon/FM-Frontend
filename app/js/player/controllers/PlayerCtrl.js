@@ -8,6 +8,7 @@ angular.module("FM.player.PlayerCtrl",[
     "FM.api.PlayerTransportResource",
     "FM.api.PlayerMuteResource",
     "FM.api.PlayerVolumeResource",
+    "FM.player.TrackTimer",
     "notification"
 ])
 /**
@@ -26,7 +27,8 @@ angular.module("FM.player.PlayerCtrl",[
     "PlayerTransportResource",
     "PlayerMuteResource",
     "PlayerVolumeResource",
-    function ($scope, $q, $notification, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource) {
+    "TrackTimer",
+    function ($scope, $q, $notification, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, TrackTimer) {
 
         /**
          * The currently playing track
@@ -55,6 +57,10 @@ angular.module("FM.player.PlayerCtrl",[
         $scope.paused = false;
 
         /**
+         */
+        $scope.trackPositionTimer = TrackTimer;
+
+        /**
          * Get all the data
          * @method getAllData
          */
@@ -69,6 +75,11 @@ angular.module("FM.player.PlayerCtrl",[
                 $scope.volume = response[2].volume;
 
                 if ($scope.track && $scope.track.track) {
+
+                    // Start track position timer
+                    var elapsed = parseInt(response[0].elapsed_time) || 0; // jshint ignore:line
+                    $scope.trackPositionTimer.start($scope.track.track.duration, elapsed);
+
                     $notification("Now Playing", {
                         body: $scope.track.track.artists[0].name + " - " + $scope.track.track.album.name + ": " + $scope.track.track.name,
                         icon: $scope.track.track.album.images[0].url
@@ -139,6 +150,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method onPause
          */
         $scope.onPause = function onPause() {
+            $scope.trackPositionTimer.stop();
             $scope.paused = true;
         };
 
@@ -147,6 +159,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method onResume
          */
         $scope.onResume = function onResume() {
+            $scope.trackPositionTimer.start($scope.track.track.duration);
             $scope.paused = false;
         };
 
@@ -191,6 +204,8 @@ angular.module("FM.player.PlayerCtrl",[
         $scope.$on("fm:player:setVolume", $scope.onSetVolume);
 
         $scope.getAllData();
+
+        $scope.$on("$destroy", $scope.trackPositionTimer.stop);
     }
 
 ]);

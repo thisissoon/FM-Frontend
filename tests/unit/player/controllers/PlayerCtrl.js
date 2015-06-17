@@ -3,7 +3,7 @@
 describe("FM.player.PlayerCtrl", function() {
 
     var $scope, $q, $httpBackend, $notification,
-        PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource;
+        PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, TrackTimer;
 
     beforeEach(function (){
         module("FM.player.PlayerCtrl");
@@ -45,13 +45,17 @@ describe("FM.player.PlayerCtrl", function() {
         spyOn(PlayerVolumeResource, "get").and.callThrough();
         spyOn(PlayerVolumeResource, "save").and.callThrough();
 
+        TrackTimer = $injector.get("TrackTimer");
+        spyOn(TrackTimer, "stop").and.callThrough();
+
         $controller("PlayerCtrl", {
             $scope: $scope,
             $q: $q,
             $notification: $notification,
             PlayerTransportResource: PlayerTransportResource,
             PlayerMuteResource: PlayerMuteResource,
-            PlayerVolumeResource: PlayerVolumeResource
+            PlayerVolumeResource: PlayerVolumeResource,
+            TrackTimer: TrackTimer
         });
 
         $httpBackend.flush();
@@ -72,6 +76,15 @@ describe("FM.player.PlayerCtrl", function() {
 
         $httpBackend.flush();
         expect($notification).toHaveBeenCalledWith("Now Playing", { body: "Boston - Boston: More Than a Feeling", icon: "http://placehold.it/640x629?text=Album+Art" });
+    });
+
+    it("should start timer", function(){
+        spyOn($scope.trackPositionTimer, "start");
+        $scope.getAllData();
+        $scope.$apply();
+
+        $httpBackend.flush();
+        expect($scope.trackPositionTimer.start).toHaveBeenCalledWith(285133, 0);
     });
 
     it("should make request to resume playback", function(){
@@ -151,6 +164,11 @@ describe("FM.player.PlayerCtrl", function() {
     it("should set mute status to false", function() {
         $scope.onUnmute();
         expect($scope.mute).toBe(false);
+    });
+
+    it("should stop timer on destroy", function() {
+        $scope.$broadcast("$destroy");
+        expect(TrackTimer.stop).toHaveBeenCalled();
     });
 
 });
