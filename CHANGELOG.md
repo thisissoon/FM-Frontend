@@ -1,3 +1,7 @@
+## Changes in 0.2.0
+
+ * @jamesjwarren: Feature: Playback position (#94)
+
 ## Changes in 0.1.3
 
  * @jamesjwarren: Fix: PlayerHistoryResource promise resolve (#93)
