@@ -16,7 +16,7 @@ describe("FM.player.PlayerCtrl", function() {
         $httpBackend.whenDELETE(/.*player\/mute/).respond(200, { message: "200 OK" });
         $httpBackend.whenPOST(/.*player\/mute/).respond(200, { message: "200 OK" });
 
-        $httpBackend.whenGET(/.*player\/current/).respond(200, {"track": {"album": {"id": "d7b737a9-d70b-49a9-9f42-8c204b342000", "images": [{"url": "http://placehold.it/640x629?text=Album+Art", "width": 640, "height": 629}, {"url": "http://placehold.it/300x295?text=Album+Art", "width": 300, "height": 295}, {"url": "http://placehold.it/64x63?text=Album+Art", "width": 64, "height": 63}], "name": "Boston", "uri": "spotify:album:2QLp07RO6anZHmtcKTEvSC"}, "name": "More Than a Feeling", "uri": "spotify:track:1QEEqeFIZktqIpPI4jSVSF", "play_count": 0, "artists": [{"id": "8c22640a-02ef-4ee0-90eb-87c9c9a2534f", "uri": "spotify:artist:29kkCKKGXheHuoO829FxWK", "name": "Boston"}], "duration": 285133, "id": "0739b113-ad3a-47a4-bea9-edb00ba192f5"}, "user": {"family_name": "Light", "display_name": "Alex Light", "avatar_url": "http://placehold.it/400", "spotify_playlists": null, "given_name": "Alex", "id": "16369f65-6aa5-4d04-8927-a77016d0d721"}}, { "Paused": 1 });
+        $httpBackend.whenGET(/.*player\/current/).respond(200, {"player": { "elapsed_time": 10 }, "track": {"album": {"id": "d7b737a9-d70b-49a9-9f42-8c204b342000", "images": [{"url": "http://placehold.it/640x629?text=Album+Art", "width": 640, "height": 629}, {"url": "http://placehold.it/300x295?text=Album+Art", "width": 300, "height": 295}, {"url": "http://placehold.it/64x63?text=Album+Art", "width": 64, "height": 63}], "name": "Boston", "uri": "spotify:album:2QLp07RO6anZHmtcKTEvSC"}, "name": "More Than a Feeling", "uri": "spotify:track:1QEEqeFIZktqIpPI4jSVSF", "play_count": 0, "artists": [{"id": "8c22640a-02ef-4ee0-90eb-87c9c9a2534f", "uri": "spotify:artist:29kkCKKGXheHuoO829FxWK", "name": "Boston"}], "duration": 285133, "id": "0739b113-ad3a-47a4-bea9-edb00ba192f5"}, "user": {"family_name": "Light", "display_name": "Alex Light", "avatar_url": "http://placehold.it/400", "spotify_playlists": null, "given_name": "Alex", "id": "16369f65-6aa5-4d04-8927-a77016d0d721"}}, { "Paused": 1 });
         $httpBackend.whenDELETE(/.*player\/current/).respond(200, { message: "200 OK" });
         $httpBackend.whenPOST(/.*player\/pause/).respond(200, { message: "200 OK" });
         $httpBackend.whenDELETE(/.*player\/pause/).respond(200, { message: "200 OK" });
@@ -47,6 +47,7 @@ describe("FM.player.PlayerCtrl", function() {
 
         TrackTimer = $injector.get("TrackTimer");
         spyOn(TrackTimer, "stop").and.callThrough();
+        spyOn(TrackTimer, "start").and.callThrough();
 
         $controller("PlayerCtrl", {
             $scope: $scope,
@@ -78,13 +79,12 @@ describe("FM.player.PlayerCtrl", function() {
         expect($notification).toHaveBeenCalledWith("Now Playing", { body: "Boston - Boston: More Than a Feeling", icon: "http://placehold.it/640x629?text=Album+Art" });
     });
 
-    it("should start timer", function(){
-        spyOn($scope.trackPositionTimer, "start");
+    it("should start timer with elapsed time", function(){
         $scope.getAllData();
         $scope.$apply();
 
         $httpBackend.flush();
-        expect($scope.trackPositionTimer.start).toHaveBeenCalledWith(285133, 0);
+        expect(TrackTimer.start).toHaveBeenCalledWith(285133, 10);
     });
 
     it("should make request to resume playback", function(){
@@ -134,6 +134,12 @@ describe("FM.player.PlayerCtrl", function() {
     it("should set paused state `false` on resume event", function() {
         $scope.$broadcast("fm:player:resume");
         expect($scope.paused).toEqual(false);
+    });
+
+    it("should resume timer on resume event", function() {
+        TrackTimer.start.calls.reset();
+        $scope.$broadcast("fm:player:resume");
+        expect(TrackTimer.start).toHaveBeenCalledWith(285133);
     });
 
     it("should set mute state on setMute event", function() {

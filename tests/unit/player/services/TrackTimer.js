@@ -39,6 +39,23 @@ describe("FM.player.TrackTimer", function() {
             expect(TrackTimer.percent).toEqual(20);
         });
 
+        it("should pause and resume timer", function(){
+            jasmine.clock().tick(2000);
+            $interval.flush(2000);
+
+            TrackTimer.stop();
+            TrackTimer.start(5000);
+
+            expect(TrackTimer.elapsedTime).toEqual(2000);
+            expect(TrackTimer.percent).toEqual(40);
+
+            jasmine.clock().tick(1000);
+            $interval.flush(1000);
+
+            expect(TrackTimer.elapsedTime).toEqual(3000);
+            expect(TrackTimer.percent).toEqual(60);
+        });
+
         it("should stop timer when duration is reached", function(){
             spyOn(TrackTimer, "stop");
             jasmine.clock().tick(5000);
