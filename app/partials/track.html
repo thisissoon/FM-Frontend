@@ -13,12 +13,9 @@
 </div>
 
 <div ng-if="track" class="media-body">
-    <p class="lead media-heading media-info" bind-html-unsafe="track.name"></p>
-    <p class="text-muted media-info">
-        <span ng-repeat-start="artist in track.artists" bind-html-unsafe="artist.name"></span
-        ><span ng-repeat-end ng-if="!$last">,&nbsp;</span>
-    </p>
-    <p class="text-muted media-info" bind-html-unsafe="track.album.name"></p>
+    <p class="lead media-heading media-info" bind-html-unsafe="track.name" title="{{ track.name }}"></p>
+    <p class="text-muted media-info" bind-html-unsafe="track.allArtists" title="{{ track.allArtists }}"></p>
+    <p class="text-muted media-info" bind-html-unsafe="track.album.name" title="{{ track.album.name }}"></p>
 </div>
 
 <div class="media-progress hidden-xs hidden-sm" ng-show="timer">

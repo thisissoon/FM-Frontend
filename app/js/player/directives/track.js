@@ -26,7 +26,29 @@ angular.module("FM.player.trackDirective", [
                 user: "=",
                 timer: "=?"
             },
-            templateUrl: "partials/track.html"
+            templateUrl: "partials/track.html",
+            link: function($scope){
+
+                /**
+                 * @method onTrackUpdated
+                 * @param  {Object} track
+                 */
+                $scope.onTrackUpdate = function onTrackUpdated(track){
+                    if (track) {
+                        $scope.track.allArtists = "";
+                    }
+
+                    if (track && track.artists){
+                        angular.forEach(track.artists, function (artist, $index){
+                            var s = ($index !== track.artists.length - 1) ? (artist.name + ", ") : artist.name;
+                            $scope.track.allArtists += s;
+                        });
+                    }
+                };
+
+                $scope.$watch("track", $scope.onTrackUpdate, true);
+
+            }
         };
     }
 ]);
