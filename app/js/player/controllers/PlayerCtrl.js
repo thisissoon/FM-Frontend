@@ -9,7 +9,10 @@ angular.module("FM.player.PlayerCtrl",[
     "FM.api.PlayerMuteResource",
     "FM.api.PlayerVolumeResource",
     "FM.player.TrackTimer",
-    "notification"
+    "notification",
+    "ui.bootstrap.popover",
+    "template/popover/popover-template.html",
+    "template/popover/popover.html"
 ])
 /**
  * @class PlayerCtrl

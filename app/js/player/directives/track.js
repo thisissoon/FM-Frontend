@@ -6,7 +6,9 @@
  * @author SOON_
  */
 angular.module("FM.player.trackDirective", [
-
+    "ui.bootstrap.popover",
+    "template/popover/popover-template.html",
+    "template/popover/popover.html"
 ])
 /**
  * @example

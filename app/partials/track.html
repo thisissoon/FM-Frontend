@@ -1,6 +1,11 @@
 <div ng-if="user" class="media-left media-user text-center">
     <span ng-if="current" class="selected">Selected by: </span>
-    <img ng-src="{{ user.avatar_url }}" alt="{{ user.display_name }}" class="img-circle img-user">
+    <img ng-src="{{ user.avatar_url }}"
+         alt="{{ user.display_name }}"
+         popover="{{ user.display_name }}"
+         popover-append-to-body="true"
+         popover-trigger="mouseenter"
+         class="img-circle img-user">
 </div>
 
 <div ng-if="track" class="media-left media-album">
