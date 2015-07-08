@@ -18,7 +18,7 @@
     <p class="text-muted media-info" bind-html-unsafe="track.album.name" title="{{ track.album.name }}"></p>
 </div>
 
-<div class="media-progress hidden-xs hidden-sm" ng-show="timer">
+<div class="media-progress hidden-xs hidden-sm" ng-show="timer && track">
     <div class="progress">
         <div class="progress-bar" role="progressbar" aria-valuenow="{{ timer.elapsedTime }}" aria-valuemin="0" aria-valuemax="{{ track.duration }}" ng-style="{ width: timer.percent + '%' }"></div>
     </div>
