@@ -3,6 +3,14 @@
 // --------------------------------------------------
 
 .btn {
+
+    &,
+    &:focus,
+    &:active,
+    &:focus:active {
+        outline: 0;
+    }
+
     &.btn-icon {
         .button-size(0; 0; @font-size-base; 28px; 50%);
         .square(30px);
@@ -11,6 +19,13 @@
             font-size: .8em;
             line-height: 30px;
             vertical-align: top;
+        }
+
+        .open &,
+        .open &:focus,
+        .open &:active,
+        .open &:active:focus {
+            background-color: lighten(@media-bg, 10%);
         }
     }
 
