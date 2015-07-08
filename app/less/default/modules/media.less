@@ -11,6 +11,7 @@
     background-color: @media-bg;
     padding-left: 20px;
     padding-right: 20px;
+    position: relative;
     margin-bottom: 5px;
 
     .footer .selected {
@@ -57,15 +58,29 @@
 }
 
 .media-menu {
-    .align-self(flex-end);
-    min-width: 40px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    position: relative;
+    .align-self(flex-start);
+    min-width: 30px;
+    margin-bottom: 10px;
+    position: absolute;
+    top: 30px;
+    right: 10px;
 
     .footer &,
     .sidebar & {
         display: none;
+    }
+
+    .btn-context {
+        .opacity(0);
+        .rotate(90deg);
+        .transition(color .2s);
+        height: 10px;
+    }
+
+    &.open .btn-context,
+    .media:hover & .btn-context {
+        .opacity(1);
+        display: block;
     }
 }
 
