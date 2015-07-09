@@ -82,7 +82,7 @@ angular.module("FM.search.AlbumDetailCtrl", [
          */
         $scope.loadMore = function loadMore(){
             $scope.loadDisabled = true;
-            Spotify.getAlbumTracks($scope.album.id, { limit: 20, album_type: "single", offset: $scope.singles.length }) // jshint ignore:line
+            Spotify.getAlbumTracks($scope.album.id, { limit: 20, album_type: "single", offset: $scope.albumTracks.length }) // jshint ignore:line
                 .then(function (response) {
                     $scope.albumTracks = $scope.albumTracks.concat(response.items);
                     $scope.meta = response;
