@@ -25,8 +25,11 @@
 
             <a href="artists/{{ artist.id }}" class="thumbnail" title="{{ artist.name }}">
                 <div class="img"
+                     ng-class="{
+                        'no-img': !artist.images[1]
+                     }"
                      ng-style="{
-                        'background-image': 'url({{ artist.images[1].url }})'
+                        'background-image': 'url({{ artist.images[1].url || 'img/icons/artist.svg' }})'
                      }">
                     <img ng-src="{{ artist.images[1].url }}" alt="{{ artist.name }}" class="sr-only sr-only-focusable">
                 </div>
