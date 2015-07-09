@@ -1,0 +1,81 @@
+<div class="artist-detail">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="img"
+                     ng-class="{
+                        'no-img': !artist.images[1]
+                     }"
+                     ng-style="{
+                        'background-image': 'url({{ artist.images[1].url || 'img/icons/artist.svg' }})'
+                     }">
+                    <img ng-src="{{ artist.images[1].url }}" alt="{{ artist.name }}" class="sr-only sr-only-focusable">
+                </div>
+
+                <h1 class="h1 text-overflow">{{ artist.name }}</h3>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>Top tracks</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="list-unstyled media-list">
+                    <li class="media"
+                        ng-repeat="track in topTracks"
+                        data-spotify-track="track"
+                        fm-track>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>Albums</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
+                 ng-repeat="album in albums">
+
+                <a href="album/{{ album.id }}" class="thumbnail" title="{{ album.name }}">
+                    <div class="img"
+                         ng-class="{
+                            'no-img': !album.images[1]
+                         }"
+                         ng-style="{
+                            'background-image': 'url({{ album.images[1].url || 'img/icons/artist.svg' }})'
+                         }">
+                        <img ng-src="{{ album.images[1].url }}" alt="{{ album.name }}" class="sr-only sr-only-focusable">
+                    </div>
+                    <div class="caption">
+                        <h3 class="h5 text-overflow">{{ album.name }}</h3>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <button class="btn btn-primary" ng-click="loadMore()" ng-if="meta.next" ng-disabled="loadDisabled">Load more</button>
+            <p ng-if="meta.total > 0 && !meta.next">No more results</p>
+        </div>
+    </div>
+
+</div>

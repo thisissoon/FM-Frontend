@@ -8,7 +8,8 @@
  */
 angular.module("FM.search", [
     "FM.search.SearchCtrl",
-    "FM.search.ArtistSearchCtrl"
+    "FM.search.ArtistSearchCtrl",
+    "FM.search.ArtistDetailCtrl"
 ])
 /**
  * @method run
