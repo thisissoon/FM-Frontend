@@ -72,32 +72,12 @@ describe("FM.player.TrackTimer", function() {
         });
 
         it("should reset timer", function(){
+            spyOn(TrackTimer, "pause");
             TrackTimer.reset();
+
             expect(TrackTimer.elapsedTime).toEqual(0);
             expect(TrackTimer.percent).toEqual(0);
-        });
-
-        it("should restart timer if called twice", function(){
-            // 1st timer
-            spyOn(TrackTimer, "stop");
-            spyOn(TrackTimer, "reset");
-            jasmine.clock().tick(4000);
-            $interval.flush(4000);
-            expect(TrackTimer.elapsedTime).toEqual(4000);
-
-            // start again
-            TrackTimer.start(5000);
-
-            // stop and reset timer
-            expect(TrackTimer.stop).toHaveBeenCalled();
-            expect(TrackTimer.reset).toHaveBeenCalled();
-
-            // 2nd timer
-            jasmine.clock().tick(1000);
-            $interval.flush(1000);
-
-            expect(TrackTimer.elapsedTime).toEqual(1000);
-            expect(TrackTimer.percent).toEqual(20);
+            expect(TrackTimer.pause).toHaveBeenCalled();
         });
 
     });

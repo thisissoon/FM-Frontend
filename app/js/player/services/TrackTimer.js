@@ -72,12 +72,6 @@ angular.module("FM.player.TrackTimer", [
          */
         this.start = function start (duration, elapsed) {
 
-            // Clear any existing timer
-            if (startTime) {
-                _this.stop();
-                _this.reset();
-            }
-
             // Default elapsed time on start to 0
             elapsed = elapsed ? elapsed : 0;
 
@@ -121,6 +115,12 @@ angular.module("FM.player.TrackTimer", [
          * @public
          */
         this.reset = function reset () {
+            // Clear running timer
+            if (startTime) {
+                _this.pause();
+            }
+
+            // Reset timer to zero
             startTime = 0;
             lastStopTime = 0;
             _this.elapsedTime = 0;
