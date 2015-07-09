@@ -1,13 +1,11 @@
 "use strict";
 /**
- * @module   FM.search.ArtistCtrl
+ * @module   FM.search.ArtistSearchCtrl
  * @author   SOON_
- * @requires FM.api.PlayerQueueResource
  * @requires spotify
  * @requires ngRoute
  */
 angular.module("FM.search.ArtistSearchCtrl", [
-    "FM.api.PlayerQueueResource",
     "spotify",
     "ngRoute"
 ])
@@ -35,8 +33,10 @@ angular.module("FM.search.ArtistSearchCtrl", [
 /**
  * @constructor
  * @class ArtistSearchCtrl
- * @param {Object} $scope
- * @param {Array}  $scope
+ * @param {Object}  $scope
+ * @param {Service} $location
+ * @param {Service} Spotify
+ * @param {Array}   search
  */
 .controller("ArtistSearchCtrl", [
     "$scope",
