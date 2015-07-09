@@ -27,7 +27,7 @@ angular.module("FM.search.ArtistDetailCtrl", [
                         return Spotify.getArtist($route.current.params.id);
                     }],
                     albums: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.getArtistAlbums($route.current.params.id, { limit: 20 });
+                        return Spotify.getArtistAlbums($route.current.params.id, { limit: 20, album_type: "album,single" }); // jshint ignore:line
                     }],
                     topTracks: ["Spotify", "$route", function (Spotify, $route){
                         return Spotify.getArtistTopTracks($route.current.params.id, "GB");
@@ -94,7 +94,7 @@ angular.module("FM.search.ArtistDetailCtrl", [
          */
         $scope.loadMore = function loadMore(){
             $scope.loadDisabled = true;
-            Spotify.getArtistAlbums($scope.artist.id, { limit: 20, offset: $scope.albums.length })
+            Spotify.getArtistAlbums($scope.artist.id, { limit: 20, album_type: "album,single", offset: $scope.albums.length }) // jshint ignore:line
                 .then(function (response) {
                     $scope.albums = $scope.albums.concat(response.items);
                     $scope.meta = response;
