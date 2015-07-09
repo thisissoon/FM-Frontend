@@ -10,6 +10,7 @@ angular.module("FM.search", [
     "FM.search.SearchCtrl",
     "FM.search.ArtistSearchCtrl",
     "FM.search.ArtistDetailCtrl",
+    "FM.search.AlbumSearchCtrl",
     "FM.search.AlbumDetailCtrl"
 ])
 /**
