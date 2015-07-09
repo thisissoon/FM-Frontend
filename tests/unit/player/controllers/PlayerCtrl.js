@@ -46,7 +46,7 @@ describe("FM.player.PlayerCtrl", function() {
         spyOn(PlayerVolumeResource, "save").and.callThrough();
 
         TrackTimer = $injector.get("TrackTimer");
-        spyOn(TrackTimer, "stop").and.callThrough();
+        spyOn(TrackTimer, "pause").and.callThrough();
         spyOn(TrackTimer, "start").and.callThrough();
         spyOn(TrackTimer, "reset").and.callThrough();
 
@@ -163,9 +163,9 @@ describe("FM.player.PlayerCtrl", function() {
         expect($scope.track).toBeNull();
     });
 
-    it("should stop and reset timer on end event", function() {
+    it("should pause and reset timer on end event", function() {
         $scope.$broadcast("fm:player:end");
-        expect(TrackTimer.stop).toHaveBeenCalled();
+        expect(TrackTimer.pause).toHaveBeenCalled();
         expect(TrackTimer.reset).toHaveBeenCalled();
     });
 
@@ -179,9 +179,9 @@ describe("FM.player.PlayerCtrl", function() {
         expect($scope.mute).toBe(false);
     });
 
-    it("should stop timer on destroy", function() {
+    it("should pause timer on destroy", function() {
         $scope.$broadcast("$destroy");
-        expect(TrackTimer.stop).toHaveBeenCalled();
+        expect(TrackTimer.pause).toHaveBeenCalled();
     });
 
 });
