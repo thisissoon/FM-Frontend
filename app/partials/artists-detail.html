@@ -1,117 +1,113 @@
-<div class="artist-detail">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-12">
+            <div class="img"
+                 ng-class="{
+                    'no-img': !artist.images[1]
+                 }"
+                 ng-style="{
+                    'background-image': 'url({{ artist.images[1].url || 'img/icons/artist.svg' }})'
+                 }">
+                <img ng-src="{{ artist.images[1].url }}" alt="{{ artist.name }}" class="sr-only sr-only-focusable">
+            </div>
 
+            <h1 class="h1 text-overflow">{{ artist.name }}</h1>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Top tracks <span class="badge">{{ topTracks.length }}</span></h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="list-unstyled media-list">
+                <li class="media"
+                    ng-repeat="track in topTracks"
+                    data-spotify-track="track"
+                    fm-track>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Albums <span class="badge">{{ albumsMeta.total }}</span></h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
+             ng-repeat="album in albums">
+
+            <a href="albums/{{ album.id }}" class="thumbnail" title="{{ album.name }}">
                 <div class="img"
                      ng-class="{
-                        'no-img': !artist.images[1]
+                        'no-img': !album.images[1]
                      }"
                      ng-style="{
-                        'background-image': 'url({{ artist.images[1].url || 'img/icons/artist.svg' }})'
+                        'background-image': 'url({{ album.images[1].url || 'img/icons/artist.svg' }})'
                      }">
-                    <img ng-src="{{ artist.images[1].url }}" alt="{{ artist.name }}" class="sr-only sr-only-focusable">
+                    <img ng-src="{{ album.images[1].url }}" alt="{{ album.name }}" class="sr-only sr-only-focusable">
                 </div>
+                <div class="caption">
+                    <h3 class="h5 text-overflow">{{ album.name }}</h3>
+                </div>
+            </a>
 
-                <h1 class="h1 text-overflow">{{ artist.name }}</h3>
-
-            </div>
         </div>
     </div>
 
-    <div class="container-fluid">
-
-        <div class="row">
-            <div class="col-xs-12">
-                <h2>Top tracks</h2>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                <ul class="list-unstyled media-list">
-                    <li class="media"
-                        ng-repeat="track in topTracks"
-                        data-spotify-track="track"
-                        fm-track>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
+    <div class="row text-center">
+        <button class="btn btn-primary" ng-click="loadMoreAlbums()" ng-if="albumsMeta.next" ng-disabled="loadDisabled">Load more</button>
+        <p ng-if="albumsMeta.total > 0 && !albumsMeta.next">No more albums</p>
     </div>
+</div>
 
-    <div class="container-fluid">
+<div class="container-fluid">
 
-        <div class="row">
-            <div class="col-xs-12">
-                <h2>Albums <span class="badge">{{ albumsMeta.total }}</span></h2>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
-                 ng-repeat="album in albums">
-
-                <a href="albums/{{ album.id }}" class="thumbnail" title="{{ album.name }}">
-                    <div class="img"
-                         ng-class="{
-                            'no-img': !album.images[1]
-                         }"
-                         ng-style="{
-                            'background-image': 'url({{ album.images[1].url || 'img/icons/artist.svg' }})'
-                         }">
-                        <img ng-src="{{ album.images[1].url }}" alt="{{ album.name }}" class="sr-only sr-only-focusable">
-                    </div>
-                    <div class="caption">
-                        <h3 class="h5 text-overflow">{{ album.name }}</h3>
-                    </div>
-                </a>
-
-            </div>
-        </div>
-
-        <div class="row text-center">
-            <button class="btn btn-primary" ng-click="loadMoreAlbums()" ng-if="albumsMeta.next" ng-disabled="loadDisabled">Load more</button>
-            <p ng-if="albumsMeta.total > 0 && !albumsMeta.next">No more albums</p>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Singles <span class="badge">{{ singlesMeta.total }}</span></h2>
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
+             ng-repeat="single in singles">
 
-        <div class="row">
-            <div class="col-xs-12">
-                <h2>Singles <span class="badge">{{ singlesMeta.total }}</span></h2>
-            </div>
-        </div>
+            <a href="albums/{{ single.id }}" class="thumbnail" title="{{ single.name }}">
+                <div class="img"
+                     ng-class="{
+                        'no-img': !single.images[1]
+                     }"
+                     ng-style="{
+                        'background-image': 'url({{ single.images[1].url || 'img/icons/artist.svg' }})'
+                     }">
+                    <img ng-src="{{ single.images[1].url }}" alt="{{ single.name }}" class="sr-only sr-only-focusable">
+                </div>
+                <div class="caption">
+                    <h3 class="h5 text-overflow">{{ single.name }}</h3>
+                </div>
+            </a>
 
-        <div class="row">
-            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
-                 ng-repeat="single in singles">
-
-                <a href="albums/{{ single.id }}" class="thumbnail" title="{{ single.name }}">
-                    <div class="img"
-                         ng-class="{
-                            'no-img': !single.images[1]
-                         }"
-                         ng-style="{
-                            'background-image': 'url({{ single.images[1].url || 'img/icons/artist.svg' }})'
-                         }">
-                        <img ng-src="{{ single.images[1].url }}" alt="{{ single.name }}" class="sr-only sr-only-focusable">
-                    </div>
-                    <div class="caption">
-                        <h3 class="h5 text-overflow">{{ single.name }}</h3>
-                    </div>
-                </a>
-
-            </div>
-        </div>
-
-        <div class="row text-center">
-            <button class="btn btn-primary" ng-click="loadMoreSingles()" ng-if="singlesMeta.next" ng-disabled="loadDisabled">Load more</button>
-            <p ng-if="singlesMeta.total > 0 && !singlesMeta.next">No more singles</p>
         </div>
     </div>
 
+    <div class="row text-center">
+        <button class="btn btn-primary" ng-click="loadMoreSingles()" ng-if="singlesMeta.next" ng-disabled="loadDisabled">Load more</button>
+        <p ng-if="singlesMeta.total > 0 && !singlesMeta.next">No more singles</p>
+    </div>
 </div>

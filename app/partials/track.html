@@ -8,7 +8,7 @@
          class="img-circle img-user">
 </div>
 
-<div ng-if="track" class="media-left media-album">
+<div ng-if="track && track.album.images[0]" class="media-left media-album">
     <img class="media-object img-album" ng-src="{{ track.album.images[0].url }}" alt="{{ item.album.name }}">
 </div>
 

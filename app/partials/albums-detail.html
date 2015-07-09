@@ -1,0 +1,56 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+
+            <div class="img img-square"
+                 ng-class="{
+                    'no-img': !album.images[1]
+                 }"
+                 ng-style="{
+                    'background-image': 'url({{ album.images[1].url || 'img/icons/artist.svg' }})'
+                 }">
+                <img ng-src="{{ album.images[1].url }}" alt="{{ album.name }}" class="sr-only sr-only-focusable">
+            </div>
+
+        </div>
+
+        <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+            <h1 class="h1">{{ album.name }} <span class="small text-muted">{{ album.release_date.split("-")[0] }}</span></h1>
+            <p class="h2">
+                <span class="small text-muted">By</span>
+                <a ng-href="artists/{{ artist.id }}"
+                   ng-repeat-start="artist in album.artists">
+                    {{ artist.name }}
+                </a><span ng-repeat-end ng-if="!$last">,</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Track list</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="list-unstyled media-list">
+                <li class="media"
+                    ng-repeat="track in albumTracks"
+                    data-spotify-track="track"
+                    fm-track>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="row text-center">
+        <button class="btn btn-primary" ng-click="loadMore()" ng-if="meta.next" ng-disabled="loadDisabled">Load more</button>
+        <p ng-if="meta.total > 0 && !meta.next">No more tracks</p>
+    </div>
+
+</div>
