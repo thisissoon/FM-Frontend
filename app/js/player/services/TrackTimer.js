@@ -6,7 +6,13 @@
 angular.module("FM.player.TrackTimer", [
 
 ])
-
+/**
+ * Timer service to track elapsed time of currently playing track
+ * @example
+ *  TrackTimer.start(duration, existingElapsedTime) // to start the timer
+ *  TrackTimer.pause() // to pause the timer
+ *  TrackTimer.reset() // to reset the timer to 0
+ */
 .service("TrackTimer", [
     "$interval",
     function ($interval) {
@@ -78,10 +84,11 @@ angular.module("FM.player.TrackTimer", [
             // Set start time
             startTime = now() - elapsed;
 
+            // Store timer as $interval instance
             _this.timerInstance = $interval(function(){
                 // Stop timer when duration is exceeded
                 if (_this.elapsedTime >= duration) {
-                    _this.stop();
+                    _this.pause();
                     return;
                 }
 
@@ -93,12 +100,12 @@ angular.module("FM.player.TrackTimer", [
         };
 
         /**
-         * Stop timer and clear timer instance
-         * @method stop
+         * Pause timer and clear timer instance
+         * @method pause
          * @public
          */
-        this.stop = function stop () {
-            // If running, update elapsed time otherwise keep it
+        this.pause = function pause () {
+            // If timer is running, update elapsed time otherwise keep it
             lastStopTime = startTime ? lastStopTime + now() - startTime : lastStopTime;
             startTime = 0;
 

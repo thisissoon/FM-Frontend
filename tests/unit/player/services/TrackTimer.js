@@ -27,7 +27,7 @@ describe("FM.player.TrackTimer", function() {
         });
 
         afterEach(function () {
-            TrackTimer.stop();
+            TrackTimer.pause();
         });
 
         it("should start timer and update elapsedTime", function(){
@@ -43,7 +43,7 @@ describe("FM.player.TrackTimer", function() {
             jasmine.clock().tick(2000);
             $interval.flush(2000);
 
-            TrackTimer.stop();
+            TrackTimer.pause();
             TrackTimer.start(5000);
 
             expect(TrackTimer.elapsedTime).toEqual(2000);
@@ -56,17 +56,17 @@ describe("FM.player.TrackTimer", function() {
             expect(TrackTimer.percent).toEqual(60);
         });
 
-        it("should stop timer when duration is reached", function(){
-            spyOn(TrackTimer, "stop");
+        it("should pause timer when duration is reached", function(){
+            spyOn(TrackTimer, "pause");
             jasmine.clock().tick(5000);
             $interval.flush(5000);
 
-            expect(TrackTimer.stop).toHaveBeenCalled();
+            expect(TrackTimer.pause).toHaveBeenCalled();
         });
 
-        it("should cancel timer", function(){
+        it("should cancel $interval instance", function(){
             $interval.flush(1000);
-            TrackTimer.stop();
+            TrackTimer.pause();
 
             expect($interval.cancel).toHaveBeenCalledWith(TrackTimer.timerInstance);
         });
@@ -110,7 +110,7 @@ describe("FM.player.TrackTimer", function() {
         });
 
         afterEach(function () {
-            TrackTimer.stop();
+            TrackTimer.pause();
         });
 
         it("should offset elapsed time", function(){
