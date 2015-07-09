@@ -46,6 +46,13 @@ angular.module("FM.search.ArtistSearchCtrl", [
     function ($scope, $location, Spotify, search) {
 
         /**
+         * Route search params
+         * @property search
+         * @type {Object}
+         */
+        $scope.search = $location.search();
+
+        /**
          * Search results
          * @property artist
          * @type {Array}
@@ -71,7 +78,7 @@ angular.module("FM.search.ArtistSearchCtrl", [
          */
         $scope.loadMore = function loadMore(){
             $scope.loadDisabled = true;
-            Spotify.search($location.search().query, "artist", { limit: 20, offset: $scope.artists.length, market: "GB" })
+            Spotify.search($scope.search.query, "artist", { limit: 20, offset: $scope.artists.length, market: "GB" })
                 .then(function (response) {
                     $scope.artists = $scope.artists.concat(response.artists.items);
                     $scope.meta = response.artists;

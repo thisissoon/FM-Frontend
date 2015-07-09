@@ -7,9 +7,9 @@
                     ng-pluralize
                     count="meta.total"
                     when="{
-                        '0': 'No results',
-                        'one': '1 Result',
-                        'other': '{} Results'
+                        '0': 'No results for \'{{ search.query }}\'',
+                        'one': '1 Result for \'{{ search.query }}\'',
+                        'other': '{} Results for \'{{ search.query }}\''
                     }">
                 </h2>
             </div>
