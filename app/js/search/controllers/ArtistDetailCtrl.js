@@ -27,7 +27,10 @@ angular.module("FM.search.ArtistDetailCtrl", [
                         return Spotify.getArtist($route.current.params.id);
                     }],
                     albums: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.getArtistAlbums($route.current.params.id, { limit: 20, album_type: "album,single" }); // jshint ignore:line
+                        return Spotify.getArtistAlbums($route.current.params.id, { limit: 20, album_type: "album" }); // jshint ignore:line
+                    }],
+                    singles: ["Spotify", "$route", function (Spotify, $route){
+                        return Spotify.getArtistAlbums($route.current.params.id, { limit: 20, album_type: "single" }); // jshint ignore:line
                     }],
                     topTracks: ["Spotify", "$route", function (Spotify, $route){
                         return Spotify.getArtistTopTracks($route.current.params.id, "GB");
@@ -51,8 +54,9 @@ angular.module("FM.search.ArtistDetailCtrl", [
     "Spotify",
     "artist",
     "albums",
+    "singles",
     "topTracks",
-    function ($scope, $location, Spotify, artist, albums, topTracks) {
+    function ($scope, $location, Spotify, artist, albums, singles, topTracks) {
 
         /**
          * Artist data
@@ -70,10 +74,24 @@ angular.module("FM.search.ArtistDetailCtrl", [
 
         /**
          * Albums list meta data
-         * @property meta
+         * @property albumsMeta
          * @type {Object}
          */
-        $scope.meta = albums;
+        $scope.albumsMeta = albums;
+
+        /**
+         * List of artist singles
+         * @property singles
+         * @type {Array}
+         */
+        $scope.singles = singles.items;
+
+        /**
+         * Albums list meta data
+         * @property singlesMeta
+         * @type {Object}
+         */
+        $scope.singlesMeta = singles;
 
         /**
          * List of artist top tracks
@@ -89,15 +107,29 @@ angular.module("FM.search.ArtistDetailCtrl", [
         $scope.loadDisabled = false;
 
         /**
-         * Load more search results
-         * @method loadMore
+         * Load more artist singles
+         * @method loadMoreSingles
          */
-        $scope.loadMore = function loadMore(){
+        $scope.loadMoreSingles = function loadMoreSingles(){
             $scope.loadDisabled = true;
-            Spotify.getArtistAlbums($scope.artist.id, { limit: 20, album_type: "album,single", offset: $scope.albums.length }) // jshint ignore:line
+            Spotify.getArtistAlbums($scope.artist.id, { limit: 20, album_type: "single", offset: $scope.singles.length }) // jshint ignore:line
+                .then(function (response) {
+                    $scope.singles = $scope.singles.concat(response.items);
+                    $scope.singlesMeta = response;
+                    $scope.loadDisabled = false;
+                });
+        };
+
+        /**
+         * Load more artist albums
+         * @method loadMoreAlbums
+         */
+        $scope.loadMoreAlbums = function loadMoreAlbums(){
+            $scope.loadDisabled = true;
+            Spotify.getArtistAlbums($scope.artist.id, { limit: 20, album_type: "album", offset: $scope.albums.length }) // jshint ignore:line
                 .then(function (response) {
                     $scope.albums = $scope.albums.concat(response.items);
-                    $scope.meta = response;
+                    $scope.albumsMeta = response;
                     $scope.loadDisabled = false;
                 });
         };
