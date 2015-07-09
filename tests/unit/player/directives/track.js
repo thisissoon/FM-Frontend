@@ -1,9 +1,21 @@
 "use strict";
 
 describe("FM.player.trackDirective", function() {
-    var element, $scope, $rootScope, isolatedScope, $templateCache;
+    var element, $scope, $rootScope, isolatedScope, $templateCache, PlayerQueueResource;
 
-    beforeEach(module("FM.player.trackDirective"));
+    beforeEach(function(){
+        module("FM.player.trackDirective")
+        module(function ($provide) {
+            $provide.provider("PlayerQueueResource", function () {
+                this.$get = function () {
+                    PlayerQueueResource = {
+                        save: jasmine.createSpy("PlayerQueueResource.save")
+                    }
+                    return PlayerQueueResource;
+                }
+            })
+        })
+    });
 
     beforeEach(inject(function (_$rootScope_, $compile, $injector) {
         $rootScope = _$rootScope_;
@@ -48,6 +60,11 @@ describe("FM.player.trackDirective", function() {
 
         isolatedScope.onTrackUpdate();
         expect(isolatedScope.track.allArtists).toEqual("");
+    })
+
+    it("should add track to playlist", function(){
+        isolatedScope.addToPlaylist({ uri: "123" });
+        expect(PlayerQueueResource.save).toHaveBeenCalledWith({ uri: "123" });
     })
 
 });
