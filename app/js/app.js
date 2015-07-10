@@ -16,6 +16,7 @@ angular.module("FM", [
     "FM.search",
     "FM.sockets",
     "FM.loadingScreen",
+    "FM.nav",
     "ngRoute",
     "notification",
     "ENV"
