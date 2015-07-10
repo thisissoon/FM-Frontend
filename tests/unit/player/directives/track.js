@@ -1,9 +1,15 @@
 "use strict";
 
 describe("FM.player.trackDirective", function() {
-    var element, $scope, $rootScope, isolatedScope, $templateCache;
+    var element, $scope, $rootScope, isolatedScope, $templateCache, $httpBackend, PlayerQueueResource;
 
     beforeEach(module("FM.player.trackDirective"));
+
+    beforeEach(inject(function (_$httpBackend_) {
+        $httpBackend = _$httpBackend_
+
+        $httpBackend.whenPOST(/.*player\/queue/).respond(200, [{ track: { uri: "foo" } },{ track: { uri: "bar" } }]);
+    }));
 
     beforeEach(inject(function (_$rootScope_, $compile, $injector) {
         $rootScope = _$rootScope_;
@@ -14,6 +20,9 @@ describe("FM.player.trackDirective", function() {
                 { name: "bar" }
             ]
         }
+
+        PlayerQueueResource = $injector.get("PlayerQueueResource");
+        spyOn(PlayerQueueResource, "save").and.callThrough();
 
         $scope = $rootScope.$new();
 
@@ -48,6 +57,11 @@ describe("FM.player.trackDirective", function() {
 
         isolatedScope.onTrackUpdate();
         expect(isolatedScope.track.allArtists).toEqual("");
+    })
+
+    it("should add track to playlist", function(){
+        isolatedScope.addToPlaylist({ uri: "123" });
+        expect(PlayerQueueResource.save).toHaveBeenCalledWith({ uri: "123" });
     })
 
 });
