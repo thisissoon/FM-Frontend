@@ -56,7 +56,6 @@
         "app/js/search/controllers/ArtistDetailCtrl.js",
         "app/js/search/controllers/AlbumSearchCtrl.js",
         "app/js/search/controllers/AlbumDetailCtrl.js",
-        "app/js/search/controllers/PlaylistSearchCtrl.js",
 
         "app/js/app.js"
     ]

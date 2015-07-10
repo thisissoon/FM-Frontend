@@ -11,8 +11,7 @@ angular.module("FM.search", [
     "FM.search.ArtistSearchCtrl",
     "FM.search.ArtistDetailCtrl",
     "FM.search.AlbumSearchCtrl",
-    "FM.search.AlbumDetailCtrl",
-    "FM.search.PlaylistSearchCtrl"
+    "FM.search.AlbumDetailCtrl"
 ])
 /**
  * @method run
