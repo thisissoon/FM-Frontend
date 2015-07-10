@@ -27,6 +27,11 @@ angular.module("FM.api.PlayerQueueResource", [
             {
                 query: {
                     isArray: false
+                },
+
+                meta: {
+                    method: "GET",
+                    url: FM_API_SERVER_ADDRESS + "player/queue/meta"
                 }
             }
         );
