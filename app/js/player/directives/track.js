@@ -6,6 +6,7 @@
  * @author SOON_
  */
 angular.module("FM.player.trackDirective", [
+    "FM.api.PlayerQueueResource",
     "ui.bootstrap.popover",
     "template/popover/popover-template.html",
     "template/popover/popover.html",
@@ -18,17 +19,28 @@ angular.module("FM.player.trackDirective", [
  * @class fmTrack
  */
 .directive("fmTrack",[
-    function (){
+    "PlayerQueueResource",
+    function (PlayerQueueResource){
         return {
             restrict: "EA",
             scope: {
                 track: "=spotifyTrack",
+                id: "=?",
                 current: "=",
                 user: "=",
                 timer: "=?"
             },
             templateUrl: "partials/track.html",
             link: function($scope){
+
+                /**
+                 * Remove track from queue
+                 * @method removeTrack
+                 * @param {String} uuid uuid of track in queue
+                 */
+                $scope.removeTrack = function removeTrack(uuid){
+                    PlayerQueueResource.remove({ id: uuid });
+                };
 
                 /**
                  * @method onTrackUpdated

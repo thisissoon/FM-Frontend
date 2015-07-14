@@ -23,10 +23,16 @@ angular.module("FM.api.PlayerQueueResource", [
 
         return $resource(
             FM_API_SERVER_ADDRESS + "player/queue",
-            {},
+            {
+                id: "@id"
+            },
             {
                 query: {
                     isArray: false
+                },
+                remove: {
+                    method: "DELETE",
+                    url: FM_API_SERVER_ADDRESS + "player/queue/:id",
                 }
             }
         );
