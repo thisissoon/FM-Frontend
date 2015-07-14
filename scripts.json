@@ -58,6 +58,8 @@
         "app/js/search/controllers/AlbumDetailCtrl.js",
         "app/js/search/controllers/TrackSearchCtrl.js",
 
+        "app/js/nav/nav.js",
+
         "app/js/app.js"
     ]
 }

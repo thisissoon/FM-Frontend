@@ -6,6 +6,7 @@
  * @author SOON_
  */
 angular.module("FM.player.trackDirective", [
+    "FM.api.PlayerQueueResource",
     "ui.bootstrap.popover",
     "template/popover/popover-template.html",
     "template/popover/popover.html",
@@ -18,7 +19,8 @@ angular.module("FM.player.trackDirective", [
  * @class fmTrack
  */
 .directive("fmTrack",[
-    function (){
+    "PlayerQueueResource",
+    function (PlayerQueueResource){
         return {
             restrict: "EA",
             scope: {
@@ -44,6 +46,16 @@ angular.module("FM.player.trackDirective", [
                             var s = ($index !== track.artists.length - 1) ? (artist.name + ", ") : artist.name;
                             $scope.track.allArtists += s;
                         });
+                    }
+                };
+
+                /**
+                 * @method addToPlaylist
+                 * @param {Object} track
+                 */
+                $scope.addToPlaylist = function addToPlaylist (track) {
+                    if (track && track.uri) {
+                        PlayerQueueResource.save({ uri: track.uri });
                     }
                 };
 
