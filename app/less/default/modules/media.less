@@ -11,6 +11,7 @@
     background-color: @media-bg;
     padding-left: 20px;
     padding-right: 20px;
+    position: relative;
     margin-bottom: 5px;
 
     .footer .selected {
@@ -44,9 +45,10 @@
 }
 
 .media-progress {
-    .flex-grow(200);
+    .flex-grow(1);
     .align-self(center);
     margin-right: 20px;
+    width: 400px;
 }
 
 .media-body {
@@ -54,6 +56,33 @@
     .align-self(center);
     overflow: hidden;
     padding: 0 10px;
+}
+
+.media-menu {
+    .align-self(flex-start);
+    min-width: 30px;
+    margin-bottom: 10px;
+    position: absolute;
+    top: 30px;
+    right: 10px;
+
+    .footer &,
+    .sidebar & {
+        display: none;
+    }
+
+    .btn-context {
+        .opacity(0);
+        .rotate(90deg);
+        .transition(color .2s);
+        display: block;
+        height: 10px;
+    }
+
+    &.open .btn-context,
+    .media:hover & .btn-context {
+        .opacity(1);
+    }
 }
 
 .media-info {

@@ -1,6 +1,14 @@
 <div class="queue">
 
-    <h2 class="h4" ng-if="playlist.length > 0">Coming up:</h2>
+    <div class="row">
+        <div class="col-xs-6">
+            <h2 class="h4" ng-if="playlist.length > 0">Coming up:</h2>
+        </div>
+        <div class="col-xs-6">
+            <p class="text-muted pull-right">{{ meta.total }} tracks in {{ meta.play_time | date: "h:mm:ss" }}</p>
+        </div>
+    </div>
+
     <h2 class="h1" ng-if="!playlist.length > 0">Playlist is empty</h2>
 
     <ul class="list-unstyled media-list">

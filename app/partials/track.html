@@ -1,6 +1,11 @@
 <div ng-if="user" class="media-left media-user text-center">
     <span ng-if="current" class="selected">Selected by: </span>
-    <img ng-src="{{ user.avatar_url }}" alt="{{ user.display_name }}" class="img-circle img-user">
+    <img ng-src="{{ user.avatar_url }}"
+         alt="{{ user.display_name }}"
+         popover="{{ user.display_name }}"
+         popover-append-to-body="true"
+         popover-trigger="mouseenter"
+         class="img-circle img-user">
 </div>
 
 <div ng-if="track" class="media-left media-album">
@@ -8,18 +13,25 @@
 </div>
 
 <div ng-if="track" class="media-body">
-    <p class="lead media-heading media-info" bind-html-unsafe="track.name"></p>
-    <p class="text-muted media-info">
-        <span ng-repeat-start="artist in track.artists" bind-html-unsafe="artist.name"></span
-        ><span ng-repeat-end ng-if="!$last">,&nbsp;</span>
-    </p>
-    <p class="text-muted media-info" bind-html-unsafe="track.album.name"></p>
+    <p class="lead media-heading media-info" bind-html-unsafe="track.name" title="{{ track.name }}"></p>
+    <p class="text-muted media-info" bind-html-unsafe="track.allArtists" title="{{ track.allArtists }}"></p>
+    <p class="text-muted media-info" bind-html-unsafe="track.album.name" title="{{ track.album.name }}"></p>
 </div>
 
-<div class="media-progress hidden-xs hidden-sm" ng-show="timer">
+<div class="media-progress hidden-xs hidden-sm" ng-show="timer && track">
     <div class="progress">
         <div class="progress-bar" role="progressbar" aria-valuenow="{{ timer.elapsedTime }}" aria-valuemin="0" aria-valuemax="{{ track.duration }}" ng-style="{ width: timer.percent + '%' }"></div>
     </div>
+</div>
+
+<div class="media-menu" dropdown is-open="status.isopen">
+    <a role="button" href class="text-muted btn-context" dropdown-toggle>
+        <span class="sr-only sr-only-focusable">Track menu</span>
+        <span class="icon icon-context"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+        <li><a href ng-click="addToPlaylist(track)">Add to playlist</a></li>
+    </ul>
 </div>
 
 <div ng-if="track.duration" class="media-right media-time text-right">

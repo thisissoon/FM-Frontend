@@ -1,3 +1,14 @@
+## Changes in 0.3.0
+
+ * @jamesjwarren: Feature: queue meta (#112)
+ * @jamesjwarren: Feature: playlist nav item (#111)
+ * @jamesjwarren: Feature: add to playlist action in track context menu (#110)
+ * @jamesjwarren: Fix: track timer reset bug (#106)
+ * @bcmrbvm: Feature: Track context menu (#105)
+ * @bcmrbvm: Feature: Popovers (#104)
+ * @bcmrbvm: Fix: Current track styling (#102)
+ * @jamesjwarren: Feature: e2e tests (#96)
+
 ## Changes in 0.2.1
 
  * @jamesjwarren: Fix: track timer (#97)
@@ -27,4 +38,4 @@
 
 ## Changes in 0.0.1
 
- * @eopa: First release
+ * @bcmrbvm: First release

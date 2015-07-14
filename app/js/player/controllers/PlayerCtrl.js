@@ -9,7 +9,10 @@ angular.module("FM.player.PlayerCtrl",[
     "FM.api.PlayerMuteResource",
     "FM.api.PlayerVolumeResource",
     "FM.player.TrackTimer",
-    "notification"
+    "notification",
+    "ui.bootstrap.popover",
+    "template/popover/popover-template.html",
+    "template/popover/popover.html"
 ])
 /**
  * @class PlayerCtrl
@@ -142,7 +145,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method onEnd
          */
         $scope.onEnd = function onEnd() {
-            $scope.trackPositionTimer.stop();
+            $scope.trackPositionTimer.pause();
             $scope.trackPositionTimer.reset();
             $scope.track = null;
         };
@@ -152,7 +155,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method onPause
          */
         $scope.onPause = function onPause() {
-            $scope.trackPositionTimer.stop();
+            $scope.trackPositionTimer.pause();
             $scope.paused = true;
         };
 
@@ -207,7 +210,7 @@ angular.module("FM.player.PlayerCtrl",[
 
         $scope.getAllData();
 
-        $scope.$on("$destroy", $scope.trackPositionTimer.stop);
+        $scope.$on("$destroy", $scope.trackPositionTimer.pause);
     }
 
 ]);
