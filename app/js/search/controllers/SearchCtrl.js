@@ -29,7 +29,7 @@ angular.module("FM.search.SearchCtrl", [
     function ($scope, $rootScope, $q, Spotify, PlayerQueueResource) {
 
         /**
-         * Searches the spotify api unsing angular-spotify and returns a
+         * Searches the spotify api using angular-spotify and returns a
          * promise containing the search results limited to 20
          * @method search
          * @param  {String}  query Query string to search spotify database
@@ -38,9 +38,10 @@ angular.module("FM.search.SearchCtrl", [
         $scope.search = function search(query){
             var deferred = $q.defer();
 
-            Spotify.search(query, "track", { limit: 20, market: "GB" })
+            Spotify.search(query, "album,artist,track", { limit: 3, market: "GB" })
                 .then(function (response) {
-                    deferred.resolve(response.tracks.items);
+                    var results = response.tracks.items.concat(response.artists.items.concat(response.albums.items));
+                    deferred.resolve(results);
                 });
 
             return deferred.promise;

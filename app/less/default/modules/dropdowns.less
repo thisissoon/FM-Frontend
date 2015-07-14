@@ -9,6 +9,24 @@
     border: none;
     padding: 10px 0;
     width: 83%;
+
+    a {
+        border: 0;
+        padding-left: 0;
+        padding-right: 0;
+        margin-bottom: 10px;
+        white-space: normal;
+    }
+
+    // Active state
+    > .active > a {
+        &,
+        &:hover,
+        &:focus {
+            background-color: lighten(@media-bg, 10%);
+            color: @white;
+        }
+    }
 }
 
 // The dropdown menu (ul)
