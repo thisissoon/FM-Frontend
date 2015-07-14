@@ -3,8 +3,8 @@
     <h2 class="h4" ng-if="history.length > 0">Previous tracks:</h2>
     <h2 class="h1" ng-if="!history.length > 0">No tracks in the history.</h2>
 
-    <ul class="list-unstyled media-list">
-        <li class="media"
+    <ul class="list-unstyled track-list">
+        <li class="track"
             ng-repeat="track in history track by $index"
             data-spotify-track="track.track"
             data-user="track.user"
