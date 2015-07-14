@@ -4,12 +4,12 @@
 
             <div class="img"
                  ng-class="{
-                    'no-img': !artist.images[1]
+                    'no-img': !artist.images[0]
                  }"
                  ng-style="{
-                    'background-image': 'url({{ artist.images[1].url || 'img/icons/artist.svg' }})'
+                    'background-image': 'url({{ artist.images[0].url || 'img/icons/artist.svg' }})'
                  }">
-                <img ng-src="{{ artist.images[1].url }}" alt="{{ artist.name }}" class="sr-only sr-only-focusable">
+                <img ng-src="{{ artist.images[0].url }}" alt="{{ artist.name }}" class="sr-only sr-only-focusable">
             </div>
 
             <h1 class="h1 text-overflow">{{ artist.name }}</h1>

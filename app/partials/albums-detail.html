@@ -5,12 +5,12 @@
 
                 <div class="img img-square"
                      ng-class="{
-                        'no-img': !album.images[1]
+                        'no-img': !album.images[0]
                      }"
                      ng-style="{
-                        'background-image': 'url({{ album.images[1].url || 'img/icons/artist.svg' }})'
+                        'background-image': 'url({{ album.images[0].url || 'img/icons/artist.svg' }})'
                      }">
-                    <img ng-src="{{ album.images[1].url }}" alt="{{ album.name }}" class="sr-only sr-only-focusable">
+                    <img ng-src="{{ album.images[0].url }}" alt="{{ album.name }}" class="sr-only sr-only-focusable">
                 </div>
 
             </div>
@@ -50,6 +50,7 @@
         <div class="col-xs-12">
             <ul class="list-unstyled track-list">
                 <li class="track"
+                    id="{{ track.uri }}"
                     ng-repeat="track in albumTracks"
                     data-spotify-track="track"
                     fm-track>
