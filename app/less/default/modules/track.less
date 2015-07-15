@@ -9,10 +9,16 @@
     .flex-wrap(nowrap);
     .justify-content(flex-start);
     background-color: @track-bg;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 0;
+    padding-right: 0;
     position: relative;
     margin-bottom: 5px;
+
+    .queue &,
+    .footer & {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 
     .footer .selected {
         display: none;
@@ -24,8 +30,13 @@
         padding-right: 10px;
     }
 
-    li.active & {
+    li.active &,
+    &:hover {
         background-color: lighten(@track-bg, 10%);
+    }
+
+    .footer &:hover {
+        background-color: @track-bg;
     }
 
     .sidebar & {
