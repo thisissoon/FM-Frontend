@@ -31,7 +31,7 @@
     </a>
     <ul class="dropdown-menu" role="menu">
         <li><a href ng-click="addToPlaylist(track)">Add to playlist</a></li>
-        <li><a href ng-click="removeTrack(id)">Delete from queue</a></li>
+        <li><a href ng-if="id" ng-click="removeTrack(id)">Delete from queue</a></li>
     </ul>
 </div>
 
