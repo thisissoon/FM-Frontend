@@ -1,9 +1,0 @@
-angular.module('config', [])
-
-.constant('bower', {name:'FM-Frontend',description:'The frontend for thisissoon.fm',version:'0.3.0',homepage:'https://github.com/thisissoon/FM-Frontend',license:'MIT',private:true,dependencies:{angular:'1.3.17','angular-animate':'1.3.17','angular-route':'1.3.17','angular-resource':'1.3.17','angular-bootstrap':'0.13.0','angular-socket-io':'0.7.0','angular-spotify':'0.11.0',bootstrap:'3.3.4',satellizer:'0.9.4','socket.io-client':'https://github.com/Automattic/socket.io-client.git#1.3.5','angular-notification':'1.0.1','angular-charts':'0.2.7',d3:'3.3.13','angular-chart.js':'0.7.1','Chart.js':'1.0.2'},devDependencies:{'angular-mocks':'1.3.17'}})
-
-.constant('pkg', {name:'FM-Frontend',private:true,version:'0.4.0',description:'The frontend for thisissoon.fm',repository:'https://github.com/thisissoon/FM-Frontend',license:'MIT',dependencies:{bower:'~1.4.1',grunt:'~0.4.5'},devDependencies:{'connect-livereload':'~0.5.3','connect-modrewrite':'~0.7.11',coveralls:'~2.11.2','grunt-bump':'~0.3.0','grunt-contrib-clean':'~0.6.0','grunt-contrib-concat':'~0.5.1','grunt-contrib-connect':'~0.10.1','grunt-contrib-copy':'~0.8.0','grunt-contrib-jasmine':'~0.8.2','grunt-contrib-jshint':'~0.11.1','grunt-contrib-less':'~1.0.1','grunt-contrib-uglify':'~0.9.1','grunt-contrib-watch':'~0.6.1','grunt-contrib-yuidoc':'~0.7.0','grunt-ng-constant':'~1.1.0','grunt-processhtml':'~0.3.7','grunt-protractor-runner':'~2.0.0','grunt-protractor-webdriver':'~0.2.0','grunt-template-jasmine-istanbul':'~0.3.3',protractor:'~2.0.0','yuidoc-bootstrap-theme':'~1.0.4'},scripts:{postinstall:'bower install'}})
-
-.constant('env', {BASE_URL:'/',GOOGLE_REDIRECT_URI:'http://localhost:8000/',FM_API_SERVER_ADDRESS:'http://localdocker:5000/',FM_SOCKET_ADDRESS:'http://localdocker:8080',HTML5_LOCATION:true,GOOGLE_CLIENT_ID:'826576189197-4sr9fonm8vr6ora4mfgdtou6j3v69asq.apps.googleusercontent.com'})
-
-;
