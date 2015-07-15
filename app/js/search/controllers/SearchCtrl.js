@@ -22,12 +22,11 @@ angular.module("FM.search.SearchCtrl", [
  */
 .controller("SearchCtrl", [
     "$scope",
-    "$location",
     "$rootScope",
     "$q",
     "Spotify",
     "PlayerQueueResource",
-    function ($scope, $location, $rootScope, $q, Spotify, PlayerQueueResource) {
+    function ($scope, $rootScope, $q, Spotify, PlayerQueueResource) {
 
         /**
          * Searches the spotify api using angular-spotify and returns a
@@ -41,9 +40,9 @@ angular.module("FM.search.SearchCtrl", [
 
             Spotify.search(query, "album,artist,track", { limit: 3, market: "GB" })
                 .then(function (response) {
-                    var albums = response.albums.items.length > 0,
-                        tracks = response.tracks.items.length > 0,
-                        artists = response.artists.items.length > 0;
+                    var albums = (response.albums && response.albums.items && response.albums.items.length > 0),
+                        tracks = (response.tracks && response.tracks.items && response.tracks.items.length > 0),
+                        artists = (response.artists && response.artists.items && response.artists.items.length > 0);
 
                     var results = [];
 
