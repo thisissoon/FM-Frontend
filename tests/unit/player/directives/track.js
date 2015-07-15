@@ -9,6 +9,7 @@ describe("FM.player.trackDirective", function() {
         $httpBackend = _$httpBackend_
 
         $httpBackend.whenPOST(/.*player\/queue/).respond(200, [{ track: { uri: "foo" } },{ track: { uri: "bar" } }]);
+        $httpBackend.whenDELETE(/.*player\/queue/).respond(200);
     }));
 
     beforeEach(inject(function (_$rootScope_, $compile, $injector) {
@@ -23,6 +24,7 @@ describe("FM.player.trackDirective", function() {
 
         PlayerQueueResource = $injector.get("PlayerQueueResource");
         spyOn(PlayerQueueResource, "save").and.callThrough();
+        spyOn(PlayerQueueResource, "remove").and.callThrough();
 
         $scope = $rootScope.$new();
 
@@ -62,6 +64,11 @@ describe("FM.player.trackDirective", function() {
     it("should add track to playlist", function(){
         isolatedScope.addToPlaylist({ uri: "123" });
         expect(PlayerQueueResource.save).toHaveBeenCalledWith({ uri: "123" });
+    })
+
+    it("should remove track from playlist", function(){
+        isolatedScope.removeTrack("123");
+        expect(PlayerQueueResource.remove).toHaveBeenCalledWith({ id: "123" });
     })
 
 });
