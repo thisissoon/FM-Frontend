@@ -3,12 +3,17 @@
 // --------------------------------------------------
 
 .track {
-    padding-left: 10px;
     padding-right: 10px;
+
+    .queue & {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 
     .footer & {
         height: @track-footer-height-xs;
         margin-bottom: 0;
+        padding-left: 10px;
     }
 }
 
