@@ -34,7 +34,7 @@ angular.module("FM", [
     "env",
     function ($routeProvider, $locationProvider, $notificationProvider, env) {
 
-        $locationProvider.html5Mode(env.HTML5_LOCATION_ENABLED).hashPrefix = "!";
+        $locationProvider.html5Mode(env.HTML5_LOCATION).hashPrefix = "!";
 
         $routeProvider
             .when("/401", { templateUrl: "partials/401.html" })
