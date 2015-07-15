@@ -1,3 +1,7 @@
+## Changes in 0.4.1
+
+ * @bcmrbvm: Fix: Remove auto generated config (No PR)
+
 ## Changes in 0.4.0
 
  * @bcmrbvm: Feature: Update grunt build (#120)
