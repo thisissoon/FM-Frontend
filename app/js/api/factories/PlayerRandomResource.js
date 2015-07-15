@@ -6,22 +6,22 @@
  * @author SOON_
  */
 angular.module("FM.api.PlayerRandomResource", [
-    "ENV",
+    "config",
     "ngResource"
 ])
 /**
  * @constructor
  * @class PlayerRandomResource
  * @param {Service} $resource
- * @param {String}  FM_API_SERVER_ADDRESS
+ * @param {Object}  env
  */
 .factory("PlayerRandomResource", [
     "$resource",
-    "FM_API_SERVER_ADDRESS",
-    function ($resource, FM_API_SERVER_ADDRESS) {
+    "env",
+    function ($resource, env) {
 
         return $resource(
-            FM_API_SERVER_ADDRESS + "player/random",
+            env.FM_API_SERVER_ADDRESS + "player/random",
             {},
             {
                 save: {

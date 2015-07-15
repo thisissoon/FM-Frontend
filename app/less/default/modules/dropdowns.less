@@ -9,10 +9,42 @@
     border: none;
     padding: 10px 0;
     width: 83%;
+
+    a {
+        border: 0;
+        padding-left: 0;
+        padding-right: 0;
+        margin-bottom: 3px;
+        white-space: normal;
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+
+    .btn {
+        padding: 8px 20px;
+        margin-bottom: 3px;
+        margin-top: 3px;
+    }
+
+    // Active state
+    > .active > a {
+        &,
+        &:hover,
+        &:focus {
+            background-color: lighten(@track-bg, 10%);
+            color: @white;
+        }
+    }
+
+    .media {
+        height: 69px;
+    }
 }
 
 // The dropdown menu (ul)
-.media .dropdown-menu {
+.track .dropdown-menu {
     left: auto;
     right: 10px;
     top: 80%;

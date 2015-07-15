@@ -34,7 +34,7 @@ describe("FM.api.RequestInterceptor", function (){
         spyOn($window.localStorage, "setItem").and.callFake(fakeCallback);
         spyOn($window.localStorage, "clear").and.callFake(function(){ localStorageValue = undefined });
 
-        FM_API_SERVER_ADDRESS = $injector.get("FM_API_SERVER_ADDRESS");
+        FM_API_SERVER_ADDRESS = $injector.get("env").FM_API_SERVER_ADDRESS;
         ERRORS = $injector.get("ERRORS");
 
         $location = $injector.get("$location");

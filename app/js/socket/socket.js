@@ -12,7 +12,7 @@
  * @author SOON_
  */
 angular.module("FM.sockets", [
-    "ENV",
+    "config",
     "btford.socket-io"
 ])
 /**
@@ -47,18 +47,18 @@ angular.module("FM.sockets", [
  * @constructor
  * @param   {Object}  $window
  * @param   {Factory} socketFactory     socket instance factory
- * @param   {String}  FM_SOCKET_ADDRESS address of socket server
+ * @param   {Object}  env               environment variables
  * @returns {Object}  socket.io instance
  */
 .factory("fmSocket", [
     "$window",
     "socketFactory",
-    "FM_SOCKET_ADDRESS",
-    function ($window, socketFactory, FM_SOCKET_ADDRESS) {
+    "env",
+    function ($window, socketFactory, env) {
 
         return socketFactory({
             prefix: "",
-            ioSocket: $window.io.connect(FM_SOCKET_ADDRESS)
+            ioSocket: $window.io.connect(env.FM_SOCKET_ADDRESS)
         });
 
     }

@@ -6,7 +6,7 @@
  * @author SOON_
  */
 angular.module("FM.api.UsersResource",[
-    "ENV",
+    "config",
     "ngResource"
 ])
 /**
@@ -17,11 +17,11 @@ angular.module("FM.api.UsersResource",[
  */
 .factory("UsersResource", [
     "$resource",
-    "FM_API_SERVER_ADDRESS",
-    function ($resource, FM_API_SERVER_ADDRESS) {
+    "env",
+    function ($resource, env) {
 
         return $resource(
-            FM_API_SERVER_ADDRESS + "users" + "/:id",
+            env.FM_API_SERVER_ADDRESS + "users" + "/:id",
             // Default values for url parameters.
             {
                 id: "@id"

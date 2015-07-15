@@ -6,7 +6,7 @@
  * @author SOON_
  */
 angular.module("FM.api.PlayerHistoryResource", [
-    "ENV",
+    "config",
     "FM.api.PaginationInterceptor",
     "ngResource"
 ])
@@ -14,15 +14,15 @@ angular.module("FM.api.PlayerHistoryResource", [
  * @constructor
  * @class PlayerHistoryResource
  * @param {Service} $resource
- * @param {String}  FM_API_SERVER_ADDRESS
+ * @param {Object}  env
  */
 .factory("PlayerHistoryResource", [
     "$resource",
-    "FM_API_SERVER_ADDRESS",
-    function ($resource, FM_API_SERVER_ADDRESS) {
+    "env",
+    function ($resource, env) {
 
         return $resource(
-            FM_API_SERVER_ADDRESS + "player/history",
+            env.FM_API_SERVER_ADDRESS + "player/history",
             {},
             {
                 query: {
