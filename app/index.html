@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <!-- build:[ng-app]:e2e FM.e2e -->
-<!--[if lt IE 8]>      <html lang="en" ng-app="FM" ng-strict-di class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="FM" ng-strict-di class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="FM" ng-strict-di class="no-js"> <!--<![endif]-->
+<!--[if lt IE 9]>      <html lang="en" ng-app="FM" ng-strict-di class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en" ng-app="FM" ng-strict-di class="no-js"> <!--<![endif]-->
 <!-- /build -->
 <head>
     <meta charset="utf-8">
@@ -54,7 +53,7 @@
     <fm-loading-screen></fm-loading-screen>
 
 
-    <!--[if lt IE 8]>
+    <!--[if lt IE 9]>
         <p>Your browser is <strong>ancient</strong> and will not work with this site. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
@@ -66,7 +65,7 @@
         document.documentElement.className = document.documentElement.className.replace(/(^|\s)no-js(\s|$)/, "$1$2");
     </script>
 
-    <!--[if gte IE 8]><!-->
+    <!--[if gte IE 9]><!-->
     <!-- build:js js/app.min.js -->
     <script src="components/socket.io-client/socket.io.js"></script>
     <script src="components/angular/angular.js"></script>
