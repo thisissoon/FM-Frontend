@@ -2,7 +2,7 @@ logs/*
 !.gitkeep
 node_modules/
 app/components/
-app/js/env/
+app/js/config/
 dist/
 docs/
 css/
