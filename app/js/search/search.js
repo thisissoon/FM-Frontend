@@ -5,9 +5,19 @@
  * @module   FM.search
  * @author   SOON_
  * @requires FM.search.SearchCtrl
+ * @requires FM.search.ArtistSearchCtrl
+ * @requires FM.search.ArtistDetailCtrl
+ * @requires FM.search.AlbumSearchCtrl
+ * @requires FM.search.AlbumDetailCtrl
+ * @requires FM.search.TrackSearchCtrl
  */
 angular.module("FM.search", [
     "FM.search.SearchCtrl",
+    "FM.search.ArtistSearchCtrl",
+    "FM.search.ArtistDetailCtrl",
+    "FM.search.AlbumSearchCtrl",
+    "FM.search.AlbumDetailCtrl",
+    "FM.search.TrackSearchCtrl"
 ])
 /**
  * @method run

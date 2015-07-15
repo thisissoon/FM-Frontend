@@ -5,14 +5,14 @@
             <h2 class="h4" ng-if="playlist.length > 0">Coming up:</h2>
         </div>
         <div class="col-xs-6">
-            <p class="text-muted pull-right">{{ meta.total }} tracks in {{ meta.play_time | date: "h:mm:ss" }}</p>
+            <p class="text-muted pull-right">{{ meta.total }} tracks in {{ meta.play_time | date: "H:mm:ss" }}</p>
         </div>
     </div>
 
     <h2 class="h1" ng-if="!playlist.length > 0">Playlist is empty</h2>
 
-    <ul class="list-unstyled media-list">
-        <li class="media"
+    <ul class="list-unstyled track-list">
+        <li class="track"
             ng-repeat="track in playlist"
             data-spotify-track="track.track"
             data-user="track.user"
