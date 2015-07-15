@@ -117,14 +117,14 @@
 //## Dropdown menu container and contents.
 
 //** Background for the dropdown menu.
-@dropdown-bg:                    lighten(@track-bg, 10%);
+@dropdown-bg:                    @light-black;
 
 //** Dropdown link text color.
 @dropdown-link-color:            @white;
 //** Hover color for dropdown links.
-@dropdown-link-hover-color:      darken(@gray-dark, 5%);
+@dropdown-link-hover-color:      darken(@white, 5%);
 //** Hover background for dropdown links.
-@dropdown-link-hover-bg:         #f5f5f5;
+@dropdown-link-hover-bg:         lighten(@dropdown-bg, 10%);
 
 //== Thumbnails
 //
@@ -176,7 +176,7 @@
 //##
 
 //** Popover body background color
-@popover-bg:                  lighten(@track-bg, 10%);
+@popover-bg:                  lighten(@light-black, 10%);
 
 
 //== Alerts
@@ -264,7 +264,7 @@
 //
 //##
 
-@controls-bg:                   @track-bg;
+@controls-bg:                   @light-black;
 @controls-height:               @footer-height;
 @controls-width:                340px;
 
