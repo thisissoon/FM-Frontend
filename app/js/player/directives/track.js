@@ -59,6 +59,16 @@ angular.module("FM.player.trackDirective", [
                     }
                 };
 
+                /**
+                 * @method addToPlaylist
+                 * @param {Object} track
+                 */
+                $scope.addToPlaylist = function addToPlaylist (track) {
+                    if (track && track.uri) {
+                        PlayerQueueResource.save({ uri: track.uri });
+                    }
+                };
+
                 $scope.$watch("track", $scope.onTrackUpdate, true);
 
             }

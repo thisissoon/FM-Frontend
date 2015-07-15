@@ -27,7 +27,7 @@ describe("FM.player.TrackTimer", function() {
         });
 
         afterEach(function () {
-            TrackTimer.stop();
+            TrackTimer.pause();
         });
 
         it("should start timer and update elapsedTime", function(){
@@ -43,7 +43,7 @@ describe("FM.player.TrackTimer", function() {
             jasmine.clock().tick(2000);
             $interval.flush(2000);
 
-            TrackTimer.stop();
+            TrackTimer.pause();
             TrackTimer.start(5000);
 
             expect(TrackTimer.elapsedTime).toEqual(2000);
@@ -56,48 +56,28 @@ describe("FM.player.TrackTimer", function() {
             expect(TrackTimer.percent).toEqual(60);
         });
 
-        it("should stop timer when duration is reached", function(){
-            spyOn(TrackTimer, "stop");
+        it("should pause timer when duration is reached", function(){
+            spyOn(TrackTimer, "pause");
             jasmine.clock().tick(5000);
             $interval.flush(5000);
 
-            expect(TrackTimer.stop).toHaveBeenCalled();
+            expect(TrackTimer.pause).toHaveBeenCalled();
         });
 
-        it("should cancel timer", function(){
+        it("should cancel $interval instance", function(){
             $interval.flush(1000);
-            TrackTimer.stop();
+            TrackTimer.pause();
 
             expect($interval.cancel).toHaveBeenCalledWith(TrackTimer.timerInstance);
         });
 
         it("should reset timer", function(){
+            spyOn(TrackTimer, "pause");
             TrackTimer.reset();
+
             expect(TrackTimer.elapsedTime).toEqual(0);
             expect(TrackTimer.percent).toEqual(0);
-        });
-
-        it("should restart timer if called twice", function(){
-            // 1st timer
-            spyOn(TrackTimer, "stop");
-            spyOn(TrackTimer, "reset");
-            jasmine.clock().tick(4000);
-            $interval.flush(4000);
-            expect(TrackTimer.elapsedTime).toEqual(4000);
-
-            // start again
-            TrackTimer.start(5000);
-
-            // stop and reset timer
-            expect(TrackTimer.stop).toHaveBeenCalled();
-            expect(TrackTimer.reset).toHaveBeenCalled();
-
-            // 2nd timer
-            jasmine.clock().tick(1000);
-            $interval.flush(1000);
-
-            expect(TrackTimer.elapsedTime).toEqual(1000);
-            expect(TrackTimer.percent).toEqual(20);
+            expect(TrackTimer.pause).toHaveBeenCalled();
         });
 
     });
@@ -110,7 +90,7 @@ describe("FM.player.TrackTimer", function() {
         });
 
         afterEach(function () {
-            TrackTimer.stop();
+            TrackTimer.pause();
         });
 
         it("should offset elapsed time", function(){

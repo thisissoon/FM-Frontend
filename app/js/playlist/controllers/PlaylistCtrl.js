@@ -27,7 +27,10 @@ angular.module("FM.playlist.PlaylistCtrl", [
                 resolve: {
                     playlistData: ["PlayerQueueResource", "$route", function (PlayerQueueResource, $route){
                         return PlayerQueueResource.query($route.current.params).$promise;
-                    }]
+                    }],
+                    playlistMeta: ["PlayerQueueResource", function (PlayerQueueResource){
+                        return PlayerQueueResource.meta().$promise;
+                    }],
                 }
             });
 
@@ -43,6 +46,7 @@ angular.module("FM.playlist.PlaylistCtrl", [
  * @param {Factory} UsersResource
  * @param {Factory} PlayerQueueResource
  * @param {Array}   playlistData
+ * @param {Object}  playlistMeta
  */
 .controller("PlaylistCtrl", [
     "$scope",
@@ -52,13 +56,20 @@ angular.module("FM.playlist.PlaylistCtrl", [
     "UsersResource",
     "PlayerQueueResource",
     "playlistData",
-    function ($scope, $q, $notification, TracksResource, UsersResource, PlayerQueueResource, playlistData) {
+    "playlistMeta",
+    function ($scope, $q, $notification, TracksResource, UsersResource, PlayerQueueResource, playlistData, playlistMeta) {
 
         /**
          * @property playlist
          * @type {Array}
          */
         $scope.playlist = playlistData.items;
+
+        /**
+         * @property meta
+         * @type {Object}
+         */
+        $scope.meta = playlistMeta;
 
         /**
          * Update `playlist` with queue data from the API
@@ -68,6 +79,10 @@ angular.module("FM.playlist.PlaylistCtrl", [
             PlayerQueueResource.query().$promise
                 .then(function (response){
                     $scope.playlist = response.items;
+                });
+            PlayerQueueResource.meta().$promise
+                .then(function (response){
+                    $scope.meta = response;
                 });
         };
 
@@ -87,6 +102,8 @@ angular.module("FM.playlist.PlaylistCtrl", [
          */
         $scope.onEnd = function onEnd(event, data) {
             if ($scope.playlist[0].track.uri === data.uri) { // jshint ignore:line
+                $scope.meta.total--;
+                $scope.meta.play_time = $scope.meta.play_time - $scope.playlist[0].track.duration; // jshint ignore:line
                 $scope.playlist.splice(0, 1);
             } else {
                 $scope.refreshPlaylist();
@@ -107,6 +124,8 @@ angular.module("FM.playlist.PlaylistCtrl", [
                     user: response[1]
                 };
                 $scope.playlist.push(item);
+                $scope.meta.total++;
+                $scope.meta.play_time = $scope.meta.play_time + response[0].duration; //jshint ignore:line
 
                 if (item.track && item.user) {
                     $notification("Track Added", {

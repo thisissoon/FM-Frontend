@@ -33,6 +33,10 @@ angular.module("FM.api.PlayerQueueResource", [
                 remove: {
                     method: "DELETE",
                     url: FM_API_SERVER_ADDRESS + "player/queue/:id",
+                },
+                meta: {
+                    method: "GET",
+                    url: FM_API_SERVER_ADDRESS + "player/queue/meta"
                 }
             }
         );

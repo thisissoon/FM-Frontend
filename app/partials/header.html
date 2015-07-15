@@ -8,28 +8,37 @@
             </a>
         </div>
 
-        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 text-right" ng-controller="LoginCtrl">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 text-right">
 
-            <button type="button" class="btn btn-primary" ng-if="!isAuthenticated()" ng-click="authenticate()">
-                <span class="icon icon-google-plus"></span>
-                <span class="separator"></span>
-                Sign in with Gmail
-            </button>
+            <span ng-if="!isAuthenticated()" ng-controller="LoginCtrl">
+                <button type="button" class="btn btn-primary" ng-click="authenticate()">
+                    <span class="icon icon-google-plus"></span>
+                    <span class="separator"></span>
+                    Sign in with Gmail
+                </button>
+            </span>
 
-            <button class="btn btn-link hidden-lg hidden-md" ng-if="isAuthenticated()" ng-click="toogleSidebar()">
-                <span class="h3 icon icon-playlist-add text-muted"></span>
-                <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Add to playlist</span>
-            </button>
+            <span ng-if="isAuthenticated()">
+                <button class="btn btn-link hidden-lg hidden-md" ng-click="toogleSidebar()">
+                    <span class="h3 icon icon-playlist-add text-muted"></span>
+                    <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Add to playlist</span>
+                </button>
 
-            <a class="btn btn-link" href="history">
-                <span class="h3 icon icon-history text-muted"></span>
-                <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Track history</span>
-            </a>
+                <a class="btn btn-link" href="./" ng-hide="routeIsActive('/')">
+                    <span class="h3 icon icon-playlist text-muted"></span>
+                    <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Playlist</span>
+                </a>
 
-            <!-- <button class="btn btn-link">
-                <span class="h3 icon icon-settings text-muted"></span>
-                <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Settings</span>
-            </button> -->
+                <a class="btn btn-link" href="history" ng-hide="routeIsActive('/history')">
+                    <span class="h3 icon icon-history text-muted"></span>
+                    <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Track history</span>
+                </a>
+
+                <!-- <button class="btn btn-link">
+                    <span class="h3 icon icon-settings text-muted"></span>
+                    <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Settings</span>
+                </button> -->
+            </span>
 
         </div>
 

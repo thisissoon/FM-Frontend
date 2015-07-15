@@ -29,6 +29,7 @@ test:
   override:
     - grunt test:development
     - grunt test
+    - grunt e2e
   post:
     - sed "s/<QUAY_TOKEN>/$QUAY_TOKEN/" < .dockercfg.template > ~/.dockercfg
     - ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info
