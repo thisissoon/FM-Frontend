@@ -1,116 +1,135 @@
 <!DOCTYPE html>
 <!-- build:[ng-app]:e2e FM.e2e -->
-<html lang="en" ng-app="FM" ng-strict-di>
+<!--[if lt IE 8]>      <html lang="en" ng-app="FM" ng-strict-di class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="FM" ng-strict-di class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="FM" ng-strict-di class="no-js"> <!--<![endif]-->
 <!-- /build -->
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="fragment" content="!">
-        <title>SOON FM_</title>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="fragment" content="!">
+    <title>SOON FM_</title>
 
-        <!-- build:template
-        <base href="<%= url %>">
-        /build -->
-        <!-- build:remove -->
-        <base href="/app/">
-        <!-- /build -->
+    <!-- build:template
+    <base href="<%= url %>">
+    /build -->
+    <!-- build:remove -->
+    <base href="/app/">
+    <!-- /build -->
 
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css">
-        <link rel='stylesheet' href="//fonts.googleapis.com/css?family=Nixie+One"  type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Nixie+One"  type="text/css">
 
-        <!-- build:css css/all.min.css -->
-        <link rel="stylesheet" href="css/all.css">
-        <!-- /build -->
+    <!-- build:css css/all.min.css -->
+    <link rel="stylesheet" href="css/all.css">
+    <!-- /build -->
 
-        <link rel="apple-touch-icon" sizes="57x57" href="img/favicons/apple-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="img/favicons/apple-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="img/favicons/apple-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="img/favicons/apple-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="img/favicons/apple-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="img/favicons/apple-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="img/favicons/apple-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="img/favicons/apple-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-icon-180x180.png">
-        <link rel="icon" type="image/png" sizes="192x192" href="img/favicons/android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="img/favicons/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="img/favicons/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="img/favicons/favicon-16x16.png">
-        <link rel="manifest" href="img/favicons/manifest.json">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="img/favicons/ms-icon-144x144.png">
-        <meta name="theme-color" content="#ffffff">
-    </head>
-    <body>
+    <link rel="apple-touch-icon" sizes="57x57" href="img/favicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="img/favicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/favicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/favicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/favicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/favicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/favicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/favicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="img/favicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="img/favicons/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="img/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
 
-        <header class="header" ng-include="'partials/header.html'"></header>
-        <div class="alerts" ng-include="'partials/alert.html'" ng-controller="AlertCtrl"></div>
-        <div class="sidebar" ng-include="'partials/sidebar.html'" ng-class="{ 'open': sidebarOpen, 'alert-active': AlertService.alerts.length }"></div>
-        <ng-view class="fade-in-out" ng-class="{ 'alert-active': AlertService.alerts.length }"></ng-view>
-        <footer class="footer" ng-include="'partials/footer.html'"></footer>
+    <header class="header" ng-include="'partials/header.html'"></header>
+    <div class="alerts" ng-include="'partials/alert.html'" ng-controller="AlertCtrl"></div>
+    <div class="sidebar" ng-include="'partials/sidebar.html'" ng-class="{ 'open': sidebarOpen, 'alert-active': AlertService.alerts.length }"></div>
+    <ng-view class="fade-in-out" ng-class="{ 'alert-active': AlertService.alerts.length }"></ng-view>
+    <footer class="footer" ng-include="'partials/footer.html'"></footer>
 
-        <fm-loading-screen></fm-loading-screen>
+    <fm-loading-screen></fm-loading-screen>
 
 
-        <!-- build:js js/app.min.js -->
-        <script src="components/socket.io-client/socket.io.js"></script>
-        <script src="components/angular/angular.js"></script>
-        <script src="components/angular-route/angular-route.js"></script>
-        <script src="components/angular-animate/angular-animate.js"></script>
-        <script src="components/angular-resource/angular-resource.js"></script>
-        <script src="components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-        <script src="components/angular-spotify/src/angular-spotify.js"></script>
-        <script src="components/angular-socket-io/socket.js"></script>
-        <script src="components/satellizer/satellizer.js"></script>
-        <script src="components/angular-notification/angular-notification.js"></script>
+    <!--[if lt IE 8]>
+        <p>Your browser is <strong>ancient</strong> and will not work with this site. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 
-        <script src="js/env/env.js"></script>
+    <noscript>
+        <p>JavaScript is either disabled or not supported by your browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or enable JavaScript to improve your experience.</p>
+    </noscript>
 
-        <script src="js/socket/socket.js"></script>
+    <script>
+        document.documentElement.className = document.documentElement.className.replace(/(^|\s)no-js(\s|$)/, "$1$2");
+    </script>
 
-        <script src="js/loading-screen/loadingScreen.js"></script>
+    <!--[if gte IE 8]><!-->
+    <!-- build:js js/app.min.js -->
+    <script src="components/socket.io-client/socket.io.js"></script>
+    <script src="components/angular/angular.js"></script>
+    <script src="components/angular-route/angular-route.js"></script>
+    <script src="components/angular-animate/angular-animate.js"></script>
+    <script src="components/angular-resource/angular-resource.js"></script>
+    <script src="components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="components/angular-spotify/src/angular-spotify.js"></script>
+    <script src="components/angular-socket-io/socket.js"></script>
+    <script src="components/satellizer/satellizer.js"></script>
+    <script src="components/angular-notification/angular-notification.js"></script>
 
-        <script src="js/infinite-scroll/infiniteScroll.js"></script>
+    <script src="js/env/env.js"></script>
 
-        <script src="js/auth/auth.js"></script>
-        <script src="js/auth/controllers/LoginCtrl.js"></script>
+    <script src="js/socket/socket.js"></script>
 
-        <script src="js/alert/alert.js"></script>
-        <script src="js/alert/controllers/AlertCtrl.js"></script>
-        <script src="js/alert/services/AlertService.js"></script>
+    <script src="js/loading-screen/loadingScreen.js"></script>
 
-        <script src="js/api/api.js"></script>
-        <script src="js/api/constants/errors.js"></script>
-        <script src="js/api/factories/PlayerHistoryResource.js"></script>
-        <script src="js/api/factories/PlayerMuteResource.js"></script>
-        <script src="js/api/factories/PlayerQueueResource.js"></script>
-        <script src="js/api/factories/PlayerRandomResource.js"></script>
-        <script src="js/api/factories/PlayerTransportResource.js"></script>
-        <script src="js/api/factories/PlayerVolumeResource.js"></script>
-        <script src="js/api/factories/TracksResource.js"></script>
-        <script src="js/api/factories/UsersResource.js"></script>
-        <script src="js/api/factories/RequestInterceptor.js"></script>
-        <script src="js/api/factories/PaginationInterceptor.js"></script>
+    <script src="js/infinite-scroll/infiniteScroll.js"></script>
 
-        <script src="js/history/history.js"></script>
-        <script src="js/history/controllers/HistoryCtrl.js"></script>
+    <script src="js/auth/auth.js"></script>
+    <script src="js/auth/controllers/LoginCtrl.js"></script>
 
-        <script src="js/player/player.js"></script>
-        <script src="js/player/controllers/PlayerCtrl.js"></script>
-        <script src="js/player/directives/slider.js"></script>
-        <script src="js/player/directives/track.js"></script>
-        <script src="js/player/services/TrackTimer.js"></script>
+    <script src="js/alert/alert.js"></script>
+    <script src="js/alert/controllers/AlertCtrl.js"></script>
+    <script src="js/alert/services/AlertService.js"></script>
 
-        <script src="js/playlist/playlist.js"></script>
-        <script src="js/playlist/controllers/PlaylistCtrl.js"></script>
+    <script src="js/api/api.js"></script>
+    <script src="js/api/constants/errors.js"></script>
+    <script src="js/api/factories/PlayerHistoryResource.js"></script>
+    <script src="js/api/factories/PlayerMuteResource.js"></script>
+    <script src="js/api/factories/PlayerQueueResource.js"></script>
+    <script src="js/api/factories/PlayerRandomResource.js"></script>
+    <script src="js/api/factories/PlayerTransportResource.js"></script>
+    <script src="js/api/factories/PlayerVolumeResource.js"></script>
+    <script src="js/api/factories/TracksResource.js"></script>
+    <script src="js/api/factories/UsersResource.js"></script>
+    <script src="js/api/factories/RequestInterceptor.js"></script>
+    <script src="js/api/factories/PaginationInterceptor.js"></script>
 
-        <script src="js/search/search.js"></script>
-        <script src="js/search/controllers/SearchCtrl.js"></script>
+    <script src="js/history/history.js"></script>
+    <script src="js/history/controllers/HistoryCtrl.js"></script>
 
-        <script src="js/nav/nav.js"></script>
+    <script src="js/player/player.js"></script>
+    <script src="js/player/controllers/PlayerCtrl.js"></script>
+    <script src="js/player/directives/slider.js"></script>
+    <script src="js/player/directives/track.js"></script>
+    <script src="js/player/services/TrackTimer.js"></script>
 
-        <script src="js/app.js"></script>
-        <!-- /build -->
-        <!-- build:include:e2e ../tests/e2e/scripts.html --><!-- /build -->
+    <script src="js/playlist/playlist.js"></script>
+    <script src="js/playlist/controllers/PlaylistCtrl.js"></script>
 
-    </body>
+    <script src="js/search/search.js"></script>
+    <script src="js/search/controllers/SearchCtrl.js"></script>
+
+    <script src="js/nav/nav.js"></script>
+
+    <script src="js/app.js"></script>
+    <!-- /build -->
+    <!--<![endif]-->
+
+    <!-- build:js:e2e inline components/angular-mocks/angular-mocks.js --><!-- /build -->
+    <!-- build:js:e2e inline ../tests/e2e/app.e2e.js --><!-- /build -->
+
+</body>
 </html>
