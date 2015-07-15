@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="page-header">
+                <h2 class="h2"
+                    ng-pluralize
+                    count="meta.total"
+                    when="{
+                        '0': 'No results for \'{{ search.query }}\' in tracks',
+                        'one': '1 Result for \'{{ search.query }}\' in tracks',
+                        'other': '{} Results for \'{{ search.query }}\' in tracks'
+                    }">
+                </h2>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="list-unstyled track-list">
+                <li class="track"
+                    ng-repeat="track in tracks"
+                    data-spotify-track="track"
+                    fm-track>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <button class="btn btn-primary" ng-click="loadMore()" ng-if="meta.next" ng-disabled="loadDisabled">Load more</button>
+        <p ng-if="meta.total > 0 && !meta.next">No more results</p>
+    </div>
+</div>

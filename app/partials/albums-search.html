@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="page-header">
+                <h2 class="h2"
+                    ng-pluralize
+                    count="meta.total"
+                    when="{
+                        '0': 'No results for \'{{ search.query }}\' in albums',
+                        'one': '1 Result for \'{{ search.query }}\' in albums',
+                        'other': '{} Results for \'{{ search.query }}\' in albums'
+                    }">
+                </h2>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
+             ng-repeat="album in albums">
+
+            <a href="albums/{{ album.id }}" class="thumbnail" title="{{ album.name }}">
+                <div class="img"
+                     ng-class="{
+                        'no-img': !album.images[1]
+                     }"
+                     ng-style="{
+                        'background-image': 'url({{ album.images[1].url || 'img/icons/artist.svg' }})'
+                     }">
+                    <img ng-src="{{ album.images[1].url }}" alt="{{ album.name }}" class="sr-only sr-only-focusable">
+                </div>
+                <div class="caption">
+                    <h3 class="h5 text-overflow">{{ album.name }}</h3>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <button class="btn btn-primary" ng-click="loadMore()" ng-if="meta.next" ng-disabled="loadDisabled">Load more</button>
+        <p ng-if="meta.total > 0 && !meta.next">No more results</p>
+    </div>
+</div>
