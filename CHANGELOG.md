@@ -1,3 +1,11 @@
+## Changes in 0.4.0
+
+ * @bcmrbvm: Feature: Update grunt build (#120)
+ * @bcmrbvm: Feature: Update angular (#119)
+ * @bcmrbvm: Fix: Hide progress bar and controls if no current tracks (#118)
+ * @bcmrbvm: Fix: Playlist duration total (#116)
+ * @bcmrbvm: Feature: Improved search (#115)
+
 ## Changes in 0.3.0
 
  * @jamesjwarren: Feature: queue meta (#112)
