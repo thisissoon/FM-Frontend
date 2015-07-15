@@ -38,7 +38,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @property track
          * @type     {Object}
          */
-        $scope.track = {};
+        $scope.track = null;
 
         /**
          * Tracks the state of mute
