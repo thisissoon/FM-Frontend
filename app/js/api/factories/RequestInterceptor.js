@@ -6,7 +6,7 @@
 angular.module("FM.api.RequestInterceptor", [
     "FM.alert",
     "FM.api.ERRORS",
-    "ENV",
+    "config",
     "satellizer",
     "ngRoute"
 ])
@@ -46,17 +46,17 @@ angular.module("FM.api.RequestInterceptor", [
  * @param {Service} $rootScope
  * @param {Service} $location
  * @param {Object}  satellizer.config     satellizer configuration
- * @param {String}  FM_API_SERVER_ADDRESS API server url
+ * @param {Object}  env
  */
 .factory("RequestInterceptor", [
     "$rootScope",
     "$location",
     "$window",
     "satellizer.config",
-    "FM_API_SERVER_ADDRESS",
+    "env",
     "AlertService",
     "ERRORS",
-    function ($rootScope, $location, $window, config, FM_API_SERVER_ADDRESS, AlertService, ERRORS) {
+    function ($rootScope, $location, $window, config, env, AlertService, ERRORS) {
 
         var tokenName = config.tokenPrefix ? config.tokenPrefix + "_" + config.tokenName : config.tokenName;
 
@@ -70,7 +70,7 @@ angular.module("FM.api.RequestInterceptor", [
              */
             request: function(httpConfig) {
 
-                if (httpConfig.url.match(FM_API_SERVER_ADDRESS)) {
+                if (httpConfig.url.match(env.FM_API_SERVER_ADDRESS)) {
 
                     var token = $window.localStorage.getItem(tokenName);
                     if (token) {
@@ -92,7 +92,7 @@ angular.module("FM.api.RequestInterceptor", [
             responseError: function(response) {
 
                 // Clear auth token if FM API returns "Unauthorised" status code
-                if (response.config.url.match(FM_API_SERVER_ADDRESS) && response.status === 401) {
+                if (response.config.url.match(env.FM_API_SERVER_ADDRESS) && response.status === 401) {
                     $window.localStorage.removeItem(tokenName);
                 }
 

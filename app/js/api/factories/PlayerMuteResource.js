@@ -6,21 +6,21 @@
  * @author SOON_
  */
 angular.module("FM.api.PlayerMuteResource", [
-    "ENV",
+    "config",
     "ngResource"
 ])
 /**
  * @constructor
  * @class PlayerMuteResource
  * @param {Service} $resource
- * @param {String}  FM_API_SERVER_ADDRESS
+ * @param {Object}  env
  */
 .factory("PlayerMuteResource", [
     "$resource",
-    "FM_API_SERVER_ADDRESS",
-    function ($resource, FM_API_SERVER_ADDRESS) {
+    "env",
+    function ($resource, env) {
 
-        return $resource(FM_API_SERVER_ADDRESS + "player/mute");
+        return $resource(env.FM_API_SERVER_ADDRESS + "player/mute");
 
     }
 ]);

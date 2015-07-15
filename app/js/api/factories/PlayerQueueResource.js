@@ -6,7 +6,7 @@
  * @author SOON_
  */
 angular.module("FM.api.PlayerQueueResource", [
-    "ENV",
+    "config",
     "FM.api.PaginationInterceptor",
     "ngResource"
 ])
@@ -14,15 +14,15 @@ angular.module("FM.api.PlayerQueueResource", [
  * @constructor
  * @class PlayerQueueResource
  * @param {Service} $resource
- * @param {String}  FM_API_SERVER_ADDRESS
+ * @param {Object}  env
  */
 .factory("PlayerQueueResource", [
     "$resource",
-    "FM_API_SERVER_ADDRESS",
-    function ($resource, FM_API_SERVER_ADDRESS) {
+    "env",
+    function ($resource, env) {
 
         return $resource(
-            FM_API_SERVER_ADDRESS + "player/queue",
+            env.FM_API_SERVER_ADDRESS + "player/queue",
             {},
             {
                 query: {
@@ -31,7 +31,7 @@ angular.module("FM.api.PlayerQueueResource", [
 
                 meta: {
                     method: "GET",
-                    url: FM_API_SERVER_ADDRESS + "player/queue/meta"
+                    url: env.FM_API_SERVER_ADDRESS + "player/queue/meta"
                 }
             }
         );

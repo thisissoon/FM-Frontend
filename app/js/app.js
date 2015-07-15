@@ -19,7 +19,7 @@ angular.module("FM", [
     "FM.nav",
     "ngRoute",
     "notification",
-    "ENV"
+    "config"
 ])
 /**
  * @method config
@@ -31,10 +31,10 @@ angular.module("FM", [
     "$routeProvider",
     "$locationProvider",
     "$notificationProvider",
-    "HTML5_LOCATION",
-    function ($routeProvider, $locationProvider, $notificationProvider, HTML5_LOCATION_ENABLED) {
+    "env",
+    function ($routeProvider, $locationProvider, $notificationProvider, env) {
 
-        $locationProvider.html5Mode(HTML5_LOCATION_ENABLED).hashPrefix = "!";
+        $locationProvider.html5Mode(env.HTML5_LOCATION_ENABLED).hashPrefix = "!";
 
         $routeProvider
             .when("/401", { templateUrl: "partials/401.html" })
