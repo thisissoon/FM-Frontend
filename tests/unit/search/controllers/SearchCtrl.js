@@ -10,7 +10,7 @@ describe("FM.search.SearchCtrl", function() {
 
     beforeEach(inject(function (_$httpBackend_, $injector) {
         $httpBackend = _$httpBackend_;
-        FM_API_SERVER_ADDRESS = $injector.get("FM_API_SERVER_ADDRESS");
+        FM_API_SERVER_ADDRESS = $injector.get("env").FM_API_SERVER_ADDRESS;
 
         searchResults = {
             artists: { items: [{},{}] },
