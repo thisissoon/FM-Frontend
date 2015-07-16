@@ -11,6 +11,7 @@ angular.module("FM.playlist.PlaylistCtrl", [
     "FM.api.TracksResource",
     "FM.api.UsersResource",
     "FM.api.PlayerQueueResource",
+    "FM.api.PaginationInterceptor",
     "ngRoute",
 ])
 /**
@@ -112,7 +113,7 @@ angular.module("FM.playlist.PlaylistCtrl", [
                     $scope.playlist = $scope.playlist.concat(response.items);
 
                     $scope.page.loading = false;
-                    $scope.page.total = response.meta.totalPages ? response.meta.totalPages : 0;
+                    $scope.page.total = response.meta.totalPages ? response.meta.totalPages : 1;
                 });
         };
 
