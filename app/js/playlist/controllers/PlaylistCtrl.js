@@ -2,7 +2,9 @@
 /**
  * @module   FM.playlist.PlaylistCtrl
  * @author   SOON_
- * @requires sn.fm.api
+ * @requires FM.api.TracksResource
+ * @requires FM.api.UsersResource
+ * @requires FFM.api.PlayerQueueResource
  * @requires ngRoute
  */
 angular.module("FM.playlist.PlaylistCtrl", [
@@ -10,7 +12,6 @@ angular.module("FM.playlist.PlaylistCtrl", [
     "FM.api.UsersResource",
     "FM.api.PlayerQueueResource",
     "ngRoute",
-    "notification"
 ])
 /**
  * @method config
@@ -41,7 +42,6 @@ angular.module("FM.playlist.PlaylistCtrl", [
  * @class PlaylistCtrl
  * @param {Object}  $scope
  * @param {Service} $q
- * @param {Service} $notification
  * @param {Factory} TracksResource
  * @param {Factory} UsersResource
  * @param {Factory} PlayerQueueResource
@@ -51,13 +51,12 @@ angular.module("FM.playlist.PlaylistCtrl", [
 .controller("PlaylistCtrl", [
     "$scope",
     "$q",
-    "$notification",
     "TracksResource",
     "UsersResource",
     "PlayerQueueResource",
     "playlistData",
     "playlistMeta",
-    function ($scope, $q, $notification, TracksResource, UsersResource, PlayerQueueResource, playlistData, playlistMeta) {
+    function ($scope, $q, TracksResource, UsersResource, PlayerQueueResource, playlistData, playlistMeta) {
 
         /**
          * @property playlist
@@ -116,9 +115,8 @@ angular.module("FM.playlist.PlaylistCtrl", [
          */
         $scope.onAdd = function onAdd(event, data) {
             $q.all([
-                TracksResource.get({ id: data.uri }).$promise,
-                UsersResource.get({ id: data.user }).$promise
-            ]).then(function(response){
+                TracksResource.get({ id: data.uri }).$promise
+            ]).then(function (response){
                 var item = {
                     track: response[0],
                     user: response[1]
@@ -126,13 +124,6 @@ angular.module("FM.playlist.PlaylistCtrl", [
                 $scope.playlist.push(item);
                 $scope.meta.total++;
                 $scope.meta.play_time = $scope.meta.play_time + response[0].duration; //jshint ignore:line
-
-                if (item.track && item.user) {
-                    $notification("Track Added", {
-                        body: item.user.display_name + " added " + item.track.artists[0].name + " - " + item.track.album.name + ": " + item.track.name, //jshint ignore:line
-                        icon: item.track.album.images[0].url
-                    });
-                }
             });
         };
 

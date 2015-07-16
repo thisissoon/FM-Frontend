@@ -11,6 +11,7 @@ angular.module("FM", [
     "FM.api",
     "FM.auth",
     "FM.history",
+    "FM.notifications",
     "FM.playlist",
     "FM.player",
     "FM.search",
