@@ -13,6 +13,15 @@ angular.module("FM.notifications", [
     "notification"
 ])
 /**
+ * @method run
+ * @param  {Service} Notifications
+ */
+.run(["Notifications",
+    function (Notifications){
+        Notifications.init();
+    }
+])
+/**
  * @class Notifications
  * @param {Service} $rootScope
  * @param {Service} $q
@@ -28,6 +37,7 @@ angular.module("FM.notifications", [
     function ($rootScope, $q, $notification, PlayerTransportResource, TracksResource, UsersResource){
 
         /**
+         * @private
          * Get all the data
          * @method onPlay
          */
@@ -47,6 +57,7 @@ angular.module("FM.notifications", [
 
 
         /**
+         * @private
          * On add event, get track data and push to playlist
          * @method onAdd
          */
@@ -70,8 +81,15 @@ angular.module("FM.notifications", [
 
         };
 
-        $rootScope.$on("fm:player:add", onAdd);
-        $rootScope.$on("fm:player:play", onPlay);
+        /**
+         * @public
+         * @method init
+         */
+        this.init = function init(){
+            onPlay();
+            $rootScope.$on("fm:player:add", onAdd);
+            $rootScope.$on("fm:player:play", onPlay);
+        };
 
     }
 ]);
