@@ -2,7 +2,7 @@
 
 describe("FM.playlist.PlaylistCtrl", function() {
 
-    var $rootScope, $location, $route, $scope, $q, $httpBackend, $notification, notificationSpy,
+    var $rootScope, $location, $route, $scope, $q, $httpBackend,
         TracksResource, UsersResource, PlayerQueueResource, playlistData, playlistMeta;
 
     beforeEach(function (){
@@ -24,7 +24,6 @@ describe("FM.playlist.PlaylistCtrl", function() {
         $rootScope = _$rootScope_;
         $scope = $rootScope.$new();
         $q = $injector.get("$q");
-        $notification = jasmine.createSpy();
 
         $location = $injector.get("$location");
         $route = $injector.get("$route");
@@ -46,7 +45,6 @@ describe("FM.playlist.PlaylistCtrl", function() {
         $controller("PlaylistCtrl", {
             $scope: $scope,
             $q: $q,
-            $notification: $notification,
             TracksResource: TracksResource,
             UsersResource: UsersResource,
             PlayerQueueResource: PlayerQueueResource,
@@ -111,7 +109,6 @@ describe("FM.playlist.PlaylistCtrl", function() {
         $scope.onAdd({},{ uri: "foo", user: 123 });
         $httpBackend.flush();
         expect($scope.playlist.length).toBe(3);
-        expect($notification).toHaveBeenCalledWith("Track Added", { body: "Alex Light added Boston - Boston: More Than a Feeling", icon: "http://placehold.it/640x629?text=Album+Art" });
     });
 
     it("should update playlist meta on add event", function(){

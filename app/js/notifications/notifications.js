@@ -7,6 +7,9 @@
  * @author   SOON_
  */
 angular.module("FM.notifications", [
+    "FM.api.PlayerTransportResource",
+    "FM.api.TracksResource",
+    "FM.api.UsersResource",
     "notification"
 ])
 /**
@@ -19,7 +22,10 @@ angular.module("FM.notifications", [
     "$rootScope",
     "$q",
     "$notification",
-    function ($rootScope, $q, $notification){
+    "PlayerTransportResource",
+    "TracksResource",
+    "UsersResource",
+    function ($rootScope, $q, $notification, PlayerTransportResource, TracksResource, UsersResource){
 
         /**
          * Get all the data
@@ -28,13 +34,12 @@ angular.module("FM.notifications", [
         var onPlay = function onPlay(){
             PlayerTransportResource.get().$promise
                 .then(function (response){
-                    var track = response[0];
 
-                    if (track && track.track) {
+                    if (response && response.track) {
 
                         $notification("Now Playing", {
-                            body: track.track.artists[0].name + " - " + track.track.album.name + ": " + track.track.name,
-                            icon: track.track.album.images[0].url
+                            body: response.track.artists[0].name + " - " + response.track.album.name + ": " + response.track.name,
+                            icon: response.track.album.images[0].url
                         });
                     }
                 });
@@ -63,10 +68,10 @@ angular.module("FM.notifications", [
                 }
             });
 
-        }
+        };
 
         $rootScope.$on("fm:player:add", onAdd);
         $rootScope.$on("fm:player:play", onPlay);
 
     }
-])
+]);

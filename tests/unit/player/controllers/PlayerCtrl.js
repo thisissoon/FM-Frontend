@@ -2,7 +2,7 @@
 
 describe("FM.player.PlayerCtrl", function() {
 
-    var $scope, $q, $httpBackend, $notification,
+    var $scope, $q, $httpBackend,
         PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, TrackTimer;
 
     beforeEach(function (){
@@ -28,7 +28,6 @@ describe("FM.player.PlayerCtrl", function() {
     beforeEach(inject(function ( $rootScope, $injector, $controller ) {
         $scope = $rootScope.$new();
         $q = $injector.get("$q");
-        $notification = jasmine.createSpy();
 
         PlayerMuteResource = $injector.get("PlayerMuteResource");
         spyOn(PlayerMuteResource, "get").and.callThrough();
@@ -53,7 +52,6 @@ describe("FM.player.PlayerCtrl", function() {
         $controller("PlayerCtrl", {
             $scope: $scope,
             $q: $q,
-            $notification: $notification,
             PlayerTransportResource: PlayerTransportResource,
             PlayerMuteResource: PlayerMuteResource,
             PlayerVolumeResource: PlayerVolumeResource,
@@ -71,13 +69,11 @@ describe("FM.player.PlayerCtrl", function() {
 
     it("should get all current track data", function(){
         $scope.getAllData();
-        $scope.$apply();
+        $httpBackend.flush();
+        $scope.$digest();
         expect(PlayerTransportResource.get).toHaveBeenCalled();
         expect(PlayerMuteResource.get).toHaveBeenCalled();
         expect(PlayerVolumeResource.get).toHaveBeenCalled();
-
-        $httpBackend.flush();
-        expect($notification).toHaveBeenCalledWith("Now Playing", { body: "Boston - Boston: More Than a Feeling", icon: "http://placehold.it/640x629?text=Album+Art" });
     });
 
     it("should start timer with elapsed time", function(){
