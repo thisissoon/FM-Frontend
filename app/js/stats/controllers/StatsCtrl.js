@@ -6,7 +6,8 @@
 angular.module("FM.stats.StatsCtrl", [
     "FM.api.StatsResource",
     "ngRoute",
-    "chart.js"
+    "chart.js",
+    "ui.bootstrap.datepicker"
 ])
 /**
  * @method config
@@ -43,6 +44,26 @@ angular.module("FM.stats.StatsCtrl", [
     "StatsResource",
     "stats",
     function ($scope, $q, $filter, $location, CHART_COLOURS, StatsResource, stats) {
+
+        /**
+         * Current search params
+         * @property {Object} search
+         */
+        $scope.search = $location.search();
+
+        /**
+         * @property {Object} filter
+         */
+        $scope.filter = {};
+
+        /**
+         * Track open status of datepickers
+         * @property {Object} datepickerOpened
+         */
+        $scope.datepickerOpened = {
+            from: "",
+            to: ""
+        };
 
         /**
          * Total number of tracks played
@@ -105,24 +126,6 @@ angular.module("FM.stats.StatsCtrl", [
         };
 
         /**
-         * Calculate begining and end of the week a date falls in
-         * @method weekBoundaries
-         * @param {String|Date}  date  Date to calcualte boundaries from
-         */
-        $scope.weekBoundaries = function weekBoundaries (date) {
-            date = new Date(date);
-            var day = date.getDay(),
-                diff = date.getDate() - day + (day === 0 ? -6:1), // adjust when day is sunday
-                weekBeginning = new Date(date.setDate(diff));
-
-            return {
-                from: $filter("date")(weekBeginning.toISOString(), "yyyy-MM-dd"),
-                to: $filter("date")(new Date(date.setDate(diff + 6)).toISOString(), "yyyy-MM-dd"),
-                label: $filter("date")(weekBeginning, "MMM d")
-            };
-        };
-
-        /**
          * Format stats data for chart and adds to existing dataset
          * @method addToDataset
          * @param {Object} dataset   ChartJs config object
@@ -165,42 +168,81 @@ angular.module("FM.stats.StatsCtrl", [
         });
 
         /**
+         * Load historic statistics for line chart
          * @method loadHistoricData
          */
-        $scope.loadHistoricData = function loadHistoricData () {
+        $scope.loadHistoricData = function loadHistoricData (startDate, endDate) {
 
-            var startDate = new Date();
+            startDate = new Date(startDate);
+            endDate = new Date(endDate);
 
-            var weeks = [
-                $scope.weekBoundaries(startDate - 7),
-                $scope.weekBoundaries(startDate - 14),
-                $scope.weekBoundaries(startDate - 21)
-            ];
+            var lastWeek = [new Date(), new Date()];
+            lastWeek[0].setDate(lastWeek[0].getDate() - 14);
+            lastWeek[1].setDate(lastWeek[1].getDate() - 7);
+
+            var diff = (startDate.getTime() - endDate.getTime()) / (24 * 60 * 60 * 1000),
+                dates = [
+                    {
+                        from: new Date().setDate(startDate.getDate() + diff),
+                        to: new Date().setDate(startDate.getDate() + diff - 1),
+                    },{
+                        from: new Date().setDate(startDate.getDate() + (diff * 2)),
+                        to: new Date().setDate(startDate.getDate() + (diff * 2) - 1),
+                    },{
+                        from: new Date().setDate(startDate.getDate() + (diff * 3)),
+                        to: new Date().setDate(startDate.getDate() + (diff * 3) - 1),
+                    }
+                ];
 
             $q.all([
-                StatsResource.get({ from: weeks[0].from, to: weeks[0].to }).$promise,
-                StatsResource.get({ from: weeks[1].from, to: weeks[1].to }).$promise,
-                StatsResource.get({ from: weeks[2].from, to: weeks[2].to }).$promise
+                StatsResource.get(dates[0]).$promise,
+                StatsResource.get(dates[1]).$promise,
+                StatsResource.get(dates[2]).$promise
             ]).then(function (responses) {
                 responses.forEach(function (response, index) {
-                    $scope.addToDataset($scope.playTime, response.total_play_time_per_user, weeks[index].label);  // jshint ignore:line
+                    $scope.addToDataset($scope.playTime, response.total_play_time_per_user, $filter("date")(dates[index].from, "dd-MM-yyyy"));  // jshint ignore:line
                 });
             });
         };
 
         /**
+         * Filter stats by dates
+         * @method updateFilter
+         */
+        $scope.updateFilter = function updateFilter () {
+            $scope.search = $scope.filter;
+            $scope.search.to = $scope.search.to.toISOString ? $filter("date")($scope.search.to.toISOString(), "yyyy-MM-dd") : $scope.search.to;
+            $scope.search.from = $scope.search.from.toISOString ? $filter("date")($scope.search.from.toISOString(), "yyyy-MM-dd") : $scope.search.from;
+            $location.search($scope.search);
+        };
+
+        /**
+         * Open datepicker
+         * @method updateFilter
+         */
+        $scope.openDatepicker = function openDatepicker($event, id) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.datepickerOpened[id] = !$scope.datepickerOpened[id] ;
+        };
+
+        /**
+         * Set current filter params and load historic data on initalise
          * @method init
          */
         $scope.init = function init () {
+            var lastWeek = [new Date(), new Date()];
+            lastWeek[0].setDate(lastWeek[0].getDate() - 14);
+            lastWeek[1].setDate(lastWeek[1].getDate() - 7);
+            $scope.datepickerMaxDate = lastWeek[1];
 
-            if (!$scope.search.from) {
-                $scope.search.from = new Date();
-            }
+            $scope.filter.from = $scope.search.from || lastWeek[0];
+            $scope.filter.to = $scope.search.to || lastWeek[1];
 
             // Format total play time per user stats for charts
-            $scope.addToDataset($scope.playTime, stats.total_play_time_per_user, "Last Week");  // jshint ignore:line
+            $scope.addToDataset($scope.playTime, stats.total_play_time_per_user, $filter("date")($scope.filter.from, "dd-MM-yyyy"));  // jshint ignore:line
 
-            $scope.loadHistoricData();
+            $scope.loadHistoricData($scope.filter.from, $scope.filter.to);
         };
 
         $scope.init();

@@ -6,6 +6,22 @@
     .box-shadow(none);
 }
 
+.input-group-btn button {
+    border-bottom-right-radius: @input-border-radius;
+    border-top-right-radius: @input-border-radius;
+}
+
+form.form-dark {
+    .form-control {
+        background-color: @light-black;
+        border-color: @light-black;
+    }
+    .input-group-btn button {
+        background-color: @lighter-black;
+        border-color: @lighter-black;
+    }
+}
+
 // Style seek and volume sliders
 // https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
 input[type=range] {
