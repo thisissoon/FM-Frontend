@@ -1,12 +1,18 @@
 "use strict";
 /**
- * Removes leading 0's from time
+ * Removes leading 0's from time but leaves
+ * minutes and seconds intacted
  * @module FM.player.removeLeadingZeros
  * @author SOON_
  */
 angular.module("FM.player.removeLeadingZeros", [
 
 ])
+/**
+ * @example
+ *     {{ time | date: "H:mm:ss" | removeLeadingZeros }}
+ * @class removeLeadingZeros
+ */
 .filter("removeLeadingZeros", [
     function (){
         return function (input) {
