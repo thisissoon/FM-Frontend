@@ -27,10 +27,10 @@ angular.module("FM.search.ArtistDetailCtrl", [
                         return Spotify.getArtist($route.current.params.id);
                     }],
                     albums: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.getArtistAlbums($route.current.params.id, { limit: 20, album_type: "album" }); // jshint ignore:line
+                        return Spotify.getArtistAlbums($route.current.params.id, { limit: 20, album_type: "album", country: "GB" }); // jshint ignore:line
                     }],
                     singles: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.getArtistAlbums($route.current.params.id, { limit: 20, album_type: "single" }); // jshint ignore:line
+                        return Spotify.getArtistAlbums($route.current.params.id, { limit: 20, album_type: "single", country: "GB" }); // jshint ignore:line
                     }],
                     topTracks: ["Spotify", "$route", function (Spotify, $route){
                         return Spotify.getArtistTopTracks($route.current.params.id, "GB");
@@ -112,7 +112,7 @@ angular.module("FM.search.ArtistDetailCtrl", [
          */
         $scope.loadMoreSingles = function loadMoreSingles(){
             $scope.loadDisabled = true;
-            Spotify.getArtistAlbums($scope.artist.id, { limit: 20, album_type: "single", offset: $scope.singles.length }) // jshint ignore:line
+            Spotify.getArtistAlbums($scope.artist.id, { limit: 20, album_type: "single", offset: $scope.singles.length, country: "GB" }) // jshint ignore:line
                 .then(function (response) {
                     $scope.singles = $scope.singles.concat(response.items);
                     $scope.singlesMeta = response;
@@ -126,7 +126,7 @@ angular.module("FM.search.ArtistDetailCtrl", [
          */
         $scope.loadMoreAlbums = function loadMoreAlbums(){
             $scope.loadDisabled = true;
-            Spotify.getArtistAlbums($scope.artist.id, { limit: 20, album_type: "album", offset: $scope.albums.length }) // jshint ignore:line
+            Spotify.getArtistAlbums($scope.artist.id, { limit: 20, album_type: "album", offset: $scope.albums.length, country: "GB" }) // jshint ignore:line
                 .then(function (response) {
                     $scope.albums = $scope.albums.concat(response.items);
                     $scope.albumsMeta = response;
