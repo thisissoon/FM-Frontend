@@ -11,6 +11,7 @@ angular.module("FM.playlist.PlaylistCtrl", [
     "FM.api.TracksResource",
     "FM.api.UsersResource",
     "FM.api.PlayerQueueResource",
+    "FM.api.PaginationInterceptor",
     "ngRoute",
 ])
 /**
@@ -71,17 +72,48 @@ angular.module("FM.playlist.PlaylistCtrl", [
         $scope.meta = playlistMeta;
 
         /**
+         * Paging properties
+         * @property {Object} page
+         */
+        $scope.page = {
+            loading: false,
+            pages: 1,
+            total: playlistData.meta.totalPages
+        };
+
+        /**
          * Update `playlist` with queue data from the API
          * @method refreshPlaylist
          */
-        $scope.refreshPlaylist = function refreshPlaylistQueue(){
+        $scope.refreshPlaylist = function refreshPlaylist(){
             PlayerQueueResource.query().$promise
                 .then(function (response){
                     $scope.playlist = response.items;
+                    $scope.page.total = response.meta.totalPages;
+                    $scope.page.pages = 1;
                 });
+
             PlayerQueueResource.meta().$promise
                 .then(function (response){
                     $scope.meta = response;
+                });
+        };
+
+        /**
+         * Load more tracks from playlist
+         * @method loadMore
+         */
+        $scope.loadMore = function loadMore() {
+
+            $scope.page.loading = true;
+            $scope.page.pages++;
+
+            PlayerQueueResource.query({ page: $scope.page.pages }).$promise
+                .then(function (response){
+                    $scope.playlist = $scope.playlist.concat(response.items);
+
+                    $scope.page.loading = false;
+                    $scope.page.total = response.meta.totalPages ? response.meta.totalPages : 1;
                 });
         };
 
@@ -100,7 +132,7 @@ angular.module("FM.playlist.PlaylistCtrl", [
          * @method onEnd
          */
         $scope.onEnd = function onEnd(event, data) {
-            if ($scope.playlist[0].track.uri === data.uri) { // jshint ignore:line
+            if (($scope.playlist[0].track.uri === data.uri) && ($scope.page.pages === $scope.page.total)) { // jshint ignore:line
                 $scope.meta.total--;
                 $scope.meta.play_time = $scope.meta.play_time - $scope.playlist[0].track.duration; // jshint ignore:line
                 $scope.playlist.splice(0, 1);
