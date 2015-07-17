@@ -4,8 +4,8 @@
                class="form-control"
                autofocus
                ng-model="selectedItem"
-               placeholder="Add track"
-               typeahead="track for track in search($viewValue)"
+               placeholder="Search"
+               typeahead="item for item in search($viewValue)"
                typeahead-loading="loadingTracks"
                typeahead-template-url="partials/search-result.html"
                typeahead-min-length="2"

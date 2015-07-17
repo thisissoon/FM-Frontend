@@ -6,22 +6,22 @@
  * @author SOON_
  */
 angular.module("FM.api.PlayerTransportResource", [
-    "ENV",
+    "config",
     "ngResource"
 ])
 /**
  * @constructor
  * @class PlayerTransportResource
  * @param {Service} $resource
- * @param {String}  FM_API_SERVER_ADDRESS
+ * @param {Object}  env
  */
 .factory("PlayerTransportResource", [
     "$resource",
-    "FM_API_SERVER_ADDRESS",
-    function ($resource, FM_API_SERVER_ADDRESS) {
+    "env",
+    function ($resource, env) {
 
         return $resource(
-            FM_API_SERVER_ADDRESS + "player/current",
+            env.FM_API_SERVER_ADDRESS + "player/current",
             // Default values for url parameters.
             {},
             // Hash with declaration of custom action that should
@@ -42,12 +42,12 @@ angular.module("FM.api.PlayerTransportResource", [
 
                 pause: {
                     method: "POST",
-                    url: FM_API_SERVER_ADDRESS + "player/pause"
+                    url: env.FM_API_SERVER_ADDRESS + "player/pause"
                 },
 
                 resume: {
                     method: "DELETE",
-                    url: FM_API_SERVER_ADDRESS + "player/pause"
+                    url: env.FM_API_SERVER_ADDRESS + "player/pause"
                 }
             }
 

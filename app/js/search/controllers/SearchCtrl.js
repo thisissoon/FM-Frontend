@@ -29,7 +29,7 @@ angular.module("FM.search.SearchCtrl", [
     function ($scope, $rootScope, $q, Spotify, PlayerQueueResource) {
 
         /**
-         * Searches the spotify api unsing angular-spotify and returns a
+         * Searches the spotify api using angular-spotify and returns a
          * promise containing the search results limited to 20
          * @method search
          * @param  {String}  query Query string to search spotify database
@@ -38,9 +38,27 @@ angular.module("FM.search.SearchCtrl", [
         $scope.search = function search(query){
             var deferred = $q.defer();
 
-            Spotify.search(query, "track", { limit: 20, market: "GB" })
+            Spotify.search(query, "album,artist,track", { limit: 3, market: "GB" })
                 .then(function (response) {
-                    deferred.resolve(response.tracks.items);
+                    var albums = (response.albums && response.albums.items && response.albums.items.length > 0),
+                        tracks = (response.tracks && response.tracks.items && response.tracks.items.length > 0),
+                        artists = (response.artists && response.artists.items && response.artists.items.length > 0);
+
+                    var results = [];
+
+                    if (tracks) {
+                        results = results.concat([{ label: "Tracks" }].concat(response.tracks.items.concat([{ buttonLabel: "tracks" }])));
+                    }
+
+                    if (albums) {
+                        results = results.concat([{ label: "Albums" }].concat(response.albums.items.concat([{ buttonLabel: "albums" }])));
+                    }
+
+                    if (artists) {
+                        results = results.concat([{ label: "Artists" }].concat(response.artists.items.concat([{ buttonLabel: "artists" }])));
+                    }
+
+                    deferred.resolve(results);
                 });
 
             return deferred.promise;
@@ -50,11 +68,11 @@ angular.module("FM.search.SearchCtrl", [
          * POST the selected track to the thisissoon FM API PlayerQueueResource
          * to add it to the playlist
          * @method onTrackSelected
-         * @param  {Object} track The selected track from the spotify search
+         * @param {Object} item The selected track from the spotify search
          */
-        $scope.onTrackSelected = function onTrackSelected(track){
-            if (track && track.uri) {
-                PlayerQueueResource.save({ uri: track.uri });
+        $scope.onTrackSelected = function onTrackSelected(item){
+            if (item && item.uri && item.uri.match("spotify:track")) {
+                PlayerQueueResource.save({ uri: item.uri });
             }
             $scope.selectedItem = null;
             $rootScope.toogleSidebar();

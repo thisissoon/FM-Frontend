@@ -21,7 +21,7 @@ dependencies:
   override:
     - npm -d install
     - npm install -g grunt-cli
-    - npm install -g protractor
+    - npm install -g protractor && webdriver-manager update
 
 # Test Commands
 

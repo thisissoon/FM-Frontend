@@ -6,22 +6,22 @@
  * @author SOON_
  */
 angular.module("FM.api.TracksResource", [
-    "ENV",
+    "config",
     "ngResource"
 ])
 /**
  * @constructor
  * @class TracksResource
  * @param {Service} $resource
- * @param {String}  FM_API_SERVER_ADDRESS
+ * @param {String}  env
  */
 .factory("TracksResource", [
     "$resource",
-    "FM_API_SERVER_ADDRESS",
-    function ($resource, FM_API_SERVER_ADDRESS) {
+    "env",
+    function ($resource, env) {
 
         return $resource(
-            FM_API_SERVER_ADDRESS + "tracks" + "/:id",
+            env.FM_API_SERVER_ADDRESS + "tracks" + "/:id",
             // Default values for url parameters.
             {
                 id: "@id"

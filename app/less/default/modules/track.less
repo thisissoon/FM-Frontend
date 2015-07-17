@@ -1,18 +1,24 @@
 //
-// Media
+// track
 // --------------------------------------------------
 
-.media {
+.track {
     .flex-box();
     .align-items(stretch);
     .flex-direction(row);
     .flex-wrap(nowrap);
     .justify-content(flex-start);
-    background-color: @media-bg;
-    padding-left: 20px;
-    padding-right: 20px;
+    background-color: @track-bg;
+    padding-left: 0;
+    padding-right: 0;
     position: relative;
     margin-bottom: 5px;
+
+    .queue &,
+    .footer & {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 
     .footer .selected {
         display: none;
@@ -24,41 +30,46 @@
         padding-right: 10px;
     }
 
-    li.active & {
-        background-color: lighten(@media-bg, 10%);
+    li.active &,
+    &:hover {
+        background-color: lighten(@track-bg, 10%);
+    }
+
+    .footer &:hover {
+        background-color: @track-bg;
     }
 
     .sidebar & {
-        .media-heading {
+        .track-heading {
             font-size: 1em; // 15px
         }
 
-        .media-info {
+        .track-info {
             font-size: 0.933em; // 14px
         }
     }
 }
 
-.media-left,
-.media-right {
+.track-left,
+.track-right {
     .flex-grow(1);
 }
 
-.media-progress {
+.track-progress {
     .flex-grow(1);
     .align-self(center);
     margin-right: 20px;
-    width: 400px;
+    min-width: 400px;
 }
 
-.media-body {
+.track-body {
     .flex-grow(50);
     .align-self(center);
     overflow: hidden;
     padding: 0 10px;
 }
 
-.media-menu {
+.track-menu {
     .align-self(flex-start);
     min-width: 30px;
     margin-bottom: 10px;
@@ -80,30 +91,31 @@
     }
 
     &.open .btn-context,
-    .media:hover & .btn-context {
+    .track:hover & .btn-context {
         .opacity(1);
     }
 }
 
-.media-info {
+.track-info {
     .text-overflow();
     line-height: 1.4;
     margin-top: 0;
     margin-bottom: 0;
 }
 
-.media-user {
+.track-user {
     .align-self(center);
-    min-width: 56px;
+    min-width: 46px;
+    text-align: left;
 }
 
-.media-album {
+.track-album {
     min-width: 90px;
 }
 
-.media-time {
+.track-time {
     .align-self(flex-end);
-    min-width: 40px;
+    min-width: 100px;
 
     .footer & {
         .align-self(center);
@@ -117,7 +129,6 @@
 
 .img-user {
     .size(36px, auto);
-    margin-right: 20px;
 }
 
 .img-album {

@@ -117,14 +117,23 @@
 //## Dropdown menu container and contents.
 
 //** Background for the dropdown menu.
-@dropdown-bg:                    lighten(@media-bg, 10%);
+@dropdown-bg:                    @light-black;
 
 //** Dropdown link text color.
 @dropdown-link-color:            @white;
 //** Hover color for dropdown links.
-@dropdown-link-hover-color:      darken(@gray-dark, 5%);
+@dropdown-link-hover-color:      darken(@white, 5%);
 //** Hover background for dropdown links.
-@dropdown-link-hover-bg:         #f5f5f5;
+@dropdown-link-hover-bg:         lighten(@dropdown-bg, 10%);
+
+//== Thumbnails
+//
+//##
+
+//** Thumbnail background color
+@thumbnail-bg:                @light-black;
+//** Thumbnail border color
+@thumbnail-border:            @light-black;
 
 //== Forms
 //
@@ -167,7 +176,7 @@
 //##
 
 //** Popover body background color
-@popover-bg:                  lighten(@media-bg, 10%);
+@popover-bg:                  lighten(@light-black, 10%);
 
 
 //== Alerts
@@ -206,6 +215,14 @@
 @footer-height-xs:              140px;
 @footer-open-position-top-xs:   @header-height-xs;
 
+
+//== Type
+//
+//##
+
+//** Page header border color
+@page-header-border-color:     @light-black;
+
 //== Sidebar
 //
 //##
@@ -235,23 +252,23 @@
 @view-position-left-xs:        0;
 @view-position-top-xs:         @header-height-xs;
 
-//== Media
+//== Track
 //
 //##
 
-@media-bg:                      @light-black;
+@track-bg:                      @light-black;
 
-@media-footer-height-xs:        75px;
+@track-footer-height-xs:        75px;
 
 //== Controls
 //
 //##
 
-@controls-bg:                   @media-bg;
+@controls-bg:                   @light-black;
 @controls-height:               @footer-height;
 @controls-width:                340px;
 
-@controls-height-xs:            @footer-height-xs - @media-footer-height-xs;
+@controls-height-xs:            @footer-height-xs - @track-footer-height-xs;
 @controls-line-height-xs:       @controls-height-xs;
 
 //== Loading-screen

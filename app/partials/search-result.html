@@ -1,1 +1,39 @@
-<fm-track class="media" data-spotify-track="match.label"></fm-track>
+<!-- label -->
+<h4 ng-if="match.label.label">{{ match.label.label }}</h4>
+
+<!-- track -->
+<a href class="media" ng-if="match.label.uri.indexOf('spotify:track') === 0" title="{{ match.label.name }}">
+    <div class="media-left">
+        <img ng-src="{{ match.label.album.images[1].url || 'img/icons/artist.svg' }}" alt="{{ match.label.name }}" class="media-object" width="62">
+    </div>
+    <div class="media-body">
+        <p class="media-heading">{{ match.label.name }}</p>
+        <p class="text-muted">{{ match.label.album.name }}</p>
+    </div>
+</a>
+
+<!-- album -->
+<a class="media" ng-if="match.label.uri.indexOf('spotify:album') === 0" href="albums/{{ match.label.id }}" title="{{ match.label.name }}">
+    <div class="media-left">
+        <img ng-src="{{ match.label.images[1].url || 'img/icons/artist.svg' }}" alt="{{ match.label.name }}" class="media-object" width="62">
+    </div>
+    <div class="media-body">
+        <p class="media-heading">{{ match.label.name }}</p>
+    </div>
+</a>
+
+
+<!-- artist -->
+<a class="media" ng-if="match.label.uri.indexOf('spotify:artist') === 0" href="artists/{{ match.label.id }}" title="{{ match.label.name }}">
+    <div class="media-left">
+        <img ng-src="{{ match.label.images[1].url || 'img/icons/artist.svg' }}" alt="{{ match.label.name }}" class="media-object" width="62">
+    </div>
+    <div class="media-body">
+        <p class="media-heading">{{ match.label.name }}</p>
+    </div>
+</a>
+
+<!-- view more results -->
+<p ng-if="match.label.buttonLabel" class="text-center">
+    <a class="btn btn-primary" ng-href="{{ match.label.buttonLabel }}?query={{ query }}">View more {{ match.label.buttonLabel }}</a>
+</p>
