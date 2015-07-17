@@ -2,15 +2,17 @@
 /**
  * @module   FM.playlist.PlaylistCtrl
  * @author   SOON_
- * @requires sn.fm.api
+ * @requires FM.api.TracksResource
+ * @requires FM.api.UsersResource
+ * @requires FFM.api.PlayerQueueResource
  * @requires ngRoute
  */
 angular.module("FM.playlist.PlaylistCtrl", [
     "FM.api.TracksResource",
     "FM.api.UsersResource",
     "FM.api.PlayerQueueResource",
+    "FM.api.PaginationInterceptor",
     "ngRoute",
-    "notification"
 ])
 /**
  * @method config
@@ -41,7 +43,6 @@ angular.module("FM.playlist.PlaylistCtrl", [
  * @class PlaylistCtrl
  * @param {Object}  $scope
  * @param {Service} $q
- * @param {Service} $notification
  * @param {Factory} TracksResource
  * @param {Factory} UsersResource
  * @param {Factory} PlayerQueueResource
@@ -51,13 +52,12 @@ angular.module("FM.playlist.PlaylistCtrl", [
 .controller("PlaylistCtrl", [
     "$scope",
     "$q",
-    "$notification",
     "TracksResource",
     "UsersResource",
     "PlayerQueueResource",
     "playlistData",
     "playlistMeta",
-    function ($scope, $q, $notification, TracksResource, UsersResource, PlayerQueueResource, playlistData, playlistMeta) {
+    function ($scope, $q, TracksResource, UsersResource, PlayerQueueResource, playlistData, playlistMeta) {
 
         /**
          * @property playlist
@@ -72,17 +72,48 @@ angular.module("FM.playlist.PlaylistCtrl", [
         $scope.meta = playlistMeta;
 
         /**
+         * Paging properties
+         * @property {Object} page
+         */
+        $scope.page = {
+            loading: false,
+            pages: 1,
+            total: playlistData.meta.totalPages
+        };
+
+        /**
          * Update `playlist` with queue data from the API
          * @method refreshPlaylist
          */
-        $scope.refreshPlaylist = function refreshPlaylistQueue(){
+        $scope.refreshPlaylist = function refreshPlaylist(){
             PlayerQueueResource.query().$promise
                 .then(function (response){
                     $scope.playlist = response.items;
+                    $scope.page.total = response.meta.totalPages;
+                    $scope.page.pages = 1;
                 });
+
             PlayerQueueResource.meta().$promise
                 .then(function (response){
                     $scope.meta = response;
+                });
+        };
+
+        /**
+         * Load more tracks from playlist
+         * @method loadMore
+         */
+        $scope.loadMore = function loadMore() {
+
+            $scope.page.loading = true;
+            $scope.page.pages++;
+
+            PlayerQueueResource.query({ page: $scope.page.pages }).$promise
+                .then(function (response){
+                    $scope.playlist = $scope.playlist.concat(response.items);
+
+                    $scope.page.loading = false;
+                    $scope.page.total = response.meta.totalPages ? response.meta.totalPages : 1;
                 });
         };
 
@@ -101,7 +132,7 @@ angular.module("FM.playlist.PlaylistCtrl", [
          * @method onEnd
          */
         $scope.onEnd = function onEnd(event, data) {
-            if ($scope.playlist[0].track.uri === data.uri) { // jshint ignore:line
+            if (($scope.playlist[0].track.uri === data.uri) && ($scope.page.pages === $scope.page.total)) { // jshint ignore:line
                 $scope.meta.total--;
                 $scope.meta.play_time = $scope.meta.play_time - $scope.playlist[0].track.duration; // jshint ignore:line
                 $scope.playlist.splice(0, 1);
@@ -116,9 +147,8 @@ angular.module("FM.playlist.PlaylistCtrl", [
          */
         $scope.onAdd = function onAdd(event, data) {
             $q.all([
-                TracksResource.get({ id: data.uri }).$promise,
-                UsersResource.get({ id: data.user }).$promise
-            ]).then(function(response){
+                TracksResource.get({ id: data.uri }).$promise
+            ]).then(function (response){
                 var item = {
                     track: response[0],
                     user: response[1]
@@ -126,13 +156,6 @@ angular.module("FM.playlist.PlaylistCtrl", [
                 $scope.playlist.push(item);
                 $scope.meta.total++;
                 $scope.meta.play_time = $scope.meta.play_time + response[0].duration; //jshint ignore:line
-
-                if (item.track && item.user) {
-                    $notification("Track Added", {
-                        body: item.user.display_name + " added " + item.track.artists[0].name + " - " + item.track.album.name + ": " + item.track.name, //jshint ignore:line
-                        icon: item.track.album.images[0].url
-                    });
-                }
             });
         };
 

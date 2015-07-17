@@ -18,6 +18,8 @@
 
         "./app/js/infinite-scroll/infiniteScroll.js",
 
+        "./app/js/notifications/notifications.js",
+
         "./app/js/auth/auth.js",
         "./app/js/auth/controllers/LoginCtrl.js",
 
