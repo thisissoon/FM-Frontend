@@ -12,6 +12,7 @@ angular.module("FM.playlist.PlaylistCtrl", [
     "FM.api.UsersResource",
     "FM.api.PlayerQueueResource",
     "FM.api.PaginationInterceptor",
+    "FM.player.removeLeadingZeros",
     "ngRoute",
 ])
 /**

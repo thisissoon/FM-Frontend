@@ -48,6 +48,7 @@
         "./app/js/player/directives/track.js",
         "./app/js/player/directives/slider.js",
         "./app/js/player/services/TrackTimer.js",
+        "./app/js/player/filter/removeLeadingZeros.js",
 
         "./app/js/playlist/playlist.js",
         "./app/js/playlist/controllers/PlaylistCtrl.js",
