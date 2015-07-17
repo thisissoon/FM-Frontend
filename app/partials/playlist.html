@@ -5,7 +5,7 @@
             <h2 class="h4" ng-if="playlist.length > 0">Coming up:</h2>
         </div>
         <div class="col-xs-6">
-            <p class="text-muted pull-right">{{ meta.total }} tracks in {{ meta.play_time | date: "H:mm:ss" }}</p>
+            <p class="text-muted pull-right">{{ meta.total }} tracks in {{ meta.play_time | date: "H:mm:ss" | removeLeadingZeros }}</p>
         </div>
     </div>
 

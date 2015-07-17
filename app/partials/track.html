@@ -41,5 +41,5 @@
 </div>
 
 <div ng-if="track.duration || track.duration_ms" class="track-right track-time text-right">
-    <p><span ng-show="timer">{{ timer.elapsedTime | date: "m:ss" }} / </span><span class="text-muted">{{ track.duration || track.duration_ms | date: "m:ss" }}</span></p>
+    <p><span ng-show="timer">{{ timer.elapsedTime | date: "H:mm:ss" | removeLeadingZeros }} / </span><span class="text-muted">{{ track.duration || track.duration_ms | date: "H:mm:ss" | removeLeadingZeros }}</span></p>
 </div>
