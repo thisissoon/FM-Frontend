@@ -1,3 +1,12 @@
+## Changes in 0.5.0
+
+ * @bcmrbvm: Fix: Hide controls if no tracks (#134)
+ * @bcmrbvm: Fix: Progress bar size (#133)
+ * @bcmrbvm: Feature: Playlist pagination (#132)
+ * @bcmrbvm: Fix: Notifications not running automatically (#127)
+ * @bcmrbvm: Feature: open artist and album detail view from track (#126)
+ * @bcmrbvm: Fix: notifications (#125)
+
 ## Changes in 0.4.1
 
  * @bcmrbvm: Fix: Remove auto generated config (No PR)
