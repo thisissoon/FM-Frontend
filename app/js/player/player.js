@@ -12,5 +12,6 @@ angular.module("FM.player", [
     "FM.player.PlayerCtrl",
     "FM.player.trackDirective",
     "FM.player.sliderDirective",
-    "FM.player.TrackTimer"
+    "FM.player.TrackTimer",
+    "FM.player.removeLeadingZeros"
 ]);
