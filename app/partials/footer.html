@@ -1,7 +1,7 @@
 <div ng-controller="PlayerCtrl">
-    <fm-track class="track" ng-show="track" data-spotify-track="track.track" data-user="track.user" data-timer="trackPositionTimer"></fm-track>
+    <fm-track class="track" ng-show="track.track.uri" data-spotify-track="track.track" data-user="track.user" data-timer="trackPositionTimer"></fm-track>
 
-    <div class="controls" ng-show="track">
+    <div class="controls" ng-show="track.track.uri">
 
         <div class="playing-animation"
              ng-switch="paused">
