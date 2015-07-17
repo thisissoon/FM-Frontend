@@ -6,6 +6,7 @@
  * @author SOON_
  */
 angular.module("FM.player.trackDirective", [
+    "FM.player.removeLeadingZeros",
     "FM.api.PlayerQueueResource",
     "ui.bootstrap.popover",
     "template/popover/popover-template.html",
