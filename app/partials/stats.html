@@ -1,8 +1,108 @@
 <div class="stats">
+
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-
+            <h1>FM Stats</h1>
         </div>
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <h2 class="h1 text-center">{{ totalPlays }}</h2>
+                <p class="text-center">Total Tracks Played</p>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <h2 class="h1 text-center"><span ng-if="totalPlayTime > 86400000">{{ totalPlayTime | date: "M 'month' d 'days'" }}<br></span>{{ totalPlayTime | date: "H'h' mm'm'" }}</h2>
+                <p class="text-center">Total Play Time</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                <canvas id="polar-area" class="chart-base" chart-type="'Pie'" data="activeDj.data" labels="activeDj.labels" options="activeDj.options" colours="chartColours"></canvas>
+
+                <h2 class="text-center">Most Active DJ</h2>
+                <p class="text-center">{{ activeDj.labels[0] }}</p>
+
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                <canvas id="line" class="chart chart-line" data="playTime.data" series="playTime.series" labels="playTime.labels" series="playTime.series" colours="chartColours"></canvas>
+
+                <h2 class="text-center">Play time</h2>
+                <p class="text-center">{{ playTime.series[0] }} <span ng-if="playTime.data[0][0] >= 1440">{{ playTime.data[0][0]/60 }} hours</span><span ng-if="playTime.data[0][0] < 1440">{{ playTime.data[0][0] }} minutes</span></p>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-12">
+
+            <h2>Top Tracks</h2>
+
+            <ul class="list-unstyled track-list">
+                <li class="track"
+                    ng-repeat="track in topTracks"
+                    data-spotify-track="track.track"
+                    fm-track>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-12">
+
+            <h2>Top Artists</h2>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
+                     ng-repeat="artist in topArtists | limitTo: 9">
+
+                    <h3>{{$index + 1}}.</h3>
+
+                    <a href="artists/{{ artist.artist.id }}" class="thumbnail" title="{{ artist.artist.name }}">
+                        <div class="img"
+                             ng-class="{
+                                'no-img': !artist.artist.images[1]
+                             }"
+                             ng-style="{
+                                'background-image': 'url({{ artist.artist.images[1].url || 'img/icons/artist.svg' }})'
+                             }">
+                            <img ng-src="{{ artist.artist.images[1].url }}" alt="{{ artist.artist.name }}" class="sr-only sr-only-focusable">
+                        </div>
+                        <div class="caption">
+                            <h3 class="h5 text-overflow">{{ artist.artist.name }}</h3>
+                            <p class="text-muted">
+                                {{ artist.total }} plays
+                            </p>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+
+            <h2>Top Genres</h2>
+
+            <ul class="list-unstyled genre-list">
+                <li class="genre"
+                    ng-repeat="genre in topGenres track by $index">
+                    <h3>{{$index + 1}}.</h3>
+                    <h3 class="genre-name">{{ genre.name }}</h3>
+                    <p class="text-muted">{{ genre.total }} plays</p>
+                </li>
+            </ul>
+        </div>
+
     </div>
 </div>

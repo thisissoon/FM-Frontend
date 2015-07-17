@@ -1,0 +1,34 @@
+//
+// Stats
+// --------------------------------------------------
+
+.stats-grid {
+
+    .row:not(:last-child) {
+        border-bottom: 2px solid @light-black;
+    }
+
+    .row > div {
+        padding: 30px;
+
+        &:not(:first-child) {
+            border-left: 2px solid @light-black;
+        }
+    }
+}
+
+.genre {
+
+    h3, p {
+        display: inline-block;
+    }
+
+    .genre-name {
+        margin-left: 20px;
+        text-transform: capitalize;
+    }
+}
+
+.genre-list {
+    .content-columns(2);
+}
