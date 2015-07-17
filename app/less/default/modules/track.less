@@ -74,7 +74,7 @@
     min-width: 30px;
     margin-bottom: 10px;
     position: absolute;
-    top: 30px;
+    top: 15px;
     right: 10px;
 
     .footer &,
@@ -116,6 +116,7 @@
 .track-time {
     .align-self(flex-end);
     min-width: 100px;
+    padding-right: 20px;
 
     .footer & {
         .align-self(center);
@@ -124,6 +125,11 @@
             margin-bottom: 0;
             margin-top: 10px;
         }
+    }
+
+    .footer &,
+    .queue & {
+        padding-right: 0;
     }
 }
 
