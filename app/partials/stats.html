@@ -9,13 +9,13 @@
                     <div class="input-group">
                         <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" is-open="datepickerOpened.from" min-date="" max-date="datepickerMaxDate" ng-model="filter.from" ng-change="updateFilter()" close-text="Close" />
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="openDatepicker($event, 'from')"><i class="glyphicon glyphicon-calendar"></i></button>
+                            <button type="button" class="btn btn-default" ng-click="openDatepicker($event, 'from')"><span class="icon icon-calendar"></span></button>
                         </span>
                     </div>
                     <div class="input-group">
                         <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" is-open="datepickerOpened.to" min-date="filter.from" max-date="datepickerMaxDate" ng-model="filter.to" ng-change="updateFilter()" close-text="Close" />
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="openDatepicker($event, 'to')"><i class="glyphicon glyphicon-calendar"></i></button>
+                            <button type="button" class="btn btn-default" ng-click="openDatepicker($event, 'to')"><span class="icon icon-calendar"></span></button>
                         </span>
                     </div>
                 </div>

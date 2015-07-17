@@ -10,10 +10,10 @@
 					{}
 				],
 				"isMulticolor": false,
-				"grid": 0,
 				"tags": [
 					"svg"
-				]
+				],
+				"grid": 0
 			},
 			"attrs": [
 				{}
@@ -26,7 +26,7 @@
 				"name": "playlist"
 			},
 			"setIdx": 0,
-			"setId": 5,
+			"setId": 4,
 			"iconIdx": 0
 		},
 		{
@@ -59,9 +59,9 @@
 				"code": 58880,
 				"name": "context"
 			},
-			"setIdx": 1,
+			"setIdx": 0,
 			"setId": 4,
-			"iconIdx": 0
+			"iconIdx": 1
 		},
 		{
 			"icon": {
@@ -85,9 +85,9 @@
 				"code": 58881,
 				"name": "google-plus"
 			},
-			"setIdx": 1,
+			"setIdx": 0,
 			"setId": 4,
-			"iconIdx": 1
+			"iconIdx": 2
 		},
 		{
 			"icon": {
@@ -112,9 +112,9 @@
 				"code": 58882,
 				"name": "history"
 			},
-			"setIdx": 1,
+			"setIdx": 0,
 			"setId": 4,
-			"iconIdx": 2
+			"iconIdx": 3
 		},
 		{
 			"icon": {
@@ -139,9 +139,9 @@
 				"code": 58883,
 				"name": "pause"
 			},
-			"setIdx": 1,
+			"setIdx": 0,
 			"setId": 4,
-			"iconIdx": 3
+			"iconIdx": 4
 		},
 		{
 			"icon": {
@@ -165,9 +165,9 @@
 				"code": 58884,
 				"name": "settings"
 			},
-			"setIdx": 1,
+			"setIdx": 0,
 			"setId": 4,
-			"iconIdx": 4
+			"iconIdx": 5
 		},
 		{
 			"icon": {
@@ -191,9 +191,9 @@
 				"code": 58885,
 				"name": "skip"
 			},
-			"setIdx": 1,
+			"setIdx": 0,
 			"setId": 4,
-			"iconIdx": 5
+			"iconIdx": 6
 		},
 		{
 			"icon": {
@@ -218,9 +218,9 @@
 				"code": 58886,
 				"name": "unmuted"
 			},
-			"setIdx": 1,
+			"setIdx": 0,
 			"setId": 4,
-			"iconIdx": 6
+			"iconIdx": 7
 		},
 		{
 			"icon": {
@@ -244,9 +244,9 @@
 				"code": 58887,
 				"name": "muted"
 			},
-			"setIdx": 1,
+			"setIdx": 0,
 			"setId": 4,
-			"iconIdx": 7
+			"iconIdx": 8
 		},
 		{
 			"icon": {
@@ -270,9 +270,9 @@
 				"code": 58888,
 				"name": "play"
 			},
-			"setIdx": 1,
+			"setIdx": 0,
 			"setId": 4,
-			"iconIdx": 8
+			"iconIdx": 9
 		},
 		{
 			"icon": {
@@ -297,9 +297,38 @@
 				"code": 58889,
 				"name": "playlist-add"
 			},
-			"setIdx": 1,
+			"setIdx": 0,
 			"setId": 4,
-			"iconIdx": 9
+			"iconIdx": 10
+		},
+		{
+			"icon": {
+				"paths": [
+					"M320 384h128v128h-128zM512 384h128v128h-128zM704 384h128v128h-128zM128 768h128v128h-128zM320 768h128v128h-128zM512 768h128v128h-128zM320 576h128v128h-128zM512 576h128v128h-128zM704 576h128v128h-128zM128 576h128v128h-128zM832 0v64h-128v-64h-448v64h-128v-64h-128v1024h960v-1024h-128zM896 960h-832v-704h832v704z"
+				],
+				"attrs": [],
+				"tags": [
+					"calendar",
+					"date",
+					"schedule",
+					"time",
+					"day"
+				],
+				"defaultCode": 57619,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 340,
+				"order": 16,
+				"prevSize": 32,
+				"code": 59731,
+				"ligatures": "calendar, date",
+				"name": "calendar"
+			},
+			"setIdx": 3,
+			"setId": 0,
+			"iconIdx": 83
 		}
 	],
 	"height": 1024,
