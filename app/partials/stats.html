@@ -28,11 +28,11 @@
 
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <h2 class="h1 text-center">{{ stats.totalPlays }}</h2>
+                <h2 class="h1 text-center">{{ stats.total_plays }}</h2>
                 <p class="text-center">Total Tracks Played</p>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <h2 class="h1 text-center"><span ng-if="stats.totalPlayTime > 86400000">{{ stats.totalPlayTime | date: "M 'month' d 'days'" }}<br></span>{{ stats.totalPlayTime | date: "H'h' mm'm'" }}</h2>
+                <h2 class="h1 text-center"><span ng-if="stats.total_play_time > 86400000">{{ stats.total_play_time | date: "M 'month' d 'days'" }}<br></span>{{ stats.total_play_time | date: "H'h' mm'm'" }}</h2>
                 <p class="text-center">Total Play Time</p>
             </div>
         </div>
@@ -65,7 +65,7 @@
 
             <ul class="list-unstyled track-list">
                 <li class="track"
-                    ng-repeat="track in stats.topTracks"
+                    ng-repeat="track in stats.most_played_tracks"
                     data-spotify-track="track.track"
                     fm-track>
                 </li>
@@ -82,7 +82,7 @@
 
             <div class="row">
                 <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
-                     ng-repeat="artist in stats.topArtists | limitTo: 9">
+                     ng-repeat="artist in stats.most_played_artists | limitTo: 9">
 
                     <h3>{{$index + 1}}.</h3>
 
@@ -114,7 +114,7 @@
 
             <ul class="list-unstyled genre-list">
                 <li class="genre"
-                    ng-repeat="genre in stats.topGenres track by $index">
+                    ng-repeat="genre in stats.most_played_genres track by $index">
                     <h3>{{$index + 1}}.</h3>
                     <h3 class="genre-name">{{ genre.name }}</h3>
                     <p class="text-muted">{{ genre.total }} plays</p>

@@ -70,33 +70,7 @@ angular.module("FM.stats.StatsCtrl", [
          * Stats resolved from the API
          * @property {Object} stats
          */
-        $scope.stats = {
-            /**
-             * Total number of tracks played
-             * @property {Number} totalPlays
-             */
-            totalPlays: stats.total_plays,  // jshint ignore:line
-            /**
-             * Total play time in ms
-             * @property {Number} totalPlayTime
-             */
-            totalPlayTime: stats.total_play_time,  // jshint ignore:line
-            /**
-             * List of top 10 tracks
-             * @property {Array} topTracks
-             */
-            topTracks: stats.most_played_tracks,  // jshint ignore:line
-            /**
-             * List of top 10 artists
-             * @property {Array} topArtists
-             */
-            topArtists: stats.most_played_artists,  // jshint ignore:line
-            /**
-             * List of top 10 genres
-             * @property {Array} topGenres
-             */
-            topGenres: stats.most_played_genres  // jshint ignore:line
-        };
+        $scope.stats = stats;
 
         /**
          * List of colours to use for charts
