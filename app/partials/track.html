@@ -24,7 +24,7 @@
     </p>
 </div>
 
-<div class="track-progress hidden-sm" ng-show="timer && track">
+<div class="track-progress" ng-show="timer && track">
     <div class="progress">
         <div class="progress-bar" role="progressbar" aria-valuenow="{{ timer.elapsedTime }}" aria-valuemin="0" aria-valuemax="{{ track.duration }}" ng-style="{ width: timer.percent + '%' }"></div>
     </div>
