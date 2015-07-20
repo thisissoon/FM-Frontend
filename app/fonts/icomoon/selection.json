@@ -4,6 +4,36 @@
 		{
 			"icon": {
 				"paths": [
+					"M365.714 512v292.571h-146.286v-292.571h146.286zM585.143 219.429v585.143h-146.286v-585.143h146.286zM1170.286 877.714v73.143h-1170.286v-877.714h73.143v804.571h1097.143zM804.571 365.714v438.857h-146.286v-438.857h146.286zM1024 146.286v658.286h-146.286v-658.286h146.286z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"width": 1170,
+				"tags": [
+					"bar-chart",
+					"bar-chart-o"
+				],
+				"grid": 14
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"order": 1,
+				"id": 0,
+				"prevSize": 28,
+				"code": 58892,
+				"name": "stats"
+			},
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 0
+		},
+		{
+			"icon": {
+				"paths": [
 					"M646.4 140.8h-646.4v108.8h646.4v-108.8zM646.4 356.267h-646.4v108.8h646.4v-108.8zM0 680.533h430.933v-108.8h-430.933v108.8zM755.2 140.8v441.6c-17.067-6.4-34.133-10.667-53.333-10.667-89.6 0-162.133 72.533-162.133 162.133s72.533 162.133 162.133 162.133 162.133-72.533 162.133-162.133v-484.267h162.133v-108.8h-270.933z"
 				],
 				"attrs": [
@@ -25,7 +55,7 @@
 				"code": 58890,
 				"name": "playlist"
 			},
-			"setIdx": 0,
+			"setIdx": 1,
 			"setId": 4,
 			"iconIdx": 0
 		},
@@ -59,7 +89,7 @@
 				"code": 58880,
 				"name": "context"
 			},
-			"setIdx": 0,
+			"setIdx": 1,
 			"setId": 4,
 			"iconIdx": 1
 		},
@@ -85,7 +115,7 @@
 				"code": 58881,
 				"name": "google-plus"
 			},
-			"setIdx": 0,
+			"setIdx": 1,
 			"setId": 4,
 			"iconIdx": 2
 		},
@@ -112,7 +142,7 @@
 				"code": 58882,
 				"name": "history"
 			},
-			"setIdx": 0,
+			"setIdx": 1,
 			"setId": 4,
 			"iconIdx": 3
 		},
@@ -139,7 +169,7 @@
 				"code": 58883,
 				"name": "pause"
 			},
-			"setIdx": 0,
+			"setIdx": 1,
 			"setId": 4,
 			"iconIdx": 4
 		},
@@ -165,7 +195,7 @@
 				"code": 58884,
 				"name": "settings"
 			},
-			"setIdx": 0,
+			"setIdx": 1,
 			"setId": 4,
 			"iconIdx": 5
 		},
@@ -191,7 +221,7 @@
 				"code": 58885,
 				"name": "skip"
 			},
-			"setIdx": 0,
+			"setIdx": 1,
 			"setId": 4,
 			"iconIdx": 6
 		},
@@ -218,7 +248,7 @@
 				"code": 58886,
 				"name": "unmuted"
 			},
-			"setIdx": 0,
+			"setIdx": 1,
 			"setId": 4,
 			"iconIdx": 7
 		},
@@ -244,7 +274,7 @@
 				"code": 58887,
 				"name": "muted"
 			},
-			"setIdx": 0,
+			"setIdx": 1,
 			"setId": 4,
 			"iconIdx": 8
 		},
@@ -270,7 +300,7 @@
 				"code": 58888,
 				"name": "play"
 			},
-			"setIdx": 0,
+			"setIdx": 1,
 			"setId": 4,
 			"iconIdx": 9
 		},
@@ -297,7 +327,7 @@
 				"code": 58889,
 				"name": "playlist-add"
 			},
-			"setIdx": 0,
+			"setIdx": 1,
 			"setId": 4,
 			"iconIdx": 10
 		},
@@ -326,7 +356,7 @@
 				"ligatures": "calendar, date",
 				"name": "calendar"
 			},
-			"setIdx": 3,
+			"setIdx": 4,
 			"setId": 0,
 			"iconIdx": 83
 		}
