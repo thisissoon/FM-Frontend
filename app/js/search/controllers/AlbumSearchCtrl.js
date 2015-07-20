@@ -7,7 +7,8 @@
  */
 angular.module("FM.search.AlbumSearchCtrl", [
     "spotify",
-    "ngRoute"
+    "ngRoute",
+    "config"
 ])
 /**
  * @method config
@@ -15,7 +16,8 @@ angular.module("FM.search.AlbumSearchCtrl", [
  */
 .config([
     "$routeProvider",
-    function ($routeProvider) {
+    "env",
+    function ($routeProvider, env) {
 
         $routeProvider
             .when("/albums", {
@@ -23,7 +25,7 @@ angular.module("FM.search.AlbumSearchCtrl", [
                 controller: "AlbumSearchCtrl",
                 resolve: {
                     search: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.search($route.current.params.query, "album", { limit: 20, market: "GB" });
+                        return Spotify.search($route.current.params.query, "album", { limit: 20, market: env.REGION_CODE });
                     }]
                 }
             });
@@ -43,7 +45,8 @@ angular.module("FM.search.AlbumSearchCtrl", [
     "$location",
     "Spotify",
     "search",
-    function ($scope, $location, Spotify, search) {
+    "env",
+    function ($scope, $location, Spotify, search, env) {
 
         /**
          * Route search params
@@ -78,7 +81,7 @@ angular.module("FM.search.AlbumSearchCtrl", [
          */
         $scope.loadMore = function loadMore(){
             $scope.loadDisabled = true;
-            Spotify.search($scope.search.query, "album", { limit: 20, offset: $scope.albums.length, market: "GB" })
+            Spotify.search($scope.search.query, "album", { limit: 20, offset: $scope.albums.length, market: env.REGION_CODE })
                 .then(function (response) {
                     $scope.albums = $scope.albums.concat(response.albums.items);
                     $scope.meta = response.albums;

@@ -9,7 +9,8 @@
 angular.module("FM.search.SearchCtrl", [
     "FM.api.PlayerQueueResource",
     "ui.bootstrap",
-    "spotify"
+    "spotify",
+    "config"
 ])
 /**
  * @constructor
@@ -24,9 +25,10 @@ angular.module("FM.search.SearchCtrl", [
     "$scope",
     "$rootScope",
     "$q",
+    "env",
     "Spotify",
     "PlayerQueueResource",
-    function ($scope, $rootScope, $q, Spotify, PlayerQueueResource) {
+    function ($scope, $rootScope, $q, env, Spotify, PlayerQueueResource) {
 
         /**
          * Searches the spotify api using angular-spotify and returns a
@@ -38,7 +40,7 @@ angular.module("FM.search.SearchCtrl", [
         $scope.search = function search(query){
             var deferred = $q.defer();
 
-            Spotify.search(query, "album,artist,track", { limit: 3, market: "GB" })
+            Spotify.search(query, "album,artist,track", { limit: 3, market: env.REGION_CODE })
                 .then(function (response) {
                     var albums = (response.albums && response.albums.items && response.albums.items.length > 0),
                         tracks = (response.tracks && response.tracks.items && response.tracks.items.length > 0),
