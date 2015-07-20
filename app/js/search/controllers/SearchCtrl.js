@@ -41,7 +41,7 @@ angular.module("FM.search.SearchCtrl", [
             var deferred = $q.defer();
 
             Spotify.search(query, "album,artist,track", {
-                limit: 3,
+                limit: env.SIDEBAR_SEARCH_LIMIT,
                 market: env.REGION_CODE
             }).then(function (response) {
                 var albums = (response.albums && response.albums.items && response.albums.items.length > 0),
