@@ -126,21 +126,21 @@ angular.module("FM.stats.StatsCtrl", [
         };
 
         /**
-         * Format stats data for chart and adds to existing dataset
-         * @method addToDataset
+         * Format series based stats data for chart and add to existing dataset
+         * @method addDataToSeries
          * @param {Object} dataset   ChartJs config object
          * @param {Object} data      New stat data from API
          * @param {String} label     Label for dataset
          * @param {Number} maxSeries Maximum number of series to extract from data
          */
-        $scope.addToDataset = function addToDataset (dataset, data, label, maxSeries) {
+        $scope.addDataToSeries = function addDataToSeries (dataset, data, label, maxSeries) {
 
             // initalise dataset properties
             dataset.labels = dataset.labels || [];
             dataset.data = dataset.data || [];
             dataset.series = dataset.series || [];
 
-            // default maximum series to 5
+            // default maximum series length to 5
             maxSeries = maxSeries || 5;
 
             if (data.length) {
@@ -153,54 +153,56 @@ angular.module("FM.stats.StatsCtrl", [
                     if (index < maxSeries) {
                         dataset.data[index] = dataset.data[index] || [];
                         dataset.series[index] = item.user.display_name;  // jshint ignore:line
+                        // convert milliseconds to minutes
                         dataset.data[index].unshift(Math.round(item.total/1000/60));
                     }
                 });
             }
         };
 
-        // Format most active DJ stats for charts
-        stats.most_active_djs.forEach(function(item, index){  // jshint ignore:line
-            if (index < 5) {
-                $scope.activeDj.labels.push(item.user.display_name);  // jshint ignore:line
-                $scope.activeDj.data.push(item.total);
-            }
-        });
-
         /**
-         * Load historic statistics for line chart
+         * Load historic play time statistics for line chart based on filter start/end dates
          * @method loadHistoricData
+         * @param {String} startDate Filter start date
+         * @param {String} endDate   Filter end date
          */
         $scope.loadHistoricData = function loadHistoricData (startDate, endDate) {
 
             startDate = new Date(startDate);
             endDate = new Date(endDate);
 
-            var lastWeek = [new Date(), new Date()];
-            lastWeek[0].setDate(lastWeek[0].getDate() - 14);
-            lastWeek[1].setDate(lastWeek[1].getDate() - 7);
+            /**
+             * Difference in days between filter start and end dates
+             * @property {Number} diff
+             */
+            var diff = (startDate.getTime() - endDate.getTime()) / (24 * 60 * 60 * 1000);
 
-            var diff = (startDate.getTime() - endDate.getTime()) / (24 * 60 * 60 * 1000),
-                dates = [
-                    {
-                        from: new Date().setDate(startDate.getDate() + diff),
-                        to: new Date().setDate(startDate.getDate() + diff - 1),
-                    },{
-                        from: new Date().setDate(startDate.getDate() + (diff * 2)),
-                        to: new Date().setDate(startDate.getDate() + (diff * 2) - 1),
-                    },{
-                        from: new Date().setDate(startDate.getDate() + (diff * 3)),
-                        to: new Date().setDate(startDate.getDate() + (diff * 3) - 1),
-                    }
-                ];
+            /**
+             * Calculated dates for historic data, based on filter dates
+             * Eg. if the filter period is 1 week this will be 1 week before, 2 weeks before and 3 weeks before
+             * @property {Array} dates
+             */
+            var dates = [{
+                from: $filter("date")(new Date().setDate(startDate.getDate() + diff), "yyyy-MM-dd"),
+                to: $filter("date")(new Date().setDate(startDate.getDate() + diff - 1), "yyyy-MM-dd"),
+            },{
+                from: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 2)), "yyyy-MM-dd"),
+                to: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 2) - 1), "yyyy-MM-dd"),
+            },{
+                from: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 3)), "yyyy-MM-dd"),
+                to: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 3) - 1), "yyyy-MM-dd"),
+            }];
 
+
+            // request historic data from API using calculated date ranges
             $q.all([
                 StatsResource.get(dates[0]).$promise,
                 StatsResource.get(dates[1]).$promise,
                 StatsResource.get(dates[2]).$promise
             ]).then(function (responses) {
                 responses.forEach(function (response, index) {
-                    $scope.addToDataset($scope.playTime, response.total_play_time_per_user, $filter("date")(dates[index].from, "dd-MM-yyyy"));  // jshint ignore:line
+                    // add data to play time chart dataset
+                    $scope.addDataToSeries($scope.playTime, response.total_play_time_per_user, $filter("date")(dates[index].from, "dd-MM-yyyy"));  // jshint ignore:line
                 });
             });
         };
@@ -231,17 +233,34 @@ angular.module("FM.stats.StatsCtrl", [
          * @method init
          */
         $scope.init = function init () {
+
+            /**
+             * Calculate date boundaries of last week
+             * @property {Array} lastWeek
+             */
             var lastWeek = [new Date(), new Date()];
             lastWeek[0].setDate(lastWeek[0].getDate() - 14);
             lastWeek[1].setDate(lastWeek[1].getDate() - 7);
+
+            // set max datepicker date to be end of last week
             $scope.datepickerMaxDate = lastWeek[1];
 
+            // default filter to last week
             $scope.filter.from = $scope.search.from || lastWeek[0];
             $scope.filter.to = $scope.search.to || lastWeek[1];
 
-            // Format total play time per user stats for charts
-            $scope.addToDataset($scope.playTime, stats.total_play_time_per_user, $filter("date")($scope.filter.from, "dd-MM-yyyy"));  // jshint ignore:line
 
+            // Format most active DJ stats for charts
+            stats.most_active_djs.forEach(function(item, index){  // jshint ignore:line
+                if (index < 5) {
+                    $scope.activeDj.labels.push(item.user.display_name);  // jshint ignore:line
+                    $scope.activeDj.data.push(item.total);
+                }
+            });
+
+            // Format total play time per user stats for charts
+            $scope.addDataToSeries($scope.playTime, stats.total_play_time_per_user, $filter("date")($scope.filter.from, "dd-MM-yyyy"));  // jshint ignore:line
+            // Load additional data for play time line chart
             $scope.loadHistoricData($scope.filter.from, $scope.filter.to);
         };
 
