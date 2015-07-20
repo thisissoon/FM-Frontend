@@ -14,6 +14,7 @@ angular.module("FM.playlist.PlaylistCtrl", [
     "FM.api.PaginationInterceptor",
     "FM.player.removeLeadingZeros",
     "ngRoute",
+    "config"
 ])
 /**
  * @method config
@@ -58,7 +59,8 @@ angular.module("FM.playlist.PlaylistCtrl", [
     "PlayerQueueResource",
     "playlistData",
     "playlistMeta",
-    function ($scope, $q, TracksResource, UsersResource, PlayerQueueResource, playlistData, playlistMeta) {
+    "env",
+    function ($scope, $q, TracksResource, UsersResource, PlayerQueueResource, playlistData, playlistMeta, env) {
 
         /**
          * @property playlist
@@ -147,14 +149,20 @@ angular.module("FM.playlist.PlaylistCtrl", [
          * @method onAdd
          */
         $scope.onAdd = function onAdd(event, data) {
+
             $q.all([
-                TracksResource.get({ id: data.uri }).$promise
+                TracksResource.get({ id: data.uri }).$promise,
+                UsersResource.get({ id: data.user }).$promise
             ]).then(function (response){
                 var item = {
                     track: response[0],
                     user: response[1]
                 };
-                $scope.playlist.push(item);
+                if ($scope.page.pages === $scope.page.total) {
+                    $scope.playlist.push(item);
+                } else if ( ($scope.meta.total + 1) > (env.SEARCH_LIMIT * $scope.page.total) ) {
+                    $scope.page.total++;
+                }
                 $scope.meta.total++;
                 $scope.meta.play_time = $scope.meta.play_time + response[0].duration; //jshint ignore:line
             });
