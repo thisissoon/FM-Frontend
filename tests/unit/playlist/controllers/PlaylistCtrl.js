@@ -2,7 +2,7 @@
 
 describe("FM.playlist.PlaylistCtrl", function() {
 
-    var $rootScope, $location, $route, $scope, $q, $httpBackend,
+    var $rootScope, $location, $route, $scope, $q, $httpBackend, env,
         TracksResource, UsersResource, PlayerQueueResource, playlistData, playlistMeta,
         queue, queueMeta, queueHeader, users, tracks;
 
@@ -35,6 +35,7 @@ describe("FM.playlist.PlaylistCtrl", function() {
         $location = $injector.get("$location");
         $route = $injector.get("$route");
 
+        env = $injector.get("env");
 
         TracksResource = $injector.get("TracksResource");
         spyOn(TracksResource, "get").and.callThrough();
@@ -117,9 +118,26 @@ describe("FM.playlist.PlaylistCtrl", function() {
     });
 
     it("should add item to playlist on add event", function(){
+        $scope.page.total = 1;
+
         $scope.onAdd({},{ uri: "foo", user: 123 });
         $httpBackend.flush();
+        $rootScope.$digest();
         expect($scope.playlist.length).toBe(3);
+    });
+
+    it("should NOT add item to playlist on add event but update total pages", function(){
+        $scope.page.total = 2;
+        $scope.meta.total = 4;
+
+        env.SEARCH_LIMIT = 2;
+
+        $scope.onAdd({},{ uri: "foo", user: 123 });
+        $httpBackend.flush();
+        $rootScope.$digest();
+        expect($scope.playlist.length).toBe(2);
+        expect($scope.page.total).toBe(3);
+        expect($scope.meta.total).toBe(5);
     });
 
     it("should update playlist meta on add event", function(){
