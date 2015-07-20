@@ -41,9 +41,10 @@ angular.module("FM.stats.StatsCtrl", [
     "$filter",
     "$location",
     "CHART_COLOURS",
+    "CHART_OPTIONS",
     "StatsResource",
     "stats",
-    function ($scope, $q, $filter, $location, CHART_COLOURS, StatsResource, stats) {
+    function ($scope, $q, $filter, $location, CHART_COLOURS, CHART_OPTIONS, StatsResource, stats) {
 
         /**
          * Current search params
@@ -108,10 +109,7 @@ angular.module("FM.stats.StatsCtrl", [
         $scope.activeDj = {
             labels: [],
             data: [],
-            options: {
-                segmentShowStroke : false,
-                animationEasing : "easeInOutQuart",
-            }
+            options: CHART_OPTIONS
         };
 
         /**
@@ -119,10 +117,7 @@ angular.module("FM.stats.StatsCtrl", [
          * @property {Object} playTime
          */
         $scope.playTime = {
-            options: {
-                segmentShowStroke : false,
-                animationEasing : "easeInOutQuart",
-            }
+            options: CHART_OPTIONS
         };
 
         /**

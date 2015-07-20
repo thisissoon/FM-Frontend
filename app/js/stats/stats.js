@@ -19,4 +19,12 @@ angular.module("FM.stats", [
     "#ccebc5",
     "#e0f3db",
     "#f7fcf0"
-]);
+])
+/**
+ * ChartJS global chart options
+ * @property {Object} CHART_OPTIONS
+ */
+.constant("CHART_OPTIONS", {
+    segmentShowStroke : false,
+    animationEasing : "easeInOutQuart"
+});
