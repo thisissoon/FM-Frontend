@@ -140,7 +140,7 @@ angular.module("FM.stats.StatsCtrl", [
             // default maximum series length to 5
             maxSeries = maxSeries || 5;
 
-            if (data.length) {
+            if (data && data.length) {
 
                 // add dataset label
                 dataset.labels.unshift(label);
@@ -248,12 +248,14 @@ angular.module("FM.stats.StatsCtrl", [
 
 
             // Format most active DJ stats for charts
-            stats.most_active_djs.forEach(function(item, index){  // jshint ignore:line
-                if (index < 5) {
-                    $scope.activeDj.labels.push(item.user.display_name);  // jshint ignore:line
-                    $scope.activeDj.data.push(item.total);
-                }
-            });
+            if (stats.most_active_djs) {  // jshint ignore:line
+                stats.most_active_djs.forEach(function(item, index){  // jshint ignore:line
+                    if (index < 5) {
+                        $scope.activeDj.labels.push(item.user.display_name);  // jshint ignore:line
+                        $scope.activeDj.data.push(item.total);
+                    }
+                });
+            }
 
             // Format total play time per user stats for charts
             $scope.addDataToSeries($scope.playTime, stats.total_play_time_per_user, $filter("date")($scope.filter.from, "dd-MM-yyyy"));  // jshint ignore:line
