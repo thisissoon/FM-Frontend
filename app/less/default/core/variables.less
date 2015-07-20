@@ -192,6 +192,7 @@
 
 //** Background color of the whole progress component
 @progress-bg:                 @lighter-black;
+@progress-height:             8px;
 
 //== Header
 //
@@ -212,7 +213,7 @@
 
 @footer-bg:                     @light-black;
 @footer-height:                 90px;
-@footer-height-xs:              140px;
+@footer-height-xs:              135px + @progress-height;
 @footer-open-position-top-xs:   @header-height-xs;
 
 
@@ -258,7 +259,7 @@
 
 @track-bg:                      @light-black;
 
-@track-footer-height-xs:        75px;
+@track-footer-height-xs:        50px;
 
 //== Controls
 //
@@ -268,7 +269,7 @@
 @controls-height:               @footer-height;
 @controls-width:                340px;
 
-@controls-height-xs:            @footer-height-xs - @track-footer-height-xs;
+@controls-height-xs:            @footer-height-xs - @track-footer-height-xs - @progress-height - 20px ;
 @controls-line-height-xs:       @controls-height-xs;
 
 //== Loading-screen

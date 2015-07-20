@@ -1,3 +1,13 @@
+## Changes in 0.6.0
+
+ * @bcmrbvm: Fix: User not loaded with song on add event (#145)
+ * @bcmrbvm: Feature: Display track progress on mobile/tablet (#144)
+ * @bcmrbvm: Fix: failing e2e test (#141)
+ * @bcmrbvm: Fix: Alignment issues in track (#139)
+ * @bcmrbvm: Fix: Limit searches to GB region (#138)
+ * @bcmrbvm: Feature: Display track time from spotify (#137)
+ * @bcmrbvm: Feature: Show hours in track time (#136)
+
 ## Changes in 0.5.0
 
  * @bcmrbvm: Fix: Hide controls if no tracks (#134)
