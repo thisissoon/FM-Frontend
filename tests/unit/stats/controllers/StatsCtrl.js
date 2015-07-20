@@ -3,7 +3,7 @@
 describe("FM.stats.StatsCtrl", function() {
 
     var $rootScope, $location, $route, $scope, $filter, $q, $httpBackend,
-        CHART_COLOURS, StatsResource, stats;
+        CHART_COLOURS, CHART_OPTIONS, StatsResource, stats;
 
     beforeEach(function (){
         module("FM.stats.StatsCtrl");
@@ -40,12 +40,14 @@ describe("FM.stats.StatsCtrl", function() {
         spyOn(StatsResource, "get").and.callThrough();
 
         CHART_COLOURS = [];
+        CHART_OPTIONS = {};
 
         $controller("StatsCtrl", {
             $scope: $scope,
             $q: $q,
             $filter: $filter,
             $location: $location,
+            CHART_OPTIONS: CHART_OPTIONS,
             CHART_COLOURS: CHART_COLOURS,
             StatsResource: StatsResource,
             stats: stats
@@ -66,11 +68,7 @@ describe("FM.stats.StatsCtrl", function() {
 
     it("should attach data to $scope", function(){
         $httpBackend.flush();
-        expect($scope.totalPlays).toEqual(stats.total_plays);
-        expect($scope.totalPlayTime).toEqual(stats.total_play_time);
-        expect($scope.topTracks).toEqual(stats.most_played_tracks);
-        expect($scope.topArtists).toEqual(stats.most_played_artists);
-        expect($scope.topGenres).toEqual(stats.most_played_genres);
+        expect($scope.stats).toEqual(stats);
         expect($scope.chartColours).toEqual(CHART_COLOURS);
     });
 
