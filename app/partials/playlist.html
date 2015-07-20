@@ -5,7 +5,7 @@
             <h2 class="h4" ng-if="playlist.length > 0">Coming up:</h2>
         </div>
         <div class="col-xs-6">
-            <p class="text-muted pull-right">{{ meta.total }} tracks in {{ meta.play_time | date: "H:mm:ss" }}</p>
+            <p class="text-muted pull-right">{{ meta.total }} tracks in {{ meta.play_time | date: "H:mm:ss" | removeLeadingZeros }}</p>
         </div>
     </div>
 
@@ -19,5 +19,12 @@
             fm-track>
         </li>
     </ul>
+
+    <img ng-show="page.loading" class="center-block loading-animation" src="img/icons/loading-animation.gif" width="50">
+
+    <div class="row text-center">
+        <button class="btn btn-primary" ng-click="loadMore()" ng-if="page.total > 1 && page.pages < page.total" ng-disabled="page.loading">Load more</button>
+        <p ng-if="page.total > 1 && page.pages >= page.total">No more results</p>
+    </div>
 
 </div>

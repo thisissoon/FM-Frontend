@@ -9,13 +9,19 @@
 </div>
 
 <div ng-if="track && track.album.images[0]" class="track-left track-album">
-    <img class="track-object img-album" ng-src="{{ track.album.images[0].url }}" alt="{{ item.album.name }}">
+    <a ng-href="albums/{{ track.album.uri }}">
+        <img class="track-object img-album" ng-src="{{ track.album.images[0].url }}" alt="{{ item.album.name }}">
+    </a>
 </div>
 
 <div ng-if="track" class="track-body">
-    <p class="lead track-heading track-info" bind-html-unsafe="track.name" title="{{ track.name }}"></p>
-    <p class="text-muted track-info" bind-html-unsafe="track.allArtists" title="{{ track.allArtists }}"></p>
-    <p class="text-muted track-info" bind-html-unsafe="track.album.name" title="{{ track.album.name }}"></p>
+    <p class="lead track-heading track-info" title="{{ track.name }}">{{ track.name }}</p>
+    <p class="text-muted track-info" title="{{ track.allArtists }}">
+        <a class="text-muted" ng-repeat-start="artist in track.artists" ng-href="artists/{{ artist.uri }}">{{ artist.name }}</a><span ng-repeat-end ng-if="!$last">, </span>
+    </p>
+    <p class="text-muted track-info" title="{{ track.album.name }}">
+        <a class="text-muted" ng-href="albums/{{ track.album.uri }}">{{ track.album.name }}</a>
+    </p>
 </div>
 
 <div class="track-progress hidden-xs hidden-sm" ng-show="timer && track">
@@ -35,5 +41,5 @@
 </div>
 
 <div ng-if="track.duration" class="track-right track-time text-right">
-    <p><span ng-show="timer">{{ timer.elapsedTime | date: "m:ss" }} / </span><span class="text-muted">{{ track.duration | date: "m:ss" }}</span></p>
+    <p><span ng-show="timer">{{ timer.elapsedTime | date: "H:mm:ss" | removeLeadingZeros }} / </span><span class="text-muted">{{ track.duration | date: "H:mm:ss" | removeLeadingZeros }}</span></p>
 </div>
