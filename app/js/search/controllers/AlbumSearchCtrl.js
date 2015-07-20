@@ -25,7 +25,10 @@ angular.module("FM.search.AlbumSearchCtrl", [
                 controller: "AlbumSearchCtrl",
                 resolve: {
                     search: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.search($route.current.params.query, "album", { limit: 20, market: env.REGION_CODE });
+                        return Spotify.search($route.current.params.query, "album", {
+                            limit: env.SEARCH_LIMIT,
+                            market: env.REGION_CODE
+                        });
                     }]
                 }
             });
@@ -81,12 +84,15 @@ angular.module("FM.search.AlbumSearchCtrl", [
          */
         $scope.loadMore = function loadMore(){
             $scope.loadDisabled = true;
-            Spotify.search($scope.search.query, "album", { limit: 20, offset: $scope.albums.length, market: env.REGION_CODE })
-                .then(function (response) {
-                    $scope.albums = $scope.albums.concat(response.albums.items);
-                    $scope.meta = response.albums;
-                    $scope.loadDisabled = false;
-                });
+            Spotify.search($scope.search.query, "album", {
+                limit: env.SEARCH_LIMIT,
+                offset: $scope.albums.length,
+                market: env.REGION_CODE
+            }).then(function (response) {
+                $scope.albums = $scope.albums.concat(response.albums.items);
+                $scope.meta = response.albums;
+                $scope.loadDisabled = false;
+            });
         };
 
     }

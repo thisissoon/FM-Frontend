@@ -40,28 +40,30 @@ angular.module("FM.search.SearchCtrl", [
         $scope.search = function search(query){
             var deferred = $q.defer();
 
-            Spotify.search(query, "album,artist,track", { limit: 3, market: env.REGION_CODE })
-                .then(function (response) {
-                    var albums = (response.albums && response.albums.items && response.albums.items.length > 0),
-                        tracks = (response.tracks && response.tracks.items && response.tracks.items.length > 0),
-                        artists = (response.artists && response.artists.items && response.artists.items.length > 0);
+            Spotify.search(query, "album,artist,track", {
+                limit: 3,
+                market: env.REGION_CODE
+            }).then(function (response) {
+                var albums = (response.albums && response.albums.items && response.albums.items.length > 0),
+                    tracks = (response.tracks && response.tracks.items && response.tracks.items.length > 0),
+                    artists = (response.artists && response.artists.items && response.artists.items.length > 0);
 
-                    var results = [];
+                var results = [];
 
-                    if (tracks) {
-                        results = results.concat([{ label: "Tracks" }].concat(response.tracks.items.concat([{ buttonLabel: "tracks" }])));
-                    }
+                if (tracks) {
+                    results = results.concat([{ label: "Tracks" }].concat(response.tracks.items.concat([{ buttonLabel: "tracks" }])));
+                }
 
-                    if (albums) {
-                        results = results.concat([{ label: "Albums" }].concat(response.albums.items.concat([{ buttonLabel: "albums" }])));
-                    }
+                if (albums) {
+                    results = results.concat([{ label: "Albums" }].concat(response.albums.items.concat([{ buttonLabel: "albums" }])));
+                }
 
-                    if (artists) {
-                        results = results.concat([{ label: "Artists" }].concat(response.artists.items.concat([{ buttonLabel: "artists" }])));
-                    }
+                if (artists) {
+                    results = results.concat([{ label: "Artists" }].concat(response.artists.items.concat([{ buttonLabel: "artists" }])));
+                }
 
-                    deferred.resolve(results);
-                });
+                deferred.resolve(results);
+            });
 
             return deferred.promise;
         };
