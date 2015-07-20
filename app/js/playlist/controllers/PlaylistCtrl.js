@@ -148,7 +148,8 @@ angular.module("FM.playlist.PlaylistCtrl", [
          */
         $scope.onAdd = function onAdd(event, data) {
             $q.all([
-                TracksResource.get({ id: data.uri }).$promise
+                TracksResource.get({ id: data.uri }).$promise,
+                UsersResource.get({ id: data.user }).$promise
             ]).then(function (response){
                 var item = {
                     track: response[0],
