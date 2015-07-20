@@ -50,17 +50,11 @@ describe("FM", function() {
 
             expect(element.all(by.repeater("track in history")).count()).toEqual(60);
 
-            // 4th page
+            // 4th page - shouldn't exist
             browser.executeScript(scrollTo(6000));
             browser.driver.sleep(2000);
 
-            expect(element.all(by.repeater("track in history")).count()).toEqual(80);
-
-            // 5th page - shouldn't exist
-            browser.executeScript(scrollTo(8000));
-            browser.driver.sleep(2000);
-
-            expect(element.all(by.repeater("track in history")).count()).toEqual(80);
+            expect(element.all(by.repeater("track in history")).count()).toEqual(60);
         });
 
     });
