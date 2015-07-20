@@ -4,7 +4,7 @@
 		{
 			"icon": {
 				"paths": [
-					"M646.4 140.8h-646.4v108.8h646.4v-108.8zM646.4 356.267h-646.4v108.8h646.4v-108.8zM0 680.533h430.933v-108.8h-430.933v108.8zM755.2 140.8v441.6c-17.067-6.4-34.133-10.667-53.333-10.667-89.6 0-162.133 72.533-162.133 162.133s72.533 162.133 162.133 162.133 162.133-72.533 162.133-162.133v-484.267h162.133v-108.8h-270.933z"
+					"M512 196.267l-512 512 119.467 119.467 392.533-392.533 392.533 392.533 119.467-119.467z"
 				],
 				"attrs": [
 					{}
@@ -12,8 +12,36 @@
 				"isMulticolor": false,
 				"grid": 0,
 				"tags": [
-					"svg"
+					"expand39"
 				]
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"order": 15,
+				"id": 10,
+				"prevSize": 32,
+				"code": 58891,
+				"name": "arrow-up"
+			},
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 0
+		},
+		{
+			"icon": {
+				"paths": [
+					"M646.4 140.8h-646.4v108.8h646.4v-108.8zM646.4 356.267h-646.4v108.8h646.4v-108.8zM0 680.533h430.933v-108.8h-430.933v108.8zM755.2 140.8v441.6c-17.067-6.4-34.133-10.667-53.333-10.667-89.6 0-162.133 72.533-162.133 162.133s72.533 162.133 162.133 162.133 162.133-72.533 162.133-162.133v-484.267h162.133v-108.8h-270.933z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"tags": [
+					"svg"
+				],
+				"grid": 0
 			},
 			"attrs": [
 				{}
@@ -27,7 +55,7 @@
 			},
 			"setIdx": 0,
 			"setId": 5,
-			"iconIdx": 0
+			"iconIdx": 1
 		},
 		{
 			"icon": {
@@ -59,9 +87,9 @@
 				"code": 58880,
 				"name": "context"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 0
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 2
 		},
 		{
 			"icon": {
@@ -85,9 +113,9 @@
 				"code": 58881,
 				"name": "google-plus"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 1
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 3
 		},
 		{
 			"icon": {
@@ -112,9 +140,9 @@
 				"code": 58882,
 				"name": "history"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 2
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 4
 		},
 		{
 			"icon": {
@@ -139,9 +167,9 @@
 				"code": 58883,
 				"name": "pause"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 3
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 5
 		},
 		{
 			"icon": {
@@ -165,9 +193,9 @@
 				"code": 58884,
 				"name": "settings"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 4
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 6
 		},
 		{
 			"icon": {
@@ -191,9 +219,9 @@
 				"code": 58885,
 				"name": "skip"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 5
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 7
 		},
 		{
 			"icon": {
@@ -218,9 +246,9 @@
 				"code": 58886,
 				"name": "unmuted"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 6
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 8
 		},
 		{
 			"icon": {
@@ -244,9 +272,9 @@
 				"code": 58887,
 				"name": "muted"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 7
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 9
 		},
 		{
 			"icon": {
@@ -270,9 +298,9 @@
 				"code": 58888,
 				"name": "play"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 8
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 10
 		},
 		{
 			"icon": {
@@ -297,9 +325,9 @@
 				"code": 58889,
 				"name": "playlist-add"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 9
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 11
 		}
 	],
 	"height": 1024,
@@ -316,26 +344,23 @@
 			"metadata": {
 				"fontFamily": "icomoon",
 				"majorVersion": 1,
-				"minorVersion": 0,
-				"description": "Icons for SOON_ FM"
+				"minorVersion": 0
 			},
 			"metrics": {
 				"emSize": 1024,
 				"baseline": 6.25,
 				"whitespace": 50
 			},
-			"showMetadata": true,
 			"showSelector": true,
-			"showVersion": false,
-			"includeMetadata": true,
-			"showMetrics": true
+			"showMetrics": false
 		},
 		"imagePref": {
 			"prefix": "icon-",
 			"png": true,
 			"useClassSelector": true,
 			"color": 4473924,
-			"bgColor": 16777215
+			"bgColor": 16777215,
+			"classSelector": ".icon"
 		},
 		"historySize": 100,
 		"showCodes": false
