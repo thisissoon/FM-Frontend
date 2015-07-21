@@ -11,6 +11,7 @@ angular.module("FM.api", [
     "FM.api.PlayerRandomResource",
     "FM.api.PlayerTransportResource",
     "FM.api.PlayerVolumeResource",
+    "FM.api.StatsResource",
     "FM.api.TracksResource",
     "FM.api.UsersResource",
     "FM.api.RequestInterceptor",
