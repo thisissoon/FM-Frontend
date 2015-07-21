@@ -19,7 +19,7 @@
     <p class="text-muted track-info" title="{{ track.allArtists }}">
         <a class="text-muted" ng-repeat-start="artist in track.artists" ng-href="artists/{{ artist.uri }}">{{ artist.name }}</a><span ng-repeat-end ng-if="!$last">, </span>
     </p>
-    <p class="text-muted track-info" title="{{ track.album.name }}">
+    <p class="text-muted track-info hidden-xs" title="{{ track.album.name }}">
         <a class="text-muted" ng-href="albums/{{ track.album.uri }}">{{ track.album.name }}</a>
     </p>
 </div>
