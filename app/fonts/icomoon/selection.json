@@ -4,16 +4,104 @@
 		{
 			"icon": {
 				"paths": [
+					"M632.571 501.143l-424 424q-10.857 10.857-25.714 10.857t-25.714-10.857l-94.857-94.857q-10.857-10.857-10.857-25.714t10.857-25.714l303.429-303.429-303.429-303.429q-10.857-10.857-10.857-25.714t10.857-25.714l94.857-94.857q10.857-10.857 25.714-10.857t25.714 10.857l424 424q10.857 10.857 10.857 25.714t-10.857 25.714z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"width": 731,
+				"tags": [
+					"chevron-right"
+				],
+				"grid": 14
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"order": 1,
+				"id": 2,
+				"prevSize": 28,
+				"code": 58891,
+				"name": "chevron-right"
+			},
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 0
+		},
+		{
+			"icon": {
+				"paths": [
+					"M669.143 172l-303.429 303.429 303.429 303.429q10.857 10.857 10.857 25.714t-10.857 25.714l-94.857 94.857q-10.857 10.857-25.714 10.857t-25.714-10.857l-424-424q-10.857-10.857-10.857-25.714t10.857-25.714l424-424q10.857-10.857 25.714-10.857t25.714 10.857l94.857 94.857q10.857 10.857 10.857 25.714t-10.857 25.714z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"width": 731,
+				"tags": [
+					"chevron-left"
+				],
+				"grid": 14
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"order": 2,
+				"id": 1,
+				"prevSize": 28,
+				"code": 58893,
+				"name": "chevron-left"
+			},
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 1
+		},
+		{
+			"icon": {
+				"paths": [
+					"M365.714 512v292.571h-146.286v-292.571h146.286zM585.143 219.429v585.143h-146.286v-585.143h146.286zM1170.286 877.714v73.143h-1170.286v-877.714h73.143v804.571h1097.143zM804.571 365.714v438.857h-146.286v-438.857h146.286zM1024 146.286v658.286h-146.286v-658.286h146.286z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"width": 1170,
+				"tags": [
+					"bar-chart",
+					"bar-chart-o"
+				],
+				"grid": 14
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"order": 1,
+				"id": 0,
+				"prevSize": 28,
+				"code": 58892,
+				"name": "stats"
+			},
+			"setIdx": 0,
+			"setId": 5,
+			"iconIdx": 2
+		},
+		{
+			"icon": {
+				"paths": [
 					"M646.4 140.8h-646.4v108.8h646.4v-108.8zM646.4 356.267h-646.4v108.8h646.4v-108.8zM0 680.533h430.933v-108.8h-430.933v108.8zM755.2 140.8v441.6c-17.067-6.4-34.133-10.667-53.333-10.667-89.6 0-162.133 72.533-162.133 162.133s72.533 162.133 162.133 162.133 162.133-72.533 162.133-162.133v-484.267h162.133v-108.8h-270.933z"
 				],
 				"attrs": [
 					{}
 				],
 				"isMulticolor": false,
-				"grid": 0,
 				"tags": [
 					"svg"
-				]
+				],
+				"grid": 0
 			},
 			"attrs": [
 				{}
@@ -25,8 +113,8 @@
 				"code": 58890,
 				"name": "playlist"
 			},
-			"setIdx": 0,
-			"setId": 5,
+			"setIdx": 1,
+			"setId": 4,
 			"iconIdx": 0
 		},
 		{
@@ -61,7 +149,7 @@
 			},
 			"setIdx": 1,
 			"setId": 4,
-			"iconIdx": 0
+			"iconIdx": 1
 		},
 		{
 			"icon": {
@@ -87,7 +175,7 @@
 			},
 			"setIdx": 1,
 			"setId": 4,
-			"iconIdx": 1
+			"iconIdx": 2
 		},
 		{
 			"icon": {
@@ -114,7 +202,7 @@
 			},
 			"setIdx": 1,
 			"setId": 4,
-			"iconIdx": 2
+			"iconIdx": 3
 		},
 		{
 			"icon": {
@@ -141,7 +229,7 @@
 			},
 			"setIdx": 1,
 			"setId": 4,
-			"iconIdx": 3
+			"iconIdx": 4
 		},
 		{
 			"icon": {
@@ -167,7 +255,7 @@
 			},
 			"setIdx": 1,
 			"setId": 4,
-			"iconIdx": 4
+			"iconIdx": 5
 		},
 		{
 			"icon": {
@@ -193,7 +281,7 @@
 			},
 			"setIdx": 1,
 			"setId": 4,
-			"iconIdx": 5
+			"iconIdx": 6
 		},
 		{
 			"icon": {
@@ -220,7 +308,7 @@
 			},
 			"setIdx": 1,
 			"setId": 4,
-			"iconIdx": 6
+			"iconIdx": 7
 		},
 		{
 			"icon": {
@@ -246,7 +334,7 @@
 			},
 			"setIdx": 1,
 			"setId": 4,
-			"iconIdx": 7
+			"iconIdx": 8
 		},
 		{
 			"icon": {
@@ -272,7 +360,7 @@
 			},
 			"setIdx": 1,
 			"setId": 4,
-			"iconIdx": 8
+			"iconIdx": 9
 		},
 		{
 			"icon": {
@@ -299,7 +387,36 @@
 			},
 			"setIdx": 1,
 			"setId": 4,
-			"iconIdx": 9
+			"iconIdx": 10
+		},
+		{
+			"icon": {
+				"paths": [
+					"M320 384h128v128h-128zM512 384h128v128h-128zM704 384h128v128h-128zM128 768h128v128h-128zM320 768h128v128h-128zM512 768h128v128h-128zM320 576h128v128h-128zM512 576h128v128h-128zM704 576h128v128h-128zM128 576h128v128h-128zM832 0v64h-128v-64h-448v64h-128v-64h-128v1024h960v-1024h-128zM896 960h-832v-704h832v704z"
+				],
+				"attrs": [],
+				"tags": [
+					"calendar",
+					"date",
+					"schedule",
+					"time",
+					"day"
+				],
+				"defaultCode": 57619,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 340,
+				"order": 16,
+				"prevSize": 32,
+				"code": 59731,
+				"ligatures": "calendar, date",
+				"name": "calendar"
+			},
+			"setIdx": 4,
+			"setId": 0,
+			"iconIdx": 83
 		}
 	],
 	"height": 1024,
