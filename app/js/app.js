@@ -18,6 +18,7 @@ angular.module("FM", [
     "FM.sockets",
     "FM.loadingScreen",
     "FM.nav",
+    "FM.stats",
     "ngRoute",
     "notification",
     "config"

@@ -1,0 +1,24 @@
+//
+// Stats
+// --------------------------------------------------
+
+.stats-grid {
+
+    .row:not(:last-child) {
+        border-bottom: none;
+    }
+
+    .row > div {
+        border-bottom: 2px solid @light-black;
+        padding-left: 0;
+        padding-right: 0;
+
+        &:not(:first-child) {
+            border-left: none;
+        }
+    }
+}
+
+.genre-list {
+    .content-columns(1);
+}
