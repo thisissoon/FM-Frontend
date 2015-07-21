@@ -50,30 +50,4 @@ describe("sn.infiniteScroll", function() {
 
     });
 
-    describe("option: container", function (){
-
-        var element, isolateScope, $scope, $rootScope;
-
-        beforeEach(inject(function (_$rootScope_, $compile, $injector) {
-        $rootScope = _$rootScope_;
-
-        $scope = $rootScope.$new();
-        $scope.loading = false;
-        $scope.loadMore = jasmine.createSpy();
-
-        element = "<div sn-infinite-scroll=\"loadMore()\" data-container=\"ng-view\"></div>";
-
-        element = $compile(element)($scope);
-        $scope.$digest();
-
-        isolateScope = element.isolateScope();
-
-    }));
-
-        it("should attach container identifier to scope", function () {
-            expect(isolateScope.container).toEqual("ng-view");
-        });
-
-    });
-
 });
