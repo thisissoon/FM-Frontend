@@ -14,18 +14,19 @@ describe("FM.search.SearchCtrl", function() {
 
         searchResults = {
             artists: { items: [{},{}] },
-            albums: { items: [{},{}] },
+            albums: { items: [{uri: "spotify:album:foo"},{uri: "spotify:album:bar"}] },
             tracks: { items: [{},{}] }
         }
 
         $httpBackend.whenGET(/partials\/.*/).respond(200, "");
         $httpBackend.whenGET(/api.spotify.com\/v1\/search.*/).respond(200, searchResults);
+        $httpBackend.whenGET(/api.spotify.com\/v1\/albums.*/).respond(200, searchResults.albums.items[0]);
         $httpBackend.whenPOST(FM_API_SERVER_ADDRESS + "player/queue").respond(200);
     }));
 
-    beforeEach(inject(function ( $rootScope, $injector, $controller ) {
+    beforeEach(inject(function ( _$rootScope_, $injector, $controller ) {
+        $rootScope = _$rootScope_;
         $scope = $rootScope.$new();
-        $rootScope = $rootScope;
 
         $rootScope.toogleSidebar = function(){}
 
@@ -50,8 +51,15 @@ describe("FM.search.SearchCtrl", function() {
         });
     }));
 
+    afterEach(function() {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    });
+
     it("should search for spotify track", function() {
         $scope.search("foo");
+        $httpBackend.flush();
+        $rootScope.$digest();
         expect(Spotify.search).toHaveBeenCalled();
 
         searchResults = {
@@ -60,12 +68,15 @@ describe("FM.search.SearchCtrl", function() {
             tracks: undefined
         }
         $scope.search("foo");
+        $rootScope.$digest();
         expect(Spotify.search.calls.count()).toBe(2);
     });
 
     it("should add selected song to playlist", function() {
         var track = { uri: "spotify:track:foo" };
         $scope.onTrackSelected(track);
+        $httpBackend.flush();
+        $rootScope.$digest();
         expect(PlayerQueueResource.save).toHaveBeenCalledWith(track);
     });
 

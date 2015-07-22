@@ -6,10 +6,12 @@
     <div class="media-left">
         <img ng-src="{{ match.label.album.images[1].url || 'img/icons/artist.svg' }}" alt="{{ match.label.name }}" class="media-object" width="62">
     </div>
-    <div class="media-body">
-        <p class="media-heading">{{ match.label.name }}</p>
-        <p class="text-muted">
-            <span class="text-muted" ng-repeat-start="artist in match.label.artists">{{ artist.name }}</span><span ng-repeat-end ng-if="!$last">, </span>
+    <div class="media-body media-middle">
+        <p class="media-heading text-overflow">{{ match.label.name }}</p>
+        <p class="text-muted text-overflow">
+            <span class="text-muted" ng-repeat-start="artist in match.label.artists">
+                {{ artist.name }}
+            </span><span ng-repeat-end ng-if="!$last">, </span>
         </p>
     </div>
 </a>
@@ -19,8 +21,13 @@
     <div class="media-left">
         <img ng-src="{{ match.label.images[1].url || 'img/icons/artist.svg' }}" alt="{{ match.label.name }}" class="media-object" width="62">
     </div>
-    <div class="media-body">
-        <p class="media-heading">{{ match.label.name }}</p>
+    <div class="media-body media-middle">
+        <p class="media-heading text-overflow">{{ match.label.name }}</p>
+        <p class="text-muted text-overflow">
+            <span class="text-muted" ng-repeat-start="artist in match.label.artists">
+                {{ artist.name }}
+            </span><span ng-repeat-end ng-if="!$last">, </span>
+        </p>
     </div>
 </a>
 
@@ -30,15 +37,15 @@
     <div class="media-left">
         <div class="img"
              ng-class="{
-                'no-img': !match.label.images[1]
+                'no-img': match.label.images.length === 0
              }"
              ng-style="{
-                'background-image': 'url({{ match.label.images[1].url || 'img/icons/artist.svg' }})'
+                'background-image': 'url({{ match.label.images[2].url || 'img/icons/artist.svg' }})'
              }">
-            <img ng-src="{{ match.label.images[1].url }}" alt="{{ match.label.name }}" class="sr-only sr-only-focusable">
+            <img ng-src="{{ match.label.images[2].url }}" alt="{{ match.label.name }}" class="sr-only sr-only-focusable">
         </div>
     </div>
-    <div class="media-body">
+    <div class="media-body media-middle">
         <p class="media-heading">{{ match.label.name }}</p>
     </div>
 </a>
