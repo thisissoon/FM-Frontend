@@ -51,15 +51,21 @@ angular.module("FM.search.SearchCtrl", [
                 var results = [];
 
                 if (tracks) {
-                    results = results.concat([{ label: "Tracks" }].concat(response.tracks.items.concat([{ buttonLabel: "tracks" }])));
+                    results = results.concat([{ label: "Tracks" }])
+                                     .concat(response.tracks.items)
+                                     .concat([{ buttonLabel: "tracks" }]);
                 }
 
                 if (albums) {
-                    results = results.concat([{ label: "Albums" }].concat(response.albums.items.concat([{ buttonLabel: "albums" }])));
+                    results = results.concat([{ label: "Albums" }])
+                                     .concat(response.albums.items)
+                                     .concat([{ buttonLabel: "albums" }]);
                 }
 
                 if (artists) {
-                    results = results.concat([{ label: "Artists" }].concat(response.artists.items.concat([{ buttonLabel: "artists" }])));
+                    results = results.concat([{ label: "Artists" }])
+                                     .concat(response.artists.items)
+                                     .concat([{ buttonLabel: "artists" }]);
                 }
 
                 deferred.resolve(results);
