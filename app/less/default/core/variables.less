@@ -213,8 +213,8 @@
 
 @footer-bg:                     @light-black;
 @footer-height:                 90px;
-@footer-height-xs:              135px + @progress-height;
-@footer-open-position-top-xs:   @header-height-xs;
+@footer-height-xs-open:         135px + @progress-height;
+@footer-height-xs-closed:       @track-footer-height-xs + @progress-height + 32px;
 
 
 //== Type
@@ -249,7 +249,7 @@
 
 @view-position-left-sm:        0;
 
-@view-position-bottom-xs:      @footer-height-xs + (@grid-gutter-width / 2);
+@view-position-bottom-xs:      @footer-height-xs-closed + (@grid-gutter-width / 2);
 @view-position-left-xs:        0;
 @view-position-top-xs:         @header-height-xs;
 
@@ -269,12 +269,13 @@
 @controls-height:               @footer-height;
 @controls-width:                340px;
 
-@controls-height-xs:            @footer-height-xs - @track-footer-height-xs - @progress-height - 20px ;
+@controls-height-xs:            @footer-height-xs-open - @track-footer-height-xs - @progress-height - 20px;
 @controls-line-height-xs:       @controls-height-xs;
 
 //== Loading-screen
 //
 //##
 
-@loading-screen-bg:             @body-bg;
-@loading-screen-position-top:   @header-height;
+@loading-screen-bg:                @body-bg;
+@loading-screen-position-top:      @header-height;
+@loading-screen-position-top-xs:   @header-height-xs;

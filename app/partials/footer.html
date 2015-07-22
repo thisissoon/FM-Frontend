@@ -1,4 +1,12 @@
+<a role="button"
+   href
+   ng-click="footerOpen = !footerOpen"
+   class="btn-icon-arrow visible-xs-inline-block">
+    <span class="icon icon-chevron-up text-primary"></span>
+</a>
+
 <div ng-controller="PlayerCtrl">
+
     <fm-track class="track" ng-show="track.track.uri" data-spotify-track="track.track" data-user="track.user" data-timer="trackPositionTimer"></fm-track>
 
     <div class="controls" ng-show="track.track.uri">

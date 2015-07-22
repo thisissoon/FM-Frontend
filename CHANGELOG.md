@@ -1,3 +1,13 @@
+## Changes in 0.7.0
+
+ * @bcmrbvm: Feature: Song in title (#155)
+ * @bcmrbvm: Fix: Minor sidebar search fixes (#154)
+ * @bcmrbvm: Fix: History pagination (#152)
+ * @bcmrbvm: Feature: Hide controls in mobile (#150)
+ * @bcmrbvm: Fix: Loading screen height on mobile (#149)
+ * @bcmrbvm: Fix: Track height on mobile (#148)
+ * @jamesjwarren: Feature: historic stats (#140)
+
 ## Changes in 0.6.0
 
  * @bcmrbvm: Fix: User not loaded with song on add event (#145)

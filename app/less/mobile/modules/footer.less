@@ -3,12 +3,26 @@
 // --------------------------------------------------
 
 .footer {
-    height: @footer-height-xs;
+    height: @footer-height-xs-closed;
     padding-top: @progress-height + 20px;
 
     &.open {
-        height: auto;
-        top: @footer-open-position-top-xs;
+        height: @footer-height-xs-open;
+    }
+
+    .btn-icon-arrow {
+        .rotate(0deg);
+        .transition(all .2s);
+        position: absolute;
+        left: 50%;
+        top: 8px;
+        margin-bottom: 2px;
+        margin-left: -7px;
+        z-index: 1;
+    }
+
+    &.open .btn-icon-arrow {
+        .rotate(180deg);
     }
 
     .controls {

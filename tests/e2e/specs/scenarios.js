@@ -5,7 +5,7 @@
 describe("FM", function() {
 
     var scrollTo = function scrollTo (y) {
-        return "angular.element(document).find('ng-view')[0].scrollTop =" + y;
+        return "document.getElementsByClassName('infinite-scroll')[0].scrollTop =" + y;
     };
 
     describe("playlist", function() {

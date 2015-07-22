@@ -6,10 +6,13 @@
         "./app/components/angular-animate/angular-animate.js",
         "./app/components/angular-resource/angular-resource.js",
         "./app/components/angular-bootstrap/ui-bootstrap-tpls.js",
+        "./app/components/angular-title/dist/angular-title.js",
         "./app/components/angular-spotify/src/angular-spotify.js",
         "./app/components/angular-socket-io/socket.js",
         "./app/components/satellizer/satellizer.js",
-        "./app/components/angular-notification/angular-notification.js"
+        "./app/components/angular-notification/angular-notification.js",
+        "./app/components/Chart.js/Chart.js",
+        "./app/components/angular-chart.js/dist/angular-chart.js"
     ],
     "application": [
         "./app/js/socket/socket.js",
@@ -35,6 +38,7 @@
         "./app/js/api/factories/PlayerRandomResource.js",
         "./app/js/api/factories/PlayerTransportResource.js",
         "./app/js/api/factories/PlayerVolumeResource.js",
+        "./app/js/api/factories/StatsResource.js",
         "./app/js/api/factories/TracksResource.js",
         "./app/js/api/factories/UsersResource.js",
         "./app/js/api/factories/RequestInterceptor.js",
@@ -60,6 +64,9 @@
         "./app/js/search/controllers/AlbumSearchCtrl.js",
         "./app/js/search/controllers/AlbumDetailCtrl.js",
         "./app/js/search/controllers/TrackSearchCtrl.js",
+
+        "./app/js/stats/stats.js",
+        "./app/js/stats/controllers/StatsCtrl.js",
 
         "./app/js/nav/nav.js",
 

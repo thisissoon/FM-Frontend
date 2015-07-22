@@ -18,25 +18,15 @@ angular.module("sn.infiniteScroll", [
  */
 .directive("snInfiniteScroll", [
     "$window",
-    "$document",
-    "$timeout",
-    function ($window, $document, $timeout){
+    function ($window){
         return {
             restrict: "A",
             scope: {
-                container: "@",
                 offset: "=?",
                 snInfiniteScroll: "&",
                 disabled: "=?"
             },
             link: function($scope, $element){
-
-                /**
-                 * Element to attach scroll listener to
-                 * Default to $element or lookup `container` identifier if defined
-                 * @property {Object} scrollElement
-                 */
-                var scrollElement = $scope.container ? $document[0].querySelector($scope.container) : $element;
 
                 /**
                  * Offset from bottom of scroll to call trigger function (px)
@@ -50,7 +40,7 @@ angular.module("sn.infiniteScroll", [
                  */
                 var onScroll = function onScroll(){
 
-                    var elementScrollEnd = ( $window.innerHeight >= ($element[0].getBoundingClientRect().bottom - $scope.offset) );
+                    var elementScrollEnd = ( $element[0].scrollHeight - $element[0].scrollTop === $element[0].clientHeight );
 
                     if (elementScrollEnd && !$scope.disabled) {
                         $scope.snInfiniteScroll();
@@ -62,17 +52,15 @@ angular.module("sn.infiniteScroll", [
                  * @function removeListeners
                  */
                 var removeListeners = function removeListeners(){
-                    angular.element(scrollElement).off("scroll");
+                    angular.element($element).off("scroll");
                     angular.element($window).off("resize");
                 };
 
                 $scope.$on("$destroy", removeListeners);
 
                 // attach event listeners
-                angular.element(scrollElement).on("scroll", onScroll);
+                angular.element($element).on("scroll", onScroll);
                 angular.element($window).on("resize", onScroll);
-
-                $timeout(onScroll, 500);
 
             }
         };
