@@ -10,7 +10,7 @@
 
         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 text-right">
 
-            <span ng-if="!isAuthenticated()" ng-controller="LoginCtrl">
+            <span ng-if="!isAuthenticatedGoogle()" ng-controller="LoginCtrl">
                 <button type="button" class="btn btn-primary" ng-click="authenticate()">
                     <span class="icon icon-google-plus"></span>
                     <span class="separator"></span>
@@ -24,7 +24,7 @@
                 Sign in with Spotify
             </button>
 
-            <span ng-if="isAuthenticated()">
+            <span ng-if="isAuthenticatedGoogle()">
                 <button class="btn btn-link hidden-lg hidden-md" ng-click="toogleSidebar()">
                     <span class="h3 icon icon-playlist-add text-muted"></span>
                     <span class="hidden-sm hidden-xs">&nbsp;&nbsp;Add to playlist</span>

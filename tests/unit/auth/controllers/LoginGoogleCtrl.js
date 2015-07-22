@@ -1,11 +1,11 @@
 "use strict";
 
-describe("FM.auth.LoginCtrl", function() {
+describe("FM.auth.LoginGoogleCtrl", function() {
 
     var $scope, _route, _auth, _mockTokenResponse, _mockAuthError, ERRORS;
 
     beforeEach(function (){
-        module("FM.auth.LoginCtrl");
+        module("FM.auth.LoginGoogleCtrl");
     });
 
     beforeEach(inject(function ( $rootScope, $injector, $controller ) {
@@ -40,7 +40,7 @@ describe("FM.auth.LoginCtrl", function() {
 
         ERRORS = $injector.get("ERRORS");
 
-        $controller("LoginCtrl", {
+        $controller("LoginGoogleCtrl", {
             $scope: $scope,
             $auth: _auth,
             $route: _route,

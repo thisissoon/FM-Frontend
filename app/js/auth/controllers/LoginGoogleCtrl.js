@@ -1,19 +1,19 @@
 "use strict";
 /**
  * Controller for thisissoon FM authentication actions
- * @class  LoginCtrl
- * @module FM.auth.LoginCtrl
+ * @class  LoginGoogleCtrl
+ * @module FM.auth.LoginGoogleCtrl
  * @author SOON_
  */
-angular.module("FM.auth.LoginCtrl", [
+angular.module("FM.auth.LoginGoogleCtrl", [
     "satellizer",
     "FM.api.ERRORS"
 ])
 /**
- * @class  LoginCtrl
+ * @class  LoginGoogleCtrl
  * @author SOON_
  */
-.controller("LoginCtrl", [
+.controller("LoginGoogleCtrl", [
     "$scope",
     "$route",
     "$auth",

@@ -24,7 +24,8 @@
         "./app/js/notifications/notifications.js",
 
         "./app/js/auth/auth.js",
-        "./app/js/auth/controllers/LoginCtrl.js",
+        "./app/js/auth/google.js",
+        "./app/js/auth/controllers/LoginGoogleCtrl.js",
 
         "./app/js/alert/alert.js",
         "./app/js/alert/controllers/AlertCtrl.js",
