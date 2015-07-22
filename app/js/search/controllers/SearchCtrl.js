@@ -46,23 +46,40 @@ angular.module("FM.search.SearchCtrl", [
             }).then(function (response) {
                 var albums = (response.albums && response.albums.items && response.albums.items.length > 0),
                     tracks = (response.tracks && response.tracks.items && response.tracks.items.length > 0),
-                    artists = (response.artists && response.artists.items && response.artists.items.length > 0);
-
-                var results = [];
+                    artists = (response.artists && response.artists.items && response.artists.items.length > 0),
+                    results = [];
 
                 if (tracks) {
-                    results = results.concat([{ label: "Tracks" }].concat(response.tracks.items.concat([{ buttonLabel: "tracks" }])));
-                }
-
-                if (albums) {
-                    results = results.concat([{ label: "Albums" }].concat(response.albums.items.concat([{ buttonLabel: "albums" }])));
+                    results = results.concat([{ label: "Tracks" }])
+                                     .concat(response.tracks.items)
+                                     .concat([{ buttonLabel: "tracks" }]);
                 }
 
                 if (artists) {
-                    results = results.concat([{ label: "Artists" }].concat(response.artists.items.concat([{ buttonLabel: "artists" }])));
+                    results = results.concat([{ label: "Artists" }])
+                                     .concat(response.artists.items)
+                                     .concat([{ buttonLabel: "artists" }]);
                 }
 
-                deferred.resolve(results);
+                if (albums) {
+                    var promises = [];
+                    angular.forEach(response.albums.items, function (album){
+                        promises.push(Spotify.getAlbum(album.uri));
+                    });
+                    $q.all(promises)
+                        .then(function (response){
+                            results = results.concat([{ label: "Albums" }])
+                                             .concat(response)
+                                             .concat([{ buttonLabel: "albums" }]);
+
+                            deferred.resolve(results);
+                        });
+
+                } else {
+                    deferred.resolve(results);
+                }
+
+
             });
 
             return deferred.promise;
