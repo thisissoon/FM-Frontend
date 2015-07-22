@@ -20,7 +20,6 @@ angular.module("FM", [
     "FM.nav",
     "FM.stats",
     "ngRoute",
-    "notification",
     "config",
     "spotify"
 ])
@@ -33,7 +32,6 @@ angular.module("FM", [
 .config([
     "$routeProvider",
     "$locationProvider",
-    "$notificationProvider",
     "env",
     "SpotifyProvider",
     function ($routeProvider, $locationProvider, $notificationProvider, env, SpotifyProvider) {
@@ -44,8 +42,6 @@ angular.module("FM", [
             .when("/401", { templateUrl: "partials/401.html" })
             .when("/500", { templateUrl: "partials/500.html" })
             .otherwise({ redirectTo: "/" });
-
-        $notificationProvider.setOptions({ delay: 5000 });
 
         SpotifyProvider.setClientId("706dc770a95f4b83b60b72b79d6e818f");
         SpotifyProvider.setRedirectUri("http://localhost:8000/app/partials/spotify-login.html");
