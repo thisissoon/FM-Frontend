@@ -11,8 +11,18 @@ angular.module("FM.player.PlayerCtrl",[
     "FM.player.TrackTimer",
     "ui.bootstrap.popover",
     "template/popover/popover-template.html",
-    "template/popover/popover.html"
+    "template/popover/popover.html",
+    "sn.title"
 ])
+/**
+ * @constant
+ * @property {Object} UNICODE
+ */
+.constant("UNICODE", {
+    play: "&#x25B6;",
+    pause: "&#10074;&#10074;"
+
+})
 /**
  * @class PlayerCtrl
  * @param {Object}  $scope
@@ -28,7 +38,9 @@ angular.module("FM.player.PlayerCtrl",[
     "PlayerMuteResource",
     "PlayerVolumeResource",
     "TrackTimer",
-    function ($scope, $q, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, TrackTimer) {
+    "snTitle",
+    "UNICODE",
+    function ($scope, $q, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, TrackTimer, snTitle, UNICODE) {
 
         /**
          * The currently playing track
@@ -81,6 +93,8 @@ angular.module("FM.player.PlayerCtrl",[
                     // Start track position timer
                     var elapsed = parseInt(response[0].player.elapsed_time) || 0; // jshint ignore:line
                     $scope.trackPositionTimer.start($scope.track.track.duration, elapsed);
+
+                    snTitle.setPageTitle(UNICODE.play + " " + $scope.track.track.name);
 
                 }
             });
@@ -143,6 +157,8 @@ angular.module("FM.player.PlayerCtrl",[
             $scope.trackPositionTimer.pause();
             $scope.trackPositionTimer.reset();
             $scope.track = null;
+
+            snTitle.setPageTitle(null);
         };
 
         /**
@@ -152,6 +168,8 @@ angular.module("FM.player.PlayerCtrl",[
         $scope.onPause = function onPause() {
             $scope.trackPositionTimer.pause();
             $scope.paused = true;
+
+            snTitle.setPageTitle(UNICODE.pause + " " + $scope.track.track.name);
         };
 
         /**
@@ -161,6 +179,8 @@ angular.module("FM.player.PlayerCtrl",[
         $scope.onResume = function onResume() {
             $scope.trackPositionTimer.start($scope.track.track.duration);
             $scope.paused = false;
+
+            snTitle.setPageTitle(UNICODE.play + " " + $scope.track.track.name);
         };
 
         /**
