@@ -2,7 +2,7 @@
 
 describe("FM.auth.LoginGoogleCtrl", function() {
 
-    var $scope, _route, _auth, _mockTokenResponse, _mockAuthError, ERRORS;
+    var $scope, _route, _auth, AlertService, _mockTokenResponse, _mockAuthError, ERRORS;
 
     beforeEach(function (){
         module("FM.auth.LoginGoogleCtrl");
@@ -15,6 +15,8 @@ describe("FM.auth.LoginGoogleCtrl", function() {
             reload: function(){}
         };
         spyOn(_route, "reload");
+
+        AlertService = $injector.get("AlertService");
 
         _auth = $injector.get("$auth");
         _auth.authenticate = function(provider){
@@ -44,7 +46,8 @@ describe("FM.auth.LoginGoogleCtrl", function() {
             $scope: $scope,
             $auth: _auth,
             $route: _route,
-            ERRORS: ERRORS
+            ERRORS: ERRORS,
+            AlertService: AlertService
         });
     }));
 
@@ -61,19 +64,19 @@ describe("FM.auth.LoginGoogleCtrl", function() {
     });
 
     it("should show authentication validation error alert", function() {
-        spyOn($scope, "showAlert");
+        spyOn(AlertService, "set");
 
         $scope.authenticate();
-        expect($scope.showAlert).toHaveBeenCalledWith(ERRORS.AUTH_VALIDATION_TITLE, "You need be a member of SOON_ or This Here");
+        expect(AlertService.set).toHaveBeenCalledWith(ERRORS.AUTH_VALIDATION_TITLE, "You need be a member of SOON_ or This Here");
         expect(_auth.removeToken).toHaveBeenCalled();
     });
 
     it("should NOT show authentication validation error alert", function() {
-        spyOn($scope, "showAlert");
+        spyOn(AlertService, "set");
         _mockAuthError = { message: "" };
 
         $scope.authenticate();
-        expect($scope.showAlert).not.toHaveBeenCalled();
+        expect(AlertService.set).not.toHaveBeenCalled();
         expect(_auth.removeToken).toHaveBeenCalled();
     });
 
