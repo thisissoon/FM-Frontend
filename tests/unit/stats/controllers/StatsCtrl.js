@@ -142,7 +142,6 @@ describe("FM.stats.StatsCtrl", function() {
             $scope.playTime.labels = [];
 
             StatsResource.get.calls.reset();
-            console.log(StatsResource.get.calls.count());
             $scope.loadHistoricData("2015-07-14","2015-07-21");
             $httpBackend.flush();
 
