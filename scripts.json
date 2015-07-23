@@ -67,6 +67,7 @@
 
         "./app/js/stats/stats.js",
         "./app/js/stats/controllers/StatsCtrl.js",
+        "./app/js/stats/filters/time.js",
 
         "./app/js/nav/nav.js",
 
