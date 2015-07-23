@@ -140,8 +140,14 @@ describe("FM.stats.StatsCtrl", function() {
             $httpBackend.flush();
             $scope.playTime.data = [];
             $scope.playTime.labels = [];
+
+            StatsResource.get.calls.reset();
             $scope.loadHistoricData("2015-07-14","2015-07-21");
             $httpBackend.flush();
+
+            expect(StatsResource.get).toHaveBeenCalledWith({ from: "2015-07-07", to: "2015-07-13" });
+            expect(StatsResource.get).toHaveBeenCalledWith({ from: "2015-06-30", to: "2015-07-06" });
+            expect(StatsResource.get).toHaveBeenCalledWith({ from: "2015-06-23", to: "2015-06-29" });
             expect($scope.playTime.data).toEqual([ [ 11595, 11595, 11595 ], [ 6819, 6819, 6819 ], [ 6037, 6037, 6037 ], [ 2704, 2704, 2704 ], [ 2499, 2499, 2499 ] ]);
             expect($scope.playTime.labels).toEqual([ "23-06-2015", "30-06-2015", "07-07-2015" ]);
         });
