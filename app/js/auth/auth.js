@@ -3,9 +3,10 @@
  * Handles authentication using OAuth
  * @module   FM.auth
  * @author   SOON_
- * @requires config
- * @requires satellizer
+ * @requires FM.auth.google
+ * @requires FM.auth.spotify
  */
 angular.module("FM.auth", [
-    "FM.auth.google"
+    "FM.auth.google",
+    "FM.auth.spotify"
 ]);

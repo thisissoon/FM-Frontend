@@ -20,8 +20,7 @@ angular.module("FM", [
     "FM.nav",
     "FM.stats",
     "ngRoute",
-    "config",
-    "spotify"
+    "config"
 ])
 /**
  * @method config
@@ -33,8 +32,7 @@ angular.module("FM", [
     "$routeProvider",
     "$locationProvider",
     "env",
-    "SpotifyProvider",
-    function ($routeProvider, $locationProvider, $notificationProvider, env, SpotifyProvider) {
+    function ($routeProvider, $locationProvider, env) {
 
         $locationProvider.html5Mode(env.HTML5_LOCATION).hashPrefix = "!";
 
@@ -42,23 +40,5 @@ angular.module("FM", [
             .when("/401", { templateUrl: "partials/401.html" })
             .when("/500", { templateUrl: "partials/500.html" })
             .otherwise({ redirectTo: "/" });
-
-        SpotifyProvider.setClientId("706dc770a95f4b83b60b72b79d6e818f");
-        SpotifyProvider.setRedirectUri("http://localhost:8000/app/partials/spotify-login.html");
-        SpotifyProvider.setScope("user-read-private playlist-read-private playlist-modify-private playlist-modify-public");
-    }
-])
-.run([
-    "$rootScope",
-    "Spotify",
-    "env",
-    function ($rootScope, Spotify, env){
-        $rootScope.loginSpotify = function loginSpotify(){
-            Spotify.login().then(function (response){
-                console.log(response);
-                Spotify.setAuthToken(response);
-                Spotify.getFeaturedPlaylists({ country: env.REGION_CODE });
-            });
-        };
     }
 ]);
