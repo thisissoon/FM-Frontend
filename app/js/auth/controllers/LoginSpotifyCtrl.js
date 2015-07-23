@@ -1,53 +1,47 @@
 "use strict";
 /**
  * Controller to handle Spotify Login
- * @class  LoginSpotifyCtrl
  * @module FM.auth.LoginSpotifyCtrl
  * @author SOON_
  */
 angular.module("FM.auth.LoginSpotifyCtrl", [
-    "FM.alert",
-    "spotify",
-    "satellizer",
-    "FM.api.ERRORS",
-    "config",
+    "FM.auth.SpotifyAuthService"
 ])
 /**
  * @constructor
  * @class LoginSpotifyCtrl
  * @param {Object}  $scope
- * @param {Service} $window
- * @param {Object}  ERRORS
- * @param {Service} Spotify
- * @param {Object}  AlertService
+ * @param {Service} SpotifyAuth
  */
 .controller("LoginSpotifyCtrl", [
     "$scope",
-    "$window",
-    "ERRORS",
-    "Spotify",
-    "AlertService",
-    function ($scope, $window, ERRORS, Spotify, AlertService) {
+    "SpotifyAuth",
+    function ($scope, SpotifyAuth) {
 
         /**
-         * Authenticate with google oauth
+         * Get current spotify user object
+         * @method spotifyUser
+         * @return {Object} Spotify user object
+         */
+        $scope.getUser = function getUser(){
+            return SpotifyAuth.user;
+        };
+
+        /**
+         * Authenticate with spotify OAuth
          * @method authenticate
          */
         $scope.authenticate = function authenticate() {
-            Spotify.login()
-                .then(function (response){
-                    Spotify.setAuthToken(response);
-                })
-                .catch(function (error){
-                    // Satellizer returns an error if there is no token, parse the error to get the original API response
-                    var response = JSON.parse(error.message.match(/\{.*\}/));
+            SpotifyAuth.authenticate();
+        };
 
-                    if (response && response.message === "Validation Error") {
-                        AlertService.set(ERRORS.AUTH_VALIDATION_TITLE, response.errors.code[0]);
-                    }
-
-                    $window.localStorage.removeItem("spotify-token");
-                });
+        /**
+         * Set isAuthenticatedSpotify if user exists
+         * @method isAuthenticatedSpotify
+         * @return {Boolean} user is authenticated
+         */
+        $scope.isAuthenticated = function isAuthenticated() {
+            return SpotifyAuth.isAuthenicated();
         };
 
     }

@@ -18,8 +18,8 @@
                 </button>
             </span>
 
-            <span ng-if="!isAuthenticatedSpotify()" ng-controller="LoginSpotifyCtrl">
-                <button type="button" class="btn btn-primary" ng-click="authenticate()">
+            <span ng-controller="LoginSpotifyCtrl">
+                <button ng-show="!getUser()" type="button" class="btn btn-primary" ng-click="authenticate()">
                     <span class="icon icon-google-plus"></span>
                     <span class="separator"></span>
                     Sign in with Spotify

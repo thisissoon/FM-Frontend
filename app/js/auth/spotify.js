@@ -25,25 +25,4 @@ angular.module("FM.auth.spotify", [
         SpotifyProvider.setScope(env.SPOTIFY_SCOPE);
 
     }
-])
-/**
- * @method run
- * @param  {Service} $rootScope
- * @param  {Service} $window
- * @param  {Service} Spotify
- */
-.run([
-    "$rootScope",
-    "$window",
-    function ($rootScope, $window){
-
-        /**
-         * Set isAuthenticatedSpotify if token exists
-         * @returns {Boolean} user is authenticated
-         */
-        $rootScope.isAuthenticatedSpotify = function isAuthenticatedSpotify() {
-            return $window.localStorage.getItem("spotify-token");
-        };
-
-    }
 ]);
