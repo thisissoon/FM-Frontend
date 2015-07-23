@@ -12,17 +12,17 @@
 
             <span ng-if="!isAuthenticatedGoogle()" ng-controller="LoginGoogleCtrl">
                 <button type="button" class="btn btn-primary" ng-click="authenticate()">
-                    <span class="icon icon-google-plus"></span>
+                    <span class="icon icon-google-plus h4"></span>
                     <span class="separator"></span>
                     Sign in with Gmail
                 </button>
             </span>
 
-            <span ng-controller="LoginSpotifyCtrl">
-                <button ng-show="!getUser()" type="button" class="btn btn-primary" ng-click="authenticate()">
-                    <span class="icon icon-google-plus"></span>
+            <span ng-show="!isAuthenticated()" ng-controller="LoginSpotifyCtrl">
+                <button type="button" class="btn btn-spotify" ng-click="authenticate()">
+                    <span class="icon icon-spotify h4"></span>
                     <span class="separator"></span>
-                    Sign in with Spotify
+                    Login to Spotify
                 </button>
             </span>
 
