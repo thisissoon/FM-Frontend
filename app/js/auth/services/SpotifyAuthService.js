@@ -75,11 +75,7 @@ angular.module("FM.auth.SpotifyAuthService", [
                     Spotify.setAuthToken(response);
                     $window.localStorage.setItem(TOKEN_NAME, response);
 
-                    Spotify.getCurrentUser()
-                        .then(function (response){
-                            _this.user = response;
-                            deferred.resolve(response);
-                        });
+                    _this.getCurrentUser();
                 })
                 .catch(function (error){
                     // Satellizer returns an error if there is no token, parse the error to get the original API response
@@ -98,14 +94,41 @@ angular.module("FM.auth.SpotifyAuthService", [
         };
 
         /**
+         * @method getCurrentUser
+         * @return {Object} current spotify user object
+         */
+        this.getCurrentUser = function getCurrentUser(){
+            var deferred = $q.defer();
+
+            Spotify.getCurrentUser()
+                .then(function (response){
+                    _this.user = response;
+                    deferred.resolve(response);
+                })
+                .catch(function (){
+                    _this.authenicate()
+                        .then(function (response){
+                            deferred.resolve(response);
+                        })
+                        .catch(function (response){
+                            deferred.reject(response);
+                        });
+                });
+
+            return deferred.promise;
+        };
+
+        /**
          * Attempt to authenicate the user if
          * they have logged into spotify before
          * @public
          * @method init
          */
         this.init = function init() {
-            if ($window.localStorage.getItem(TOKEN_NAME)){
-                _this.authenticate();
+            var authToken = $window.localStorage.getItem(TOKEN_NAME);
+            if (authToken){
+                Spotify.setAuthToken(authToken);
+                _this.getCurrentUser();
             }
         };
 
