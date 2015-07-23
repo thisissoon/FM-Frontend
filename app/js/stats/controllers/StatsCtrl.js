@@ -155,15 +155,14 @@ angular.module("FM.stats.StatsCtrl", [
              */
             var dates = [{
                 from: $filter("date")(new Date().setDate(startDate.getDate() + diff), "yyyy-MM-dd"),
-                to: $filter("date")(new Date().setDate(startDate.getDate() + diff - 1), "yyyy-MM-dd"),
+                to: $filter("date")(new Date().setDate(startDate.getDate() - 1), "yyyy-MM-dd"),
             },{
                 from: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 2)), "yyyy-MM-dd"),
-                to: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 2) - 1), "yyyy-MM-dd"),
+                to: $filter("date")(new Date().setDate(startDate.getDate() + (diff) - 1), "yyyy-MM-dd"),
             },{
                 from: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 3)), "yyyy-MM-dd"),
-                to: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 3) - 1), "yyyy-MM-dd"),
+                to: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 2) - 1), "yyyy-MM-dd"),
             }];
-
 
             // request historic data from API using calculated date ranges
             $q.all([
