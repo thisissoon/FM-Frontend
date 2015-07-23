@@ -32,7 +32,7 @@
                 <p class="text-center">Total Tracks Played</p>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <h2 class="h1 text-center"><span ng-if="stats.total_play_time > 86400000">{{ stats.total_play_time | date: "M 'month' d 'days'" }}<br></span>{{ stats.total_play_time | date: "H'h' mm'm'" }}</h2>
+                <h2 class="h1 text-center">{{ stats.total_play_time | time }}</h2>
                 <p class="text-center">Total Play Time</p>
             </div>
         </div>
