@@ -127,7 +127,7 @@ angular.module("FM.search.ArtistDetailCtrl", [
          * @property relatedArtists
          * @type {Array}
          */
-        $scope.relatedArtists = relatedArtists;
+        $scope.relatedArtists = relatedArtists.artists;
 
         /**
          * @property loadDisabled
