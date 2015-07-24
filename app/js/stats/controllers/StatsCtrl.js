@@ -5,7 +5,7 @@
  */
 angular.module("FM.stats.StatsCtrl", [
     "FM.stats.DateUtils",
-    "FM.stats.StatsResolver",
+    "FM.stats.statsResolver",
     "FM.api.StatsResource",
     "ngRoute",
     "chart.js",
@@ -24,7 +24,9 @@ angular.module("FM.stats.StatsCtrl", [
                 templateUrl: "partials/stats.html",
                 controller: "StatsCtrl",
                 resolve: {
-                    stats: "StatsResolver"
+                    stats: ["statsResolver", "$route", function (statsResolver, $route) {
+                        return statsResolver($route.current.params);
+                    }]
                 }
             });
 

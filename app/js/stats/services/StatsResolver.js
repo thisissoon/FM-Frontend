@@ -1,9 +1,9 @@
 "use strict";
 /**
- * @module   FM.stats.StatsResolver
+ * @module   FM.stats.statsResolver
  * @author   SOON_
  */
-angular.module("FM.stats.StatsResolver", [
+angular.module("FM.stats.statsResolver", [
     "FM.stats.DateUtils",
     "FM.api.StatsResource",
     "ngRoute"
@@ -17,7 +17,7 @@ angular.module("FM.stats.StatsResolver", [
  * @param   {Service}  DateUtils     Date helper utilities
  * @returns {Promise}  Data resolved from API
  */
-.factory("StatsResolver", [
+.factory("statsResolver", [
     "$route",
     "$filter",
     "$location",
@@ -25,30 +25,27 @@ angular.module("FM.stats.StatsResolver", [
     "DateUtils",
     function ($route, $filter, $location, StatsResource, DateUtils) {
 
-        /**
-         * New route parameters
-         * @property {Object} params
-         */
-        var params = $route.current.params;
+        return function resolver(params){
+            /**
+             * Is the param `to` greater than last Friday
+             * @property {Boolean} toInvalid
+             */
+            var toInvalid = new Date(params.to) > DateUtils.lastOccurence(5);
 
-        /**
-         * Is the param `to` greater than last Friday
-         * @property {Boolean} toInvalid
-         */
-        var toInvalid = new Date(params.to) > DateUtils.lastOccurence(5);
+            // Restrict `to` search param to last Friday
+            if (!params.to || toInvalid) {
+                params.to = $filter("date")(DateUtils.lastOccurence(5), "yyyy-MM-dd");
+            }
 
-        // Restrict `to` search param to last Friday
-        if (!params.to || toInvalid) {
-            params.to = $filter("date")(DateUtils.lastOccurence(5), "yyyy-MM-dd");
-        }
+            // Set `from` default to last week
+            if (!params.from && !params.all) {
+                var defaultFrom = new Date().setDate(DateUtils.lastOccurence(5).getDate() - 7);
+                params.from = $filter("date")(defaultFrom, "yyyy-MM-dd");
+            }
 
-        // Set `from` default to last week
-        if (!params.from && !params.all) {
-            var defaultFrom = new Date().setDate(DateUtils.lastOccurence(5).getDate() - 7);
-            params.from = $filter("date")(defaultFrom, "yyyy-MM-dd");
-        }
-
-        $location.replace().search(params);
-        return StatsResource.get(params).$promise;
+            $location.replace().search(params);
+            delete params.all;
+            return StatsResource.get(params).$promise;
+        };
     }
 ]);
