@@ -6,6 +6,7 @@
 angular.module("FM.stats", [
     "FM.stats.StatsCtrl",
     "FM.stats.DateUtils",
+    "FM.stats.timeFilter",
     "FM.stats.statsResolver"
 ])
 /**
