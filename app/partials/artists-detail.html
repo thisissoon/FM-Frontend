@@ -1,8 +1,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12">
-            <div class="artist-banner">
 
+            <div class="artist-banner">
                 <div class="img banner"
                      ng-class="{ 'no-img': !artist.images[0] }"
                      ng-style="{ 'background-image': 'url({{ artist.images[0].url || 'img/icons/artist.svg' }})' }">
@@ -12,12 +12,11 @@
                          ng-style="{ 'background-image': 'url({{ artist.images[0].url || 'img/icons/artist.svg' }})' }">
                         <img ng-src="{{ artist.images[0].url }}" alt="{{ artist.name }}" class="sr-only sr-only-focusable">
                     </div>
+
                     <div class="mask"></div>
 
                     <h1 class="h1 text-overflow">{{ artist.name }}</h1>
-
                 </div>
-
             </div>
 
         </div>
@@ -27,145 +26,22 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12">
+
             <tabset>
                 <tab heading="Top tracks">
-                    <div class="container-fluid">
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <h2>Top tracks <span class="badge">{{ topTracks.length }}</span></h2>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <ul class="list-unstyled track-list">
-                                    <li class="track"
-                                        ng-repeat="track in topTracks"
-                                        data-spotify-track="track"
-                                        fm-track>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
+                    <ng-include src="'partials/artists/top-tracks.html'"></ng-include>
                 </tab>
-
                 <tab heading="Albums">
-                    <div class="container-fluid">
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <h2>Albums <span class="badge">{{ albumsMeta.total }}</span></h2>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
-                                 ng-repeat="album in albums">
-
-                                <a href="albums/{{ album.id }}" class="thumbnail" title="{{ album.name }}">
-                                    <div class="img"
-                                         ng-class="{
-                                            'no-img': !album.images[1]
-                                         }"
-                                         ng-style="{
-                                            'background-image': 'url({{ album.images[1].url || 'img/icons/artist.svg' }})'
-                                         }">
-                                        <img ng-src="{{ album.images[1].url }}" alt="{{ album.name }}" class="sr-only sr-only-focusable">
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="h5 text-overflow">{{ album.name }}</h3>
-                                    </div>
-                                </a>
-
-                            </div>
-                        </div>
-
-                        <div class="row text-center">
-                            <button class="btn btn-primary" ng-click="loadMoreAlbums()" ng-if="albumsMeta.next" ng-disabled="loadDisabled">Load more</button>
-                            <p ng-if="albumsMeta.total > 0 && !albumsMeta.next">No more albums</p>
-                        </div>
-                    </div>
+                    <ng-include src="'partials/artists/album-list.html'"></ng-include>
                 </tab>
-
                 <tab heading="Singles">
-                    <div class="container-fluid">
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <h2>Singles <span class="badge">{{ singlesMeta.total }}</span></h2>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
-                                 ng-repeat="single in singles">
-
-                                <a href="albums/{{ single.id }}" class="thumbnail" title="{{ single.name }}">
-                                    <div class="img"
-                                         ng-class="{
-                                            'no-img': !single.images[1]
-                                         }"
-                                         ng-style="{
-                                            'background-image': 'url({{ single.images[1].url || 'img/icons/artist.svg' }})'
-                                         }">
-                                        <img ng-src="{{ single.images[1].url }}" alt="{{ single.name }}" class="sr-only sr-only-focusable">
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="h5 text-overflow">{{ single.name }}</h3>
-                                    </div>
-                                </a>
-
-                            </div>
-                        </div>
-
-                        <div class="row text-center">
-                            <button class="btn btn-primary" ng-click="loadMoreSingles()" ng-if="singlesMeta.next" ng-disabled="loadDisabled">Load more</button>
-                            <p ng-if="singlesMeta.total > 0 && !singlesMeta.next">No more singles</p>
-                        </div>
-                    </div>
+                    <ng-include src="'partials/artists/singles-list.html'"></ng-include>
                 </tab>
-
                 <tab heading="Related artists">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <h2>Related artists <span class="badge">{{ relatedArtists.length }}</span></h2>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
-                                 ng-repeat="artist in relatedArtists">
-
-                                <a href="artists/{{ artist.id }}" class="thumbnail" title="{{ artist.name }}">
-                                    <div class="img"
-                                         ng-class="{
-                                            'no-img': !artist.images[1]
-                                         }"
-                                         ng-style="{
-                                            'background-image': 'url({{ artist.images[1].url || 'img/icons/artist.svg' }})'
-                                         }">
-                                        <img ng-src="{{ artist.images[1].url }}" alt="{{ artist.name }}" class="sr-only sr-only-focusable">
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="h5 text-overflow">{{ artist.name }}</h3>
-                                    </div>
-                                </a>
-
-                            </div>
-                        </div>
-
-                        <div class="row text-center">
-                            <button class="btn btn-primary" ng-click="loadMore()" ng-if="meta.next" ng-disabled="loadDisabled">Load more</button>
-                            <p ng-if="meta.total > 0 && !meta.next">No more results</p>
-                        </div>
-                    </div>
+                    <ng-include src="'partials/artists/related-artists.html'"></ng-include>
                 </tab>
-
             </tabset>
         </div>
+
     </div>
 </div>
