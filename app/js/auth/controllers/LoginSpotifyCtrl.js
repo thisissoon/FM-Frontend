@@ -41,7 +41,7 @@ angular.module("FM.auth.LoginSpotifyCtrl", [
          * @return {Boolean} user is authenticated
          */
         $scope.isAuthenticated = function isAuthenticated() {
-            return SpotifyAuth.isAuthenicated();
+            return SpotifyAuth.isAuthenticated();
         };
 
     }

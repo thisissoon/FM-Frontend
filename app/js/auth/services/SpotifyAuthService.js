@@ -55,10 +55,10 @@ angular.module("FM.auth.SpotifyAuthService", [
 
         /**
          * @public
-         * @method isAuthenicated
+         * @method isAuthenticated
          * @return {Boolean} whether the current user is authenticated
          */
-        this.isAuthenicated = function isAuthenicated() {
+        this.isAuthenticated = function isAuthenticated() {
             return _this.user;
         };
 
@@ -75,11 +75,9 @@ angular.module("FM.auth.SpotifyAuthService", [
                     Spotify.setAuthToken(response);
                     $window.localStorage.setItem(TOKEN_NAME, response);
 
-                    _this.getCurrentUser();
+                    deferred.resolve(response);
                 })
-                .catch(function (error){
-                    // Satellizer returns an error if there is no token, parse the error to get the original API response
-                    var response = JSON.parse(error.message.match(/\{.*\}/));
+                .catch(function (response){
 
                     if (response && response.message === "Validation Error") {
                         AlertService.set(ERRORS.AUTH_VALIDATION_TITLE, response.errors.code[0]);
@@ -87,7 +85,7 @@ angular.module("FM.auth.SpotifyAuthService", [
 
                     $window.localStorage.removeItem(TOKEN_NAME);
 
-                    deferred.reject(error);
+                    deferred.reject(response);
                 });
 
             return deferred.promise;
@@ -106,11 +104,22 @@ angular.module("FM.auth.SpotifyAuthService", [
                     deferred.resolve(response);
                 })
                 .catch(function (){
-                    _this.authenicate()
-                        .then(function (response){
-                            deferred.resolve(response);
+                    _this.authenticate()
+                        .then(function(){
+
+                            Spotify.getCurrentUser()
+                                .then(function (response){
+                                    _this.user = response;
+                                    deferred.resolve(response);
+                                })
+                                .catch(function (response){
+                                    _this.user = null;
+                                    deferred.reject(response);
+                                });
+
                         })
                         .catch(function (response){
+                            _this.user = null;
                             deferred.reject(response);
                         });
                 });
