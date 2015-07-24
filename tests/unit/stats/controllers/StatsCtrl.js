@@ -42,6 +42,9 @@ describe("FM.stats.StatsCtrl", function() {
         CHART_COLOURS = [];
         CHART_OPTIONS = {};
 
+        var today = new Date("2015-07-01");
+        jasmine.clock().mockDate(today);
+
         $controller("StatsCtrl", {
             $scope: $scope,
             $q: $q,
@@ -88,41 +91,41 @@ describe("FM.stats.StatsCtrl", function() {
         expect($scope.datepickerOpened.test).toBe(false);
     });
 
-    it("should update filter", function(){
-        $httpBackend.flush();
+    describe("filter", function () {
 
-        // filter as js dates
-        $scope.filter = {
-            from: new Date("2015-07-01"),
-            to: new Date("2015-07-02")
-        };
-        $scope.updateFilter();
-        expect($location.search).toHaveBeenCalledWith({
-            from: "2015-07-01",
-            to: "2015-07-02"
+        it("should filter from JS dates", function(){
+            $httpBackend.flush();
+            $scope.filter = {
+                from: new Date("2015-07-01"),
+                to: new Date("2015-07-02")
+            };
+            $scope.updateFilter();
+            expect($location.search).toHaveBeenCalledWith({
+                from: "2015-07-01",
+                to: "2015-07-02"
+            });
         });
 
-        // filter as date strings
-        $scope.filter = { from: "2015-07-01", to: "2015-07-02" };
-        $scope.updateFilter();
-        expect($location.search).toHaveBeenCalledWith({
-            from: "2015-07-01",
-            to: "2015-07-02"
+        it("should filter from date strings", function(){
+            $httpBackend.flush();
+            $scope.filter = { from: "2015-07-01", to: "2015-07-02" };
+            $scope.updateFilter();
+            expect($location.search).toHaveBeenCalledWith({
+                from: "2015-07-01",
+                to: "2015-07-02"
+            });
         });
+
+        it("should clear filters", function(){
+            $httpBackend.flush();
+            $scope.filter = { from: undefined, to: undefined };
+            $scope.updateFilter();
+            expect($location.search).toHaveBeenCalledWith({ from: undefined, to: undefined, all: true });
+        });
+
     });
 
     describe("init", function () {
-
-        it("should default filter to last week", function(){
-            var today = new Date("2015-07-01");
-            jasmine.clock().mockDate(today);
-            $scope.search = {};
-
-            $scope.init();
-            $httpBackend.flush();
-            expect($scope.filter.from).toEqual(new Date("2015-06-17"));
-            expect($scope.filter.to).toEqual(new Date("2015-06-24"));
-        });
 
         it("should add active DJ data to dataset", function(){
             $httpBackend.flush();
