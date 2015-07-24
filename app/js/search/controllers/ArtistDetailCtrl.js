@@ -44,6 +44,9 @@ angular.module("FM.search.ArtistDetailCtrl", [
                     }],
                     topTracks: ["Spotify", "$route", function (Spotify, $route){
                         return Spotify.getArtistTopTracks($route.current.params.id, env.REGION_CODE);
+                    }],
+                    relatedArtists: ["Spotify", "$route", function (Spotify, $route){
+                        return Spotify.getRelatedArtists($route.current.params.id);
                     }]
                 }
             });
@@ -57,6 +60,11 @@ angular.module("FM.search.ArtistDetailCtrl", [
  * @param {Array}  $location
  * @param {Array}  Spotify
  * @param {Array}  artist
+ * @param {Array}  albums
+ * @param {Array}  singles
+ * @param {Array}  topTracks
+ * @param {Array}  relatedArtists
+ * @param {Object} env
  */
 .controller("ArtistDetailCtrl", [
     "$scope",
@@ -66,8 +74,9 @@ angular.module("FM.search.ArtistDetailCtrl", [
     "albums",
     "singles",
     "topTracks",
+    "relatedArtists",
     "env",
-    function ($scope, $location, Spotify, artist, albums, singles, topTracks, env) {
+    function ($scope, $location, Spotify, artist, albums, singles, topTracks, relatedArtists, env) {
 
         /**
          * Artist data
@@ -110,6 +119,12 @@ angular.module("FM.search.ArtistDetailCtrl", [
          * @type {Array}
          */
         $scope.topTracks = topTracks.tracks;
+
+        /**
+         * @property relatedArtists
+         * @type {Array}
+         */
+        $scope.relatedArtists = relatedArtists;
 
         /**
          * @property loadDisabled
