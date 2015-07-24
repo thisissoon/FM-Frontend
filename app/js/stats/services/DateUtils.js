@@ -11,13 +11,13 @@ angular.module("FM.stats.DateUtils", [
  * @property {Array} LAST_WEEK
  */
 .value("LAST_WEEK", [
-    new Date(),
     new Date(new Date().setDate(new Date().getDate() - 1)),
     new Date(new Date().setDate(new Date().getDate() - 2)),
     new Date(new Date().setDate(new Date().getDate() - 3)),
     new Date(new Date().setDate(new Date().getDate() - 4)),
     new Date(new Date().setDate(new Date().getDate() - 5)),
-    new Date(new Date().setDate(new Date().getDate() - 6))
+    new Date(new Date().setDate(new Date().getDate() - 6)),
+    new Date(new Date().setDate(new Date().getDate() - 7))
 ])
 /**
  * Date helper functions
