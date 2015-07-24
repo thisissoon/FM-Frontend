@@ -17,7 +17,7 @@
             <img ng-switch-default src="img/icons/playing-stoped.png" alt="music stopped animation">
         </div>
 
-        <form name="controls" class="form-inline">
+        <form name="controls" class="form-inline" ng-if="isAuthenticated()">
 
             <button ng-show="paused"
                     ng-click="resume()"
