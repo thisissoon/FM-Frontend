@@ -9,7 +9,10 @@ angular.module("FM.search.ArtistDetailCtrl", [
     "spotify",
     "ngRoute",
     "config",
-    "FM.player.trackDirective"
+    "FM.player.trackDirective",
+    "ui.bootstrap.tabs",
+    "template/tabs/tab.html",
+    "template/tabs/tabset.html"
 ])
 /**
  * @method config
