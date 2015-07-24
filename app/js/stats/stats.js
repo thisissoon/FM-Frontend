@@ -5,7 +5,8 @@
  */
 angular.module("FM.stats", [
     "FM.stats.StatsCtrl",
-    "FM.stats.timeFilter"
+    "FM.stats.DateUtils",
+    "FM.stats.statsResolver"
 ])
 /**
  * Colour scheme for charts

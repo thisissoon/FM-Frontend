@@ -68,6 +68,8 @@
         "./app/js/stats/stats.js",
         "./app/js/stats/controllers/StatsCtrl.js",
         "./app/js/stats/filters/time.js",
+        "./app/js/stats/services/DateUtils.js",
+        "./app/js/stats/services/StatsResolver.js",
 
         "./app/js/nav/nav.js",
 

@@ -51,7 +51,8 @@
                 <canvas id="line" class="chart chart-line" data="playTime.data" series="playTime.series" labels="playTime.labels" series="playTime.series" colours="chartColours"></canvas>
 
                 <h2 class="text-center">Play time</h2>
-                <p class="text-center">{{ playTime.series[0] }} <span ng-if="playTime.data[0][0] >= 1440">{{ playTime.data[0][0]/60 }} hours</span><span ng-if="playTime.data[0][0] < 1440">{{ playTime.data[0][0] }} minutes</span></p>
+                <p class="text-center" ng-if="playTime.data[0][0]">{{ playTime.series[0] }} <span ng-if="playTime.data[0][0] >= 1440">{{ playTime.data[0][0]/60 }} hours</span><span ng-if="playTime.data[0][0] < 1440">{{ playTime.data[0][0] }} minutes</span></p>
+                <p class="text-center" ng-if="!playTime.data[0][0]">Select from date to view historic play time stats</p>
 
             </div>
         </div>

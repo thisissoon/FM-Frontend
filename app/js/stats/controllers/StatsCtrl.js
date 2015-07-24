@@ -4,6 +4,8 @@
  * @author   "SOON_"
  */
 angular.module("FM.stats.StatsCtrl", [
+    "FM.stats.DateUtils",
+    "FM.stats.statsResolver",
     "FM.api.StatsResource",
     "ngRoute",
     "chart.js",
@@ -22,8 +24,8 @@ angular.module("FM.stats.StatsCtrl", [
                 templateUrl: "partials/stats.html",
                 controller: "StatsCtrl",
                 resolve: {
-                    stats: ["StatsResource", "$route", function (StatsResource, $route){
-                        return StatsResource.get($route.current.params).$promise;
+                    stats: ["statsResolver", "$route", function (statsResolver, $route) {
+                        return statsResolver($route.current.params);
                     }]
                 }
             });
@@ -42,9 +44,10 @@ angular.module("FM.stats.StatsCtrl", [
     "$location",
     "CHART_COLOURS",
     "CHART_OPTIONS",
+    "DateUtils",
     "StatsResource",
     "stats",
-    function ($scope, $q, $filter, $location, CHART_COLOURS, CHART_OPTIONS, StatsResource, stats) {
+    function ($scope, $q, $filter, $location, CHART_COLOURS, CHART_OPTIONS, DateUtils, StatsResource, stats) {
 
         /**
          * Current search params
@@ -140,7 +143,7 @@ angular.module("FM.stats.StatsCtrl", [
         $scope.loadHistoricData = function loadHistoricData (startDate, endDate) {
 
             startDate = new Date(startDate);
-            endDate = new Date(endDate);
+            endDate = endDate ? new Date(endDate) : new Date();
 
             /**
              * Difference in days between filter start and end dates
@@ -182,9 +185,17 @@ angular.module("FM.stats.StatsCtrl", [
          * @method updateFilter
          */
         $scope.updateFilter = function updateFilter () {
-            $scope.search = $scope.filter;
-            $scope.search.to = $scope.search.to.toISOString ? $filter("date")($scope.search.to.toISOString(), "yyyy-MM-dd") : $scope.search.to;
-            $scope.search.from = $scope.search.from.toISOString ? $filter("date")($scope.search.from.toISOString(), "yyyy-MM-dd") : $scope.search.from;
+            if ($scope.filter.to) {
+                $scope.search.to = $scope.filter.to.toISOString ? $filter("date")($scope.filter.to.toISOString(), "yyyy-MM-dd") : $scope.filter.to;
+            } else {
+                $scope.search.to = undefined;
+            }
+            if ($scope.filter.from) {
+                $scope.search.from = $scope.filter.from.toISOString ? $filter("date")($scope.filter.from.toISOString(), "yyyy-MM-dd") : $scope.filter.from;
+            } else {
+                $scope.search.from = undefined;
+                $scope.search.all = true;
+            }
             $location.search($scope.search);
         };
 
@@ -204,21 +215,11 @@ angular.module("FM.stats.StatsCtrl", [
          */
         $scope.init = function init () {
 
-            /**
-             * Calculate date boundaries of last week
-             * @property {Array} lastWeek
-             */
-            var lastWeek = [new Date(), new Date()];
-            lastWeek[0].setDate(lastWeek[0].getDate() - 14);
-            lastWeek[1].setDate(lastWeek[1].getDate() - 7);
+            $scope.filter.from = $scope.search.from || undefined;
+            $scope.filter.to = $scope.search.to || undefined;
 
             // set max datepicker date to be end of last week
-            $scope.datepickerMaxDate = lastWeek[1];
-
-            // default filter to last week
-            $scope.filter.from = $scope.search.from || lastWeek[0];
-            $scope.filter.to = $scope.search.to || lastWeek[1];
-
+            $scope.datepickerMaxDate = DateUtils.lastOccurence(5);
 
             // Format most active DJ stats for charts
             if (stats.most_active_djs) {  // jshint ignore:line
@@ -230,10 +231,12 @@ angular.module("FM.stats.StatsCtrl", [
                 });
             }
 
-            // Format total play time per user stats for charts
-            $scope.addDataToSeries($scope.playTime, stats.total_play_time_per_user, $filter("date")($scope.filter.from, "dd-MM-yyyy"));  // jshint ignore:line
-            // Load additional data for play time line chart
-            $scope.loadHistoricData($scope.filter.from, $scope.filter.to);
+            if ($scope.filter.from) {
+                // Format total play time per user stats for charts
+                $scope.addDataToSeries($scope.playTime, stats.total_play_time_per_user, $filter("date")($scope.filter.from, "dd-MM-yyyy"));  // jshint ignore:line
+                // Load additional data for play time line chart
+                $scope.loadHistoricData($scope.filter.from, $scope.filter.to);
+            }
         };
 
         $scope.init();
