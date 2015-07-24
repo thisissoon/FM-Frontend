@@ -36,12 +36,21 @@ describe("FM.auth.LoginSpotifyCtrl", function() {
     });
 
     it("should get authenticated status", function() {
+        SpotifyAuth.authenticated = true;
+
         var spy = spyOn(SpotifyAuth, "isAuthenticated").and.callThrough();
         var authenticated = $scope.isAuthenticated();
         $rootScope.$digest();
 
         expect(spy).toHaveBeenCalled();
         expect(authenticated).toBeTruthy();
+
+        SpotifyAuth.authenticated = false;
+        authenticated = $scope.isAuthenticated();
+        $rootScope.$digest();
+
+        expect(spy.calls.count()).toBe(2);
+        expect(authenticated).toBeFalsy();
     });
 
 });

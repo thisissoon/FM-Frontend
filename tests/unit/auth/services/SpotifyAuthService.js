@@ -88,12 +88,12 @@ describe("FM.auth.SpotifyAuthService", function() {
     });
 
     it("should return authentication status", function () {
-        service.user = null;
+        service.authenticated = false;
 
         var authenticated = service.isAuthenticated();
         expect(authenticated).toBeFalsy();
 
-        service.user = { id: "foo" };
+        service.authenticated = true;
 
         var authenticated = service.isAuthenticated();
         expect(authenticated).toBeTruthy();

@@ -54,12 +54,19 @@ angular.module("FM.auth.SpotifyAuthService", [
         this.user = null;
 
         /**
+         * Whether the user is authenticated
+         * @public
+         * @property {Object} authenticated
+         */
+        this.authenticated = false;
+
+        /**
          * @public
          * @method isAuthenticated
          * @return {Boolean} whether the current user is authenticated
          */
         this.isAuthenticated = function isAuthenticated() {
-            return _this.user;
+            return _this.authenticated;
         };
 
         /**
@@ -74,6 +81,7 @@ angular.module("FM.auth.SpotifyAuthService", [
                 .then(function (response){
                     Spotify.setAuthToken(response);
                     $window.localStorage.setItem(TOKEN_NAME, response);
+                    _this.authenticated = true;
 
                     deferred.resolve(response);
                 })
@@ -84,6 +92,7 @@ angular.module("FM.auth.SpotifyAuthService", [
                     }
 
                     $window.localStorage.removeItem(TOKEN_NAME);
+                    _this.authenticated = false;
 
                     deferred.reject(response);
                 });
@@ -101,6 +110,7 @@ angular.module("FM.auth.SpotifyAuthService", [
             Spotify.getCurrentUser()
                 .then(function (response){
                     _this.user = response;
+                    _this.authenticated = true;
                     deferred.resolve(response);
                 })
                 .catch(function (){
