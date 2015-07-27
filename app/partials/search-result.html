@@ -2,23 +2,10 @@
 <p class="h4 text-center" ng-if="match.label.label">{{ match.label.label }}</p>
 
 <!-- track -->
-<a href class="media" ng-if="match.label.uri.indexOf('spotify:track') === 0" title="{{ match.label.name }}">
-    <div class="media-left">
-        <img ng-src="{{ match.label.album.images[1].url || 'img/icons/artist.svg' }}" alt="{{ match.label.name }}" class="media-object" width="62">
-    </div>
-    <div class="media-body media-middle">
-        <p class="media-heading text-overflow">{{ match.label.name }}</p>
-        <p class="text-muted text-overflow">
-            <span class="text-muted" ng-repeat-start="artist in match.label.artists">
-                {{ artist.name }}
-            </span><span ng-repeat-end ng-if="!$last">, </span>
-        </p>
-    </div>
-</a>
+<fm-track ng-if="match.label.uri.indexOf('spotify:track') === 0" data-spotify-track="match.label" class="track"></fm-track>
 
 <!-- album -->
 <fm-album ng-if="match.label.uri.indexOf('spotify:album') === 0" data-album="match.label"></fm-album>
-
 
 <!-- artist -->
 <fm-artist ng-if="match.label.uri.indexOf('spotify:artist') === 0" data-artist="match.label"></fm-artist>
