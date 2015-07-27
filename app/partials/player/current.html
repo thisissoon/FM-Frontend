@@ -1,10 +1,12 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-show="track.track.uri">
+
     <div class="row">
         <div class="col-xs-4 col-xs-offset-4 text-center">
             <img class="img-responsive" ng-src="{{ track.track.album.images[0].url }}" alt="{{ track.track.name }} album cover">
         </div>
     </div>
     <br>
+
     <div class="row">
         <div class="col-xs-12 text-center">
             <p class="lead track-heading track-info" title="{{ track.name }}">{{ track.track.name }}</p>
@@ -16,4 +18,23 @@
             </p>
         </div>
     </div>
+    <br>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="track-progress" ng-show="trackPositionTimer && track">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ trackPositionTimer.elapsedTime }}" aria-valuemin="0" aria-valuemax="{{ track.track.duration }}" ng-style="{ width: trackPositionTimer.percent + '%' }"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <div ng-include="'partials/player/controls.html'"></div>
+        </div>
+    </div>
 </div>
+
+<div ng-include="'partials/loading.html'" ng-show="!track.track.uri"></div>

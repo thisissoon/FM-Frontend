@@ -8,11 +8,15 @@
     .flex-direction(row);
     .flex-wrap(nowrap);
     .justify-content(space-between);
-    background-color: @controls-bg;
     height: @controls-height;
     min-width: 340px;
     padding-right: 30px;
     text-align: right;
+
+    .current & {
+        .justify-content(center);
+        padding-right: 0;
+    }
 }
 
 .playing-animation {
