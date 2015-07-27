@@ -5,8 +5,10 @@
  * @module   FM.player
  * @author   SOON_
  * @requires FM.player.PlayerCtrl
- * @requires FM.player.PlayerService
  * @requires FM.player.trackDirective
+ * @requires FM.player.sliderDirective
+ * @requires FM.player.TrackTimer
+ * @requires FM.player.removeLeadingZeros
  */
 angular.module("FM.player", [
     "FM.player.PlayerCtrl",

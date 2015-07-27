@@ -64,6 +64,7 @@
         "./app/js/search/controllers/AlbumSearchCtrl.js",
         "./app/js/search/controllers/AlbumDetailCtrl.js",
         "./app/js/search/controllers/TrackSearchCtrl.js",
+        "./app/js/search/directives/artist.js",
 
         "./app/js/stats/stats.js",
         "./app/js/stats/controllers/StatsCtrl.js",

@@ -1,0 +1,59 @@
+//
+// Artists
+// --------------------------------------------------
+
+.artist {
+    .sidebar & {
+        .clearfix();
+        height: 62px;
+
+        .img,
+        .caption {
+            display: inline-block;
+            float: left;
+        }
+
+        .img {
+            .square(62px);
+        }
+
+        .caption {
+            height: 100%;
+            width: 203px;
+
+            .h5 {
+                font-family: @font-family-base;
+            }
+        }
+    }
+}
+
+.artist-banner {
+    margin-bottom: 12px;
+
+    .h1 {
+        bottom: 20px;
+        left: 180px;
+        position: absolute;
+        z-index: 1;
+    }
+
+    .img.avatar {
+        .square(130px);
+        border-radius: 50%;
+        bottom: 20px;
+        left: 30px;
+        position: absolute;
+        z-index: 1;
+    }
+
+    .mask {
+        background-color: rgba(red(@black), green(@black), blue(@black), .7);
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 0;
+    }
+}

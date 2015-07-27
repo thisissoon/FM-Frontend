@@ -33,22 +33,7 @@
 
 
 <!-- artist -->
-<a class="media" ng-if="match.label.uri.indexOf('spotify:artist') === 0" href="artists/{{ match.label.id }}" title="{{ match.label.name }}">
-    <div class="media-left">
-        <div class="img"
-             ng-class="{
-                'no-img': match.label.images.length === 0
-             }"
-             ng-style="{
-                'background-image': 'url({{ match.label.images[2].url || 'img/icons/artist.svg' }})'
-             }">
-            <img ng-src="{{ match.label.images[2].url }}" alt="{{ match.label.name }}" class="sr-only sr-only-focusable">
-        </div>
-    </div>
-    <div class="media-body media-middle">
-        <p class="media-heading">{{ match.label.name }}</p>
-    </div>
-</a>
+<fm-artist ng-if="match.label.uri.indexOf('spotify:artist') === 0" data-artist="match.label"></fm-artist>
 
 <!-- view more results -->
 <p ng-if="match.label.buttonLabel" class="text-center">
