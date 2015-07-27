@@ -82,32 +82,18 @@
 
             <h2>Top Artists</h2>
 
-            <div class="row">
-                <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
-                     ng-repeat="artist in stats.most_played_artists | limitTo: 9">
+            <ul class="row list-unstyled">
+                <li class="col-lg-3 col-md-3 col-sm-4 col-xs-6"
+                    ng-repeat="artist in stats.most_played_artists | limitTo: 9">
 
                     <h3>{{$index + 1}}.</h3>
 
-                    <a href="artists/{{ artist.artist.id }}" class="thumbnail" title="{{ artist.artist.name }}">
-                        <div class="img"
-                             ng-class="{
-                                'no-img': !artist.artist.images[1]
-                             }"
-                             ng-style="{
-                                'background-image': 'url({{ artist.artist.images[1].url || 'img/icons/artist.svg' }})'
-                             }">
-                            <img ng-src="{{ artist.artist.images[1].url }}" alt="{{ artist.artist.name }}" class="sr-only sr-only-focusable">
-                        </div>
-                        <div class="caption">
-                            <h3 class="h5 text-overflow">{{ artist.artist.name }}</h3>
-                            <p class="text-muted">
-                                {{ artist.total }} plays
-                            </p>
-                        </div>
-                    </a>
+                    <fm-artist data-artist="artist.artist"></fm-artist>
 
-                </div>
-            </div>
+                    <p class="text-muted">{{ artist.total }} plays</p>
+
+                </li>
+            </ul>
         </div>
 
         <div class="col-xs-12">

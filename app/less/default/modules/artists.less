@@ -1,6 +1,32 @@
 //
-// Artist
+// Artists
 // --------------------------------------------------
+
+.artist {
+    .sidebar & {
+        .clearfix();
+        height: 62px;
+
+        .img,
+        .caption {
+            display: inline-block;
+            float: left;
+        }
+
+        .img {
+            .square(62px);
+        }
+
+        .caption {
+            height: 100%;
+            width: 203px;
+
+            .h5 {
+                font-family: @font-family-base;
+            }
+        }
+    }
+}
 
 .artist-banner {
     margin-bottom: 12px;
