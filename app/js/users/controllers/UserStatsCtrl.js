@@ -43,25 +43,29 @@ angular.module("FM.users.UserStatsCtrl", [
 /**
  * @constructor
  * @class UserStatsCtrl
- * @param {Object}  $scope        Scoped application data
- * @param {Service} $q            Angular promise service
- * @param {Service} $filter       Angular filter service
- * @param {Service} $location     Angular URL service
- * @param {Object}  stats         User's stats resolved from API
- * @param {Array}   CHART_COLOURS List of global chart colours
- * @param {Object}  CHART_OPTIONS ChartJS config options
+ * @param {Object}   $scope        Scoped application data
+ * @param {Service}  $q            Angular promise service
+ * @param {Service}  $filter       Angular filter service
+ * @param {Service}  $location     Angular URL service
+ * @param {Service}  DateUtils     Date helper functions
+ * @param {Array}    CHART_COLOURS List of global chart colours
+ * @param {Object}   CHART_OPTIONS ChartJS config options
+ * @param {Resource} StatsResource Provides communication with stats API endpoint
+ * @param {Object}   stats         User's stats resolved from API
+ * @param {Object}   user          User object resolved from API
  */
 .controller("UserStatsCtrl", [
     "$scope",
     "$q",
     "$filter",
     "$location",
-    "stats",
-    "user",
+    "DateUtils",
     "CHART_COLOURS",
     "CHART_OPTIONS",
     "UsersResource",
-    function ($scope, $q, $filter, $location, stats, user, CHART_COLOURS, CHART_OPTIONS, UsersResource) {
+    "stats",
+    "user",
+    function ($scope, $q, $filter, $location, DateUtils, CHART_COLOURS, CHART_OPTIONS, UsersResource, stats, user) {
 
         /**
          * User
@@ -107,7 +111,7 @@ angular.module("FM.users.UserStatsCtrl", [
          */
         $scope.playTime = {
             data: [[]],
-            series: [user.display_name],
+            series: [user.display_name],  // jshint ignore:line
             labels: [],
             options: CHART_OPTIONS
         };
@@ -120,30 +124,7 @@ angular.module("FM.users.UserStatsCtrl", [
          */
         $scope.loadHistoricData = function loadHistoricData (startDate, endDate) {
 
-            startDate = new Date(startDate);
-            endDate = endDate ? new Date(endDate) : new Date();
-
-            /**
-             * Difference in days between filter start and end dates
-             * @property {Number} diff
-             */
-            var diff = (startDate.getTime() - endDate.getTime()) / (24 * 60 * 60 * 1000);
-
-            /**
-             * Calculated dates for historic data, based on filter dates
-             * Eg. if the filter period is 1 week this will be 1 week before, 2 weeks before and 3 weeks before
-             * @property {Array} dates
-             */
-            var dates = [{
-                from: $filter("date")(new Date().setDate(startDate.getDate() + diff), "yyyy-MM-dd"),
-                to: $filter("date")(new Date().setDate(startDate.getDate() - 1), "yyyy-MM-dd"),
-            },{
-                from: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 2)), "yyyy-MM-dd"),
-                to: $filter("date")(new Date().setDate(startDate.getDate() + (diff) - 1), "yyyy-MM-dd"),
-            },{
-                from: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 3)), "yyyy-MM-dd"),
-                to: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 2) - 1), "yyyy-MM-dd"),
-            }];
+            var dates = DateUtils.historicDatePeriods(startDate, endDate, 3);
 
             // request historic data from API using calculated date ranges
             $q.all([
@@ -155,7 +136,7 @@ angular.module("FM.users.UserStatsCtrl", [
                     // add data to play time chart dataset
                     $scope.playTime.labels.unshift($filter("date")(dates[index].from, "dd-MM-yyyy"));
                     // convert milliseconds to minutes
-                    $scope.playTime.data[0].unshift(Math.round(response.total_play_time / 1000 / 60));
+                    $scope.playTime.data[0].unshift(Math.round(response.total_play_time / 1000 / 60));  // jshint ignore:line
                 });
             });
         };
@@ -205,7 +186,7 @@ angular.module("FM.users.UserStatsCtrl", [
                 // Format total play time per user stats for charts
                 $scope.playTime.labels.unshift($filter("date")($scope.filter.from, "dd-MM-yyyy"));
                 // convert milliseconds to minutes
-                $scope.playTime.data[0].unshift(Math.round(stats.total_play_time / 1000 / 60));
+                $scope.playTime.data[0].unshift(Math.round(stats.total_play_time / 1000 / 60));  // jshint ignore:line
 
                 // Load additional data for play time line chart
                 $scope.loadHistoricData($scope.filter.from, $scope.filter.to);

@@ -142,30 +142,7 @@ angular.module("FM.stats.StatsCtrl", [
          */
         $scope.loadHistoricData = function loadHistoricData (startDate, endDate) {
 
-            startDate = new Date(startDate);
-            endDate = endDate ? new Date(endDate) : new Date();
-
-            /**
-             * Difference in days between filter start and end dates
-             * @property {Number} diff
-             */
-            var diff = (startDate.getTime() - endDate.getTime()) / (24 * 60 * 60 * 1000);
-
-            /**
-             * Calculated dates for historic data, based on filter dates
-             * Eg. if the filter period is 1 week this will be 1 week before, 2 weeks before and 3 weeks before
-             * @property {Array} dates
-             */
-            var dates = [{
-                from: $filter("date")(new Date().setDate(startDate.getDate() + diff), "yyyy-MM-dd"),
-                to: $filter("date")(new Date().setDate(startDate.getDate() - 1), "yyyy-MM-dd"),
-            },{
-                from: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 2)), "yyyy-MM-dd"),
-                to: $filter("date")(new Date().setDate(startDate.getDate() + (diff) - 1), "yyyy-MM-dd"),
-            },{
-                from: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 3)), "yyyy-MM-dd"),
-                to: $filter("date")(new Date().setDate(startDate.getDate() + (diff * 2) - 1), "yyyy-MM-dd"),
-            }];
+            var dates = DateUtils.historicDatePeriods(startDate, endDate, 3);
 
             // request historic data from API using calculated date ranges
             $q.all([
