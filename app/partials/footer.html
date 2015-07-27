@@ -7,9 +7,9 @@
 
 <div ng-controller="PlayerCtrl">
 
-    <fm-track class="track" ng-show="track.track.uri" data-spotify-track="track.track" data-user="track.user" data-timer="trackPositionTimer"></fm-track>
+    <fm-track class="track" ng-show="track.track.uri" data-spotify-track="track.track" data-user="track.user" data-timer="trackPositionTimer" ng-class="{ 'no-controls': !isAuthenticated() }"></fm-track>
 
-    <div class="controls" ng-show="track.track.uri">
+    <div class="controls" ng-show="track.track.uri" ng-class="{ 'no-controls': !isAuthenticated() }">
 
         <div class="playing-animation"
              ng-switch="paused">
@@ -17,7 +17,7 @@
             <img ng-switch-default src="img/icons/playing-stoped.png" alt="music stopped animation">
         </div>
 
-        <form name="controls" class="form-inline">
+        <form name="controls" class="form-inline" ng-if="isAuthenticated()">
 
             <button ng-show="paused"
                     ng-click="resume()"
