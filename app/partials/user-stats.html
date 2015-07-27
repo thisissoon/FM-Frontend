@@ -1,0 +1,135 @@
+<div class="row profile">
+    <div class="avatar">
+        <img ng-src="{{ user.avatar_url }}" alt="{{ user.display_name }}">
+    </div>
+    <div class="name">
+        <h1>{{ user.display_name }}</h1>
+    </div>
+</div>
+
+<nav class="row">
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a ng-href="./users/{{ user.id }}">Stats</a></li>
+    </ul>
+</nav>
+
+
+<div class="stats">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-inline form-dark">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Stats from" datepicker-popup="dd-MM-yyyy" is-open="datepickerOpened.from" min-date="" max-date="datepickerMaxDate" ng-model="filter.from" ng-change="updateFilter()" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="openDatepicker($event, 'from')"><span class="icon icon-calendar"></span></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Stats to" datepicker-popup="dd-MM-yyyy" is-open="datepickerOpened.to" min-date="filter.from" max-date="datepickerMaxDate" ng-model="filter.to" ng-change="updateFilter()" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="openDatepicker($event, 'to')"><span class="icon icon-calendar"></span></button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <h2 class="h1 text-center">{{ stats.total_plays }}</h2>
+                <p class="text-center">Total Tracks Played</p>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <h2 class="h1 text-center">{{ stats.total_play_time | time }}</h2>
+                <p class="text-center">Total Play Time</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                <canvas ng-hide="!playTime.data[0][0]" id="line" class="chart chart-line" data="playTime.data" series="playTime.series" labels="playTime.labels" series="playTime.series" colours="chartColours"></canvas>
+
+                <h2 class="text-center">Play Time</h2>
+                <p class="text-center" ng-if="!playTime.data[0][0]">Set filter dates to view historic play time from previous periods</p>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-12">
+
+            <h2>Top Tracks</h2>
+
+            <ul class="list-unstyled track-list">
+                <li class="track"
+                    ng-repeat="track in stats.most_played_tracks"
+                    data-spotify-track="track.track"
+                    data-play-count="track.total"
+                    fm-track>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-12">
+
+            <h2>Top Artists</h2>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
+                     ng-repeat="artist in stats.most_played_artists | limitTo: 9">
+
+                    <h3>{{$index + 1}}.</h3>
+
+                    <a href="artists/{{ artist.artist.id }}" class="thumbnail" title="{{ artist.artist.name }}">
+                        <div class="img"
+                             ng-class="{
+                                'no-img': !artist.artist.images[1]
+                             }"
+                             ng-style="{
+                                'background-image': 'url({{ artist.artist.images[1].url || 'img/icons/artist.svg' }})'
+                             }">
+                            <img ng-src="{{ artist.artist.images[1].url }}" alt="{{ artist.artist.name }}" class="sr-only sr-only-focusable">
+                        </div>
+                        <div class="caption">
+                            <h3 class="h5 text-overflow">{{ artist.artist.name }}</h3>
+                            <p class="text-muted">
+                                {{ artist.total }} plays
+                            </p>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+
+            <h2>Top Genres</h2>
+
+            <ul class="list-unstyled genre-list">
+                <li class="genre"
+                    ng-repeat="genre in stats.most_played_genres track by $index">
+                    <h3>{{$index + 1}}.</h3>
+                    <h3 class="genre-name">{{ genre.name }}</h3>
+                    <p class="text-muted">{{ genre.total }} plays</p>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>

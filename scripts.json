@@ -71,6 +71,9 @@
         "./app/js/stats/services/DateUtils.js",
         "./app/js/stats/services/StatsResolver.js",
 
+        "./app/js/users/users.js",
+        "./app/js/users/controllers/UserStatsCtrl.js",
+
         "./app/js/nav/nav.js",
 
         "./app/js/app.js"
