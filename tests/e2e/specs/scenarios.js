@@ -2,6 +2,11 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/getting-started.md */
 
+var login = function login (){
+    browser.executeScript("localStorage.setItem('sn_fm_access_token', 'Ijc4NWJjMDY0LTBlMDgtNGVhMy05OGQ1LTQ0NmU0OTdiZDIxMyI.CJeLpg.oPLDqjS2W-iaAKnfJ8DBwAvLx-s');");
+    browser.driver.sleep(2000);
+};
+
 describe("FM", function() {
 
     var scrollTo = function scrollTo (y) {
@@ -100,17 +105,21 @@ describe("FM", function() {
 
         it("should pause and resume", function() {
 
+            // login
+            login();
+
             // pause
             element(by.css(".controls button:nth-child(2)")).click();
 
             var startTime = 0;
             element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
-                startTime = value;
+                startTime = parseInt(value);
             });
 
             browser.driver.sleep(2000);
 
             element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
+                value = parseInt(value);
                 expect(value).toEqual(startTime);
             });
 
@@ -119,6 +128,7 @@ describe("FM", function() {
             browser.driver.sleep(2000);
 
             element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
+                value = parseInt(value);
                 expect(value > startTime).toBeTruthy();
             });
         });
