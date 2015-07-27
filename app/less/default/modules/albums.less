@@ -1,0 +1,41 @@
+//
+// Albums
+// --------------------------------------------------
+
+.album {
+
+    .text-artists {
+        display: none;
+    }
+
+    .sidebar & {
+        .clearfix();
+        height: 62px;
+
+        .img,
+        .caption {
+            display: inline-block;
+            float: left;
+        }
+
+        .img {
+            .square(62px);
+        }
+
+        .caption {
+            height: 100%;
+            width: 203px;
+
+            .h5 {
+                font-family: @font-family-base;
+                line-height: 1.4;
+                margin-bottom: 5px;
+                margin-top: 0;
+            }
+
+            .text-artists {
+                display: block;
+            }
+        }
+    }
+}

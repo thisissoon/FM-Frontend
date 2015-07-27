@@ -17,19 +17,7 @@
 </a>
 
 <!-- album -->
-<a class="media" ng-if="match.label.uri.indexOf('spotify:album') === 0" href="albums/{{ match.label.id }}" title="{{ match.label.name }}">
-    <div class="media-left">
-        <img ng-src="{{ match.label.images[1].url || 'img/icons/artist.svg' }}" alt="{{ match.label.name }}" class="media-object" width="62">
-    </div>
-    <div class="media-body media-middle">
-        <p class="media-heading text-overflow">{{ match.label.name }}</p>
-        <p class="text-muted text-overflow">
-            <span class="text-muted" ng-repeat-start="artist in match.label.artists">
-                {{ artist.name }}
-            </span><span ng-repeat-end ng-if="!$last">, </span>
-        </p>
-    </div>
-</a>
+<fm-album ng-if="match.label.uri.indexOf('spotify:album') === 0" data-album="match.label"></fm-album>
 
 
 <!-- artist -->
