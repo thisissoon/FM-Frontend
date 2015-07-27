@@ -30,6 +30,12 @@
     </div>
 </div>
 
+<div ng-if="playCount" class="track-right track-plays text-right">
+    <p>
+        {{ playCount }} plays
+    </p>
+</div>
+
 <div class="track-menu" dropdown is-open="status.isopen">
     <a role="button" href class="text-muted btn-context" dropdown-toggle>
         <span class="sr-only sr-only-focusable">Track menu</span>
