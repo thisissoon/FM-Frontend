@@ -1,12 +1,11 @@
 "use strict";
 /**
- * @module   FM.stats.StatsCtrl
- * @author   "SOON_"
+ * @module   FM.users.UserStatsCtrl
+ * @author   SOON_
  */
-angular.module("FM.stats.StatsCtrl", [
-    "FM.stats.DateUtils",
-    "FM.stats.statsResolver",
-    "FM.api.StatsResource",
+angular.module("FM.users.UserStatsCtrl", [
+    "FM.api.UsersResource",
+    "FM.stats",
     "ngRoute",
     "chart.js",
     "ui.bootstrap.datepicker"
@@ -20,12 +19,15 @@ angular.module("FM.stats.StatsCtrl", [
     function ($routeProvider) {
 
         $routeProvider
-            .when("/stats", {
-                templateUrl: "partials/stats.html",
-                controller: "StatsCtrl",
+            .when("/users/:id", {
+                templateUrl: "partials/user-stats.html",
+                controller: "UserStatsCtrl",
                 resolve: {
-                    stats: ["statsResolver", "$route", function (statsResolver, $route) {
-                        return statsResolver($route.current.params);
+                    stats: ["UsersResource", "$route", function (UsersResource, $route){
+                        return UsersResource.stats($route.current.params).$promise;
+                    }],
+                    user: ["UsersResource", "$route", function (UsersResource, $route){
+                        return UsersResource.get($route.current.params).$promise;
                     }]
                 }
             });
@@ -34,20 +36,42 @@ angular.module("FM.stats.StatsCtrl", [
 ])
 /**
  * @constructor
- * @param {Object} $scope Application data on scope
- * @param {Object} stats  Data resolved from API
+ * @class UserStatsCtrl
+ * @param {Object}   $scope        Scoped application data
+ * @param {Service}  $q            Angular promise service
+ * @param {Service}  $filter       Angular filter service
+ * @param {Service}  $location     Angular URL service
+ * @param {Service}  DateUtils     Date helper functions
+ * @param {Array}    CHART_COLOURS List of global chart colours
+ * @param {Object}   CHART_OPTIONS ChartJS config options
+ * @param {Resource} StatsResource Provides communication with stats API endpoint
+ * @param {Object}   stats         User's stats resolved from API
+ * @param {Object}   user          User object resolved from API
  */
-.controller("StatsCtrl", [
+.controller("UserStatsCtrl", [
     "$scope",
     "$q",
     "$filter",
     "$location",
+    "DateUtils",
     "CHART_COLOURS",
     "CHART_OPTIONS",
-    "DateUtils",
-    "StatsResource",
+    "UsersResource",
     "stats",
-    function ($scope, $q, $filter, $location, CHART_COLOURS, CHART_OPTIONS, DateUtils, StatsResource, stats) {
+    "user",
+    function ($scope, $q, $filter, $location, DateUtils, CHART_COLOURS, CHART_OPTIONS, UsersResource, stats, user) {
+
+        /**
+         * User
+         * @property {Object} user
+         */
+        $scope.user = user;
+
+        /**
+         * User's stats resolved from API
+         * @property {Object} stats
+         */
+        $scope.stats = stats;
 
         /**
          * Current search params
@@ -70,68 +94,20 @@ angular.module("FM.stats.StatsCtrl", [
         };
 
         /**
-         * Stats resolved from the API
-         * @property {Object} stats
-         */
-        $scope.stats = stats;
-
-        /**
          * List of colours to use for charts
          * @property {Array} chartColours
          */
         $scope.chartColours = CHART_COLOURS;
 
         /**
-         * ChartJS config for active DJs pie chart
-         * @property {Object} activeDj
-         */
-        $scope.activeDj = {
-            labels: [],
-            data: [],
-            options: CHART_OPTIONS
-        };
-
-        /**
          * ChartJS config for play time line graph
          * @property {Object} playTime
          */
         $scope.playTime = {
+            data: [[]],
+            series: [user.display_name],  // jshint ignore:line
+            labels: [],
             options: CHART_OPTIONS
-        };
-
-        /**
-         * Format series based stats data for chart and add to existing dataset
-         * @method addDataToSeries
-         * @param {Object} dataset   ChartJs config object
-         * @param {Object} data      New stat data from API
-         * @param {String} label     Label for dataset
-         * @param {Number} maxSeries Maximum number of series to extract from data
-         */
-        $scope.addDataToSeries = function addDataToSeries (dataset, data, label, maxSeries) {
-
-            // initalise dataset properties
-            dataset.labels = dataset.labels || [];
-            dataset.data = dataset.data || [];
-            dataset.series = dataset.series || [];
-
-            // default maximum series length to 5
-            maxSeries = maxSeries || 5;
-
-            if (data && data.length) {
-
-                // add dataset label
-                dataset.labels.unshift(label);
-
-                // parse data from API to chart data array
-                data.forEach(function(item, index){
-                    if (index < maxSeries) {
-                        dataset.data[index] = dataset.data[index] || [];
-                        dataset.series[index] = item.user.display_name;  // jshint ignore:line
-                        // convert milliseconds to minutes
-                        dataset.data[index].unshift(Math.round(item.total/1000/60));
-                    }
-                });
-            }
         };
 
         /**
@@ -146,13 +122,15 @@ angular.module("FM.stats.StatsCtrl", [
 
             // request historic data from API using calculated date ranges
             $q.all([
-                StatsResource.get(dates[0]).$promise,
-                StatsResource.get(dates[1]).$promise,
-                StatsResource.get(dates[2]).$promise
+                UsersResource.stats({ from: dates[0].from, to: dates[0].to, id: user.id }).$promise,
+                UsersResource.stats({ from: dates[1].from, to: dates[1].to, id: user.id }).$promise,
+                UsersResource.stats({ from: dates[2].from, to: dates[2].to, id: user.id }).$promise
             ]).then(function (responses) {
                 responses.forEach(function (response, index) {
                     // add data to play time chart dataset
-                    $scope.addDataToSeries($scope.playTime, response.total_play_time_per_user, $filter("date")(dates[index].from, "dd-MM-yyyy"));  // jshint ignore:line
+                    $scope.playTime.labels.unshift($filter("date")(dates[index].from, "dd-MM-yyyy"));
+                    // convert milliseconds to minutes
+                    $scope.playTime.data[0].unshift(Math.round(response.total_play_time / 1000 / 60));  // jshint ignore:line
                 });
             });
         };
@@ -195,22 +173,15 @@ angular.module("FM.stats.StatsCtrl", [
             $scope.filter.from = $scope.search.from || undefined;
             $scope.filter.to = $scope.search.to || undefined;
 
-            // set max datepicker date to be end of last week
-            $scope.datepickerMaxDate = DateUtils.lastOccurence(5);
-
-            // Format most active DJ stats for charts
-            if (stats.most_active_djs) {  // jshint ignore:line
-                stats.most_active_djs.forEach(function(item, index){  // jshint ignore:line
-                    if (index < 5) {
-                        $scope.activeDj.labels.push(item.user.display_name);  // jshint ignore:line
-                        $scope.activeDj.data.push(item.total);
-                    }
-                });
-            }
+            // set max datepicker date to today
+            $scope.datepickerMaxDate = new Date();
 
             if ($scope.filter.from) {
                 // Format total play time per user stats for charts
-                $scope.addDataToSeries($scope.playTime, stats.total_play_time_per_user, $filter("date")($scope.filter.from, "dd-MM-yyyy"));  // jshint ignore:line
+                $scope.playTime.labels.unshift($filter("date")($scope.filter.from, "dd-MM-yyyy"));
+                // convert milliseconds to minutes
+                $scope.playTime.data[0].unshift(Math.round(stats.total_play_time / 1000 / 60));  // jshint ignore:line
+
                 // Load additional data for play time line chart
                 $scope.loadHistoricData($scope.filter.from, $scope.filter.to);
             }
