@@ -1,11 +1,13 @@
 <div ng-if="user" class="track-left track-user text-center">
     <span ng-if="current" class="selected">Selected by: </span>
-    <img ng-src="{{ user.avatar_url }}"
-         alt="{{ user.display_name }}"
-         popover="{{ user.display_name }}"
-         popover-append-to-body="true"
-         popover-trigger="mouseenter"
-         class="img-circle img-user">
+    <a ng-href="users/{{ user.id }}">
+        <img ng-src="{{ user.avatar_url }}"
+             alt="{{ user.display_name }}"
+             popover="{{ user.display_name }}"
+             popover-append-to-body="true"
+             popover-trigger="mouseenter"
+             class="img-circle img-user">
+    </a>
 </div>
 
 <div ng-if="track && track.album.images[0]" class="track-left track-album">
