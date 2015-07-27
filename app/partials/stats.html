@@ -12,6 +12,8 @@
                             <button type="button" class="btn btn-default" ng-click="openDatepicker($event, 'from')"><span class="icon icon-calendar"></span></button>
                         </span>
                     </div>
+                </div>
+                <div class="form-group">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Stats to" datepicker-popup="dd-MM-yyyy" is-open="datepickerOpened.to" min-date="filter.from" max-date="datepickerMaxDate" ng-model="filter.to" ng-change="updateFilter()" close-text="Close" />
                         <span class="input-group-btn">
@@ -40,7 +42,7 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
-                <canvas id="polar-area" class="chart-base" chart-type="'Pie'" data="activeDj.data" labels="activeDj.labels" options="activeDj.options" colours="chartColours"></canvas>
+                <canvas ng-hide="activeDj.data.length == 0" id="polar-area" class="chart-base" chart-type="'Pie'" data="activeDj.data" labels="activeDj.labels" options="activeDj.options" colours="chartColours"></canvas>
 
                 <h2 class="text-center">Most Active DJ</h2>
                 <p class="text-center">{{ activeDj.labels[0] }}</p>
@@ -48,11 +50,11 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
-                <canvas id="line" class="chart chart-line" data="playTime.data" series="playTime.series" labels="playTime.labels" series="playTime.series" colours="chartColours"></canvas>
+                <canvas ng-hide="playTime.data.length == 0" id="line" class="chart chart-line" data="playTime.data" series="playTime.series" labels="playTime.labels" series="playTime.series" colours="chartColours"></canvas>
 
                 <h2 class="text-center">Play time</h2>
                 <p class="text-center" ng-if="playTime.data[0][0]">{{ playTime.series[0] }} <span ng-if="playTime.data[0][0] >= 1440">{{ playTime.data[0][0]/60 }} hours</span><span ng-if="playTime.data[0][0] < 1440">{{ playTime.data[0][0] }} minutes</span></p>
-                <p class="text-center" ng-if="!playTime.data[0][0]">Select from date to view historic play time stats</p>
+                <p class="text-center" ng-if="!playTime.data[0][0]">Set filter dates to view historic play time from previous periods</p>
 
             </div>
         </div>
