@@ -27,18 +27,16 @@ describe("FM", function() {
 
     describe("history", function() {
 
-        beforeEach(function(){
+        it("should render history partial when user navigates to /history", function() {
             browser.manage().deleteAllCookies();
             browser.get("http://127.0.0.1:8000/history");
             browser.waitForAngular();
             browser.driver.sleep(2000);
-        });
 
-        it("should render history partial when user navigates to /history", function() {
             expect(element.all(by.repeater("track in history")).count()).toEqual(20);
         });
 
-        it("should load more pages on scroll to bottom of list", function() {
+        it("should load more pages on scroll to bottom of list (40 items total)", function() {
 
             // confirm initial state
             expect(element.all(by.repeater("track in history")).count()).toEqual(20);
@@ -48,12 +46,19 @@ describe("FM", function() {
             browser.driver.sleep(2000);
 
             expect(element.all(by.repeater("track in history")).count()).toEqual(40);
+        });
+
+        it("should load more pages on scroll to bottom of list (60 items total)", function() {
 
             // 3rd page
             browser.executeScript(scrollTo(4000));
             browser.driver.sleep(2000);
 
             expect(element.all(by.repeater("track in history")).count()).toEqual(60);
+
+        });
+
+        it("should NOT load more pages on scroll to bottom of list", function() {
 
             // 4th page - shouldn't exist
             browser.executeScript(scrollTo(6000));
