@@ -17,4 +17,8 @@ ng-view {
     padding: @view-padding;
     position: fixed;
     top: @view-position-top;
+
+    .current ng-view {
+        bottom: 0;
+    }
 }

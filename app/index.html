@@ -42,7 +42,9 @@
     <meta name="msapplication-TileImage" content="img/favicons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 </head>
-<body>
+<body ng-class="{
+          'current': routeIsActive('/current')
+      }">
 
     <header class="header" ng-include="'partials/header.html'"></header>
     <div class="alerts" ng-include="'partials/alert.html'" ng-controller="AlertCtrl"></div>
