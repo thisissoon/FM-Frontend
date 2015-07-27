@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-4 col-xs-offset-4 text-center">
+            <img class="img-responsive" ng-src="{{ track.track.album.images[0].url }}" alt="{{ track.track.name }} album cover">
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <p class="lead track-heading track-info" title="{{ track.name }}">{{ track.track.name }}</p>
+            <p class="text-muted track-info" title="{{ track.allArtists }}">
+                <a class="text-muted" ng-repeat-start="artist in track.track.artists" ng-href="artists/{{ artist.uri }}">{{ artist.name }}</a><span ng-repeat-end ng-if="!$last">, </span>
+            </p>
+            <p class="text-muted track-info hidden-xs" title="{{ track.track.album.name }}">
+                <a class="text-muted" ng-href="albums/{{ track.track.album.uri }}">{{ track.track.album.name }}</a>
+            </p>
+        </div>
+    </div>
+</div>

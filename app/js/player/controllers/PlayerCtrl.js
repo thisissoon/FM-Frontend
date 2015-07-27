@@ -12,7 +12,21 @@ angular.module("FM.player.PlayerCtrl",[
     "ui.bootstrap.popover",
     "template/popover/popover-template.html",
     "template/popover/popover.html",
-    "sn.title"
+    "sn.title",
+    "ngRoute"
+])
+/**
+ * @method config
+ */
+.config([
+    "$routeProvider",
+    function ($routeProvider) {
+        $routeProvider
+            .when("/current", {
+                templateUrl: "partials/player/current.html",
+                controller: "PlayerCtrl"
+            });
+    }
 ])
 /**
  * @constant
@@ -21,7 +35,6 @@ angular.module("FM.player.PlayerCtrl",[
 .constant("UNICODE", {
     play: "&#x25B6;",
     pause: "&#10074;&#10074;"
-
 })
 /**
  * @class PlayerCtrl
