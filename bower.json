@@ -1,7 +1,7 @@
 {
   "name": "FM-Frontend",
   "description": "The frontend for thisissoon.fm",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "homepage": "https://github.com/thisissoon/FM-Frontend",
   "license": "MIT",
   "private": true,
