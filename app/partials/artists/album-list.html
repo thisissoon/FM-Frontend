@@ -5,30 +5,18 @@
         </div>
     </div>
 
+    <ul class="row list-unstyled">
+        <li ng-repeat="album in albums"
+            class="col-lg-3 col-md-3 col-sm-4 col-xs-6"
+            data-album="album"
+            fm-album>
+        </li>
+    </ul>
+
     <div class="row">
-        <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
-             ng-repeat="album in albums">
-
-            <a href="albums/{{ album.id }}" class="thumbnail" title="{{ album.name }}">
-                <div class="img"
-                     ng-class="{
-                        'no-img': !album.images[1]
-                     }"
-                     ng-style="{
-                        'background-image': 'url({{ album.images[1].url || 'img/icons/artist.svg' }})'
-                     }">
-                    <img ng-src="{{ album.images[1].url }}" alt="{{ album.name }}" class="sr-only sr-only-focusable">
-                </div>
-                <div class="caption">
-                    <h3 class="h5 text-overflow">{{ album.name }}</h3>
-                </div>
-            </a>
-
+        <div class="col-xs-12 text-center">
+            <button class="btn btn-primary" ng-click="loadMoreAlbums()" ng-if="albumsMeta.next" ng-disabled="loadDisabled">Load more</button>
+            <p ng-if="albumsMeta.total > 0 && !albumsMeta.next">No more albums</p>
         </div>
-    </div>
-
-    <div class="row text-center">
-        <button class="btn btn-primary" ng-click="loadMoreAlbums()" ng-if="albumsMeta.next" ng-disabled="loadDisabled">Load more</button>
-        <p ng-if="albumsMeta.total > 0 && !albumsMeta.next">No more albums</p>
     </div>
 </div>

@@ -19,6 +19,8 @@
 
         .caption {
             height: 100%;
+            padding: 0;
+            margin-left: 10px;
             width: 203px;
 
             .h5 {
@@ -34,8 +36,16 @@
     .h1 {
         bottom: 20px;
         left: 180px;
+        line-height: 130px;
+        margin: 0;
         position: absolute;
         z-index: 1;
+    }
+
+    .img.banner {
+        min-height: 300px;
+        padding-bottom: 30%;
+        position: relative;
     }
 
     .img.avatar {
@@ -52,6 +62,7 @@
         bottom: 0;
         left: 0;
         position: absolute;
+        pointer-events: none;
         right: 0;
         top: 0;
         z-index: 0;

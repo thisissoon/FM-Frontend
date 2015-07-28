@@ -5,30 +5,18 @@
         </div>
     </div>
 
+    <ul class="row list-unstyled">
+        <li ng-repeat="single in singles"
+            class="col-lg-3 col-md-3 col-sm-4 col-xs-6"
+            data-album="single"
+            fm-album>
+        </li>
+    </ul>
+
     <div class="row">
-        <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12"
-             ng-repeat="single in singles">
-
-            <a href="albums/{{ single.id }}" class="thumbnail" title="{{ single.name }}">
-                <div class="img"
-                     ng-class="{
-                        'no-img': !single.images[1]
-                     }"
-                     ng-style="{
-                        'background-image': 'url({{ single.images[1].url || 'img/icons/artist.svg' }})'
-                     }">
-                    <img ng-src="{{ single.images[1].url }}" alt="{{ single.name }}" class="sr-only sr-only-focusable">
-                </div>
-                <div class="caption">
-                    <h3 class="h5 text-overflow">{{ single.name }}</h3>
-                </div>
-            </a>
-
+        <div class="col-xs-12 text-center">
+            <button class="btn btn-primary" ng-click="loadMoreSingles()" ng-if="singlesMeta.next" ng-disabled="loadDisabled">Load more</button>
+            <p ng-if="singlesMeta.total > 0 && !singlesMeta.next">No more singles</p>
         </div>
-    </div>
-
-    <div class="row text-center">
-        <button class="btn btn-primary" ng-click="loadMoreSingles()" ng-if="singlesMeta.next" ng-disabled="loadDisabled">Load more</button>
-        <p ng-if="singlesMeta.total > 0 && !singlesMeta.next">No more singles</p>
     </div>
 </div>
