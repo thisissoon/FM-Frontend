@@ -1,3 +1,7 @@
+## Changes in 0.8.1
+
+ * @bcmrbvm: Fix: Volume slider (#187)
+
 ## Changes in 0.8.0
 
  * @jamesjwarren: Feature: user stats (#183)
