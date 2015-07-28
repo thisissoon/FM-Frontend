@@ -1,3 +1,18 @@
+## Changes in 0.8.0
+
+ * @jamesjwarren: Feature: user stats (#183)
+ * @bcmrbvm: Fix: Infinite scroll e2e test timing out (#182)
+ * @bcmrbvm: Fix: Incorrect artist image in sidebar search (#180)
+ * @bcmrbvm: Feature: Album directive (#179)
+ * @bcmrbvm: Feature: Artist directive (#178)
+ * @jamesjwarren: Feature: hide controls for unauthorised user (#177)
+ * @bcmrbvm: Feature: Related artists (#174)
+ * @jamesjwarren: Feature: add play count to top tracks (#173)
+ * @jamesjwarren: Fix: timeFilter module dependency (#172)
+ * @jamesjwarren: Fix: stat filtering (#171)
+ * @jamesjwarren: Fix: total play time stat (#165)
+ * @jamesjwarren: Fix: historic stats loading (#164)
+
 ## Changes in 0.7.0
 
  * @bcmrbvm: Feature: Song in title (#155)
