@@ -13,6 +13,17 @@ angular.module("FM.notifications", [
     "notification"
 ])
 /**
+ * @method config
+ * @param  {Provider} $notificationProvider
+ */
+.config([
+    "$notificationProvider",
+    function ($notificationProvider) {
+
+        $notificationProvider.setOptions({ delay: 5000 });
+    }
+])
+/**
  * @method run
  * @param  {Service} Notifications
  */

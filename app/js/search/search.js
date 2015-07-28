@@ -11,6 +11,7 @@
  * @requires FM.search.AlbumDetailCtrl
  * @requires FM.search.TrackSearchCtrl
  * @requires FM.search.artistDirective
+ * @requires FM.search.albumDirective
  */
 angular.module("FM.search", [
     "FM.search.SearchCtrl",
@@ -19,7 +20,8 @@ angular.module("FM.search", [
     "FM.search.AlbumSearchCtrl",
     "FM.search.AlbumDetailCtrl",
     "FM.search.TrackSearchCtrl",
-    "FM.search.artistDirective"
+    "FM.search.artistDirective",
+    "FM.search.albumDirective"
 ])
 /**
  * @method run

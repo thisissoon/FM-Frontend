@@ -7,7 +7,7 @@
         <span class="icon icon-chevron-up text-primary"></span>
     </a>
 
-    <fm-track class="track" data-spotify-track="track.track" data-user="track.user" data-timer="trackPositionTimer" ng-class="{ 'no-controls': !isAuthenticated() }"></fm-track>
+    <fm-track class="track" ng-show="track.track.uri" data-spotify-track="track.track" data-user="track.user" data-timer="trackPositionTimer" ng-class="{ 'no-controls': !isAuthenticatedGoogle() }"></fm-track>
 
     <div ng-include="'partials/player/controls.html'"></div>
 
