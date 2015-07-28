@@ -139,10 +139,67 @@
     }
 }
 
+.track-plays {
+    .align-self(flex-end);
+
+    .footer &,
+    .queue & {
+        display: none;
+    }
+}
+
 .img-user {
     .size(36px, auto);
 }
 
 .img-album {
     .size(90px, auto);
+}
+
+.sidebar .track {
+    .clearfix();
+    height: 62px;
+    padding-right: 0;
+
+    .track-progress,
+    .track-menu,
+    .track-time {
+        display: none;
+    }
+
+    .track-body,
+    .track-album {
+        display: inline-block;
+        float: left;
+    }
+
+    .img-album {
+        .square(62px);
+    }
+
+    .track-album {
+        min-width: 62px;
+        max-width: none;
+        width: 62px;
+    }
+
+    .track-body {
+        width: 203px;
+
+        .track-info {
+            font-size: @font-size-base;
+            font-family: @font-family-base;
+            height: @font-size-base * 1.4;
+            line-height: 1.4;
+            width: 203px;
+
+            a {
+                white-space: nowrap;
+            }
+        }
+
+        .track-info:last-child {
+            display: none;
+        }
+    }
 }

@@ -4,7 +4,10 @@
  * @author   SOON_
  */
 angular.module("FM.stats", [
-    "FM.stats.StatsCtrl"
+    "FM.stats.StatsCtrl",
+    "FM.stats.DateUtils",
+    "FM.stats.timeFilter",
+    "FM.stats.statsResolver"
 ])
 /**
  * Colour scheme for charts

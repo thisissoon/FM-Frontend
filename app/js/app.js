@@ -19,6 +19,7 @@ angular.module("FM", [
     "FM.loadingScreen",
     "FM.nav",
     "FM.stats",
+    "FM.users",
     "ngRoute",
     "notification",
     "config"

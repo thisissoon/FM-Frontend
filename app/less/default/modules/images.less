@@ -6,14 +6,16 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 300px;
+    height: auto;
     width: 100%;
 
     &.no-img {
-        background-size: 200px 200px;
+        background-color: lighten(@light-black, 10%);
+        background-image: url(../img/icons/artist.svg);
+        background-size: 60% auto;
     }
 
-    &.img-square {
-        width: 300px;
+    .img-helper {
+        width: 100%;
     }
 }

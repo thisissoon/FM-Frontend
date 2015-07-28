@@ -2,6 +2,11 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/getting-started.md */
 
+var login = function login (){
+    browser.executeScript("localStorage.setItem('sn_fm_access_token', 'Ijc4NWJjMDY0LTBlMDgtNGVhMy05OGQ1LTQ0NmU0OTdiZDIxMyI.CJeLpg.oPLDqjS2W-iaAKnfJ8DBwAvLx-s');");
+    browser.driver.sleep(2000);
+};
+
 describe("FM", function() {
 
     var scrollTo = function scrollTo (y) {
@@ -22,18 +27,16 @@ describe("FM", function() {
 
     describe("history", function() {
 
-        beforeEach(function(){
+        it("should render history partial when user navigates to /history", function() {
             browser.manage().deleteAllCookies();
             browser.get("http://127.0.0.1:8000/history");
             browser.waitForAngular();
             browser.driver.sleep(2000);
-        });
 
-        it("should render history partial when user navigates to /history", function() {
             expect(element.all(by.repeater("track in history")).count()).toEqual(20);
         });
 
-        it("should load more pages on scroll to bottom of list", function() {
+        it("should load more pages on scroll to bottom of list (40 items total)", function() {
 
             // confirm initial state
             expect(element.all(by.repeater("track in history")).count()).toEqual(20);
@@ -43,12 +46,19 @@ describe("FM", function() {
             browser.driver.sleep(2000);
 
             expect(element.all(by.repeater("track in history")).count()).toEqual(40);
+        });
+
+        it("should load more pages on scroll to bottom of list (60 items total)", function() {
 
             // 3rd page
             browser.executeScript(scrollTo(4000));
             browser.driver.sleep(2000);
 
             expect(element.all(by.repeater("track in history")).count()).toEqual(60);
+
+        });
+
+        it("should NOT load more pages on scroll to bottom of list", function() {
 
             // 4th page - shouldn't exist
             browser.executeScript(scrollTo(6000));
@@ -100,17 +110,21 @@ describe("FM", function() {
 
         it("should pause and resume", function() {
 
+            // login
+            login();
+
             // pause
             element(by.css(".controls button:nth-child(2)")).click();
 
             var startTime = 0;
             element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
-                startTime = value;
+                startTime = parseInt(value);
             });
 
             browser.driver.sleep(2000);
 
             element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
+                value = parseInt(value);
                 expect(value).toEqual(startTime);
             });
 
@@ -119,6 +133,7 @@ describe("FM", function() {
             browser.driver.sleep(2000);
 
             element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
+                value = parseInt(value);
                 expect(value > startTime).toBeTruthy();
             });
         });

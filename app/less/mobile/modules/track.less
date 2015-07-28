@@ -35,7 +35,7 @@
 .track-menu {
     .align-self(center);
     position: static;
-    min-width: 10px;
+    min-width: 15px;
     margin-bottom: 0;
     margin-top: 10px;
 
@@ -83,6 +83,17 @@
     }
 }
 
+.track-plays {
+    .align-self(center);
+    font-size: 0.867em; // 13px
+    margin-right: 15px;
+    white-space: nowrap;
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
 .track-heading {
     font-size: 0.933em; // 14px
 }
@@ -98,4 +109,14 @@
     right: 0;
     top: 0;
     width: 100%;
+}
+
+.sidebar .track {
+    .track-body {
+        width: 160px;
+
+        .track-info {
+            width: 160px;
+        }
+    }
 }

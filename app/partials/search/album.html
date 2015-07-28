@@ -1,0 +1,20 @@
+<a href="albums/{{ album.id }}" class="thumbnail album" title="{{ album.name }}">
+    <div class="img"
+         ng-class="{
+            'no-img': !album.images[1]
+         }"
+         ng-style="{
+            'background-image': 'url({{ album.images[1].url || 'img/icons/artist.svg' }})'
+         }">
+        <img ng-src="{{ album.images[1].url }}" alt="{{ album.name }}" class="sr-only sr-only-focusable">
+        <img src="img/helpers/1x1.jpg" alt="image for styling purposes" class="invisible img-helper">
+    </div>
+    <div class="caption">
+        <h3 class="h5 text-overflow">{{ album.name }}</h3>
+        <p class="text-muted text-artists text-overflow">
+            <span class="text-muted" ng-repeat-start="artist in album.artists">
+                {{ artist.name }}
+            </span><span ng-repeat-end ng-if="!$last">, </span>
+        </p>
+    </div>
+</a>

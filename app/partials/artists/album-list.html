@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Albums <span class="badge">{{ albumsMeta.total }}</span></h2>
+        </div>
+    </div>
+
+    <ul class="row list-unstyled">
+        <li ng-repeat="album in albums"
+            class="col-lg-3 col-md-3 col-sm-4 col-xs-6"
+            data-album="album"
+            fm-album>
+        </li>
+    </ul>
+
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <button class="btn btn-primary" ng-click="loadMoreAlbums()" ng-if="albumsMeta.next" ng-disabled="loadDisabled">Load more</button>
+            <p ng-if="albumsMeta.total > 0 && !albumsMeta.next">No more albums</p>
+        </div>
+    </div>
+</div>
