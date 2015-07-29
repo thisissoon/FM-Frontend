@@ -1,50 +1,52 @@
-<div class="container-fluid" ng-show="track.track.uri">
+<div class="current">
+    <div class="container-fluid" ng-show="track.track.uri">
 
-    <div class="row">
-        <div class="col-xs-4 col-xs-offset-4 text-center">
-            <img class="img-responsive" ng-src="{{ track.track.album.images[0].url }}" alt="{{ track.track.name }} album cover">
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-4 text-center">
+                <img class="img-responsive" ng-src="{{ track.track.album.images[0].url }}" alt="{{ track.track.name }} album cover">
+            </div>
         </div>
-    </div>
-    <br>
+        <br>
 
-    <div class="row">
-        <div class="col-xs-12 text-center">
-            <p class="lead track-heading track-info" title="{{ track.name }}">{{ track.track.name }}</p>
-            <p class="text-muted track-info" title="{{ track.allArtists }}">
-                <a class="text-muted" ng-repeat-start="artist in track.track.artists" ng-href="artists/{{ artist.uri }}">{{ artist.name }}</a><span ng-repeat-end ng-if="!$last">, </span>
-            </p>
-            <p class="text-muted track-info hidden-xs" title="{{ track.track.album.name }}">
-                <a class="text-muted" ng-href="albums/{{ track.track.album.uri }}">{{ track.track.album.name }}</a>
-            </p>
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <p class="lead track-heading track-info" title="{{ track.name }}">{{ track.track.name }}</p>
+                <p class="text-muted track-info" title="{{ track.allArtists }}">
+                    <a class="text-muted" ng-repeat-start="artist in track.track.artists" ng-href="artists/{{ artist.uri }}">{{ artist.name }}</a><span ng-repeat-end ng-if="!$last">, </span>
+                </p>
+                <p class="text-muted track-info hidden-xs" title="{{ track.track.album.name }}">
+                    <a class="text-muted" ng-href="albums/{{ track.track.album.uri }}">{{ track.track.album.name }}</a>
+                </p>
+            </div>
         </div>
-    </div>
-    <br>
+        <br>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="track-progress" ng-show="trackPositionTimer && track">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ trackPositionTimer.elapsedTime }}" aria-valuemin="0" aria-valuemax="{{ track.track.duration }}" ng-style="{ width: trackPositionTimer.percent + '%' }"></div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="track-progress" ng-show="trackPositionTimer && track">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ trackPositionTimer.elapsedTime }}" aria-valuemin="0" aria-valuemax="{{ track.track.duration }}" ng-style="{ width: trackPositionTimer.percent + '%' }"></div>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="timer lead text-center">
+                    <span ng-show="trackPositionTimer">{{ trackPositionTimer.elapsedTime | date: "H:mm:ss" | removeLeadingZeros }}</span>
+                    <span ng-show="trackPositionTimer" class="hidden-xs">/</span>
+                    <span class="text-muted">{{ track.track.duration | date: "H:mm:ss" | removeLeadingZeros }}</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <div ng-include="'partials/player/controls.html'"></div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <p class="lead text-center">
-                <span ng-show="trackPositionTimer">{{ trackPositionTimer.elapsedTime | date: "H:mm:ss" | removeLeadingZeros }}</span>
-                <span ng-show="trackPositionTimer" class="hidden-xs">/</span>
-                <span class="text-muted">{{ track.track.duration | date: "H:mm:ss" | removeLeadingZeros }}</span>
-            </p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12 text-center">
-            <div ng-include="'partials/player/controls.html'"></div>
-        </div>
-    </div>
+    <div ng-include="'partials/loading.html'" ng-show="!track.track.uri"></div>
 </div>
-
-<div ng-include="'partials/loading.html'" ng-show="!track.track.uri"></div>
