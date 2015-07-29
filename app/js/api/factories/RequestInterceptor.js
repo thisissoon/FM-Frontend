@@ -96,7 +96,7 @@ angular.module("FM.api.RequestInterceptor", [
                     $window.localStorage.removeItem(tokenName);
                 }
 
-                if($rootScope.routeChanging){
+                if($rootScope.routeChanging && !response.config.url.match(/api.spotify.com\/v1\/me/)){
 
                     // Navigate to error pages if server returns error code whilst FE route is changing
                     if (response.status === 401){
