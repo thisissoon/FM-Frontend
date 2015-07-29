@@ -3,6 +3,43 @@
 // --------------------------------------------------
 
 .current {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+
+    .track,
+    .controls-wrapper {
+        background-color: rgba(red(@track-bg), green(@track-bg), blue(@track-bg), 0.9);
+    }
+
+    .track {
+        padding-left: 20px;
+
+        .track-info,
+        .text-muted {
+            color: @white;
+        }
+
+        .btn-context {
+            .opacity(1);
+        }
+    }
+
+    .controls-wrapper {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+    }
+
+    .progress {
+        border-radius: 0;
+        margin-top: 0;
+    }
+
     .controls {
         .btn {
             .square(50px);
@@ -19,6 +56,23 @@
     }
 
     .timer {
+        display: block;
+        font-size: @font-size-small;
+        left: 0;
+        height: 20px;
         margin-top: 10px;
+        position: absolute;
+        right: 0;
+        top: @progress-height;
+
+        span {
+            float: left;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        span + span {
+            float: right;
+        }
     }
 }
