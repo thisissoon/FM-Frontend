@@ -31,6 +31,16 @@
     </div>
 
     <div class="row">
+        <div class="col-xs-12">
+            <p class="lead text-center">
+                <span ng-show="trackPositionTimer">{{ trackPositionTimer.elapsedTime | date: "H:mm:ss" | removeLeadingZeros }}</span>
+                <span ng-show="trackPositionTimer" class="hidden-xs">/</span>
+                <span class="text-muted">{{ track.track.duration | date: "H:mm:ss" | removeLeadingZeros }}</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-xs-12 text-center">
             <div ng-include="'partials/player/controls.html'"></div>
         </div>
