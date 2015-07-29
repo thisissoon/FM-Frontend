@@ -1,13 +1,21 @@
 <div ng-controller="PlayerCtrl" ng-show="track.track.uri">
 
-    <a role="button"
-       href
-       ng-click="footerOpen = !footerOpen"
-       class="btn-icon-arrow visible-xs-inline-block">
+    <button class="btn-icon-arrow visible-xs-inline-block"
+            ng-click="footerOpen = !footerOpen">
         <span class="icon icon-chevron-up text-primary"></span>
-    </a>
+    </button>
 
-    <fm-track class="track" ng-show="track.track.uri" data-spotify-track="track.track" data-user="track.user" data-timer="trackPositionTimer" ng-class="{ 'no-controls': !isAuthenticatedGoogle() }"></fm-track>
+    <a href="current">
+        <fm-track class="track"
+                  ng-show="track.track.uri"
+                  data-spotify-track="track.track"
+                  data-user="track.user"
+                  data-timer="trackPositionTimer"
+                  ng-class="{
+                    'no-controls': !isAuthenticatedGoogle()
+                  }">
+        </fm-track>
+    </a>
 
     <div ng-include="'partials/player/controls.html'"></div>
 
