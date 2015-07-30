@@ -14,6 +14,10 @@
     top: @sidebar-position-top;
     width: @sidebar-width;
     z-index: @zindex-sidebar;
+
+    .current-view & {
+        left: -@sidebar-width;
+    }
 }
 
 .loading-animation {

@@ -17,8 +17,8 @@
     <base href="/app/">
     <!-- /build -->
 
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Nixie+One"  type="text/css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nixie+One">
 
     <!-- build:css css/all.min.css -->
     <link rel="stylesheet" href="css/all.css">
@@ -42,7 +42,9 @@
     <meta name="msapplication-TileImage" content="img/favicons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 </head>
-<body>
+<body ng-class="{
+          'current-view': routeIsActive('/current')
+      }">
 
     <header class="header" ng-include="'partials/header.html'"></header>
     <div class="alerts" ng-include="'partials/alert.html'" ng-controller="AlertCtrl"></div>
