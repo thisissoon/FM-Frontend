@@ -122,7 +122,7 @@ angular.module("FM.auth.SpotifyAuthService", [
                 Spotify.setAuthToken(authToken);
 
                 getCurrentUser()
-                    .then(function (response){
+                    .then(function (){
                         authenticated = true;
                         deferred.resolve(authToken);
                     })
