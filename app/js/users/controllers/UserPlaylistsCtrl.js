@@ -5,6 +5,7 @@
  */
 angular.module("FM.users.UserPlaylistsCtrl", [
     "FM.api.UsersResource",
+    "FM.auth.SpotifyAuthService",
     "ngRoute",
     "spotify"
 ])
@@ -24,24 +25,8 @@ angular.module("FM.users.UserPlaylistsCtrl", [
                     user: ["UsersResource", "$route", function (UsersResource, $route){
                         return UsersResource.get($route.current.params).$promise;
                     }],
-                    playlists: ["$q", "SpotifyAuth", "Spotify", function ($q, SpotifyAuth, Spotify){
-                        var deferred = $q.defer();
-
-                        SpotifyAuth.getCurrentUser()
-                            .then(function (response){
-                                Spotify.getUserPlaylists(response.id, {})
-                                    .then(function (response){
-                                        deferred.resolve(response);
-                                    })
-                                    .catch(function (){
-                                        deferred.reject({});
-                                    });
-                            })
-                            .catch(function(){
-                                deferred.resolve({});
-                            });
-
-                        return deferred.promise;
+                    playlists: ["SpotifyAuth", function (SpotifyAuth){
+                        return SpotifyAuth.getUserPlaylists();
                     }]
                 }
             });

@@ -20,7 +20,7 @@ angular.module("FM.users.UserStatsCtrl", [
 
         $routeProvider
             .when("/users/:id", {
-                templateUrl: "partials/user-stats.html",
+                templateUrl: "partials/users/stats.html",
                 controller: "UserStatsCtrl",
                 resolve: {
                     stats: ["UsersResource", "$route", function (UsersResource, $route){
