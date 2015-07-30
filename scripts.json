@@ -79,6 +79,7 @@
 
         "./app/js/users/users.js",
         "./app/js/users/controllers/UserStatsCtrl.js",
+        "./app/js/users/controllers/UserPlaylistsCtrl.js",
 
         "./app/js/nav/nav.js",
 
