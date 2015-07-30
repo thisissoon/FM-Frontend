@@ -79,22 +79,17 @@ angular.module("FM.auth.SpotifyAuthService", [
 
             Spotify.login()
                 .then(function (response){
-                    Spotify.setAuthToken(response);
-                    $window.localStorage.setItem(TOKEN_NAME, response);
-                    _this.authenticated = true;
-
-                    deferred.resolve(response);
-                })
-                .catch(function (response){
-
-                    if (response && response.message === "Validation Error") {
-                        AlertService.set(ERRORS.AUTH_VALIDATION_TITLE, response.errors.code[0]);
+                    if (response && typeof response === "string"){
+                        Spotify.setAuthToken(response);
+                        $window.localStorage.setItem(TOKEN_NAME, response);
+                        _this.authenticated = true;
+                        deferred.resolve(response);
+                    } else {
+                        AlertService.set(ERRORS.AUTH_VALIDATION_TITLE, response.error.status);
+                        _this.authenticated = false;
+                        $window.localStorage.removeItem(TOKEN_NAME);
+                        deferred.reject(response);
                     }
-
-                    $window.localStorage.removeItem(TOKEN_NAME);
-                    _this.authenticated = false;
-
-                    deferred.reject(response);
                 });
 
             return deferred.promise;
@@ -113,25 +108,10 @@ angular.module("FM.auth.SpotifyAuthService", [
                     _this.authenticated = true;
                     deferred.resolve(response);
                 })
-                .catch(function (){
-                    _this.authenticate()
-                        .then(function(){
-
-                            Spotify.getCurrentUser()
-                                .then(function (response){
-                                    _this.user = response;
-                                    deferred.resolve(response);
-                                })
-                                .catch(function (response){
-                                    _this.user = null;
-                                    deferred.reject(response);
-                                });
-
-                        })
-                        .catch(function (response){
-                            _this.user = null;
-                            deferred.reject(response);
-                        });
+                .catch(function (response){
+                    _this.user = null;
+                    _this.authenticated = false;
+                    deferred.reject(response);
                 });
 
             return deferred.promise;
@@ -147,7 +127,12 @@ angular.module("FM.auth.SpotifyAuthService", [
             var authToken = $window.localStorage.getItem(TOKEN_NAME);
             if (authToken){
                 Spotify.setAuthToken(authToken);
-                _this.getCurrentUser();
+                _this.getCurrentUser()
+                    .then(function (response){
+                        if (response && response.error && response.error.status === 401){
+                            _this.authenticate();
+                        }
+                    });
             }
         };
 
