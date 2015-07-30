@@ -230,14 +230,15 @@ angular.module("FM.auth.SpotifyAuthService", [
          * Get Users Playlists
          * @public
          * @method getUserPlaylists
+         * @param  {Object}  request options
          * @return {Promise} User playlists object
          */
-        this.getUserPlaylists = function getUserPlaylists() {
+        this.getUserPlaylists = function getUserPlaylists(options) {
             var deferred = $q.defer();
 
             _this.getUser()
                 .then(function (response){
-                    Spotify.getUserPlaylists(response.id)
+                    Spotify.getUserPlaylists(response.id, options)
                         .then(deferred.resolve)
                         .catch(deferred.reject);
                 })
