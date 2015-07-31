@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # CircleCI/Saucelabs e2e testing script
 
