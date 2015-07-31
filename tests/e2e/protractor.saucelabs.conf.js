@@ -55,27 +55,6 @@ exports.config = {
     "selenium-version": "2.46.0",
     "platform": "Windows 8.1",
     "screenResolution": "1280x1024"
-  }, {
-    "browserName": "chrome",
-    "build": process.env.CIRCLE_BUILD_NUM,
-    "name": process.env.CIRCLE_PROJECT_REPONAME + " (Chrome: Android) Build: " + process.env.CIRCLE_BUILD_NUM,
-    "version": "5.0",
-    "platformVersion": "5.0",
-    "platformName": "Android",
-    "appiumVersion": "1.3.4",
-    "deviceName": "Android Emulator",
-    "device-orientation": "portrait"
-  }, {
-    "browserName": "safari",
-    "build": process.env.CIRCLE_BUILD_NUM,
-    "name": process.env.CIRCLE_PROJECT_REPONAME + " (Safari: iOS ) Build: " + process.env.CIRCLE_BUILD_NUM,
-    "version": "8.1",
-    "platformVersion": "8.1",
-    "platformName": "iOS",
-    "appiumVersion": "1.3.4",
-    "platform": "iOS",
-    "deviceName": "iPhone Simulator",
-    "device-orientation": "portrait"
   }],
 
   // ----- More information for your tests ----

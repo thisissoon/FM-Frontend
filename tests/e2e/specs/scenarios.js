@@ -113,12 +113,6 @@ describe("FM", function() {
             // login
             login();
 
-            browser.getCapabilities().then(function (cap) {
-                if ((cap.caps_.platform === "iOS") || (cap.caps_.platform === "ANDROID")){
-                    element(by.css("body > footer > div > button")).click();
-                }
-            });
-
             // pause
             element(by.css(".controls button:nth-child(2)")).click();
 
