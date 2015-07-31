@@ -2,11 +2,21 @@
 
 describe("FM.auth.LoginSpotifyCtrl", function() {
 
-    var $rootScope, $scope, SpotifyAuth, user;
+    var $rootScope, $scope, $httpBackend, SpotifyAuth, userRequest, user;
 
     beforeEach(function (){
         module("FM.auth.LoginSpotifyCtrl");
     });
+
+    beforeEach(inject(function (_$httpBackend_) {
+        $httpBackend = _$httpBackend_;
+        user = { id: "foo" };
+
+        userRequest = $httpBackend.whenGET(/.*api.spotify.com\/v1\/me.*/);
+
+        userRequest.respond(200, user);
+
+    }));
 
     beforeEach(inject(function ( _$rootScope_, $injector, $controller ) {
         $rootScope = _$rootScope_;
@@ -38,14 +48,14 @@ describe("FM.auth.LoginSpotifyCtrl", function() {
     it("should get authenticated status", function() {
         SpotifyAuth.authenticated = true;
 
-        var spy = spyOn(SpotifyAuth, "isAuthenticated").and.callThrough();
+        var spy = spyOn(SpotifyAuth, "isAuthenticated").and.callFake(function(){ return true });
         var authenticated = $scope.isAuthenticated();
         $rootScope.$digest();
 
         expect(spy).toHaveBeenCalled();
         expect(authenticated).toBeTruthy();
 
-        SpotifyAuth.authenticated = false;
+        spy.and.callFake(function(){ return false });
         authenticated = $scope.isAuthenticated();
         $rootScope.$digest();
 
