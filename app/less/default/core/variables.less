@@ -14,6 +14,8 @@
 @lighter-black:     #222222;
 @yellow:            #fffd00;
 
+@brand-spotify:     #2EBD59;
+
 @brand-primary:     @yellow;
 
 //== Typography
@@ -126,6 +128,22 @@
 //** Hover background for dropdown links.
 @dropdown-link-hover-bg:         lighten(@dropdown-bg, 10%);
 
+//== Navs
+//
+//##
+
+//=== Shared nav styles
+@nav-link-hover-bg:                         @light-black;
+
+//== Tabs
+@nav-tabs-border-color:                     lighten(@light-black, 5%);
+
+@nav-tabs-link-hover-border-color:          lighten(@light-black, 5%);
+
+@nav-tabs-active-link-hover-color:          @brand-primary;
+@nav-tabs-active-link-hover-border-color:   lighten(@light-black, 5%);
+
+
 //== Thumbnails
 //
 //##
@@ -171,6 +189,19 @@
 //** Element ID within SVG icon file.
 @icon-font-svg-id:        "icomoon";
 
+//== Navs
+//
+//##
+
+//=== Shared nav styles
+@nav-link-hover-bg:                         @lighter-black;
+
+//== Tabs
+@nav-tabs-border-color:                     @lighter-black;
+@nav-tabs-link-hover-border-color:          @lighter-black;
+@nav-tabs-active-link-hover-bg:             @lighter-black;
+@nav-tabs-active-link-hover-color:          @lighter-black;
+
 //== Popovers
 //
 //##
@@ -192,6 +223,7 @@
 
 //** Background color of the whole progress component
 @progress-bg:                 @lighter-black;
+@progress-height:             8px;
 
 //== Header
 //
@@ -212,8 +244,8 @@
 
 @footer-bg:                     @light-black;
 @footer-height:                 90px;
-@footer-height-xs:              140px;
-@footer-open-position-top-xs:   @header-height-xs;
+@footer-height-xs-open:         135px + @progress-height;
+@footer-height-xs-closed:       @track-footer-height-xs + @progress-height + 32px;
 
 
 //== Type
@@ -248,7 +280,7 @@
 
 @view-position-left-sm:        0;
 
-@view-position-bottom-xs:      @footer-height-xs + (@grid-gutter-width / 2);
+@view-position-bottom-xs:      @footer-height-xs-closed + (@grid-gutter-width / 2);
 @view-position-left-xs:        0;
 @view-position-top-xs:         @header-height-xs;
 
@@ -258,7 +290,7 @@
 
 @track-bg:                      @light-black;
 
-@track-footer-height-xs:        75px;
+@track-footer-height-xs:        50px;
 
 //== Controls
 //
@@ -268,12 +300,13 @@
 @controls-height:               @footer-height;
 @controls-width:                340px;
 
-@controls-height-xs:            @footer-height-xs - @track-footer-height-xs;
+@controls-height-xs:            @footer-height-xs-open - @track-footer-height-xs - @progress-height - 20px;
 @controls-line-height-xs:       @controls-height-xs;
 
 //== Loading-screen
 //
 //##
 
-@loading-screen-bg:             @body-bg;
-@loading-screen-position-top:   @header-height;
+@loading-screen-bg:                @body-bg;
+@loading-screen-position-top:      @header-height;
+@loading-screen-position-top-xs:   @header-height-xs;

@@ -14,22 +14,30 @@
         height: @track-footer-height-xs;
         margin-bottom: 0;
         padding-left: 10px;
+        padding-right: 10px;
     }
 }
 
+.track-body {
+    .footer & {
+        padding-right: 0;
+    }
+}
 .track-user {
     align-self: center;
     min-width: 40px;
 }
 
 .track-album {
-    min-width: 75px;
+    min-width: @track-footer-height-xs;
 }
 
 .track-menu {
     .align-self(center);
     position: static;
-    min-width: 10px;
+    min-width: 15px;
+    margin-bottom: 0;
+    margin-top: 10px;
 
     .btn-context {
         .opacity(1);
@@ -49,6 +57,41 @@
 
 .track-time {
     display: none;
+
+    .footer & {
+        display: block;
+        font-size: @font-size-small;
+        left: 0;
+        height: 20px;
+        position: absolute;
+        right: 0;
+        top: @progress-height;
+
+        p {
+            margin-top: 1px;
+        }
+
+        p span {
+            float: left;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        p span + span {
+            float: right;
+        }
+    }
+}
+
+.track-plays {
+    .align-self(center);
+    font-size: 0.867em; // 13px
+    margin-right: 15px;
+    white-space: nowrap;
+
+    p {
+        margin-bottom: 0;
+    }
 }
 
 .track-heading {
@@ -57,4 +100,23 @@
 
 .track-info {
     font-size: 0.867em; // 13px
+}
+
+.track-progress {
+    left: 0;
+    min-width: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+}
+
+.sidebar .track {
+    .track-body {
+        width: 160px;
+
+        .track-info {
+            width: 160px;
+        }
+    }
 }

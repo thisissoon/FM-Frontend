@@ -20,8 +20,8 @@
         padding-right: 20px;
     }
 
-    .footer .selected {
-        display: none;
+    .footer & {
+        margin-bottom: 0;
     }
 
     .dropdown-menu & {
@@ -60,6 +60,10 @@
     .align-self(center);
     margin-right: 20px;
     min-width: 400px;
+
+    .current-view & {
+        margin-right: 0;
+    }
 }
 
 .track-body {
@@ -74,7 +78,7 @@
     min-width: 30px;
     margin-bottom: 10px;
     position: absolute;
-    top: 30px;
+    top: 15px;
     right: 10px;
 
     .footer &,
@@ -105,17 +109,20 @@
 
 .track-user {
     .align-self(center);
-    min-width: 46px;
+    min-width: 56px;
+    max-width: 56px;
     text-align: left;
 }
 
 .track-album {
     min-width: 90px;
+    max-width: 90px;
 }
 
 .track-time {
     .align-self(flex-end);
     min-width: 100px;
+    padding-right: 20px;
 
     .footer & {
         .align-self(center);
@@ -125,6 +132,20 @@
             margin-top: 10px;
         }
     }
+
+    .footer &,
+    .queue & {
+        padding-right: 0;
+    }
+}
+
+.track-plays {
+    .align-self(flex-end);
+
+    .footer &,
+    .queue & {
+        display: none;
+    }
 }
 
 .img-user {
@@ -133,4 +154,52 @@
 
 .img-album {
     .size(90px, auto);
+}
+
+.sidebar .track {
+    .clearfix();
+    height: 62px;
+    padding-right: 0;
+
+    .track-progress,
+    .track-menu,
+    .track-time {
+        display: none;
+    }
+
+    .track-body,
+    .track-album {
+        display: inline-block;
+        float: left;
+    }
+
+    .img-album {
+        .square(62px);
+    }
+
+    .track-album {
+        min-width: 62px;
+        max-width: none;
+        width: 62px;
+    }
+
+    .track-body {
+        width: 203px;
+
+        .track-info {
+            font-size: @font-size-base;
+            font-family: @font-family-base;
+            height: @font-size-base * 1.4;
+            line-height: 1.4;
+            width: 203px;
+
+            a {
+                white-space: nowrap;
+            }
+        }
+
+        .track-info:last-child {
+            display: none;
+        }
+    }
 }

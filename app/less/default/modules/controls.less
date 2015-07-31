@@ -8,11 +8,15 @@
     .flex-direction(row);
     .flex-wrap(nowrap);
     .justify-content(space-between);
-    background-color: @controls-bg;
     height: @controls-height;
     min-width: 340px;
     padding-right: 30px;
     text-align: right;
+
+    .current-view & {
+        .justify-content(center);
+        padding-right: 0;
+    }
 }
 
 .playing-animation {
@@ -25,6 +29,10 @@
     margin: 0 10px;
     vertical-align: middle;
     width: 129px;
+}
+
+.no-controls.controls {
+    min-width: 70px;
 }
 
 fm-slider {

@@ -25,6 +25,12 @@ angular.module("FM.api.UsersResource",[
             // Default values for url parameters.
             {
                 id: "@id"
+            },
+            {
+                stats: {
+                    method: "GET",
+                    url: env.FM_API_SERVER_ADDRESS + "users" + "/:id/stats"
+                }
             }
         );
 

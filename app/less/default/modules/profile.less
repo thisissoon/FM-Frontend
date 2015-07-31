@@ -1,0 +1,33 @@
+//
+// Profile
+// --------------------------------------------------
+
+.profile {
+    .flex-box();
+    .align-items(stretch);
+    .flex-direction(row);
+    .flex-wrap(nowrap);
+    .justify-content(flex-start);
+    margin-top: 20px;
+    margin-bottom: 40px;
+
+    .avatar {
+        .flex(3);
+        .align-self(center);
+
+        img {
+            .img-responsive();
+            .img-circle();
+        }
+    }
+
+    .name {
+        .flex(9);
+        .align-self(center);
+        margin-left: @grid-gutter-width * 2;
+
+        h1 {
+            margin: 0;
+        }
+    }
+}

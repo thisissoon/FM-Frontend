@@ -21,16 +21,20 @@
             vertical-align: top;
         }
 
-        .open &,
-        .open &:focus,
-        .open &:active,
-        .open &:active:focus {
+        .dropdown.open &,
+        .dropdown.open &:focus,
+        .dropdown.open &:active,
+        .dropdown.open &:active:focus {
             background-color: lighten(@track-bg, 10%);
         }
     }
 
     &.btn-transparent {
         .button-variant(@gray-light; transparent; @gray-light);
+    }
+
+    &.btn-spotify {
+        .button-variant(@white; @brand-spotify; @brand-spotify);
     }
 
     .separator {

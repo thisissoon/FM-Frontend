@@ -17,8 +17,8 @@
     <base href="/app/">
     <!-- /build -->
 
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Nixie+One"  type="text/css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nixie+One">
 
     <!-- build:css css/all.min.css -->
     <link rel="stylesheet" href="css/all.css">
@@ -42,13 +42,15 @@
     <meta name="msapplication-TileImage" content="img/favicons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 </head>
-<body>
+<body ng-class="{
+          'current-view': routeIsActive('/current')
+      }">
 
     <header class="header" ng-include="'partials/header.html'"></header>
     <div class="alerts" ng-include="'partials/alert.html'" ng-controller="AlertCtrl"></div>
     <div class="sidebar" ng-include="'partials/sidebar.html'" ng-class="{ 'open': sidebarOpen, 'alert-active': AlertService.alerts.length }"></div>
     <ng-view class="fade-in-out" ng-class="{ 'alert-active': AlertService.alerts.length }"></ng-view>
-    <footer class="footer" ng-include="'partials/footer.html'"></footer>
+    <footer class="footer" ng-class="{ 'open': footerOpen }" ng-include="'partials/footer.html'"></footer>
 
     <fm-loading-screen></fm-loading-screen>
 
@@ -74,9 +76,12 @@
     <script src="components/angular-resource/angular-resource.js"></script>
     <script src="components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="components/angular-spotify/src/angular-spotify.js"></script>
+    <script src="components/angular-title/dist/angular-title.js"></script>
     <script src="components/angular-socket-io/socket.js"></script>
     <script src="components/satellizer/satellizer.js"></script>
     <script src="components/angular-notification/angular-notification.js"></script>
+    <script src="components/Chart.js/Chart.js"></script>
+    <script src="components/angular-chart.js/dist/angular-chart.js"></script>
 
     <script src="js/config/config.js"></script>
 
@@ -89,7 +94,11 @@
     <script src="js/notifications/notifications.js"></script>
 
     <script src="js/auth/auth.js"></script>
-    <script src="js/auth/controllers/LoginCtrl.js"></script>
+    <script src="js/auth/google.js"></script>
+    <script src="js/auth/spotify.js"></script>
+    <script src="js/auth/controllers/LoginGoogleCtrl.js"></script>
+    <script src="js/auth/controllers/LoginSpotifyCtrl.js"></script>
+    <script src="js/auth/services/SpotifyAuthService.js"></script>
 
     <script src="js/alert/alert.js"></script>
     <script src="js/alert/controllers/AlertCtrl.js"></script>
@@ -103,6 +112,7 @@
     <script src="js/api/factories/PlayerRandomResource.js"></script>
     <script src="js/api/factories/PlayerTransportResource.js"></script>
     <script src="js/api/factories/PlayerVolumeResource.js"></script>
+    <script src="js/api/factories/StatsResource.js"></script>
     <script src="js/api/factories/TracksResource.js"></script>
     <script src="js/api/factories/UsersResource.js"></script>
     <script src="js/api/factories/RequestInterceptor.js"></script>
@@ -115,6 +125,7 @@
     <script src="js/player/controllers/PlayerCtrl.js"></script>
     <script src="js/player/directives/slider.js"></script>
     <script src="js/player/directives/track.js"></script>
+    <script src="js/player/filter/removeLeadingZeros.js"></script>
     <script src="js/player/services/TrackTimer.js"></script>
 
     <script src="js/playlist/playlist.js"></script>
@@ -127,8 +138,22 @@
     <script src="js/search/controllers/AlbumSearchCtrl.js"></script>
     <script src="js/search/controllers/AlbumDetailCtrl.js"></script>
     <script src="js/search/controllers/TrackSearchCtrl.js"></script>
+    <script src="js/search/directives/artist.js"></script>
+    <script src="js/search/directives/album.js"></script>
+    <script src="js/search/directives/playlist.js"></script>
 
     <script src="js/nav/nav.js"></script>
+
+    <script src="js/stats/stats.js"></script>
+    <script src="js/stats/controllers/StatsCtrl.js"></script>
+    <script src="js/stats/filters/time.js"></script>
+    <script src="js/stats/services/DateUtils.js"></script>
+    <script src="js/stats/services/StatsResolver.js"></script>
+
+    <script src="js/users/users.js"></script>
+    <script src="js/users/controllers/UserStatsCtrl.js"></script>
+    <script src="js/users/controllers/UserPlaylistsCtrl.js"></script>
+    <script src="js/users/controllers/UserPlaylistDetailCtrl.js"></script>
 
     <script src="js/app.js"></script>
     <!-- /build -->

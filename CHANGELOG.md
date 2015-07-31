@@ -1,3 +1,42 @@
+## Changes in 0.8.1
+
+ * @bcmrbvm: Fix: Volume slider (#187)
+
+## Changes in 0.8.0
+
+ * @jamesjwarren: Feature: user stats (#183)
+ * @bcmrbvm: Fix: Infinite scroll e2e test timing out (#182)
+ * @bcmrbvm: Fix: Incorrect artist image in sidebar search (#180)
+ * @bcmrbvm: Feature: Album directive (#179)
+ * @bcmrbvm: Feature: Artist directive (#178)
+ * @jamesjwarren: Feature: hide controls for unauthorised user (#177)
+ * @bcmrbvm: Feature: Related artists (#174)
+ * @jamesjwarren: Feature: add play count to top tracks (#173)
+ * @jamesjwarren: Fix: timeFilter module dependency (#172)
+ * @jamesjwarren: Fix: stat filtering (#171)
+ * @jamesjwarren: Fix: total play time stat (#165)
+ * @jamesjwarren: Fix: historic stats loading (#164)
+
+## Changes in 0.7.0
+
+ * @bcmrbvm: Feature: Song in title (#155)
+ * @bcmrbvm: Fix: Minor sidebar search fixes (#154)
+ * @bcmrbvm: Fix: History pagination (#152)
+ * @bcmrbvm: Feature: Hide controls in mobile (#150)
+ * @bcmrbvm: Fix: Loading screen height on mobile (#149)
+ * @bcmrbvm: Fix: Track height on mobile (#148)
+ * @jamesjwarren: Feature: historic stats (#140)
+
+## Changes in 0.6.0
+
+ * @bcmrbvm: Fix: User not loaded with song on add event (#145)
+ * @bcmrbvm: Feature: Display track progress on mobile/tablet (#144)
+ * @bcmrbvm: Fix: failing e2e test (#141)
+ * @bcmrbvm: Fix: Alignment issues in track (#139)
+ * @bcmrbvm: Fix: Limit searches to GB region (#138)
+ * @bcmrbvm: Feature: Display track time from spotify (#137)
+ * @bcmrbvm: Feature: Show hours in track time (#136)
+
 ## Changes in 0.5.0
 
  * @bcmrbvm: Fix: Hide controls if no tracks (#134)

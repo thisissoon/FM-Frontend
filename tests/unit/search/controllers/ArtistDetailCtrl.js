@@ -2,7 +2,8 @@
 
 describe("FM.search.ArtistDetailCtrl", function() {
 
-    var $scope, $route, $rootScope, $httpBackend, Spotify, $location, artist, albums, singles, topTracks;
+    var $scope, $route, $rootScope, $httpBackend, Spotify, $location,
+        artist, artists, albums, singles, topTracks;
 
     beforeEach(function (){
         module("FM.search.ArtistDetailCtrl");
@@ -14,9 +15,11 @@ describe("FM.search.ArtistDetailCtrl", function() {
         topTracks = { tracks: [{},{}] };
         albums = { items: [{},{}] };
         artist = { id: "123" };
+        artists = [{ id: "123" },{ id: "123" }];
 
         $httpBackend.whenGET(/partials\/.*/).respond(200, "");
         $httpBackend.whenGET(/api.spotify.com\/v1\/artists\/.*\/top-tracks/).respond(200, topTracks);
+        $httpBackend.whenGET(/api.spotify.com\/v1\/artists\/.*\/related-artists/).respond(200, artists);
         $httpBackend.whenGET(/api.spotify.com\/v1\/artists\/.*\/albums/).respond(200, albums);
         $httpBackend.whenGET(/api.spotify.com\/v1\/artists\/.*/).respond(200, artist);
     }));
@@ -38,6 +41,7 @@ describe("FM.search.ArtistDetailCtrl", function() {
             artist: artist,
             albums: albums,
             singles: albums,
+            relatedArtists: artists,
             topTracks: topTracks
         });
     }));

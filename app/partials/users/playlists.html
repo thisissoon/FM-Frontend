@@ -1,0 +1,26 @@
+<div ng-include="'partials/users/profile.html'"></div>
+
+<div ng-include="'partials/users/nav.html'"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Playlists <span class="badge">{{ meta.total }}</span></h2>
+        </div>
+    </div>
+
+    <ul class="row list-unstyled">
+        <li ng-repeat="playlist in playlists"
+            class="col-lg-3 col-md-3 col-sm-4 col-xs-6"
+            data-playlist="playlist"
+            fm-playlist>
+        </li>
+    </ul>
+
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <button class="btn btn-primary" ng-click="loadMore()" ng-if="meta.next" ng-disabled="loadDisabled">Load more</button>
+            <p ng-if="meta.total > 0 && !meta.next">No more playlists</p>
+        </div>
+    </div>
+</div>

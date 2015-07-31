@@ -8,6 +8,7 @@
 angular.module("FM.search.AlbumDetailCtrl", [
     "spotify",
     "ngRoute",
+    "config",
     "FM.player.trackDirective"
 ])
 /**
@@ -16,7 +17,8 @@ angular.module("FM.search.AlbumDetailCtrl", [
  */
 .config([
     "$routeProvider",
-    function ($routeProvider) {
+    "env",
+    function ($routeProvider, env) {
 
         $routeProvider
             .when("/albums/:id", {
@@ -27,7 +29,9 @@ angular.module("FM.search.AlbumDetailCtrl", [
                         return Spotify.getAlbum($route.current.params.id);
                     }],
                     albumTracks: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.getAlbumTracks($route.current.params.id, { limit: 20 });
+                        return Spotify.getAlbumTracks($route.current.params.id, {
+                            limit: env.SEARCH_LIMIT
+                        });
                     }]
                 }
             });
@@ -47,7 +51,8 @@ angular.module("FM.search.AlbumDetailCtrl", [
     "Spotify",
     "album",
     "albumTracks",
-    function ($scope, Spotify, album, albumTracks) {
+    "env",
+    function ($scope, Spotify, album, albumTracks, env) {
 
         /**
          * Album data
@@ -82,12 +87,14 @@ angular.module("FM.search.AlbumDetailCtrl", [
          */
         $scope.loadMore = function loadMore(){
             $scope.loadDisabled = true;
-            Spotify.getAlbumTracks($scope.album.id, { limit: 20, offset: $scope.albumTracks.length }) // jshint ignore:line
-                .then(function (response) {
-                    $scope.albumTracks = $scope.albumTracks.concat(response.items);
-                    $scope.meta = response;
-                    $scope.loadDisabled = false;
-                });
+            Spotify.getAlbumTracks($scope.album.id, {
+                limit: env.SEARCH_LIMIT,
+                offset: $scope.albumTracks.length
+            }).then(function (response) {
+                $scope.albumTracks = $scope.albumTracks.concat(response.items);
+                $scope.meta = response;
+                $scope.loadDisabled = false;
+            });
         };
 
     }

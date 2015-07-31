@@ -1,0 +1,21 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Top tracks <span class="badge">{{ topTracks.length }}</span></h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="list-unstyled track-list">
+                <li class="track"
+                    ng-repeat="track in topTracks"
+                    data-spotify-track="track"
+                    fm-track>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

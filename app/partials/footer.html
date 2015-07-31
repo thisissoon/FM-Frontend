@@ -1,75 +1,21 @@
-<div ng-controller="PlayerCtrl">
-    <fm-track class="track" ng-show="track.track.uri" data-spotify-track="track.track" data-user="track.user" data-timer="trackPositionTimer"></fm-track>
+<div ng-controller="PlayerCtrl" ng-show="track.track.uri">
 
-    <div class="controls" ng-show="track.track.uri">
+    <button class="btn-icon-arrow visible-xs-inline-block"
+            ng-click="footerOpen = !footerOpen">
+        <span class="icon icon-chevron-up text-primary"></span>
+    </button>
 
-        <div class="playing-animation"
-             ng-switch="paused">
-            <img ng-switch-when="false" src="img/icons/playing-animation.gif" alt="music playing animation">
-            <img ng-switch-default src="img/icons/playing-stoped.png" alt="music stopped animation">
-        </div>
+    <a href="current">
+        <fm-track class="track"
+                  data-spotify-track="track.track"
+                  data-user="track.user"
+                  data-timer="trackPositionTimer"
+                  ng-class="{
+                    'no-controls': !isAuthenticatedGoogle()
+                  }">
+        </fm-track>
+    </a>
 
-        <form name="controls" class="form-inline">
+    <div ng-include="'partials/player/controls.html'"></div>
 
-            <button ng-show="paused"
-                    ng-click="resume()"
-                    class="btn btn-icon btn-transparent"
-                    popover="Resume"
-                    popover-append-to-body="true"
-                    popover-trigger="mouseenter">
-                <span class="icon icon-play text-primary"></span>
-            </button>
-
-            <button ng-show="!paused"
-                    ng-click="pause()"
-                    class="btn btn-icon btn-transparent"
-                    popover="Pause"
-                    popover-append-to-body="true"
-                    popover-trigger="mouseenter">
-                <span class="icon icon-pause text-primary"></span>
-            </button>
-
-            <button ng-click="skip()"
-                    class="btn btn-icon btn-transparent"
-                    popover="Skip"
-                    popover-append-to-body="true"
-                    popover-trigger="mouseenter">
-                <span class="icon icon-skip"></span>
-            </button>
-
-            <button ng-click="toggleMute()" class="btn btn-icon btn-transparent" ng-switch="mute">
-                <span ng-switch-when="true"
-                      class="icon icon-muted"
-                      popover="Un-mute"
-                      popover-append-to-body="true"
-                      popover-trigger="mouseenter"></span>
-                <span ng-switch-default
-                      class="icon icon-unmuted"
-                      popover="Mute"
-                      popover-append-to-body="true"
-                      popover-trigger="mouseenter"></span>
-            </button>
-
-            <fm-slider
-                class="volume-control"
-                name="volume"
-                ng-model="volume"
-                ng-change="updateVol()"
-                ng-model-options="{
-                    updateOn: 'default blur',
-                    debounce: {
-                        'default': 500,
-                        'blur': 0
-                    }
-                }"
-                data-min="0"
-                data-max="100"
-                popover="{{ controls.volume.$viewValue }}"
-                popover-append-to-body="true"
-                popover-trigger="mouseenter">
-            </fm-slider>
-
-        </form>
-
-    </div>
 </div>
