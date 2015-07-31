@@ -12,14 +12,13 @@
         "./app/components/satellizer/satellizer.js",
         "./app/components/angular-notification/angular-notification.js",
         "./app/components/Chart.js/Chart.js",
-        "./app/components/angular-chart.js/dist/angular-chart.js"
+        "./app/components/angular-chart.js/dist/angular-chart.js",
+        "./app/components/angular-sn-infinite-scroll/dist/angular-sn-infinite-scroll.js"
     ],
     "application": [
         "./app/js/socket/socket.js",
 
         "./app/js/loading-screen/loadingScreen.js",
-
-        "./app/js/infinite-scroll/infiniteScroll.js",
 
         "./app/js/notifications/notifications.js",
 
