@@ -23,67 +23,38 @@ exports.config = {
   // https://docs.saucelabs.com/reference/platforms-configurator/#/
   multiCapabilities: [{
     "browserName": "chrome",
-    "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER,
-    "build": process.env.TRAVIS_BUILD_NUMBER,
-    "name":  pkg.name + " (Chrome: Linux) Build: " + process.env.TRAVIS_BUILD_NUMBER,
-    "version": "39",
-    "selenium-version": "2.43.1",
-    "platform": "Linux"
+    "build": process.env.CIRCLE_BUILD_NUM,
+    "name": process.env.CIRCLE_PROJECT_REPONAME + " (Chrome) Build: " + process.env.CIRCLE_BUILD_NUM,
+    "version": "43.0",
+    "selenium-version": "2.46.0",
+    "chromedriver-version": "2.14",
+    "platform": "Windows 8.1",
+    "screenResolution": "1280x1024"
   }, {
     "browserName": "firefox",
-    "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER,
-    "build": process.env.TRAVIS_BUILD_NUMBER,
-    "name":  pkg.name + " (FF: Linux) Build: " + process.env.TRAVIS_BUILD_NUMBER,
-    "version": "34",
-    "selenium-version": "2.43.1",
-    "platform": "Linux"
+    "build": process.env.CIRCLE_BUILD_NUM,
+    "name": process.env.CIRCLE_PROJECT_REPONAME + " (FF) Build: " + process.env.CIRCLE_BUILD_NUM,
+    "version": "39.0",
+    "selenium-version": "2.46.0",
+    "platform": "Linux",
+    "screenResolution": "1024x768"
   }, {
     "browserName": "safari",
-    "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER,
-    "build": process.env.TRAVIS_BUILD_NUMBER,
-    "name":  pkg.name + " (Safari: OS X 10.10) Build: " + process.env.TRAVIS_BUILD_NUMBER,
-    "version": "8",
-    "selenium-version": "2.43.1",
-    "platform": "OS X 10.10"
+    "build": process.env.CIRCLE_BUILD_NUM,
+    "name": process.env.CIRCLE_PROJECT_REPONAME + " (Safari) Build: " + process.env.CIRCLE_BUILD_NUM,
+    "version": "7.0",
+    "selenium-version": "2.44.0",
+    "platform": "OS X 10.9",
+    "screenResolution": "1024x768"
+
   }, {
     "browserName": "internet explorer",
-    "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER,
-    "build": process.env.TRAVIS_BUILD_NUMBER,
-    "name":  pkg.name + " (IE11: Win 8.1) Build: " + process.env.TRAVIS_BUILD_NUMBER,
-    "version": "11",
-    "selenium-version": "2.43.1",
-    "platform": "Windows 8.1"
-  }, {
-    "browserName": "internet explorer",
-    "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER,
-    "build": process.env.TRAVIS_BUILD_NUMBER,
-    "name":  pkg.name + " (IE10: Win 8) Build: " + process.env.TRAVIS_BUILD_NUMBER,
-    "version": "10",
-    "selenium-version": "2.43.1",
-    "platform": "Windows 8"
-  }, {
-    "browserName": "chrome",
-    "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER,
-    "build": process.env.TRAVIS_BUILD_NUMBER,
-    "name":  pkg.name + " (Chrome: Android 5.0) Build: " + process.env.TRAVIS_BUILD_NUMBER,
-    "version": "5.0",
-    "platformVersion": "5.0",
-    "platformName": "Android",
-    "appiumVersion": "1.3.4",
-    "deviceName": "Android Emulator",
-    "device-orientation": "portrait"
-  }, {
-    "browserName": "safari",
-    "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER,
-    "build": process.env.TRAVIS_BUILD_NUMBER,
-    "name":  pkg.name + " (Safari: iOS 8.1) Build: " + process.env.TRAVIS_BUILD_NUMBER,
-    "version": "8.1",
-    "platformVersion": "8.1",
-    "platformName": "iOS",
-    "appiumVersion": "1.3.4",
-    "platform": "iOS",
-    "deviceName": "iPhone Simulator",
-    "device-orientation": "portrait"
+    "build": process.env.CIRCLE_BUILD_NUM,
+    "name": process.env.CIRCLE_PROJECT_REPONAME + " (IE) Build: " + process.env.CIRCLE_BUILD_NUM,
+    "version": "11.0",
+    "selenium-version": "2.46.0",
+    "platform": "Windows 8.1",
+    "screenResolution": "1280x1024"
   }],
 
   // ----- More information for your tests ----
