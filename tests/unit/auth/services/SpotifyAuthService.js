@@ -3,13 +3,20 @@
 describe("FM.auth.SpotifyAuthService", function() {
 
     var service, $httpBackend, $rootScope, $window, $q, ERRORS, Spotify, AlertService, TOKEN_NAME,
-        fakeSpotifyLoginCallback, fakeGetItemCallback,
+        fakeSpotifyLoginCallback, fakeGetItemCallback, getItemSpy, setItemSpy, removeItemSpy,
         spotifyLoginResponse, user, token, userRequest, userPlaylistRequest, playlists;
-
-    window.localStorage = {};
 
     beforeEach(function (){
         module("FM.auth.SpotifyAuthService");
+        module(function ($provide) {
+            $provide.value("$window", {
+                localStorage: {
+                    getItem: function(){ return null; },
+                    setItem: function(){ return null; },
+                    removeItem: function(){}
+                }
+            });
+        });
     });
 
     beforeEach(inject(function (_$httpBackend_) {
@@ -44,10 +51,9 @@ describe("FM.auth.SpotifyAuthService", function() {
         $rootScope = _$rootScope_;
 
         $window = $injector.get("$window");
-        $window.localStorage = {};
-        spyOn($window.localStorage, "getItem").and.callFake(fakeGetItemCallback);
-        spyOn($window.localStorage, "setItem").and.callFake(fakeGetItemCallback);
-        spyOn($window.localStorage, "removeItem").and.callFake(fakeGetItemCallback);
+        getItemSpy = spyOn($window.localStorage, "getItem").and.callFake(fakeGetItemCallback);
+        setItemSpy = spyOn($window.localStorage, "setItem").and.callFake(fakeGetItemCallback);
+        removeItemSpy = spyOn($window.localStorage, "removeItem").and.callFake(fakeGetItemCallback);
 
         Spotify = $injector.get("Spotify");
         spyOn(Spotify, "login").and.callFake(fakeSpotifyLoginCallback);
@@ -83,6 +89,7 @@ describe("FM.auth.SpotifyAuthService", function() {
 
     it("should NOT attempt to get current user if auth token doesn't exists", function () {
         var setAuthTokenSpy = spyOn(Spotify, "setAuthToken");
+        getItemSpy.and.callFake(function(){ return null });
 
         service.init();
         $rootScope.$digest();

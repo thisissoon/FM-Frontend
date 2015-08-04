@@ -166,4 +166,17 @@ describe("FM.playlist.PlaylistCtrl", function() {
         expect($scope.playlist.length).toBe(6);
     });
 
+    it("should update playlist meta on deleted event", function(){
+        $scope.page.total = 1;
+        expect($scope.playlist.length).toBe(2);
+
+        $scope.onDeleted({},{ uri: "foo" });
+        $httpBackend.flush();
+        expect($scope.meta.play_time).toEqual(20000);
+        expect($scope.meta.total).toEqual(1);
+        expect($scope.playlist.length).toBe(1);
+        expect($scope.playlist).not.toContain({ track: { uri: "foo", duration: 100 } });
+    });
+
+
 });
