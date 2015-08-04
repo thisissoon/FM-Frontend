@@ -6,6 +6,7 @@
  * @author SOON_
  */
 angular.module("FM.auth.LoginGoogleCtrl", [
+    "FM.auth.GoogleAuthService",
     "FM.alert",
     "satellizer",
     "FM.api.ERRORS"
@@ -20,15 +21,17 @@ angular.module("FM.auth.LoginGoogleCtrl", [
     "$auth",
     "ERRORS",
     "AlertService",
+    "GoogleAuthService",
     /**
      * @constructor
      * @param {Object}  $scope
      * @param {Service} $route
-     * @param {Service} $auth         satellizer $auth service
-     * @param {Object}  ERRORS        error message copy
-     * @param {Object}  AlertService  Service which displays errors in the player
+     * @param {Service} $auth             satellizer $auth service
+     * @param {Object}  ERRORS            error message copy
+     * @param {Object}  AlertService      Service which displays errors in the player
+     * @param {Object}  GoogleAuthService Stores google auth data
      */
-    function ($scope, $route, $auth, ERRORS, AlertService) {
+    function ($scope, $route, $auth, ERRORS, AlertService, GoogleAuthService) {
 
         /**
          * Authenticate with google oauth
@@ -37,7 +40,10 @@ angular.module("FM.auth.LoginGoogleCtrl", [
         $scope.authenticate = function authenticate() {
 
             $auth.authenticate("google")
-                .then($route.reload)
+                .then(function(){
+                    GoogleAuthService.loadUser();
+                    $route.reload();
+                })
                 .catch(function (error){
                     // Satellizer returns an error if there is no token, parse the error to get the original API response
                     var response = JSON.parse(error.message.match(/\{.*\}/));

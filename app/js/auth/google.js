@@ -8,6 +8,7 @@
  */
 angular.module("FM.auth.google", [
     "FM.auth.LoginGoogleCtrl",
+    "FM.auth.GoogleAuthService",
     "config",
     "satellizer"
 ])
@@ -42,7 +43,8 @@ angular.module("FM.auth.google", [
 .run([
     "$rootScope",
     "$auth",
-    function ($rootScope, $auth){
+    "GoogleAuthService",
+    function ($rootScope, $auth, GoogleAuthService){
 
         /**
          * Set isAuthenticatedGoogle if token exists
@@ -51,6 +53,10 @@ angular.module("FM.auth.google", [
         $rootScope.isAuthenticatedGoogle = function isAuthenticatedGoogle() {
             return Boolean($auth.getToken());
         };
+
+        if ($rootScope.isAuthenticatedGoogle()){
+            GoogleAuthService.loadUser();
+        }
 
     }
 ]);

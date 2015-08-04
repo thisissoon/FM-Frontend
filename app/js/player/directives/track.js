@@ -8,6 +8,7 @@
 angular.module("FM.player.trackDirective", [
     "FM.player.removeLeadingZeros",
     "FM.api.PlayerQueueResource",
+    "FM.auth.GoogleAuthService",
     "ui.bootstrap.popover",
     "template/popover/popover-template.html",
     "template/popover/popover.html",
@@ -21,7 +22,8 @@ angular.module("FM.player.trackDirective", [
  */
 .directive("fmTrack",[
     "PlayerQueueResource",
-    function (PlayerQueueResource){
+    "GoogleAuthService",
+    function (PlayerQueueResource, GoogleAuthService){
         return {
             restrict: "EA",
             scope: {
@@ -34,6 +36,21 @@ angular.module("FM.player.trackDirective", [
             },
             templateUrl: "partials/track.html",
             link: function($scope){
+
+                /**
+                 * @property currentUser
+                 * @type {Object}
+                 */
+                $scope.currentUser = GoogleAuthService.getUser();
+
+                /**
+                 * Whether the track has been added by the current user
+                 * @property addedByCurrent
+                 * @type {Boolean}
+                 */
+                $scope.addedByCurrent = ($scope.currentUser && $scope.user && $scope.currentUser.id && $scope.user.id ) ?
+                                        ($scope.currentUser.id === $scope.user.id) :
+                                        false;
 
                 /**
                  * Remove track from queue
