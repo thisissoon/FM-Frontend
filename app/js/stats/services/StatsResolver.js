@@ -26,6 +26,13 @@ angular.module("FM.stats.statsResolver", [
     function ($route, $filter, $location, StatsResource, DateUtils) {
 
         return function resolver(params){
+
+            /**
+             * The date last friday
+             * @property {Date} lastFriday
+             */
+            var lastFriday = DateUtils.lastOccurence(5);
+
             /**
              * Is the param `to` greater than last Friday
              * @property {Boolean} toInvalid
@@ -38,8 +45,8 @@ angular.module("FM.stats.statsResolver", [
             }
 
             // Set `from` default to last week
-            if (!params.from && !params.all) {
-                var defaultFrom = new Date().setDate(DateUtils.lastOccurence(5).getDate() - 7);
+            if ((!params.from && !params.all) || fromInvalid) {
+                var defaultFrom = new Date(lastFriday - (7 * 86400000));
                 params.from = $filter("date")(defaultFrom, "yyyy-MM-dd");
             }
 
