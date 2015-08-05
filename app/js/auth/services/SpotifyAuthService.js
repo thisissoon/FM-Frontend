@@ -96,12 +96,13 @@ angular.module("FM.auth.SpotifyAuthService", [
 
             Spotify.getCurrentUser()
                 .then(function (response){
-                    user = response;
-                    deferred.resolve(response);
-                })
-                .catch(function (response){
-                    user = null;
-                    deferred.reject(response);
+                    if (response && !response.error){
+                        user = response;
+                        deferred.resolve(response);
+                    } else {
+                        user = null;
+                        deferred.reject(response);
+                    }
                 });
 
             return deferred.promise;
