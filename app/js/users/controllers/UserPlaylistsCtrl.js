@@ -84,8 +84,8 @@ angular.module("FM.users.UserPlaylistsCtrl", [
                 limit: env.SEARCH_LIMIT,
                 offset: $scope.playlists.length
             }).then(function (response) {
-                $scope.playlists = $scope.playlists.concat(response.playlists.items);
-                $scope.meta = response.playlists;
+                $scope.playlists = $scope.playlists.concat(response.items);
+                $scope.meta = response;
                 $scope.loadDisabled = false;
             });
         };

@@ -168,9 +168,25 @@ angular.module("FM.playlist.PlaylistCtrl", [
             });
         };
 
+        /**
+         * On delete event, remove track from playlist
+         * refresh playlist if song URI doesn't match the playlist
+         * @method onDeleted
+         */
+        $scope.onDeleted = function onDeleted(event, data) {
+            angular.forEach($scope.playlist, function (track, $index){
+                if (track.track.id === data.id){
+                    $scope.meta.total--;
+                    $scope.meta.play_time = $scope.meta.play_time - $scope.playlist[$index].track.duration; // jshint ignore:line
+                    $scope.playlist.splice($index, 1);
+                }
+            });
+        };
+
         $scope.$on("fm:player:play", $scope.onPlay);
         $scope.$on("fm:player:end", $scope.onEnd);
         $scope.$on("fm:player:add", $scope.onAdd);
+        $scope.$on("fm:player:deleted", $scope.onDeleted);
 
     }
 
