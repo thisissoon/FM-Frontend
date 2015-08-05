@@ -37,11 +37,17 @@ angular.module("FM.stats.statsResolver", [
              * Is the param `to` greater than last Friday
              * @property {Boolean} toInvalid
              */
-            var toInvalid = new Date(params.to) > DateUtils.lastOccurence(5);
+            var toInvalid = new Date(params.to) > lastFriday;
+
+            /**
+             * Is the param `from` greater than last Friday
+             * @property {Boolean} fromInvalid
+             */
+            var fromInvalid = new Date(params.from) > lastFriday;
 
             // Restrict `to` search param to last Friday
             if (!params.to || toInvalid) {
-                params.to = $filter("date")(DateUtils.lastOccurence(5), "yyyy-MM-dd");
+                params.to = $filter("date")(lastFriday, "yyyy-MM-dd");
             }
 
             // Set `from` default to last week
