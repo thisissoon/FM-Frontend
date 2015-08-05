@@ -8,13 +8,13 @@ describe("FM.stats.DateUtils", function() {
 
     beforeEach(module(function($provide) {
         $provide.value("LAST_WEEK", [
-            new Date("2015-07-08"),
-            new Date(new Date().setDate(new Date("2015-07-08").getDate() - 1)),
-            new Date(new Date().setDate(new Date("2015-07-08").getDate() - 2)),
-            new Date(new Date().setDate(new Date("2015-07-08").getDate() - 3)),
-            new Date(new Date().setDate(new Date("2015-07-08").getDate() - 4)),
-            new Date(new Date().setDate(new Date("2015-07-08").getDate() - 5)),
-            new Date(new Date().setDate(new Date("2015-07-08").getDate() - 6))
+            new Date(new Date("2015-07-08").getTime() - (86400000)),
+            new Date(new Date("2015-07-08").getTime() - (2*86400000)),
+            new Date(new Date("2015-07-08").getTime() - (3*86400000)),
+            new Date(new Date("2015-07-08").getTime() - (4*86400000)),
+            new Date(new Date("2015-07-08").getTime() - (5*86400000)),
+            new Date(new Date("2015-07-08").getTime() - (6*86400000)),
+            new Date(new Date("2015-07-08").getTime() - (7*86400000))
         ]);
     }));
 
@@ -30,10 +30,24 @@ describe("FM.stats.DateUtils", function() {
 
     describe("lastOccurence", function(){
 
-        it("should return last occurence of specific day of the week", function(){
+        it("should return last occurence of friday", function(){
             jasmine.clock().tick(1);
             var lastFriday = DateUtils.lastOccurence(5);
             expect(lastFriday).toEqual(new Date("2015-07-03"));
+        });
+
+        // check beginning of week boundary
+        it("should return last occurence of wednesday", function(){
+            jasmine.clock().tick(1);
+            var lastWednesday = DateUtils.lastOccurence(3);
+            expect(lastWednesday).toEqual(new Date("2015-07-01"));
+        });
+
+        // check end of week boundary
+        it("should return last occurence of tuesday", function(){
+            jasmine.clock().tick(1);
+            var tuesday = DateUtils.lastOccurence(2);
+            expect(tuesday).toEqual(new Date("2015-07-07"));
         });
 
     });
