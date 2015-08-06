@@ -14,6 +14,10 @@
     position: relative;
     margin-bottom: 5px;
 
+    &.disabled {
+        .opacity(.3);
+    }
+
     .queue &,
     .footer & {
         padding-left: 20px;
@@ -33,6 +37,16 @@
     li.active &,
     &:hover {
         background-color: lighten(@track-bg, 10%);
+    }
+
+    &.disabled {
+        .opacity(.7);
+        background-color: transparent;
+
+        li.active &,
+        &:hover {
+            background-color: transparent;
+        }
     }
 
     .footer &:hover {

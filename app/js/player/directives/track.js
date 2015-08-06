@@ -12,7 +12,8 @@ angular.module("FM.player.trackDirective", [
     "ui.bootstrap.popover",
     "template/popover/popover-template.html",
     "template/popover/popover.html",
-    "ui.bootstrap.dropdown"
+    "ui.bootstrap.dropdown",
+    "config"
 ])
 /**
  * @example
@@ -23,7 +24,8 @@ angular.module("FM.player.trackDirective", [
 .directive("fmTrack",[
     "PlayerQueueResource",
     "GoogleAuthService",
-    function (PlayerQueueResource, GoogleAuthService){
+    "env",
+    function (PlayerQueueResource, GoogleAuthService, env){
         return {
             restrict: "EA",
             scope: {
@@ -36,6 +38,16 @@ angular.module("FM.player.trackDirective", [
             },
             templateUrl: "partials/track.html",
             link: function($scope){
+
+                /**
+                 * If the track is not available
+                 * in the region set in the config
+                 * @property regionLocked
+                 * @type {Boolean}
+                 */
+                $scope.regionLocked = ($scope.track && $scope.track.available_markets) ? //jshint ignore:line
+                                      ($scope.track.available_markets.indexOf(env.REGION_CODE) === -1) : //jshint ignore:line
+                                      false;
 
                 /**
                  * @property currentUser
