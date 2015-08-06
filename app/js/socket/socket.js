@@ -40,6 +40,7 @@ angular.module("FM.sockets", [
     "fm:player:pause",
     "fm:player:resume",
     "fm:player:add",
+    "fm:player:deleted",
     "fm:player:setMute",
     "fm:player:setVolume"
 ])
