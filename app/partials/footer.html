@@ -1,4 +1,8 @@
-<div ng-controller="PlayerCtrl" ng-show="track.track.uri">
+<div ng-controller="PlayerCtrl"
+     ng-show="track.track.uri"
+     ng-class="{
+        'no-controls': !isAuthenticatedGoogle()
+      }">
 
     <button class="btn-link btn-icon-arrow visible-xs-inline-block"
             ng-click="footerOpen = !footerOpen">
