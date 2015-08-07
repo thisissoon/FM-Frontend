@@ -1,6 +1,17 @@
 <nav class="row">
     <ul class="nav nav-tabs">
-        <li role="presentation" ng-class="{ 'active': routeIsActive('/users/' + user.id) }"><a ng-href="./users/{{ user.id }}">Stats</a></li>
-        <li role="presentation" ng-class="{ 'active': routeIsActive('/users/' + user.id + '/playlists') }"><a ng-href="./users/{{ user.id }}/playlists">Playlists</a></li>
+        <li role="presentation"
+            ng-class="{
+                'active': routeIsActive('/users/' + user.id)
+            }">
+            <a ng-href="./users/{{ user.id }}">Stats</a>
+        </li>
+        <li role="presentation"
+            ng-controller="LoginSpotifyCtrl"
+            ng-class="{
+                'active': routeIsActive('/users/' + user.id + '/playlists')
+            }">
+            <a ng-if="isAuthenticated()" ng-href="./users/{{ user.id }}/playlists">Playlists</a>
+        </li>
     </ul>
 </nav>
