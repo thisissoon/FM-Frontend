@@ -34,6 +34,12 @@ angular.module("FM.auth.LoginGoogleCtrl", [
     function ($scope, $route, $auth, ERRORS, AlertService, GoogleAuthService) {
 
         /**
+         * @property currentUser
+         * @type {Object}
+         */
+        $scope.currentUser = GoogleAuthService.getUser();
+
+        /**
          * Authenticate with google oauth
          * @method authenticate
          */
