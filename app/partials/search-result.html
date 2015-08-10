@@ -2,7 +2,7 @@
 <p class="h4 text-center" ng-if="match.label.label">{{ match.label.label }}</p>
 
 <!-- track -->
-<fm-track ng-if="match.label.uri.indexOf('spotify:track') === 0" data-spotify-track="match.label" class="track"></fm-track>
+<fm-track ng-if="match.label.uri.indexOf('spotify:track') === 0" data-spotify-track="match.label"></fm-track>
 
 <!-- album -->
 <fm-album ng-if="match.label.uri.indexOf('spotify:album') === 0" data-album="match.label"></fm-album>

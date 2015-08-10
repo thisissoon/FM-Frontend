@@ -35,6 +35,16 @@
         background-color: lighten(@track-bg, 10%);
     }
 
+    &.disabled {
+        .opacity(.7);
+        background-color: transparent;
+
+        li.active &,
+        &:hover {
+            background-color: transparent;
+        }
+    }
+
     .footer &:hover {
         background-color: @track-bg;
     }
