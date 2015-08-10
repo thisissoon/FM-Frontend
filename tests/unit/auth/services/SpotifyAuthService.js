@@ -25,7 +25,7 @@ describe("FM.auth.SpotifyAuthService", function() {
         playlists = [{ id: "123" }, { id: "456" }];
 
         userPlaylistRequest = $httpBackend.whenGET(/.*api.spotify.com\/v1\/users\/.*\/playlists/);
-        userRequest = $httpBackend.whenGET(/.*api.spotify.com\/v1\/me.*/);
+        userRequest = $httpBackend.whenGET(/.*api.spotify.com\/v1\/me/);
 
         userRequest.respond(200, user);
         userPlaylistRequest.respond(200, playlists);
@@ -170,7 +170,7 @@ describe("FM.auth.SpotifyAuthService", function() {
         // user has local token, token is expired, token is renewed
         var error = { error: { status: 401 } };
         token = "foo";
-        userRequest.respond(401, error);
+        userRequest.respond(200, error);
         var setAuthTokenSpy = spyOn(Spotify, "setAuthToken");
         var alertSpy = spyOn(AlertService, "set");
 
@@ -194,7 +194,7 @@ describe("FM.auth.SpotifyAuthService", function() {
         expect(service.isAuthenticated()).toBeTruthy();
 
         // user has local token, token is expired, token renewal fails
-        userRequest.respond(401, error);
+        userRequest.respond(200, error);
         spotifyLoginResponse = error;
 
         service.authenticate();
