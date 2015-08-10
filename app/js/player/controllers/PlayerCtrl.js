@@ -12,17 +12,22 @@ angular.module("FM.player.PlayerCtrl",[
     "ui.bootstrap.popover",
     "template/popover/popover-template.html",
     "template/popover/popover.html",
-    "sn.title"
+    "sn.title",
+    "ngRoute"
 ])
 /**
- * @constant
- * @property {Object} UNICODE
+ * @method config
  */
-.constant("UNICODE", {
-    play: "&#x25B6;",
-    pause: "&#10074;&#10074;"
-
-})
+.config([
+    "$routeProvider",
+    function ($routeProvider) {
+        $routeProvider
+            .when("/current", {
+                templateUrl: "partials/player/current.html",
+                controller: "PlayerCtrl"
+            });
+    }
+])
 /**
  * @class PlayerCtrl
  * @param {Object}  $scope
@@ -39,8 +44,7 @@ angular.module("FM.player.PlayerCtrl",[
     "PlayerVolumeResource",
     "TrackTimer",
     "snTitle",
-    "UNICODE",
-    function ($scope, $q, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, TrackTimer, snTitle, UNICODE) {
+    function ($scope, $q, PlayerTransportResource, PlayerMuteResource, PlayerVolumeResource, TrackTimer, snTitle) {
 
         /**
          * The currently playing track
@@ -94,7 +98,7 @@ angular.module("FM.player.PlayerCtrl",[
                     var elapsed = parseInt(response[0].player.elapsed_time) || 0; // jshint ignore:line
                     $scope.trackPositionTimer.start($scope.track.track.duration, elapsed);
 
-                    snTitle.setPageTitle(UNICODE.play + " " + $scope.track.track.name);
+                    snTitle.setPageTitle($scope.track.track.name + " - " + $scope.track.track.artists[0].name);
 
                 }
             });
@@ -168,8 +172,6 @@ angular.module("FM.player.PlayerCtrl",[
         $scope.onPause = function onPause() {
             $scope.trackPositionTimer.pause();
             $scope.paused = true;
-
-            snTitle.setPageTitle(UNICODE.pause + " " + $scope.track.track.name);
         };
 
         /**
@@ -179,8 +181,6 @@ angular.module("FM.player.PlayerCtrl",[
         $scope.onResume = function onResume() {
             $scope.trackPositionTimer.start($scope.track.track.duration);
             $scope.paused = false;
-
-            snTitle.setPageTitle(UNICODE.play + " " + $scope.track.track.name);
         };
 
         /**

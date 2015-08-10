@@ -13,6 +13,10 @@
     right: 0;
     top: auto;
 
+    .current-view & {
+        bottom: -@footer-height;
+    }
+
     .controls,
     .track {
         bottom: 0;
@@ -31,11 +35,11 @@
     }
 
     .no-controls {
-        &.track {
+        .track {
             right: 70px;
         }
 
-        &.controls {
+        .controls {
             width: 70px;
         }
     }

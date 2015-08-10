@@ -45,9 +45,7 @@
     <div class="row">
         <div class="col-xs-12">
             <ul class="list-unstyled track-list">
-                <li class="track"
-                    id="{{ track.uri }}"
-                    ng-repeat="track in albumTracks"
+                <li ng-repeat="track in albumTracks"
                     data-spotify-track="track"
                     fm-track>
                 </li>

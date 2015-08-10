@@ -24,10 +24,6 @@
         margin-bottom: 0;
     }
 
-    .footer .selected {
-        display: none;
-    }
-
     .dropdown-menu & {
         cursor: pointer;
         padding-left: 0;
@@ -37,6 +33,16 @@
     li.active &,
     &:hover {
         background-color: lighten(@track-bg, 10%);
+    }
+
+    &.disabled {
+        .opacity(.7);
+        background-color: transparent;
+
+        li.active &,
+        &:hover {
+            background-color: transparent;
+        }
     }
 
     .footer &:hover {
@@ -64,6 +70,10 @@
     .align-self(center);
     margin-right: 20px;
     min-width: 400px;
+
+    .current-view & {
+        margin-right: 0;
+    }
 }
 
 .track-body {
@@ -97,6 +107,18 @@
     &.open .btn-context,
     .track:hover & .btn-context {
         .opacity(1);
+    }
+
+    & .option-delete {
+        display: none;
+    }
+
+    .queue & .option-delete {
+        display: block;
+
+        .history& {
+            display: none;
+        }
     }
 }
 

@@ -17,8 +17,8 @@
     <base href="/app/">
     <!-- /build -->
 
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Nixie+One"  type="text/css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nixie+One">
 
     <!-- build:css css/all.min.css -->
     <link rel="stylesheet" href="css/all.css">
@@ -42,7 +42,9 @@
     <meta name="msapplication-TileImage" content="img/favicons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 </head>
-<body>
+<body ng-class="{
+          'current-view': routeIsActive('/current')
+      }">
 
     <header class="header" ng-include="'partials/header.html'"></header>
     <div class="alerts" ng-include="'partials/alert.html'" ng-controller="AlertCtrl"></div>
@@ -80,6 +82,7 @@
     <script src="components/angular-notification/angular-notification.js"></script>
     <script src="components/Chart.js/Chart.js"></script>
     <script src="components/angular-chart.js/dist/angular-chart.js"></script>
+    <script src="components/angular-sn-infinite-scroll/dist/angular-sn-infinite-scroll.js"></script>
 
     <script src="js/config/config.js"></script>
 
@@ -87,12 +90,15 @@
 
     <script src="js/loading-screen/loadingScreen.js"></script>
 
-    <script src="js/infinite-scroll/infiniteScroll.js"></script>
-
     <script src="js/notifications/notifications.js"></script>
 
     <script src="js/auth/auth.js"></script>
-    <script src="js/auth/controllers/LoginCtrl.js"></script>
+    <script src="js/auth/google.js"></script>
+    <script src="js/auth/spotify.js"></script>
+    <script src="js/auth/controllers/LoginGoogleCtrl.js"></script>
+    <script src="js/auth/controllers/LoginSpotifyCtrl.js"></script>
+    <script src="js/auth/services/GoogleAuthService.js"></script>
+    <script src="js/auth/services/SpotifyAuthService.js"></script>
 
     <script src="js/alert/alert.js"></script>
     <script src="js/alert/controllers/AlertCtrl.js"></script>
@@ -134,6 +140,7 @@
     <script src="js/search/controllers/TrackSearchCtrl.js"></script>
     <script src="js/search/directives/artist.js"></script>
     <script src="js/search/directives/album.js"></script>
+    <script src="js/search/directives/playlist.js"></script>
 
     <script src="js/nav/nav.js"></script>
 
@@ -145,6 +152,8 @@
 
     <script src="js/users/users.js"></script>
     <script src="js/users/controllers/UserStatsCtrl.js"></script>
+    <script src="js/users/controllers/UserPlaylistsCtrl.js"></script>
+    <script src="js/users/controllers/UserPlaylistDetailCtrl.js"></script>
 
     <script src="js/app.js"></script>
     <!-- /build -->

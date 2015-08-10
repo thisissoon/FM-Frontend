@@ -1,31 +1,43 @@
 "use strict";
 /**
  * Controller for thisissoon FM authentication actions
- * @class  LoginCtrl
- * @module FM.auth.LoginCtrl
+ * @class  LoginGoogleCtrl
+ * @module FM.auth.LoginGoogleCtrl
  * @author SOON_
  */
-angular.module("FM.auth.LoginCtrl", [
+angular.module("FM.auth.LoginGoogleCtrl", [
+    "FM.auth.GoogleAuthService",
+    "FM.alert",
     "satellizer",
     "FM.api.ERRORS"
 ])
 /**
- * @class  LoginCtrl
+ * @class  LoginGoogleCtrl
  * @author SOON_
  */
-.controller("LoginCtrl", [
+.controller("LoginGoogleCtrl", [
     "$scope",
     "$route",
     "$auth",
     "ERRORS",
+    "AlertService",
+    "GoogleAuthService",
     /**
      * @constructor
      * @param {Object}  $scope
      * @param {Service} $route
-     * @param {Service} $auth    satellizer $auth service
-     * @param {Object}  ERRORS   rror message copy
+     * @param {Service} $auth             satellizer $auth service
+     * @param {Object}  ERRORS            error message copy
+     * @param {Object}  AlertService      Service which displays errors in the player
+     * @param {Object}  GoogleAuthService Stores google auth data
      */
-    function ($scope, $route, $auth, ERRORS) {
+    function ($scope, $route, $auth, ERRORS, AlertService, GoogleAuthService) {
+
+        /**
+         * @property currentUser
+         * @type {Object}
+         */
+        $scope.currentUser = GoogleAuthService.getUser();
 
         /**
          * Authenticate with google oauth
@@ -34,7 +46,8 @@ angular.module("FM.auth.LoginCtrl", [
         $scope.authenticate = function authenticate() {
 
             $auth.authenticate("google")
-                .then(function() {
+                .then(function(){
+                    GoogleAuthService.loadUser();
                     $route.reload();
                 })
                 .catch(function (error){
@@ -42,27 +55,11 @@ angular.module("FM.auth.LoginCtrl", [
                     var response = JSON.parse(error.message.match(/\{.*\}/));
 
                     if (response && response.message === "Validation Error") {
-                        $scope.showAlert(ERRORS.AUTH_VALIDATION_TITLE, response.errors.code[0]);
+                        AlertService.set(ERRORS.AUTH_VALIDATION_TITLE, response.errors.code[0]);
                     }
 
                     $auth.removeToken();
                 });
-
-        };
-
-        /**
-         * Show alert dialog with mdDialog service
-         * @param {String} title   title to display in dialog
-         * @param {String} content content to display in dialog
-         */
-        $scope.showAlert = function showAlert() {
-            // $mdDialog.show(
-            //     $mdDialog.alert()
-            //         .title(title)
-            //         .content(content)
-            //         .ariaLabel("Alert")
-            //         .ok("Ok")
-            // );
         };
 
     }

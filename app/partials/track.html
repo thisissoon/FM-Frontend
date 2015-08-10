@@ -1,57 +1,63 @@
-<div ng-if="user" class="track-left track-user text-center">
-    <span ng-if="current" class="selected">Selected by: </span>
-    <a ng-href="users/{{ user.id }}">
-        <img ng-src="{{ user.avatar_url }}"
-             alt="{{ user.display_name }}"
-             popover="{{ user.display_name }}"
-             popover-append-to-body="true"
-             popover-trigger="mouseenter"
-             class="img-circle img-user">
-    </a>
-</div>
+<div class="track"
+     ng-class="{
+        'disabled': regionLocked
+     }">
+    <div ng-if="user" class="track-left track-user text-center">
 
-<div ng-if="track && track.album.images[0]" class="track-left track-album">
-    <a ng-href="albums/{{ track.album.uri }}">
-        <img class="track-object img-album" ng-src="{{ track.album.images[0].url }}" alt="{{ item.album.name }}">
-    </a>
-</div>
-
-<div ng-if="track" class="track-body">
-    <p class="lead track-heading track-info" title="{{ track.name }}">{{ track.name }}</p>
-    <p class="text-muted track-info" title="{{ track.allArtists }}">
-        <a class="text-muted" ng-repeat-start="artist in track.artists" ng-href="artists/{{ artist.uri }}">{{ artist.name }}</a><span ng-repeat-end ng-if="!$last">, </span>
-    </p>
-    <p class="text-muted track-info hidden-xs" title="{{ track.album.name }}">
-        <a class="text-muted" ng-href="albums/{{ track.album.uri }}">{{ track.album.name }}</a>
-    </p>
-</div>
-
-<div class="track-progress" ng-show="timer && track">
-    <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="{{ timer.elapsedTime }}" aria-valuemin="0" aria-valuemax="{{ track.duration }}" ng-style="{ width: timer.percent + '%' }"></div>
+        <a ng-href="users/{{ user.id }}">
+            <img ng-src="{{ user.avatar_url }}"
+                 alt="{{ user.display_name }}"
+                 popover="{{ user.display_name }}"
+                 popover-append-to-body="true"
+                 popover-trigger="mouseenter"
+                 class="img-circle img-user">
+        </a>
     </div>
-</div>
 
-<div ng-if="playCount" class="track-right track-plays text-right">
-    <p>
-        {{ playCount }} plays
-    </p>
-</div>
+    <div ng-if="track && track.album.images[0]" class="track-left track-album">
+        <a ng-href="albums/{{ track.album.uri }}">
+            <img class="track-object img-album" ng-src="{{ track.album.images[0].url }}" alt="{{ item.album.name }}">
+        </a>
+    </div>
 
-<div class="track-menu" dropdown is-open="status.isopen">
-    <a role="button" href class="text-muted btn-context" dropdown-toggle>
-        <span class="sr-only sr-only-focusable">Track menu</span>
-        <span class="icon icon-context"></span>
-    </a>
-    <ul class="dropdown-menu" role="menu">
-        <li><a href ng-click="addToPlaylist(track)">Add to playlist</a></li>
-    </ul>
-</div>
+    <div ng-if="track" class="track-body">
+        <p class="lead track-heading track-info" title="{{ track.name }}">{{ track.name }}</p>
+        <p class="text-muted track-info" title="{{ track.allArtists }}">
+            <a class="text-muted" ng-repeat-start="artist in track.artists" ng-href="artists/{{ artist.uri }}">{{ artist.name }}</a><span ng-repeat-end ng-if="!$last">, </span>
+        </p>
+        <p class="text-muted track-info hidden-xs" title="{{ track.album.name }}">
+            <a class="text-muted" ng-href="albums/{{ track.album.uri }}">{{ track.album.name }}</a>
+        </p>
+    </div>
 
-<div ng-if="track.duration || track.duration_ms" class="track-right track-time text-right">
-    <p>
-        <span ng-show="timer">{{ timer.elapsedTime | date: "H:mm:ss" | removeLeadingZeros }}</span>
-        <span ng-show="timer" class="hidden-xs">/</span>
-        <span class="text-muted">{{ track.duration || track.duration_ms | date: "H:mm:ss" | removeLeadingZeros }}</span>
-    </p>
+    <div class="track-progress" ng-show="timer && track">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{ timer.elapsedTime }}" aria-valuemin="0" aria-valuemax="{{ track.duration }}" ng-style="{ width: timer.percent + '%' }"></div>
+        </div>
+    </div>
+
+    <div ng-if="playCount" class="track-right track-plays text-right">
+        <p>
+            {{ playCount }} plays
+        </p>
+    </div>
+
+    <div class="track-menu" dropdown is-open="status.isopen" ng-if="!regionLocked || addedByCurrent">
+        <a role="button" href class="text-muted btn-context" dropdown-toggle>
+            <span class="sr-only sr-only-focusable">Track menu</span>
+            <span class="icon icon-context"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href ng-click="addToPlaylist(track)" ng-if="!regionLocked">Add to playlist</a></li>
+            <li><a href ng-click="removeTrack(id)" ng-if="id && addedByCurrent" class="option-delete">Delete from queue</a></li>
+        </ul>
+    </div>
+
+    <div ng-if="track.duration || track.duration_ms" class="track-right track-time text-right">
+        <p>
+            <span ng-show="timer">{{ timer.elapsedTime | date: "H:mm:ss" | removeLeadingZeros }}</span>
+            <span ng-show="timer" class="hidden-xs">/</span>
+            <span class="text-muted">{{ track.duration || track.duration_ms | date: "H:mm:ss" | removeLeadingZeros }}</span>
+        </p>
+    </div>
 </div>

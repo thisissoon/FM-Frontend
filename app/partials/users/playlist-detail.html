@@ -1,0 +1,59 @@
+<div class="container-fluid">
+    <div class="horizontal-padding">
+        <div class="row">
+            <div ng-class="{
+                'col-lg-4 col-md-4 col-sm-6 col-xs-12': playlist.images[0],
+                'hidden': !playlist.images[0]
+            }">
+                <img ng-src="{{ playlist.images[0].url }}" alt="{{ playlist.name }}" class="img-responsive">
+            </div>
+
+            <div ng-class="{
+                'col-lg-8 col-md-8 col-sm-6 col-xs-12': playlist.images[0],
+                'col-xs-12': !playlist.images[0]
+            }">
+                <h1 class="h2">{{ playlist.name }}</h1>
+                <p class="lead">
+                    <span class="small text-muted">By</span>
+                    {{ playlist.owner.id }} <small class="text-muted">(Spotify)</small>
+                </p>
+                <p class="lead"
+                   ng-pluralize
+                   count="meta.total"
+                   when="{
+                       '0': 'No tracks',
+                       'one': '1 track',
+                       'other': '{} tracks'
+                   }">
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="h4 horizontal-padding">Track list</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="list-unstyled track-list">
+                <li ng-repeat="track in playlistTracks"
+                    data-spotify-track="track.track"
+                    fm-track>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="row text-center">
+        <button class="btn btn-primary" ng-click="loadMore()" ng-if="meta.next" ng-disabled="loadDisabled">Load more</button>
+        <p ng-if="meta.total > 0 && !meta.next">No more tracks</p>
+    </div>
+
+</div>

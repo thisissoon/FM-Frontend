@@ -1,0 +1,30 @@
+<div class="current img"
+     ng-style="{
+        'background-image': 'url(' + track.track.album.images[0].url + ')'
+     }">
+
+    <div ng-show="track.track.uri">
+
+        <fm-track data-spotify-track="track.track" data-user="track.user"></fm-track>
+
+        <div class="controls-wrapper">
+
+            <div class="track-progress" ng-show="trackPositionTimer && track">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ trackPositionTimer.elapsedTime }}" aria-valuemin="0" aria-valuemax="{{ track.track.duration }}" ng-style="{ width: trackPositionTimer.percent + '%' }"></div>
+                </div>
+            </div>
+
+            <p class="timer text-center">
+                <span ng-show="trackPositionTimer">{{ trackPositionTimer.elapsedTime | date: "H:mm:ss" | removeLeadingZeros }}</span>
+                <span class="text-muted">{{ track.track.duration | date: "H:mm:ss" | removeLeadingZeros }}</span>
+            </p>
+
+            <div class="text-center" ng-include="'partials/player/controls.html'"></div>
+
+        </div>
+
+    </div>
+
+    <div ng-include="'partials/loading.html'" ng-show="!track.track.uri"></div>
+</div>

@@ -8,10 +8,12 @@
 angular.module("FM.player.trackDirective", [
     "FM.player.removeLeadingZeros",
     "FM.api.PlayerQueueResource",
+    "FM.auth.GoogleAuthService",
     "ui.bootstrap.popover",
     "template/popover/popover-template.html",
     "template/popover/popover.html",
-    "ui.bootstrap.dropdown"
+    "ui.bootstrap.dropdown",
+    "config"
 ])
 /**
  * @example
@@ -21,11 +23,14 @@ angular.module("FM.player.trackDirective", [
  */
 .directive("fmTrack",[
     "PlayerQueueResource",
-    function (PlayerQueueResource){
+    "GoogleAuthService",
+    "env",
+    function (PlayerQueueResource, GoogleAuthService, env){
         return {
             restrict: "EA",
             scope: {
                 track: "=spotifyTrack",
+                id: "=?",
                 current: "=",
                 user: "=",
                 timer: "=?",
@@ -33,6 +38,40 @@ angular.module("FM.player.trackDirective", [
             },
             templateUrl: "partials/track.html",
             link: function($scope){
+
+                /**
+                 * If the track is not available
+                 * in the region set in the config
+                 * @property regionLocked
+                 * @type {Boolean}
+                 */
+                $scope.regionLocked = ($scope.track && $scope.track.available_markets) ? //jshint ignore:line
+                                      ($scope.track.available_markets.indexOf(env.REGION_CODE) === -1) : //jshint ignore:line
+                                      false;
+
+                /**
+                 * @property currentUser
+                 * @type {Object}
+                 */
+                $scope.currentUser = GoogleAuthService.getUser();
+
+                /**
+                 * Whether the track has been added by the current user
+                 * @property addedByCurrent
+                 * @type {Boolean}
+                 */
+                $scope.addedByCurrent = ($scope.currentUser && $scope.user && $scope.currentUser.id && $scope.user.id ) ?
+                                        ($scope.currentUser.id === $scope.user.id) :
+                                        false;
+
+                /**
+                 * Remove track from queue
+                 * @method removeTrack
+                 * @param {String} uuid uuid of track in queue
+                 */
+                $scope.removeTrack = function removeTrack(uuid){
+                    PlayerQueueResource.remove({ id: uuid });
+                };
 
                 /**
                  * @method onTrackUpdated
