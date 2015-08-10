@@ -1,3 +1,15 @@
+## Changes in 0.9.0
+
+ * @edwardoparearyee: Fix: Hide playlist link when not logged in to spotify (#206)
+ * @edwardoparearyee: Fix: Hide tracks not available in region (#205)
+ * @edwardoparearyee: Fix: spotify auth when has expired (#204)
+ * @edwardoparearyee: Feature: Fix track in browser title (#202)
+ * @jamesjwarren: Fix: stat default from (#201)
+ * @edwardoparearyee: Feature: Saucelabs (#198)
+ * @jamesjwarren: Fix: replace sn.infiniteScroll with bower component (#197)
+ * @edwardoparearyee: Feature: Current track view (#192)
+ * @edwardoparearyee: Feature: Delete track (#117)
+
 ## Changes in 0.8.1
 
  * @bcmrbvm: Fix: Volume slider (#187)
