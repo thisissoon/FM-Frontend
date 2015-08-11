@@ -135,8 +135,9 @@ angular.module("FM.player.PlayerCtrl",[
          * send POST request to update volume
          * @method skip
          */
-        $scope.updateVol = function updateVol() {
-            PlayerVolumeResource.save({ volume: parseInt($scope.volume) });
+        $scope.updateVol = function updateVol(vol) {
+            $scope.volume = parseInt(vol);
+            PlayerVolumeResource.save({ volume: $scope.volume });
         };
 
         /**
