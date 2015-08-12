@@ -2,7 +2,7 @@
 
 <div ng-include="'partials/users/nav.html'"></div>
 
-<div class="container-fluid">
+<div class="container-fluid" ng-if="authenticated()">
     <div class="row">
         <div class="col-xs-12">
             <h2>Playlists <span class="badge">{{ meta.total }}</span></h2>
@@ -21,6 +21,24 @@
         <div class="col-xs-12 text-center">
             <button class="btn btn-primary" ng-click="loadMore()" ng-if="meta.next" ng-disabled="loadDisabled">Load more</button>
             <p ng-if="meta.total > 0 && !meta.next">No more playlists</p>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" ng-if="!authenticated()">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <h2>Click the button below to login to Spotify and view your playlists</h2>
+
+        </div>
+
+        <div class="col-xs-12 text-center" ng-controller="LoginSpotifyCtrl">
+            <button type="button" class="btn btn-spotify" ng-click="authenticate()">
+                <span class="icon icon-spotify h4"></span>
+                <span class="separator"></span>
+                Login to Spotify
+            </button>
         </div>
     </div>
 </div>

@@ -18,15 +18,12 @@ angular.module("FM.users.UserPlaylistsCtrl", [
     function ($routeProvider) {
 
         $routeProvider
-            .when("/users/:id/playlists", {
+            .when("/users/me/playlists", {
                 templateUrl: "partials/users/playlists.html",
                 controller: "UserPlaylistsCtrl",
                 resolve: {
-                    user: ["UsersResource", "$route", function (UsersResource, $route){
-                        return UsersResource.get($route.current.params).$promise;
-                    }],
-                    playlists: ["SpotifyAuth", function (SpotifyAuth){
-                        return SpotifyAuth.getUserPlaylists();
+                    user: ["UsersResource", function (UsersResource){
+                        return UsersResource.current().$promise;
                     }]
                 }
             });
@@ -36,37 +33,45 @@ angular.module("FM.users.UserPlaylistsCtrl", [
 /**
  * @constructor
  * @class UserPlaylistsCtrl
- * @param {Object}   $scope    Scoped application data
- * @param {Object}   Spotify   Spotify api service
- * @param {Object}   user      User object resolved from API
- * @param {Object}   Playlists User playlist from spotify
+ * @param {Object}  $scope      Scoped application data
+ * @param {Service} Spotify     Spotify API wrapper
+ * @param {Service} SpotifyAuth Authentication service for Spotify
+ * @param {Object}  user        User object resolved from API
+ * @param {Object}  env         App enviroment variables
  */
 .controller("UserPlaylistsCtrl", [
     "$scope",
+    "Spotify",
     "SpotifyAuth",
     "user",
-    "playlists",
     "env",
-    function ($scope, SpotifyAuth, user, playlists, env) {
+    function ($scope, Spotify, SpotifyAuth, user, env) {
 
         /**
-         * User
+         * @property SpotifyAuth
+         * @type {Object}
+         */
+        $scope.authenticated = function authenticated(){
+            return SpotifyAuth.isAuthenticated();
+        };
+
+        /**
          * @property {Object} user
          */
         $scope.user = user;
 
         /**
          * @property playlists
-         * @type {Object}
+         * @type {Array}
          */
-        $scope.playlists = playlists.items;
+        $scope.playlists = null;
 
         /**
-         * Search meta data
+         * User playlists meta data
          * @property meta
          * @type {Object}
          */
-        $scope.meta = playlists;
+        $scope.meta = null;
 
         /**
          * @property loadDisabled
@@ -82,13 +87,30 @@ angular.module("FM.users.UserPlaylistsCtrl", [
             $scope.loadDisabled = true;
             SpotifyAuth.getUserPlaylists({
                 limit: env.SEARCH_LIMIT,
-                offset: $scope.playlists.length
+                offset: ($scope.playlists && $scope.playlists.length) ? $scope.playlists.length : 0
             }).then(function (response) {
-                $scope.playlists = $scope.playlists.concat(response.items);
+                $scope.playlists = ($scope.playlists && $scope.playlists.concat) ? $scope.playlists.concat(response.items) : response.items;
                 $scope.meta = response;
                 $scope.loadDisabled = false;
             });
         };
+
+        /**
+         * Action to perform when spotify suth status has changed.
+         * Loads users playlists if authenticated or removes playlists
+         * when logged out.
+         * @method onAuthChange
+         * @param  {Boolean} isAuthenticated
+         */
+        $scope.onAuthChange = function onAuthChange(isAuthenticated){
+            if (isAuthenticated) {
+                $scope.loadMore();
+            } else {
+                $scope.playlists = null;
+            }
+        };
+
+        $scope.$watch("authenticated", $scope.onAuthChange);
 
     }
 ]);

@@ -29,7 +29,7 @@ describe("FM.users.UserPlaylistsCtrl", function() {
         $httpBackend.whenGET(/partials\/.*/).respond(200, "");
         $httpBackend.whenGET(/api.spotify.com\/v1\/users\/.*\/playlists/).respond(200, playlistsResponse);
         $httpBackend.whenGET(/api.spotify.com\/v1\/users\/.*/).respond(200, userResponse);
-        $httpBackend.whenGET(env.FM_API_SERVER_ADDRESS + "users/foo").respond(200, userResponse);
+        $httpBackend.whenGET(env.FM_API_SERVER_ADDRESS + "users/authenticated").respond(200, userResponse);
     }));
 
     beforeEach(inject(function (  _$location_, _$route_, _$rootScope_, $injector, $controller ) {
@@ -72,7 +72,7 @@ describe("FM.users.UserPlaylistsCtrl", function() {
     });
 
     it("should load user playlist view", function() {
-        $location.path("/users/foo/playlists/");
+        $location.path("/users/me/playlists/");
         $rootScope.$digest();
         $httpBackend.flush();
         expect($route.current.controller).toBe("UserPlaylistsCtrl");
