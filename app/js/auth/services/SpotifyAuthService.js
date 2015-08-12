@@ -12,16 +12,6 @@ angular.module("FM.auth.SpotifyAuthService", [
     "spotify"
 ])
 /**
- * @method run
- * @param  {Service} SpotifyAuth
- */
-.run([
-    "SpotifyAuth",
-    function (SpotifyAuth){
-        SpotifyAuth.init();
-    }
-])
-/**
  * @constant
  * @property {String} TOKEN_NAME
  */
@@ -112,49 +102,20 @@ angular.module("FM.auth.SpotifyAuthService", [
          * Authenticate with spotify OAuth
          * @public
          * @method authenticate
-         * @param  {Boolean} onlyIfToken only request auth if user token exists
          * @return {Object}  Spotify     user object
          */
-        this.authenticate = function authenticate(onlyIfToken) {
-            var deferred = $q.defer(),
-                authToken = $window.localStorage.getItem(TOKEN_NAME);
+        this.authenticate = function authenticate() {
+            var deferred = $q.defer();
 
-            // check for existing auth token
-            if (authToken){
-                Spotify.setAuthToken(authToken);
-
-                getCurrentUser()
-                    .then(function (){
-                        authenticated = true;
-                        deferred.resolve(authToken);
-                    })
-                    .catch(function (){
-                        login()
-                            .then(function (response){
-                                authenticated = true;
-                                deferred.resolve(response);
-                            })
-                            .catch(function (response){
-                                authenticated = false;
-                                deferred.reject(response);
-                            });
-                    });
-
-            } else {
-                if (!onlyIfToken){
-                    login()
-                        .then(function (response){
-                            authenticated = true;
-                            deferred.resolve(response);
-                        })
-                        .catch(function (response){
-                            authenticated = false;
-                            deferred.reject(response);
-                        });
-                } else {
-                    deferred.reject();
-                }
-            }
+            login()
+                .then(function (response){
+                    authenticated = true;
+                    deferred.resolve(response);
+                })
+                .catch(function (response){
+                    authenticated = false;
+                    deferred.reject(response);
+                });
 
             return deferred.promise;
         };
@@ -178,7 +139,7 @@ angular.module("FM.auth.SpotifyAuthService", [
         this.getUser = function getUser() {
             var deferred = $q.defer();
 
-            _this.authenticate(true)
+            _this.authenticate()
                 .then(function (){
                     getCurrentUser()
                         .then(deferred.resolve)
@@ -208,16 +169,6 @@ angular.module("FM.auth.SpotifyAuthService", [
                 .catch(deferred.reject);
 
             return deferred.promise;
-        };
-
-        /**
-         * Attempt to authenicate the user if
-         * they have logged into spotify before
-         * @public
-         * @method init
-         */
-        this.init = function init() {
-            _this.authenticate(true);
         };
 
     }
