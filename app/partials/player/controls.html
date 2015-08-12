@@ -51,7 +51,7 @@
             class="volume-control"
             name="volume"
             ng-model="volume"
-            ng-change="updateVol()"
+            ng-change="updateVol(controls.volume.$modelValue)"
             ng-model-options="{
                 updateOn: 'default blur',
                 debounce: {
