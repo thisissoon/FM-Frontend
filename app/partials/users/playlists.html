@@ -17,6 +17,8 @@
         </li>
     </ul>
 
+    <img ng-show="loadDisabled" class="center-block loading-animation" src="img/icons/loading-animation.gif" width="50">
+
     <div class="row">
         <div class="col-xs-12 text-center">
             <button class="btn btn-primary" ng-click="loadMore()" ng-if="meta.next" ng-disabled="loadDisabled">Load more</button>

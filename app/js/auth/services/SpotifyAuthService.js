@@ -139,13 +139,13 @@ angular.module("FM.auth.SpotifyAuthService", [
         this.getUser = function getUser() {
             var deferred = $q.defer();
 
-            _this.authenticate()
-                .then(function (){
-                    getCurrentUser()
-                        .then(deferred.resolve)
-                        .catch(deferred.reject);
-                })
-                .catch(deferred.reject);
+            if (authenticated){
+                getCurrentUser()
+                    .then(deferred.resolve)
+                    .catch(deferred.reject);
+            } else {
+                deferred.reject();
+            }
 
             return deferred.promise;
         };

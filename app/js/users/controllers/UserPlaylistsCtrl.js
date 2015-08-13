@@ -48,14 +48,6 @@ angular.module("FM.users.UserPlaylistsCtrl", [
     function ($scope, Spotify, SpotifyAuth, user, env) {
 
         /**
-         * @property SpotifyAuth
-         * @type {Object}
-         */
-        $scope.authenticated = function authenticated(){
-            return SpotifyAuth.isAuthenticated();
-        };
-
-        /**
          * @property {Object} user
          */
         $scope.user = user;
@@ -78,6 +70,14 @@ angular.module("FM.users.UserPlaylistsCtrl", [
          * @type {Boolean}
          */
         $scope.loadDisabled = false;
+
+        /**
+         * @property SpotifyAuth
+         * @type {Object}
+         */
+        $scope.authenticated = function authenticated(){
+            return SpotifyAuth.isAuthenticated();
+        };
 
         /**
          * Load more search results
@@ -110,7 +110,7 @@ angular.module("FM.users.UserPlaylistsCtrl", [
             }
         };
 
-        $scope.$watch("authenticated", $scope.onAuthChange);
+        $scope.$watch($scope.authenticated, $scope.onAuthChange);
 
     }
 ]);
