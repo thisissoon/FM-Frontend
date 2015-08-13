@@ -103,9 +103,10 @@ describe("FM.player.PlayerCtrl", function() {
     });
 
     it("should make request to update volume", function(){
-        $scope.volume = "70";
-        $scope.updateVol();
+        $scope.volume = 50;
+        $scope.updateVol("70");
         $httpBackend.flush();
+        expect($scope.volume).toBe(70);
         expect(PlayerVolumeResource.save).toHaveBeenCalledWith({ volume: 70 });
     });
 

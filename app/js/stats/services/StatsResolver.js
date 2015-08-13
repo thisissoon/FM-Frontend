@@ -5,7 +5,6 @@
  */
 angular.module("FM.stats.statsResolver", [
     "FM.stats.DateUtils",
-    "FM.api.StatsResource",
     "ngRoute"
 ])
 /**
@@ -13,7 +12,6 @@ angular.module("FM.stats.statsResolver", [
  * @param   {Object}   $route
  * @param   {Service}  $filter
  * @param   {String}   $location
- * @param   {Resource} StatsResource Resource to provide communication with API
  * @param   {Service}  DateUtils     Date helper utilities
  * @returns {Promise}  Data resolved from API
  */
@@ -21,11 +19,15 @@ angular.module("FM.stats.statsResolver", [
     "$route",
     "$filter",
     "$location",
-    "StatsResource",
     "DateUtils",
-    function ($route, $filter, $location, StatsResource, DateUtils) {
+    function ($route, $filter, $location, DateUtils) {
 
-        return function resolver(params){
+        /**
+         * Resolve stats from resource with restricted from/to parameters
+         * @param {Function} resource API resource action to resolve stats from eg. StatsResource.get
+         * @param {Object}   params   Current search params
+         */
+        return function resolver(resource, params){
 
             /**
              * The date last friday
@@ -58,7 +60,7 @@ angular.module("FM.stats.statsResolver", [
 
             $location.replace().search(params);
             delete params.all;
-            return StatsResource.get(params).$promise;
+            return resource(params).$promise;
         };
     }
 ]);

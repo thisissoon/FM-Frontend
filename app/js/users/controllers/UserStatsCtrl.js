@@ -23,8 +23,8 @@ angular.module("FM.users.UserStatsCtrl", [
                 templateUrl: "partials/users/stats.html",
                 controller: "UserStatsCtrl",
                 resolve: {
-                    stats: ["UsersResource", "$route", function (UsersResource, $route){
-                        return UsersResource.stats($route.current.params).$promise;
+                    stats: ["statsResolver", "$route", "UsersResource", function (statsResolver, $route, UsersResource) {
+                        return statsResolver(UsersResource.stats, $route.current.params);
                     }],
                     user: ["UsersResource", "$route", function (UsersResource, $route){
                         return UsersResource.get($route.current.params).$promise;
@@ -174,7 +174,7 @@ angular.module("FM.users.UserStatsCtrl", [
             $scope.filter.to = $scope.search.to || undefined;
 
             // set max datepicker date to today
-            $scope.datepickerMaxDate = new Date();
+            $scope.datepickerMaxDate = DateUtils.lastOccurence(5);
 
             if ($scope.filter.from) {
                 // Format total play time per user stats for charts
