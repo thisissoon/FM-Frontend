@@ -18,7 +18,8 @@ angular.module("FM.search.artistDirective", [
         return {
             restrict: "EA",
             scope: {
-                artist: "="
+                artist: "=",
+                link: "@?"
             },
             templateUrl: "partials/search/artist.html"
         };

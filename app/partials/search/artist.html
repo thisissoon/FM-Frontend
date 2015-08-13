@@ -1,4 +1,4 @@
-<a href="artists/{{ artist.id }}" class="thumbnail artist" title="{{ artist.name }}">
+<a ng-href="artists/{{  link ? artist[link] : artist.id }}" class="thumbnail artist" title="{{ artist.name }}">
     <div class="img"
          ng-class="{
             'no-img': !artist.images[1]
