@@ -18,14 +18,6 @@
                 </button>
             </span>
 
-            <span class="hidden-xs" ng-show="!isAuthenticated()" ng-controller="LoginSpotifyCtrl">
-                <button type="button" class="btn btn-spotify" ng-click="authenticate()">
-                    <span class="icon icon-spotify h4"></span>
-                    <span class="separator"></span>
-                    Login to Spotify
-                </button>
-            </span>
-
             <span ng-if="isAuthenticatedGoogle()">
                 <button class="btn btn-link hidden-lg hidden-md" ng-click="toogleSidebar()">
                     <span class="h3 icon icon-playlist-add text-muted"></span>
