@@ -174,7 +174,7 @@ angular.module("FM.users.UserStatsCtrl", [
             $scope.filter.to = $scope.search.to || undefined;
 
             // set max datepicker date to today
-            $scope.datepickerMaxDate = new Date();
+            $scope.datepickerMaxDate = DateUtils.lastOccurence(5);
 
             if ($scope.filter.from) {
                 // Format total play time per user stats for charts
