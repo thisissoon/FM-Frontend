@@ -18,12 +18,12 @@ angular.module("FM.users.UserPlaylistsCtrl", [
     function ($routeProvider) {
 
         $routeProvider
-            .when("/users/me/playlists", {
+            .when("/users/:id/playlists", {
                 templateUrl: "partials/users/playlists.html",
                 controller: "UserPlaylistsCtrl",
                 resolve: {
-                    user: ["UsersResource", function (UsersResource){
-                        return UsersResource.current().$promise;
+                    user: ["UsersResource", "$route", function (UsersResource, $route){
+                        return UsersResource.get($route.current.params).$promise;
                     }]
                 }
             });

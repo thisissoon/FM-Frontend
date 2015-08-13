@@ -7,10 +7,11 @@
             <a ng-href="./users/{{ user.id }}">Stats</a>
         </li>
         <li role="presentation"
+            ng-if="currentUser.id === user.id"
             ng-class="{
-                'active': routeIsActive('/users/me/playlists')
+                'active': routeIsActive('/users/' + user.id + '/playlists')
             }">
-            <a ng-href="./users/me/playlists">Playlists</a>
+            <a ng-href="./users/{{ user.id }}/playlists">Playlists</a>
         </li>
     </ul>
 </nav>
