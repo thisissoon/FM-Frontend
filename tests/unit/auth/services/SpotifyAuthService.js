@@ -79,11 +79,8 @@ describe("FM.auth.SpotifyAuthService", function() {
     it("should return authentication status", function () {
         var authenticated = service.isAuthenticated();
         expect(authenticated).toBeFalsy();
-        token = "foo";
 
-        service.getUser();
-
-        $httpBackend.flush();
+        service.authenticate();
         $rootScope.$digest();
 
         authenticated = service.isAuthenticated();
@@ -130,6 +127,9 @@ describe("FM.auth.SpotifyAuthService", function() {
     it("should get the current user", function () {
         var data;
 
+        service.authenticate();
+        $rootScope.$digest();
+
         service.getUser()
             .then(function (response){
                 data = response;
@@ -144,9 +144,21 @@ describe("FM.auth.SpotifyAuthService", function() {
 
     it("should handle error when getting current user", function () {
         var data;
-        token = "foo";
+
+        service.getUser()
+            .then(function (response){
+                data = response;
+            });
+
+        expect(data).not.toBe(user);
+
+        service.authenticate();
+        $rootScope.$digest();
 
         userRequest.respond(200, { error: { status: 401 }});
+
+        service.authenticate();
+        $rootScope.$digest();
 
         service.getUser()
             .then(function (response){
@@ -161,6 +173,9 @@ describe("FM.auth.SpotifyAuthService", function() {
 
     it("should get users playlist", function () {
         var data;
+
+        service.authenticate();
+        $rootScope.$digest();
 
         service.getUserPlaylists()
             .then(function (response){

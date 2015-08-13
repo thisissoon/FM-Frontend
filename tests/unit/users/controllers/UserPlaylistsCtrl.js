@@ -2,7 +2,7 @@
 
 describe("FM.users.UserPlaylistsCtrl", function() {
 
-    var $scope, $route, $rootScope, $httpBackend, SpotifyAuth, $location, $window, env,
+    var $scope, $route, $rootScope, $httpBackend, SpotifyAuth, Spotify, $location, $window, env,
         userResponse, playlistsResponse;
 
     beforeEach(function (){
@@ -24,7 +24,7 @@ describe("FM.users.UserPlaylistsCtrl", function() {
         env = $injector.get("env");
 
         userResponse = { id: "foo" };
-        playlistsResponse = { items: [{ id: "bar" }, { id: "baz" }] };
+        playlistsResponse = { items: [{ id: "bar" },{ id: "baz" }] };
 
         $httpBackend.whenGET(/partials\/.*/).respond(200, "");
         $httpBackend.whenGET(/api.spotify.com\/v1\/users\/.*\/playlists/).respond(200, playlistsResponse);
@@ -48,6 +48,8 @@ describe("FM.users.UserPlaylistsCtrl", function() {
         };
         spyOn($window.localStorage, "getItem").and.callThrough();
 
+        Spotify = $injector.get("Spotify");
+
         SpotifyAuth = $injector.get("SpotifyAuth");
         spyOn(SpotifyAuth, "getUserPlaylists").and.callFake(function(){
             return {
@@ -59,8 +61,8 @@ describe("FM.users.UserPlaylistsCtrl", function() {
 
         $controller("UserPlaylistsCtrl", {
             $scope: $scope,
+            Spotify: Spotify,
             SpotifyAuth: SpotifyAuth,
-            playlists: playlistsResponse,
             user: userResponse,
             env: env
         });
@@ -73,18 +75,28 @@ describe("FM.users.UserPlaylistsCtrl", function() {
 
     it("should load user playlist view", function() {
         $location.path("/users/me/playlists/");
-        $rootScope.$digest();
         $httpBackend.flush();
+        $rootScope.$digest();
         expect($route.current.controller).toBe("UserPlaylistsCtrl");
     });
 
     it("should load more tracks", function() {
-        expect($scope.playlists).toEqual(playlistsResponse.items);
-        expect($scope.playlists.length).toBe(2);
+        expect($scope.playlists).toBeNull();
         $scope.loadMore();
-        $rootScope.$digest();
+
+        expect($scope.playlists).not.toBeNull();
+        expect($scope.playlists.length).toBe(2);
+
+        $scope.loadMore();
 
         expect($scope.playlists.length).toBe(4);
+    });
+
+    it("should get users playlists when logged in", function() {
+        spyOn($scope, "loadMore");
+
+        $scope.onAuthChange(true);
+        expect($scope.loadMore).toHaveBeenCalled();
     });
 
 });
