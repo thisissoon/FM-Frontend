@@ -175,7 +175,7 @@ angular.module("FM.playlist.PlaylistCtrl", [
          */
         $scope.onDeleted = function onDeleted(event, data) {
             angular.forEach($scope.playlist, function (track, $index){
-                if (track.track.id === data.id){
+                if (track.uuid === data.uuid){
                     $scope.meta.total--;
                     $scope.meta.play_time = $scope.meta.play_time - $scope.playlist[$index].track.duration; // jshint ignore:line
                     $scope.playlist.splice($index, 1);
