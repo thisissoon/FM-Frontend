@@ -1,3 +1,7 @@
+## Changes in 0.9.1
+
+ * @edwardoparearyee: Fix: Volume slider (#210)
+
 ## Changes in 0.9.0
 
  * @edwardoparearyee: Fix: Hide playlist link when not logged in to spotify (#206)
