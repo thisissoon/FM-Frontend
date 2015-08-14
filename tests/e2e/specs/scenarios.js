@@ -15,9 +15,11 @@ describe("FM", function() {
 
     describe("playlist", function() {
         beforeEach(function(){
+            browser.driver.manage().window().setSize(1366, 1024);
             browser.get("http://127.0.0.1:8000/");
             browser.waitForAngular();
-            browser.driver.sleep(2000);
+            login();
+            browser.driver.sleep(1000);
         });
 
         it("should render playlist partial when user navigates to /", function() {
@@ -28,10 +30,12 @@ describe("FM", function() {
     describe("history", function() {
 
         it("should render history partial when user navigates to /history", function() {
-            browser.manage().deleteAllCookies();
-            browser.get("http://127.0.0.1:8000/history");
+            browser.driver.manage().window().setSize(1366, 768);
+
+            browser.get("http://127.0.0.1:8000/");
             browser.waitForAngular();
-            browser.driver.sleep(2000);
+            login();
+            browser.get("http://127.0.0.1:8000/history");
 
             expect(element.all(by.repeater("track in history")).count()).toEqual(20);
         });
@@ -43,7 +47,6 @@ describe("FM", function() {
 
             // 2nd page
             browser.executeScript(scrollTo(2000));
-            browser.driver.sleep(2000);
 
             expect(element.all(by.repeater("track in history")).count()).toEqual(40);
         });
@@ -52,7 +55,6 @@ describe("FM", function() {
 
             // 3rd page
             browser.executeScript(scrollTo(4000));
-            browser.driver.sleep(2000);
 
             expect(element.all(by.repeater("track in history")).count()).toEqual(60);
 
@@ -62,7 +64,6 @@ describe("FM", function() {
 
             // 4th page - shouldn't exist
             browser.executeScript(scrollTo(6000));
-            browser.driver.sleep(2000);
 
             expect(element.all(by.repeater("track in history")).count()).toEqual(60);
         });
@@ -72,15 +73,15 @@ describe("FM", function() {
     describe("track timer", function() {
 
         var elapsedTime = 0;
-
-        beforeEach(function(){
-            browser.driver.manage().window().setSize(1630, 800);
-            browser.get("http://127.0.0.1:8000/");
-            browser.waitForAngular();
-            browser.driver.sleep(2000);
-        });
+        var startTime = 0;
 
         it("should start track timer with current elapsed time", function() {
+            browser.driver.manage().window().setSize(1366, 768);
+            browser.get("http://127.0.0.1:8000/");
+            browser.waitForAngular();
+            login();
+            browser.driver.sleep(1000);
+
             element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
                 expect(value > 5000).toBeTruthy();
             });
@@ -108,29 +109,29 @@ describe("FM", function() {
 
         });
 
-        it("should pause and resume", function() {
-
-            // login
-            login();
+        it("should pause track", function() {
 
             // pause
             element(by.css(".controls button:nth-child(2)")).click();
 
-            var startTime = 0;
             element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
                 startTime = parseInt(value);
             });
 
-            browser.driver.sleep(2000);
+            browser.driver.sleep(1000);
 
             element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
                 value = parseInt(value);
                 expect(value).toEqual(startTime);
             });
 
+        });
+
+        it("should resume track", function() {
+
             // resume
             element(by.css(".controls button:nth-child(1)")).click();
-            browser.driver.sleep(2000);
+            browser.driver.sleep(1000);
 
             element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
                 value = parseInt(value);
