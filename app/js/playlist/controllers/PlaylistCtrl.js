@@ -81,7 +81,7 @@ angular.module("FM.playlist.PlaylistCtrl", [
         $scope.page = {
             loading: false,
             pages: 1,
-            total: playlistData.meta.totalPages
+            total: playlistData.meta.totalPages || 1
         };
 
         /**
