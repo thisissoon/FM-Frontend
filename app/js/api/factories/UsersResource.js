@@ -29,7 +29,7 @@ angular.module("FM.api.UsersResource",[
             {
                 current: {
                     method: "GET",
-                    url: env.FM_API_SERVER_ADDRESS + "users" + "/:id/authenticated"
+                    url: env.FM_API_SERVER_ADDRESS + "users/authenticated"
                 },
                 stats: {
                     method: "GET",

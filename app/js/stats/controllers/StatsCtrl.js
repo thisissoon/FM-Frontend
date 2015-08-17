@@ -24,8 +24,8 @@ angular.module("FM.stats.StatsCtrl", [
                 templateUrl: "partials/stats.html",
                 controller: "StatsCtrl",
                 resolve: {
-                    stats: ["statsResolver", "$route", function (statsResolver, $route) {
-                        return statsResolver($route.current.params);
+                    stats: ["statsResolver", "$route", "StatsResource", function (statsResolver, $route, StatsResource) {
+                        return statsResolver(StatsResource.get, $route.current.params);
                     }]
                 }
             });

@@ -75,80 +75,12 @@ describe("FM.auth.SpotifyAuthService", function() {
         $httpBackend.verifyNoOutstandingRequest();
     });
 
-    it("should attempt to get current user if auth token exists", function () {
-        var setAuthTokenSpy = spyOn(Spotify, "setAuthToken");
-        token = "foo";
-
-        service.init();
-        $httpBackend.flush();
-        $rootScope.$digest();
-
-        expect(setAuthTokenSpy).toHaveBeenCalledWith(token);
-        expect(Spotify.getCurrentUser).toHaveBeenCalled();
-    });
-
-    it("should NOT attempt to get current user if auth token doesn't exists", function () {
-        var setAuthTokenSpy = spyOn(Spotify, "setAuthToken");
-        getItemSpy.and.callFake(function(){ return null });
-
-        service.init();
-        $rootScope.$digest();
-        expect(setAuthTokenSpy).not.toHaveBeenCalled();
-        expect(Spotify.getCurrentUser).not.toHaveBeenCalled();
-    });
-
-    it("should authenticate the user if token has expired", function () {
-        var setAuthTokenSpy = spyOn(Spotify, "setAuthToken");
-
-        user = { error: { status: 401 } };
-        userRequest.respond(200, user);
-        token = "foo";
-
-        service.init();
-        $httpBackend.flush();
-        $rootScope.$digest();
-
-        expect(setAuthTokenSpy).toHaveBeenCalled();
-        expect(Spotify.getCurrentUser).toHaveBeenCalled();
-
-        user = { error: { status: 401 } };
-        userRequest.respond(401, user);
-
-        service.init();
-        $httpBackend.flush();
-        $rootScope.$digest();
-
-        expect(setAuthTokenSpy.calls.count()).toEqual(3);
-        expect(Spotify.getCurrentUser.calls.count()).toEqual(2);
-
-        spotifyLoginResponse = { error: { status: 401 } };
-
-        service.init();
-        $httpBackend.flush();
-        $rootScope.$digest();
-
-        expect(setAuthTokenSpy.calls.count()).toEqual(4);
-        expect(Spotify.getCurrentUser.calls.count()).toEqual(3);
-
-        user = { error: { status: 404 } };
-        userRequest.respond(404, user);
-
-        service.init();
-        $httpBackend.flush();
-        $rootScope.$digest();
-
-        expect(setAuthTokenSpy.calls.count()).toEqual(5);
-        expect(Spotify.getCurrentUser.calls.count()).toEqual(4);
-    });
 
     it("should return authentication status", function () {
         var authenticated = service.isAuthenticated();
         expect(authenticated).toBeFalsy();
-        token = "foo";
 
-        service.getUser();
-
-        $httpBackend.flush();
+        service.authenticate();
         $rootScope.$digest();
 
         authenticated = service.isAuthenticated();
@@ -156,80 +88,47 @@ describe("FM.auth.SpotifyAuthService", function() {
     });
 
     it("should attempt to authenticate user", function () {
-        token = "foo";
         var setAuthTokenSpy = spyOn(Spotify, "setAuthToken");
+        spotifyLoginResponse = "foo";
         service.authenticate();
-        $httpBackend.flush();
         $rootScope.$digest();
 
-        expect(setAuthTokenSpy).toHaveBeenCalledWith(token);
+        expect(setAuthTokenSpy).toHaveBeenCalledWith(spotifyLoginResponse);
         expect(service.isAuthenticated()).toBeTruthy();
     });
 
     it("should attempt to authenticate user and handle error", function () {
         // user has local token, token is expired, token is renewed
         var error = { error: { status: 401 } };
-        token = "foo";
-        userRequest.respond(200, error);
-        var setAuthTokenSpy = spyOn(Spotify, "setAuthToken");
         var alertSpy = spyOn(AlertService, "set");
 
-        service.authenticate();
-        $httpBackend.flush();
-        $rootScope.$digest();
-
-        expect(setAuthTokenSpy.calls.count()).toBe(2);
-        expect($window.localStorage.setItem.calls.count()).toBe(1);
-        expect(service.isAuthenticated()).toBeTruthy();
-
-        // user has local token, token is still valid
-        userRequest.respond(200, user);
-
-        service.authenticate();
-        $httpBackend.flush();
-        $rootScope.$digest();
-
-        expect(setAuthTokenSpy.calls.count()).toBe(3);
-        expect($window.localStorage.setItem.calls.count()).toBe(1);
-        expect(service.isAuthenticated()).toBeTruthy();
-
-        // user has local token, token is expired, token renewal fails
-        userRequest.respond(200, error);
         spotifyLoginResponse = error;
 
-        service.authenticate();
-        $httpBackend.flush();
-        $rootScope.$digest();
-
-        expect(setAuthTokenSpy.calls.count()).toBe(4);
-        expect($window.localStorage.setItem.calls.count()).toBe(1);
-        expect(service.isAuthenticated()).toBeFalsy();
-
-        // user does NOT have local token, user authentication fails
-        spotifyLoginResponse = { error: { status: 401 } };
-        token = undefined;
-
+        // login fails
         service.authenticate();
         $rootScope.$digest();
 
-        expect(setAuthTokenSpy.calls.count()).toBe(4);
-        expect($window.localStorage.setItem.calls.count()).toBe(1);
+        expect(setItemSpy).not.toHaveBeenCalled();
+        expect(removeItemSpy).toHaveBeenCalled();
+        expect($window.localStorage.setItem).not.toHaveBeenCalled();
         expect(service.isAuthenticated()).toBeFalsy();
 
-        // user does NOT have local token, user authentication successful
+        // login successful
         spotifyLoginResponse = "bar";
 
         service.authenticate();
         $rootScope.$digest();
 
-        expect(setAuthTokenSpy.calls.count()).toBe(5);
-        expect($window.localStorage.setItem.calls.count()).toBe(2);
+        expect(setItemSpy).toHaveBeenCalled();
+        expect($window.localStorage.setItem).toHaveBeenCalled();
         expect(service.isAuthenticated()).toBeTruthy();
     });
 
     it("should get the current user", function () {
-        token = "foo";
         var data;
+
+        service.authenticate();
+        $rootScope.$digest();
 
         service.getUser()
             .then(function (response){
@@ -244,10 +143,22 @@ describe("FM.auth.SpotifyAuthService", function() {
     });
 
     it("should handle error when getting current user", function () {
-        token = "foo";
         var data;
 
-        userRequest.respond(400, { error: { status: 401 }});
+        service.getUser()
+            .then(function (response){
+                data = response;
+            });
+
+        expect(data).not.toBe(user);
+
+        service.authenticate();
+        $rootScope.$digest();
+
+        userRequest.respond(200, { error: { status: 401 }});
+
+        service.authenticate();
+        $rootScope.$digest();
 
         service.getUser()
             .then(function (response){
@@ -256,12 +167,15 @@ describe("FM.auth.SpotifyAuthService", function() {
 
         $httpBackend.flush();
         $rootScope.$digest();
+
         expect(data).not.toBe(user);
     });
 
     it("should get users playlist", function () {
-        token = "foo";
         var data;
+
+        service.authenticate();
+        $rootScope.$digest();
 
         service.getUserPlaylists()
             .then(function (response){
@@ -272,5 +186,6 @@ describe("FM.auth.SpotifyAuthService", function() {
         $rootScope.$digest();
         expect(data).toEqual(playlists);
     });
+
 
 });

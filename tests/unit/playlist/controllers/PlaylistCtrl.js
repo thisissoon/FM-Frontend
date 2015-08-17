@@ -13,7 +13,7 @@ describe("FM.playlist.PlaylistCtrl", function() {
     beforeEach(inject(function (_$httpBackend_) {
         $httpBackend = _$httpBackend_;
 
-        queue = [{ track: { uri: "foo", duration: 100 } },{ track: { uri: "bar", duration: 100 } }];
+        queue = [{ uuid: "foo", track: { uri: "foo", duration: 100 } },{ uuid: "bar", track: { uri: "bar", duration: 100 } }];
         queueHeader = {"Total-Pages": "2", "Total-Count": "4"};
         queueMeta = {"play_time": 20100, "genres": {"dirty south rap": 2, "pop": 12, "quiet storm": 1}, "total": 2, "users": {"fef86892-0a28-4b26-b0b3-90a1050cfffd": 2}};
         users = {"family_name": "Light", "display_name": "Alex Light", "avatar_url": "http://placehold.it/400", "spotify_playlists": null, "given_name": "Alex", "id": "16369f65-6aa5-4d04-8927-a77016d0d721"};
@@ -47,7 +47,7 @@ describe("FM.playlist.PlaylistCtrl", function() {
         UsersResource = $injector.get("UsersResource");
         spyOn(UsersResource, "get").and.callThrough();
 
-        playlistData = { items: [{ track: { uri: "foo", duration: 100 } },{ track: { uri: "bar", duration: 100 } }], meta: { totalCount: 4, totalPages: 2 }};
+        playlistData = { items:  [{ uuid: "foo", track: { uri: "foo", duration: 100 } },{ uuid: "bar", track: { uri: "bar", duration: 100 } }], meta: { totalCount: 4, totalPages: 2 }};
         playlistMeta = {"play_time": 20100, "genres": {"dirty south rap": 2, "pop": 12, "quiet storm": 1}, "total": 2, "users": {"fef86892-0a28-4b26-b0b3-90a1050cfffd": 9}};
 
         $controller("PlaylistCtrl", {
@@ -170,8 +170,10 @@ describe("FM.playlist.PlaylistCtrl", function() {
         $scope.page.total = 1;
         expect($scope.playlist.length).toBe(2);
 
-        $scope.onDeleted({},{ uri: "foo" });
+        $scope.onDeleted({},{ uuid: "foo" });
         $httpBackend.flush();
+        $rootScope.$digest();
+
         expect($scope.meta.play_time).toEqual(20000);
         expect($scope.meta.total).toEqual(1);
         expect($scope.playlist.length).toBe(1);
