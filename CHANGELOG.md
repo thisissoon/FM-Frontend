@@ -1,3 +1,7 @@
+## Changes in 0.9.3
+
+ * @edwardoparearyee: Fix: Track not added to playlist (#232)
+
 ## Changes in 0.9.2
 
  * @edwardoparearyee: Fix: Track in title element being removed on route change (#230)
