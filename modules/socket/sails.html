@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="socketDemo">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>SOON FM_ - Modules</title>
+
+    <base href="/app/">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css">
+    <link rel="stylesheet" href="css/all.css">
+
+</head>
+
+<body ng-controller="SocketDemoCtrl">
+
+    <div ng-repeat="item in queue">
+        {{ item }}
+    </div>
+
+    <script src="components/angular/angular.js"></script>
+    <script src="components/socket.io-client/socket.io.js"></script>
+    <script src="components/angularSails/dist/ngsails.io.js"></script>
+
+    <script src="js/config/config.js"></script>
+
+    <script src="js/socket/sails.js"></script>
+    <script src="js/socket/factories/PlayerQueueSocket.js"></script>
+
+    <script>
+        angular.module("socketDemo", [
+            "FM.sockets.sails"
+        ])
+        .controller("SocketDemoCtrl", [
+            "$scope",
+            "PlayerQueueSocket",
+            function ($scope, PlayerQueueSocket) {
+
+                $scope.queue = [];
+
+                PlayerQueueSocket.get()
+                    .then(function (response) {
+                        $scope.queue = response.data;
+                    });
+
+                PlayerQueueSocket.on("created", function (event, data) {
+                    $scope.queue.unshift(data);
+                });
+
+            }
+        ]);
+    </script>
+</body>
+</html>
