@@ -23,7 +23,7 @@ RUN npm install --production && \
     bower install --production --allow-root
 
 # Bundle app source
-ADD . /build
+COPY . /build
 
 # Build app
 RUN grunt build --env frontend-api && \
@@ -33,7 +33,7 @@ RUN grunt build --env frontend-api && \
 WORKDIR /fm
 
 # Add nginx config - overwrite bundled nginx.conf
-ADD nginx.conf /etc/nginx/
+COPY nginx.conf /etc/nginx/
 
 # Volumes
 VOLUME ["/etc/nginx"]
