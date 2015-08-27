@@ -26,7 +26,7 @@ RUN npm install --production && \
 ADD . /build
 
 # Build app
-RUN grunt build --env production && \
+RUN grunt build --env frontend-api && \
     mkdir /fm && \
     mv /build/dist/* /fm
 
