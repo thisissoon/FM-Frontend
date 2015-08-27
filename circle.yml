@@ -8,16 +8,14 @@ machine:
   services:
     - docker
   node:
-    version: 0.10.28
+    version: 0.12
   environment:
-    REPO: thisissoon/fm-frontend
+    REPO: registry.soon.build/fm/fe
     TAG: $(sed 's/master/latest/;s/\//\-/' <<<$CIRCLE_BRANCH)
 
 # Dependencies
 
 dependencies:
-  pre:
-    - docker pull google/nodejs
   override:
     - npm -d install
     - npm install -g grunt-cli
@@ -33,15 +31,30 @@ test:
     - grunt test
     - ./tests/e2e/saucelabs.sh
   post:
-    - sed "s/<QUAY_TOKEN>/$QUAY_TOKEN/" < .dockercfg.template > ~/.dockercfg
+    - sed "s/<DOCKER_REGISTRY>/$DOCKER_REGISTRY/;s/<DOCKER_AUTH>/$DOCKER_AUTH/" < .docker.config.json > ~/.dockercfg
     - ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info
 
 # Deployment
 
 deployment:
-  latest:
+  prod:
     branch: master
     commands:
+      - grunt build --env production
       - docker build -t $REPO:$TAG .
-      - docker tag $REPO:$TAG quay.io/$REPO:$TAG
-      - docker push quay.io/$REPO:$TAG
+      - docker tag $REPO:$TAG $REPO:prod
+      - docker push $REPO:prod
+  qa:
+    branch: /release\/.*/
+    commands:
+      - grunt build --env production
+      - docker build -t $REPO:$TAG .
+      - docker tag $REPO:$TAG $REPO:qa
+      - docker push $REPO:qa
+  latest:
+    branch: develop
+    commands:
+      - grunt build --env production
+      - docker build -t $REPO:$TAG .
+      - docker tag $REPO:$TAG $REPO:latest
+      - docker push $REPO:latest
