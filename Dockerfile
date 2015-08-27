@@ -11,7 +11,7 @@ RUN apk-install ca-certificates nginx python git
 
 # Install global build dependencies
 RUN npm install -g \
-    bower
+    bower \
     grunt-cli
 
 # Install app dependencies
