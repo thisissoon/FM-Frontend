@@ -4,14 +4,10 @@
 #
 
 # Pull node base image
-FROM google/nodejs
+FROM mhart/alpine-node:latest
 
 # Install Nginx
-ADD nginx.sources.list /etc/apt/sources.list.d/nginx.list
-ADD http://nginx.org/keys/nginx_signing.key /nginx_signing.key
-RUN apt-key add /nginx_signing.key && \
-    apt-get update -y -q && \
-    apt-get install -y -q nginx
+RUN apk-install ca-certificates nginx python git
 
 # Install global build dependencies
 RUN npm install -g grunt-cli bower
