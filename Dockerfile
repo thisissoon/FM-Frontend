@@ -10,15 +10,17 @@ FROM mhart/alpine-node:latest
 RUN apk-install ca-certificates nginx python git
 
 # Install global build dependencies
-RUN npm install -g grunt-cli bower
+RUN npm install -g \
+    bower
+    grunt-cli
 
 # Install app dependencies
 WORKDIR /build
 ADD package.json /build/package.json
 ADD bower.json /build/bower.json
 ADD .bowerrc /build/.bowerrc
-RUN npm install && \
-    bower install --allow-root
+RUN npm install --production && \
+    bower install --production --allow-root
 
 # Bundle app source
 ADD . /build
