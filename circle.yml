@@ -10,7 +10,7 @@ machine:
   node:
     version: 0.12
   environment:
-    REPO: registry.soon.build/fm/fe
+    REPO: thisissoon/fm-frontend
     TAG: $(sed 's/master/latest/;s/\//\-/' <<<$CIRCLE_BRANCH)
 
 # Dependencies
@@ -31,7 +31,7 @@ test:
     - grunt test
     - ./tests/e2e/saucelabs.sh
   post:
-    - sed "s/<DOCKER_REGISTRY>/$DOCKER_REGISTRY/;s/<DOCKER_AUTH>/$DOCKER_AUTH/" < .docker.config.json > ~/.dockercfg
+    - sed "s/<QUAY_TOKEN>/$QUAY_TOKEN/" < .dockercfg.template > ~/.dockercfg
     - ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info
 
 # Deployment
@@ -43,18 +43,18 @@ deployment:
       - grunt build --env production
       - docker build -t $REPO:$TAG .
       - docker tag $REPO:$TAG $REPO:prod
-      - docker push $REPO:prod
+      - docker push quay.io/$REPO:prod
   qa:
     branch: /release\/.*/
     commands:
       - grunt build --env production
       - docker build -t $REPO:$TAG .
       - docker tag $REPO:$TAG $REPO:qa
-      - docker push $REPO:qa
+      - docker push quay.io/$REPO:qa
   latest:
     branch: develop
     commands:
       - grunt build --env production
       - docker build -t $REPO:$TAG .
       - docker tag $REPO:$TAG $REPO:latest
-      - docker push $REPO:latest
+      - docker push quay.io/$REPO:latest
