@@ -1,6 +1,6 @@
+.git
 .grunt
 _SpecRunner.html
 app/components
 coverage
-dist
 node_modules
