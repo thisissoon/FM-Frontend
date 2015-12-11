@@ -97,7 +97,7 @@ angular.module("FM.playlist.PlaylistCtrl", [
             PlayerQueueResource.meta().$promise
                 .then(function (response){
                     $scope.meta = response;
-                    $scope.page.total = (Math.floor($scope.meta.total / 20) + 1);
+                    $scope.page.total = (Math.floor(response.total / 20) + 1);
                     $scope.page.pages = 1;
                 });
         };
@@ -116,7 +116,12 @@ angular.module("FM.playlist.PlaylistCtrl", [
                     $scope.playlist = $scope.playlist.concat(response.items);
 
                     $scope.page.loading = false;
-                    $scope.page.total = response.meta.totalPages ? response.meta.totalPages : 1;
+                });
+
+            PlayerQueueResource.meta().$promise
+                .then(function (response){
+                    $scope.meta = response;
+                    $scope.page.total = (Math.floor(response.total / 20) + 1);
                 });
         };
 
