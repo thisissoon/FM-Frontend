@@ -15,11 +15,13 @@ machine:
 
 # Dependencies
 
+
 dependencies:
+  pre:
+    - npm install -g grunt-cli bower
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS -e $DOCKER_EMAIL $DOCKER_REGISTRY
   override:
     - npm -d install
-    - npm install -g grunt-cli
-    - npm install -g protractor && webdriver-manager update
 
 # Test Commands
 
