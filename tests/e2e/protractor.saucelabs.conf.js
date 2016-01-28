@@ -21,39 +21,37 @@ exports.config = {
 
   // Saucelabs capabilities reference
   // https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
-  multiCapabilities: [{
-    "browserName": "chrome",
-    "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER,
-    "build": process.env.TRAVIS_BUILD_NUMBER,
-    "name":  pkg.name + " (Chrome: Win 10) Build: " + process.env.TRAVIS_BUILD_NUMBER,
-    "version": "47",
-    "platform": "Windows 10",
-    "screenResolution": "1280x1024"
+  multiCapabilities: [
+    {
+      "browserName": "chrome",
+      "build": process.env.CIRCLE_BUILD_NUM,
+      "name":  pkg.name + " (Chrome: Win 10) Build: " + process.env.CIRCLE_BUILD_NUM,
+      "version": "47",
+      "platform": "Windows 10",
+      "screenResolution": "1280x1024"
     },{
-    "browserName": "firefox",
-    "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER,
-    "build": process.env.TRAVIS_BUILD_NUMBER,
-    "name":  pkg.name + " (FF: Win 7) Build: " + process.env.TRAVIS_BUILD_NUMBER,
-    "version": "43",
-    "platform": "Windows 7",
-    "screenResolution": "1280x1024"
+      "browserName": "firefox",
+      "build": process.env.CIRCLE_BUILD_NUM,
+      "name":  pkg.name + " (FF: Win 7) Build: " + process.env.CIRCLE_BUILD_NUM,
+      "version": "43",
+      "platform": "Windows 7",
+      "screenResolution": "1280x1024"
     },{
-    "browserName": "safari",
-    "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER,
-    "build": process.env.TRAVIS_BUILD_NUMBER,
-    "name":  pkg.name + " (Safari: OS X 10.10) Build: " + process.env.TRAVIS_BUILD_NUMBER,
-    "version": "8.0",
-    "platform": "OS X 10.10",
-    "screenResolution": "1280x1024"
+      "browserName": "safari",
+      "build": process.env.CIRCLE_BUILD_NUM,
+      "name":  pkg.name + " (Safari: OS X 10.10) Build: " + process.env.CIRCLE_BUILD_NUM,
+      "version": "8.0",
+      "platform": "OS X 10.10",
+      "screenResolution": "1280x1024"
     },{
-    "browserName": "internet explorer",
-    "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER,
-    "build": process.env.TRAVIS_BUILD_NUMBER,
-    "name":  pkg.name + " (IE11: Win 10) Build: " + process.env.TRAVIS_BUILD_NUMBER,
-    "version": "11",
-    "platform": "Windows 10",
-    "screenResolution": "1280x1024"
-  }],
+      "browserName": "internet explorer",
+      "build": process.env.CIRCLE_BUILD_NUM,
+      "name":  pkg.name + " (IE11: Win 10) Build: " + process.env.CIRCLE_BUILD_NUM,
+      "version": "11",
+      "platform": "Windows 10",
+      "screenResolution": "1280x1024"
+    }
+  ],
 
   // ----- More information for your tests ----
   //
