@@ -1,6 +1,0 @@
-{
-	"quay.io": {
-		"auth": "<QUAY_TOKEN>",
-		"email": ""
-	}
-}
