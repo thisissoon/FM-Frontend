@@ -20,42 +20,38 @@ exports.config = {
   ],
 
   // Saucelabs capabilities reference
-  // https://docs.saucelabs.com/reference/platforms-configurator/#/
-  multiCapabilities: [{
-    "browserName": "chrome",
-    "build": process.env.CIRCLE_BUILD_NUM,
-    "name": process.env.CIRCLE_PROJECT_REPONAME + " (Chrome) Build: " + process.env.CIRCLE_BUILD_NUM,
-    "version": "43.0",
-    "selenium-version": "2.46.0",
-    "chromedriver-version": "2.14",
-    "platform": "Windows 8.1",
-    "screenResolution": "1280x1024"
-  }, {
-    "browserName": "firefox",
-    "build": process.env.CIRCLE_BUILD_NUM,
-    "name": process.env.CIRCLE_PROJECT_REPONAME + " (FF) Build: " + process.env.CIRCLE_BUILD_NUM,
-    "version": "39.0",
-    "selenium-version": "2.46.0",
-    "platform": "Linux",
-    "screenResolution": "1024x768"
-  }, {
-    "browserName": "safari",
-    "build": process.env.CIRCLE_BUILD_NUM,
-    "name": process.env.CIRCLE_PROJECT_REPONAME + " (Safari) Build: " + process.env.CIRCLE_BUILD_NUM,
-    "version": "7.0",
-    "selenium-version": "2.44.0",
-    "platform": "OS X 10.9",
-    "screenResolution": "1024x768"
-
-  }, {
-    "browserName": "internet explorer",
-    "build": process.env.CIRCLE_BUILD_NUM,
-    "name": process.env.CIRCLE_PROJECT_REPONAME + " (IE) Build: " + process.env.CIRCLE_BUILD_NUM,
-    "version": "11.0",
-    "selenium-version": "2.46.0",
-    "platform": "Windows 8.1",
-    "screenResolution": "1280x1024"
-  }],
+  // https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
+  multiCapabilities: [
+    {
+      "browserName": "chrome",
+      "build": process.env.CIRCLE_BUILD_NUM,
+      "name":  pkg.name + " (Chrome: Win 10) Build: " + process.env.CIRCLE_BUILD_NUM,
+      "version": "47",
+      "platform": "Windows 10",
+      "screenResolution": "1280x1024"
+    },{
+      "browserName": "firefox",
+      "build": process.env.CIRCLE_BUILD_NUM,
+      "name":  pkg.name + " (FF: Win 7) Build: " + process.env.CIRCLE_BUILD_NUM,
+      "version": "43",
+      "platform": "Windows 7",
+      "screenResolution": "1280x1024"
+    },{
+      "browserName": "safari",
+      "build": process.env.CIRCLE_BUILD_NUM,
+      "name":  pkg.name + " (Safari: OS X 10.10) Build: " + process.env.CIRCLE_BUILD_NUM,
+      "version": "8.0",
+      "platform": "OS X 10.10",
+      "screenResolution": "1280x1024"
+    },{
+      "browserName": "internet explorer",
+      "build": process.env.CIRCLE_BUILD_NUM,
+      "name":  pkg.name + " (IE11: Win 10) Build: " + process.env.CIRCLE_BUILD_NUM,
+      "version": "11",
+      "platform": "Windows 10",
+      "screenResolution": "1280x1024"
+    }
+  ],
 
   // ----- More information for your tests ----
   //

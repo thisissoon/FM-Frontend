@@ -4,7 +4,8 @@ describe("FM.playlist.PlaylistCtrl", function() {
 
     var $rootScope, $location, $route, $scope, $q, $httpBackend, env,
         TracksResource, UsersResource, PlayerQueueResource, playlistData, playlistMeta,
-        queue, queueMeta, queueHeader, users, tracks;
+        queue, queueMeta, queueHeader, users, tracks,
+        queueExpect;
 
     beforeEach(function (){
         module("FM.playlist.PlaylistCtrl");
@@ -19,8 +20,11 @@ describe("FM.playlist.PlaylistCtrl", function() {
         users = {"family_name": "Light", "display_name": "Alex Light", "avatar_url": "http://placehold.it/400", "spotify_playlists": null, "given_name": "Alex", "id": "16369f65-6aa5-4d04-8927-a77016d0d721"};
         tracks = {"album": {"id": "d7b737a9-d70b-49a9-9f42-8c204b342000", "images": [{"url": "http://placehold.it/640x629?text=Album+Art", "width": 640, "height": 629}, {"url": "http://placehold.it/300x295?text=Album+Art", "width": 300, "height": 295}, {"url": "http://placehold.it/64x63?text=Album+Art", "width": 64, "height": 63}], "name": "Boston", "uri": "spotify:album:2QLp07RO6anZHmtcKTEvSC"}, "name": "More Than a Feeling", "uri": "spotify:track:1QEEqeFIZktqIpPI4jSVSF", "play_count": 0, "artists": [{"id": "8c22640a-02ef-4ee0-90eb-87c9c9a2534f", "uri": "spotify:artist:29kkCKKGXheHuoO829FxWK", "name": "Boston"}], "duration": 285133, "id": "0739b113-ad3a-47a4-bea9-edb00ba192f5"};
 
-        $httpBackend.whenGET(/.*player\/queue/).respond(200, queue, queueHeader);
         $httpBackend.whenGET(/.*player\/queue\/meta/).respond(200, queueMeta);
+
+        queueExpect = $httpBackend.whenGET(/.*player\/queue/);
+        queueExpect.respond(200, queue, queueHeader);
+
         $httpBackend.whenGET(/.*users.*/).respond(200, users);
         $httpBackend.whenGET(/.*tracks.*/).respond(200, tracks);
         $httpBackend.whenGET(/partials\/.*/).respond(200);
@@ -47,7 +51,7 @@ describe("FM.playlist.PlaylistCtrl", function() {
         UsersResource = $injector.get("UsersResource");
         spyOn(UsersResource, "get").and.callThrough();
 
-        playlistData = { items:  [{ uuid: "foo", track: { uri: "foo", duration: 100 } },{ uuid: "bar", track: { uri: "bar", duration: 100 } }], meta: { totalCount: 4, totalPages: 2 }};
+        playlistData = { items: [{ uuid: "foo", track: { uri: "foo", duration: 100 } },{ uuid: "bar", track: { uri: "bar", duration: 100 } }], meta: { totalCount: 4, totalPages: 2 }};
         playlistMeta = {"play_time": 20100, "genres": {"dirty south rap": 2, "pop": 12, "quiet storm": 1}, "total": 2, "users": {"fef86892-0a28-4b26-b0b3-90a1050cfffd": 9}};
 
         $controller("PlaylistCtrl", {
@@ -178,6 +182,33 @@ describe("FM.playlist.PlaylistCtrl", function() {
         expect($scope.meta.total).toEqual(1);
         expect($scope.playlist.length).toBe(1);
         expect($scope.playlist).not.toContain({ track: { uri: "foo", duration: 100 } });
+    });
+
+    it("should add track to empty playlist", function(){
+        $scope.playlist = [];
+
+        $scope.onAdd({},{ uri: "foo", user: "bar" });
+        $httpBackend.flush();
+        $rootScope.$digest();
+
+        expect($scope.playlist.length).toBe(1);
+
+        queueExpect.respond(200, []);
+
+        $scope.onEnd({}, { uri: "foo" });
+        $httpBackend.flush();
+        $rootScope.$digest();
+
+        expect($scope.playlist.length).toBe(0);
+
+        queueExpect.respond(200, [{ uuid: "foo", track: { uri: "foo", duration: 100 } }]);
+
+        $scope.onAdd({},{ uri: "foo", user: "bar" });
+        $httpBackend.flush();
+        $rootScope.$digest();
+
+        expect($scope.playlist.length).toBe(1);
+
     });
 
 

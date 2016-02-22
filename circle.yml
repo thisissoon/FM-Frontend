@@ -8,20 +8,21 @@ machine:
   services:
     - docker
   node:
-    version: 0.10.28
+    version: 0.12
   environment:
-    REPO: thisissoon/fm-frontend
+    REPO: quay.io/thisissoon/fm-frontend
     TAG: $(sed 's/master/latest/;s/\//\-/' <<<$CIRCLE_BRANCH)
 
 # Dependencies
 
+
 dependencies:
   pre:
-    - docker pull google/nodejs
+    - npm install -g grunt-cli bower protractor
+    - webdriver-manager update
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS -e $DOCKER_EMAIL $DOCKER_REGISTRY
   override:
     - npm -d install
-    - npm install -g grunt-cli
-    - npm install -g protractor && webdriver-manager update
 
 # Test Commands
 
@@ -33,15 +34,29 @@ test:
     - grunt test
     - ./tests/e2e/saucelabs.sh
   post:
-    - sed "s/<QUAY_TOKEN>/$QUAY_TOKEN/" < .dockercfg.template > ~/.dockercfg
     - ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info
 
 # Deployment
 
 deployment:
-  latest:
+  prod:
     branch: master
     commands:
+      - grunt build --env production
       - docker build -t $REPO:$TAG .
-      - docker tag $REPO:$TAG quay.io/$REPO:$TAG
-      - docker push quay.io/$REPO:$TAG
+      - docker tag $REPO:$TAG $REPO:prod
+      - docker push $REPO:prod
+  qa:
+    branch: /release\/.*/
+    commands:
+      - grunt build --env production
+      - docker build -t $REPO:$TAG .
+      - docker tag $REPO:$TAG $REPO:qa
+      - docker push $REPO:qa
+  latest:
+    branch: develop
+    commands:
+      - grunt build --env production
+      - docker build -t $REPO:$TAG .
+      - docker tag $REPO:$TAG $REPO:latest
+      - docker push $REPO:latest

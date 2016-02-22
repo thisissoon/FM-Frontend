@@ -1,3 +1,10 @@
+## Changes in 0.9.4
+
+ * @edwardoparearyee: Fix: Track not being added to empty playlist (#238)
+ * @jamesjwarren: Feature: docker updates to work with febe (#236)
+ * @jamesjwarren: Feature: sails socket (#235)
+ * @edwardoparearyee: Feature: Frontend backend config (#233)
+
 ## Changes in 0.9.3
 
  * @edwardoparearyee: Fix: Track not added to playlist (#232)
