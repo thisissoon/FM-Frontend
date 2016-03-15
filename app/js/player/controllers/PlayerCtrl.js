@@ -129,8 +129,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method skip
          */
         $scope.skip = function skip() {
-            PlayerTransportResource.skip().$promise
-                .then($scope.onEnd);
+            PlayerTransportResource.skip();
         };
 
         /**
@@ -138,7 +137,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method skip
          */
         $scope.updateVol = function updateVol(vol) {
-            $scope.volume = parseInt(vol);
+            $scope.volume = parseInt(vol, 10);
             PlayerVolumeResource.save({ volume: $scope.volume });
         };
 
@@ -148,11 +147,9 @@ angular.module("FM.player.PlayerCtrl",[
          */
         $scope.toggleMute = function toggleMute() {
             if ($scope.mute) {
-                PlayerMuteResource.remove().$promise
-                    .then($scope.onUnmute);
+                PlayerMuteResource.remove();
             } else {
-                PlayerMuteResource.save({ mute: true }).$promise
-                    .then($scope.onMute);
+                PlayerMuteResource.save({ mute: true });
             }
         };
 
