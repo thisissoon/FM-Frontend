@@ -91,12 +91,16 @@ angular.module("FM.player.PlayerCtrl",[
                 $scope.track = response[0];
                 $scope.mute = response[1].mute;
                 $scope.volume = response[2].volume;
+                $scope.paused = response[0].paused;
 
                 if ($scope.track && $scope.track.track) {
 
                     // Start track position timer
                     var elapsed = parseInt(response[0].player.elapsed_time) || 0; // jshint ignore:line
                     $scope.trackPositionTimer.start($scope.track.track.duration, elapsed);
+                    if ($scope.paused) {
+                        $scope.trackPositionTimer.pause();
+                    }
 
                     snTitle.setPageTitle($scope.track.track.name + " - " + $scope.track.track.artists[0].name);
 
@@ -109,8 +113,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method resume
          */
         $scope.resume = function resume() {
-            PlayerTransportResource.resume({}).$promise
-                .then($scope.onResume);
+            PlayerTransportResource.resume({});
         };
 
         /**
@@ -118,8 +121,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method pause
          */
         $scope.pause = function pause() {
-            PlayerTransportResource.pause({}).$promise
-                .then($scope.onPause);
+            PlayerTransportResource.pause({});
         };
 
         /**
@@ -127,8 +129,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method skip
          */
         $scope.skip = function skip() {
-            PlayerTransportResource.skip().$promise
-                .then($scope.onEnd);
+            PlayerTransportResource.skip();
         };
 
         /**
@@ -136,7 +137,7 @@ angular.module("FM.player.PlayerCtrl",[
          * @method skip
          */
         $scope.updateVol = function updateVol(vol) {
-            $scope.volume = parseInt(vol);
+            $scope.volume = parseInt(vol, 10);
             PlayerVolumeResource.save({ volume: $scope.volume });
         };
 
@@ -146,11 +147,9 @@ angular.module("FM.player.PlayerCtrl",[
          */
         $scope.toggleMute = function toggleMute() {
             if ($scope.mute) {
-                PlayerMuteResource.remove().$promise
-                    .then($scope.onUnmute);
+                PlayerMuteResource.remove();
             } else {
-                PlayerMuteResource.save({ mute: true }).$promise
-                    .then($scope.onMute);
+                PlayerMuteResource.save({ mute: true });
             }
         };
 

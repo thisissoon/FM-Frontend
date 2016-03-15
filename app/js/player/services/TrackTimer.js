@@ -78,6 +78,10 @@ angular.module("FM.player.TrackTimer", [
             // Set start time
             startTime = now() - elapsed;
 
+            if (_this.timerInstance){
+                $interval.cancel(_this.timerInstance);
+            }
+
             // Store timer as $interval instance
             _this.timerInstance = $interval(function(){
                 // Stop timer when duration is exceeded
@@ -100,7 +104,7 @@ angular.module("FM.player.TrackTimer", [
          */
         this.pause = function pause () {
             // If timer is running, update elapsed time otherwise keep it
-            lastStopTime = startTime ? lastStopTime + now() - startTime : lastStopTime;
+            lastStopTime = startTime ? (lastStopTime + (now() - startTime)) : lastStopTime;
             startTime = 0;
 
             // Clear timer instance
