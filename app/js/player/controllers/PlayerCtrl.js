@@ -91,12 +91,16 @@ angular.module("FM.player.PlayerCtrl",[
                 $scope.track = response[0];
                 $scope.mute = response[1].mute;
                 $scope.volume = response[2].volume;
+                $scope.paused = response[0].paused;
 
                 if ($scope.track && $scope.track.track) {
 
                     // Start track position timer
                     var elapsed = parseInt(response[0].player.elapsed_time) || 0; // jshint ignore:line
                     $scope.trackPositionTimer.start($scope.track.track.duration, elapsed);
+                    if ($scope.paused) {
+                        $scope.trackPositionTimer.pause();
+                    }
 
                     snTitle.setPageTitle($scope.track.track.name + " - " + $scope.track.track.artists[0].name);
 
