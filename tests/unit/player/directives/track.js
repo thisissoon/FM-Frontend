@@ -64,6 +64,14 @@ describe("FM.player.trackDirective", function() {
     it("should add track to playlist", function(){
         isolatedScope.addToPlaylist({ uri: "123" });
         expect(PlayerQueueResource.save).toHaveBeenCalledWith({ uri: "123" });
+
+        isolatedScope.addToPlaylist({ spotify_uri: "456" });
+        expect(PlayerQueueResource.save.calls.argsFor(1)).toEqual([{ uri: "456" }]);
+    })
+
+    it("should NOT add track to playlist", function(){
+        isolatedScope.addToPlaylist({ uri: undefined });
+        expect(PlayerQueueResource.save).not.toHaveBeenCalled();
     })
 
     it("should remove track from playlist", function(){
