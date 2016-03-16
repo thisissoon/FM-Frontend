@@ -1,0 +1,49 @@
+//
+// Media
+// --------------------------------------------------
+
+.media {
+    margin-bottom: (@grid-gutter-width/2);
+    height: 62px;
+
+    h5, .h5 {
+        font-family: @font-family-sans-serif;
+        margin-bottom: 0;
+    }
+
+    &:hover {
+        background-color: lighten(@track-bg, 10%);
+        cursor: pointer;
+    }
+
+    h5, .h5,
+    .media-label {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 200px;
+        white-space: nowrap;
+        line-height: 1.3;
+    }
+
+    .media-left {
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        padding-right: 0;
+        overflow: hidden;
+        .square(62px);
+
+        &.no-img {
+            background-size: 80%;
+        }
+    }
+
+    .media-body {
+        padding-left: 10px;
+    }
+
+    .sidebar & .media-object {
+        .square(62px);
+    }
+}
