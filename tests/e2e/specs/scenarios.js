@@ -109,35 +109,35 @@ describe("FM", function() {
 
         });
 
-        it("should pause track", function() {
+        // it("should pause track", function() {
 
-            // pause
-            element(by.css(".controls button:nth-child(2)")).click();
+        //     // pause
+        //     element(by.css(".controls button:nth-child(2)")).click();
 
-            element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
-                startTime = parseInt(value);
-            });
+        //     element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
+        //         startTime = parseInt(value);
+        //     });
 
-            browser.driver.sleep(1000);
+        //     browser.driver.sleep(1000);
 
-            element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
-                value = parseInt(value);
-                expect(value).toEqual(startTime);
-            });
+        //     element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
+        //         value = parseInt(value);
+        //         expect(value).toEqual(startTime);
+        //     });
 
-        });
+        // });
 
-        it("should resume track", function() {
+        // it("should resume track", function() {
 
-            // resume
-            element(by.css(".controls button:nth-child(1)")).click();
-            browser.driver.sleep(1000);
+        //     // resume
+        //     element(by.css(".controls button:nth-child(1)")).click();
+        //     browser.driver.sleep(1000);
 
-            element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
-                value = parseInt(value);
-                expect(value > startTime).toBeTruthy();
-            });
-        });
+        //     element(by.css("footer fm-track .progress-bar")).getAttribute("aria-valuenow").then(function(value){
+        //         value = parseInt(value);
+        //         expect(value > startTime).toBeTruthy();
+        //     });
+        // });
 
     });
 
