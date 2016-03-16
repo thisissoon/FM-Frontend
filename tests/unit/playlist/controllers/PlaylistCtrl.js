@@ -3,7 +3,7 @@
 describe("FM.playlist.PlaylistCtrl", function() {
 
     var $rootScope, $location, $route, $scope, $q, $httpBackend, env,
-        TracksResource, UsersResource, PlayerQueueResource, playlistData, playlistMeta,
+        TracksResource, UsersResource, PlayerQueueResource, GoogleAuthService, playlistData, playlistMeta,
         queue, queueMeta, queueHeader, users, tracks,
         queueExpect;
 
@@ -38,6 +38,11 @@ describe("FM.playlist.PlaylistCtrl", function() {
 
         $location = $injector.get("$location");
         $route = $injector.get("$route");
+
+        GoogleAuthService = $injector.get("GoogleAuthService");
+        spyOn(GoogleAuthService, "getUser").and.callFake(function () {
+            return users;
+        });
 
         env = $injector.get("env");
 
@@ -208,6 +213,21 @@ describe("FM.playlist.PlaylistCtrl", function() {
         $rootScope.$digest();
 
         expect($scope.playlist.length).toBe(1);
+
+    });
+
+    it("should refresh playlist if current user has added a track", function(){
+        var spy = spyOn($scope, "refreshPlaylist");
+
+        $scope.onAdd({},{ uri: "foo", user: "foo" });
+        $httpBackend.flush();
+        $rootScope.$digest();
+
+        expect(spy).not.toHaveBeenCalled();
+
+        $scope.onAdd({},{ uri: "foo", user: "16369f65-6aa5-4d04-8927-a77016d0d721" });
+
+        expect(spy).toHaveBeenCalled();
 
     });
 
