@@ -1,3 +1,9 @@
+## Changes in 0.9.5
+
+ * @edwardoparearyee: Fix: invalid html (#244)
+ * @edwardoparearyee: Fix: add delete track option without having to refresh playlist (#242)
+ * @edwardoparearyee: Fix: Incorrect track timer values (#241)
+
 ## Changes in 0.9.4
 
  * @edwardoparearyee: Fix: Track not being added to empty playlist (#238)
