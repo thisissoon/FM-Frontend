@@ -2,7 +2,7 @@
 
 describe("FM.search.SearchCtrl", function() {
 
-    var $scope, $rootScope, $httpBackend, $q, FM_API_SERVER_ADDRESS, Spotify, PlayerQueueResource, searchResults;
+    var $scope, $rootScope, $location, $httpBackend, $q, FM_API_SERVER_ADDRESS, Spotify, PlayerQueueResource, searchResults;
 
     beforeEach(function (){
         module("FM.search.SearchCtrl");
@@ -31,6 +31,7 @@ describe("FM.search.SearchCtrl", function() {
         $rootScope.toogleSidebar = function(){}
 
         $q = $injector.get("$q");
+        $location = $injector.get("$location");
 
         Spotify = $injector.get("Spotify");
         spyOn(Spotify, "search").and.callFake(function() {
@@ -46,6 +47,7 @@ describe("FM.search.SearchCtrl", function() {
             $scope: $scope,
             $rootScope: $rootScope,
             $q: $q,
+            $location: $location,
             Spotify: Spotify,
             PlayerQueueResource: PlayerQueueResource
         });
@@ -81,17 +83,25 @@ describe("FM.search.SearchCtrl", function() {
     });
 
     it("should NOT add selected item to playlist", function() {
+        spyOn($location, "path");
         var track = { uri: "spotify:album:foo" };;
         $scope.onTrackSelected(track);
         expect(PlayerQueueResource.save).not.toHaveBeenCalled();
+        expect($location.path).toHaveBeenCalledWith("/albums/spotify:album:foo");
 
-        var track = undefined;
+        track = undefined;
         $scope.onTrackSelected(track);
         expect(PlayerQueueResource.save).not.toHaveBeenCalled();
 
-        var track = {};
+        track = {};
         $scope.onTrackSelected(track);
         expect(PlayerQueueResource.save).not.toHaveBeenCalled();
+
+        track = { uri: "spotify:artist:foo" };;
+        $scope.onTrackSelected(track);
+        expect(PlayerQueueResource.save).not.toHaveBeenCalled();
+        expect($location.path.calls.argsFor(1)).toEqual(["/artists/spotify:artist:foo"]);
+
     });
 
 });

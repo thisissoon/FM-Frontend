@@ -1,14 +1,37 @@
 <!-- label -->
-<p class="h4 text-center" ng-if="match.label.label">{{ match.label.label }}</p>
+<p class="h4 text-center text-sans-serif" ng-if="match.label.label">{{ match.label.label }}</p>
 
 <!-- track -->
-<fm-track ng-if="match.label.uri.indexOf('spotify:track') === 0" data-spotify-track="match.label"></fm-track>
+<div class="media" ng-if="match.label.uri.indexOf('spotify:track') === 0">
+  <div class="media-left" ng-class="{'no-img': !match.label.album.images[2].url}" ng-style="{ 'background-image': 'url(' + (match.label.album.images[2].url || 'img/icons/artist.svg' ) + ')'}">
+    <img class="invisible media-object" ng-src="{{ match.label.album.images[2].url || 'img/icons/artist.svg' }}" alt="match.label.album.name">
+  </div>
+  <div class="media-body media-middle">
+    <h5 class="media-heading text-nowrap" title="{{ match.label.name }}">{{ match.label.name }}</h5>
+    <p class="media-label" title="{{ match.label.artists[0].name }}"><span class="text-muted text-nowrap" ng-repeat-start="artist in match.label.artists">{{ artist.name }}</span><span class="text-muted text-nowrap" ng-repeat-end ng-if="!$last">, </span>
+  </div></p>
+</div>
 
 <!-- album -->
-<fm-album ng-if="match.label.uri.indexOf('spotify:album') === 0" data-album="match.label"></fm-album>
+<div class="media" ng-if="match.label.uri.indexOf('spotify:album') === 0">
+  <div class="media-left" ng-class="{'no-img': !match.label.images[2].url}" ng-style="{ 'background-image': 'url(' + (match.label.images[2].url || 'img/icons/artist.svg' ) + ')'}">
+    <img class="invisible media-object" ng-src="{{ match.label.images[2].url || 'img/icons/artist.svg' }}" alt="match.label.name">
+  </div>
+  <div class="media-body media-middle">
+    <h5 class="media-heading text-nowrap" title="{{ match.label.name }}">{{ match.label.name }}</h5>
+    <p class="media-label" title="{{ match.label.artists[0].name }}"><span class="text-muted text-nowrap" ng-repeat-start="artist in match.label.artists">{{ artist.name }}</span><span class="text-muted text-nowrap" ng-repeat-end ng-if="!$last">, </span></p>
+  </div>
+</div>
 
 <!-- artist -->
-<fm-artist ng-if="match.label.uri.indexOf('spotify:artist') === 0" data-artist="match.label"></fm-artist>
+<div class="media" ng-if="match.label.uri.indexOf('spotify:artist') === 0">
+  <div class="media-left" ng-class="{'no-img': !match.label.images[2].url}" ng-style="{ 'background-image': 'url(' + (match.label.images[2].url || 'img/icons/artist.svg') + ')'}">
+    <img class="invisible media-object" ng-src="{{ match.label.images[2].url || 'img/icons/artist.svg' }}" alt="match.label.name">
+  </div>
+  <div class="media-body media-middle">
+    <h5 class="media-heading text-nowrap" title="{{ match.label.name }}">{{ match.label.name }}</h5>
+  </div>
+</div>
 
 <!-- view more results -->
 <p ng-if="match.label.buttonLabel" class="text-center">

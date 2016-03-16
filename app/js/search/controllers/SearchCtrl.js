@@ -25,10 +25,11 @@ angular.module("FM.search.SearchCtrl", [
     "$scope",
     "$rootScope",
     "$q",
+    "$location",
     "env",
     "Spotify",
     "PlayerQueueResource",
-    function ($scope, $rootScope, $q, env, Spotify, PlayerQueueResource) {
+    function ($scope, $rootScope, $q, $location, env, Spotify, PlayerQueueResource) {
 
         /**
          * Searches the spotify api using angular-spotify and returns a
@@ -94,6 +95,10 @@ angular.module("FM.search.SearchCtrl", [
         $scope.onTrackSelected = function onTrackSelected(item){
             if (item && item.uri && item.uri.match("spotify:track")) {
                 PlayerQueueResource.save({ uri: item.uri });
+            } else if (item && item.uri && item.uri.match("spotify:album")) {
+                $location.path("/albums/"+item.uri);
+            } else if (item && item.uri && item.uri.match("spotify:artist")) {
+                $location.path("/artists/"+item.uri);
             }
             $scope.selectedItem = null;
             $rootScope.toogleSidebar();
