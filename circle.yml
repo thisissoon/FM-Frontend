@@ -8,7 +8,7 @@ machine:
   services:
     - docker
   node:
-    version: 0.12
+    version: 6
   environment:
     REPO: quay.io/thisissoon/fm-frontend
     TAG: $(sed 's/master/latest/;s/\//\-/' <<<$CIRCLE_BRANCH)
@@ -32,7 +32,7 @@ test:
   override:
     - grunt test:development
     - grunt test
-    - ./tests/e2e/saucelabs.sh
+    # - ./tests/e2e/saucelabs.sh
   post:
     - ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info
 
