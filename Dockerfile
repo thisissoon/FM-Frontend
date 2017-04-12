@@ -4,15 +4,12 @@
 #
 
 # Pull alpine base image
-FROM alpine:3.2
-
-# Install Nginx
-RUN apk add --update nginx && \
-    rm -rf /var/cache/apk/*
+FROM nginx:1.10.3-alpine
 
 # Bundle app build
 COPY ./dist /fm
 
+# Working Dir
 WORKDIR /fm
 
 # Add nginx config - overwrite bundled nginx.conf

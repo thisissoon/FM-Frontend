@@ -1,0 +1,44 @@
+#
+# Frontend Kubernetes Deployment
+#
+
+# Web Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  labels:
+    app: web
+    tier: frontend
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: web
+    tier: frontend
+---
+# Web Frontend Deployment
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: web
+        tier: frontend
+    spec:
+      # Containers
+      containers:
+      # Web Frontend Application
+      - name: web
+        image: gcr.io/soon-fm-production/web:$TAG
+        resources:
+          requests:
+            memory: "10Mi"
+        ports:
+        - containerPort: 80
