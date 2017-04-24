@@ -7,19 +7,16 @@
 //
 //## Gray and brand colors for use across Bootstrap.
 //
-@black:             #BA68C8;
+@black:             #EA2212;
 @white:             #ffffff;
 
-@light-black:       #CE93D8;
-@lighter-black:     #E1BEE7;
-
-@gray-light:        #F3E5F5;
-
-@yellow:            rgba(255,255,255,0.5);
+@light-black:       lighten(@black, 10%);
+@lighter-black:     lighten(@light-black, 10%);
+@yellow:            #fffd00;
 
 @brand-spotify:     #2EBD59;
 
-@brand-primary:     @yellow;
+@brand-primary:    @white;
 
 //== Typography
 //
@@ -58,7 +55,7 @@
 //
 //## For each of Bootstrap's buttons, define text, background and border color.
 
-@btn-primary-color:           @black;
+@btn-primary-color:           #333333;
 
 //== Media queries breakpoints
 //
@@ -165,7 +162,7 @@
 
 // input[type="range"] properties
 @track-color:                   transparent;
-@track-fill:                    @gray-light;
+@track-fill:                    @black;
 @thumb-color:                   @white;
 
 @thumb-radius:                  8px;
@@ -177,7 +174,7 @@
 @track-width:                   100%;
 @track-height:                  8px;
 @track-border-width:            1px;
-@track-border-color:            @gray-light;
+@track-border-color:            @lighter-black;
 
 @track-radius:                  5px;
 @contrast:                      5%;
