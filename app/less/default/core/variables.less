@@ -7,16 +7,20 @@
 //
 //## Gray and brand colors for use across Bootstrap.
 //
-@black:             #EA2212;
-@white:             #ffffff;
+@black:                     #000000;
+@white:                     #ffffff;
 
-@light-black:       lighten(@black, 10%);
-@lighter-black:     lighten(@light-black, 10%);
-@yellow:            #fffd00;
+@yellow:                    #fffd00;
 
-@brand-spotify:     #2EBD59;
+@brand-spotify:             #2EBD59;
 
-@brand-primary:    @white;
+@dj-theme-color:            #003366;
+
+@brand-primary:             @dj-theme-color;
+@brand-secondary:           @white;
+
+@brand-primary-light:       lighten(@brand-primary, 10%);
+@brand-primary-lighter:     lighten(@brand-primary, 20%);
 
 //== Typography
 //
@@ -42,7 +46,7 @@
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-@body-bg:               @black;
+@body-bg:               @dj-theme-color;
 //** Global text color on `<body>`.
 @text-color:            @white;
 //** Global textual link color.
@@ -120,7 +124,7 @@
 //## Dropdown menu container and contents.
 
 //** Background for the dropdown menu.
-@dropdown-bg:                    @light-black;
+@dropdown-bg:                    @brand-primary-light;
 
 //** Dropdown link text color.
 @dropdown-link-color:            @white;
@@ -134,15 +138,15 @@
 //##
 
 //=== Shared nav styles
-@nav-link-hover-bg:                         @light-black;
+@nav-link-hover-bg:                         @brand-primary-light;
 
 //== Tabs
-@nav-tabs-border-color:                     lighten(@light-black, 5%);
+@nav-tabs-border-color:                     lighten(@brand-primary-light, 5%);
 
-@nav-tabs-link-hover-border-color:          lighten(@light-black, 5%);
+@nav-tabs-link-hover-border-color:          lighten(@brand-primary-light, 5%);
 
 @nav-tabs-active-link-hover-color:          @brand-primary;
-@nav-tabs-active-link-hover-border-color:   lighten(@light-black, 5%);
+@nav-tabs-active-link-hover-border-color:   lighten(@brand-primary-light, 5%);
 
 
 //== Thumbnails
@@ -150,9 +154,9 @@
 //##
 
 //** Thumbnail background color
-@thumbnail-bg:                @light-black;
+@thumbnail-bg:                @brand-primary-light;
 //** Thumbnail border color
-@thumbnail-border:            @light-black;
+@thumbnail-border:            @brand-primary-light;
 
 //== Forms
 //
@@ -161,8 +165,12 @@
 @input-border-radius:            20px;
 
 // input[type="range"] properties
+
+
+@track-bg:                      @brand-primary-light;
+@track-footer-height-xs:        50px;
 @track-color:                   transparent;
-@track-fill:                    @black;
+@track-fill:                    @brand-primary-lighter;
 @thumb-color:                   @white;
 
 @thumb-radius:                  8px;
@@ -174,7 +182,7 @@
 @track-width:                   100%;
 @track-height:                  8px;
 @track-border-width:            1px;
-@track-border-color:            @lighter-black;
+@track-border-color:            @brand-primary-lighter;
 
 @track-radius:                  5px;
 @contrast:                      5%;
@@ -195,20 +203,20 @@
 //##
 
 //=== Shared nav styles
-@nav-link-hover-bg:                         @lighter-black;
+@nav-link-hover-bg:                         @brand-primary-lighter;
 
 //== Tabs
-@nav-tabs-border-color:                     @lighter-black;
-@nav-tabs-link-hover-border-color:          @lighter-black;
-@nav-tabs-active-link-hover-bg:             @lighter-black;
-@nav-tabs-active-link-hover-color:          @lighter-black;
+@nav-tabs-border-color:                     @brand-primary-lighter;
+@nav-tabs-link-hover-border-color:          @brand-primary-lighter;
+@nav-tabs-active-link-hover-bg:             @brand-primary-lighter;
+@nav-tabs-active-link-hover-color:          @brand-primary-lighter;
 
 //== Popovers
 //
 //##
 
 //** Popover body background color
-@popover-bg:                  lighten(@light-black, 10%);
+@popover-bg:                  lighten(@brand-primary-light, 10%);
 
 
 //== Alerts
@@ -223,8 +231,9 @@
 //##
 
 //** Background color of the whole progress component
-@progress-bg:                 @lighter-black;
+@progress-bg:                 @brand-primary-lighter;
 @progress-height:             8px;
+@progress-bar-bg:             @brand-secondary;
 
 //== Header
 //
@@ -233,7 +242,7 @@
 @header-height:                 92px;
 @header-line-height:            @header-height;
 @header-horizontal-padding:     30px;
-@header-border-bottom-color:    @light-black;
+@header-border-bottom-color:    @brand-primary-light;
 
 @header-height-xs:              75px;
 @header-line-height-xs:         @header-height-xs;
@@ -243,7 +252,7 @@
 //
 //##
 
-@footer-bg:                     @light-black;
+@footer-bg:                     @brand-primary-light;
 @footer-height:                 90px;
 @footer-height-xs-open:         135px + @progress-height;
 @footer-height-xs-closed:       @track-footer-height-xs + @progress-height + 32px;
@@ -254,13 +263,13 @@
 //##
 
 //** Page header border color
-@page-header-border-color:     @light-black;
+@page-header-border-color:     @brand-primary-light;
 
 //== Sidebar
 //
 //##
 
-@sidebar-bg:                    @light-black;
+@sidebar-bg:                    @brand-primary-light;
 @sidebar-padding:               30px;
 @sidebar-position-bottom:       @footer-height + (@grid-gutter-width / 2);
 @sidebar-position-top:          @header-height;
@@ -285,19 +294,12 @@
 @view-position-left-xs:        0;
 @view-position-top-xs:         @header-height-xs;
 
-//== Track
-//
-//##
-
-@track-bg:                      @light-black;
-
-@track-footer-height-xs:        50px;
 
 //== Controls
 //
 //##
 
-@controls-bg:                   @light-black;
+@controls-bg:                   @brand-primary-light;
 @controls-height:               @footer-height;
 @controls-width:                340px;
 

@@ -14,7 +14,7 @@
     <img ng-show="page.loading" class="center-block loading-animation" src="img/icons/loading-animation.gif" width="50" height="50">
 
     <div class="row text-center">
-        <button class="btn btn-primary" ng-click="loadMore()" ng-if="page.total > 1 && page.pages < page.total" ng-disabled="page.loading">Load more</button>
+        <button class="btn btn-secondary" ng-click="loadMore()" ng-if="page.total > 1 && page.pages < page.total" ng-disabled="page.loading">Load more</button>
         <p ng-if="page.total > 1 && page.pages >= page.total">No more results</p>
     </div>
 
