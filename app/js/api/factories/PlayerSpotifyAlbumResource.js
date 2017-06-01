@@ -22,7 +22,7 @@ angular.module("FM.api.PlayerSpotifyAlbumResource", [
     function ($resource, env) {
 
         return $resource(
-            env.FM_API_SERVER_ADDRESS + "spotify/album/:id",
+            env.FM_API_SERVER_ADDRESS + "spotify/albums/:id",
             {
                 id: "@id"
             },
@@ -32,7 +32,7 @@ angular.module("FM.api.PlayerSpotifyAlbumResource", [
                 },
                 getTracks: {
                     method: "GET",
-                    url: env.FM_API_SERVER_ADDRESS + "spotify/album/:id/tracks",
+                    url: env.FM_API_SERVER_ADDRESS + "spotify/albums/:id/tracks",
                 }
             }
         );

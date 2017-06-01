@@ -48,10 +48,10 @@ angular.module("FM.search.AlbumSearchCtrl", [
 .controller("AlbumSearchCtrl", [
     "$scope",
     "$location",
-    "Spotify",
+    "PlayerSpotifySearchResource",
     "search",
     "env",
-    function ($scope, $location, Spotify, search, env) {
+    function ($scope, $location, PlayerSpotifySearchResource, search, env) {
 
         /**
          * Route search params
@@ -86,11 +86,13 @@ angular.module("FM.search.AlbumSearchCtrl", [
          */
         $scope.loadMore = function loadMore(){
             $scope.loadDisabled = true;
-            Spotify.search($scope.search.query, "album", {
+            PlayerSpotifySearchResource.query({
+                q: $scope.search.query + "*",
+                type: "album",
                 limit: env.SEARCH_LIMIT,
                 offset: $scope.albums.length,
                 market: env.REGION_CODE
-            }).then(function (response) {
+            }).$promise.then(function (response) {
                 $scope.albums = $scope.albums.concat(response.albums.items);
                 $scope.meta = response.albums;
                 $scope.loadDisabled = false;

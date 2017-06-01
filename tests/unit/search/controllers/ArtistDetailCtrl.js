@@ -2,7 +2,7 @@
 
 describe("FM.search.ArtistDetailCtrl", function() {
 
-    var $scope, $route, $rootScope, $httpBackend, Spotify, $location,
+    var $scope, $route, $rootScope, $httpBackend, PlayerSpotifyArtistResource, $location,
         artist, artists, albums, singles, topTracks;
 
     beforeEach(function (){
@@ -19,9 +19,9 @@ describe("FM.search.ArtistDetailCtrl", function() {
 
         $httpBackend.whenGET(/partials\/.*/).respond(200, "");
         $httpBackend.whenGET(/api.spotify.com\/v1\/artists\/.*\/top-tracks/).respond(200, topTracks);
-        $httpBackend.whenGET(/api.spotify.com\/v1\/artists\/.*\/related-artists/).respond(200, artists);
-        $httpBackend.whenGET(/api.spotify.com\/v1\/artists\/.*\/albums/).respond(200, albums);
-        $httpBackend.whenGET(/api.spotify.com\/v1\/artists\/.*/).respond(200, artist);
+        $httpBackend.whenGET(/.*\/artists\/.*\/related-artists/).respond(200, artists);
+        $httpBackend.whenGET(/.*\/artists\/.*\/albums/).respond(200, albums);
+        $httpBackend.whenGET(/.*\/artists\/.*/).respond(200, artist);
     }));
 
     beforeEach(inject(function (  _$location_, _$route_, _$rootScope_, $injector, $controller ) {
@@ -32,12 +32,12 @@ describe("FM.search.ArtistDetailCtrl", function() {
 
         $location = $injector.get("$location");
 
-        Spotify = $injector.get("Spotify");
+        PlayerSpotifyArtistResource = $injector.get("PlayerSpotifyArtistResource");
 
         $controller("ArtistDetailCtrl", {
             $scope: $scope,
             $location: $location,
-            Spotify: Spotify,
+            PlayerSpotifyArtistResource: PlayerSpotifyArtistResource,
             artist: artist,
             albums: albums,
             singles: albums,

@@ -74,14 +74,14 @@ angular.module("FM.search.ArtistDetailCtrl", [
 .controller("ArtistDetailCtrl", [
     "$scope",
     "$location",
-    "Spotify",
+    "PlayerSpotifyArtistResource",
     "artist",
     "albums",
     "singles",
     "topTracks",
     "relatedArtists",
     "env",
-    function ($scope, $location, Spotify, artist, albums, singles, topTracks, relatedArtists, env) {
+    function ($scope, $location, PlayerSpotifyArtistResource, artist, albums, singles, topTracks, relatedArtists, env) {
 
         /**
          * Artist data
@@ -143,12 +143,13 @@ angular.module("FM.search.ArtistDetailCtrl", [
          */
         $scope.loadMoreSingles = function loadMoreSingles(){
             $scope.loadDisabled = true;
-            Spotify.getArtistAlbums($scope.artist.id, {
+            PlayerSpotifyArtistResource.getAlbums({
+                id: $scope.artist.id,
                 limit: env.SEARCH_LIMIT,
                 album_type: "single", // jshint ignore:line
                 offset: $scope.singles.length,
                 country: env.REGION_CODE
-            }).then(function (response) {
+            }).$promise.then(function (response) {
                 $scope.singles = $scope.singles.concat(response.items);
                 $scope.singlesMeta = response;
                 $scope.loadDisabled = false;
@@ -161,12 +162,13 @@ angular.module("FM.search.ArtistDetailCtrl", [
          */
         $scope.loadMoreAlbums = function loadMoreAlbums(){
             $scope.loadDisabled = true;
-            Spotify.getArtistAlbums($scope.artist.id, {
+            PlayerSpotifyArtistResource.getAlbums({
+                id: $scope.artist.id,
                 limit: env.SEARCH_LIMIT,
                 album_type: "album", // jshint ignore:line
                 offset: $scope.albums.length,
                 country: env.REGION_CODE
-            }).then(function (response) {
+            }).$promise.then(function (response) {
                 $scope.albums = $scope.albums.concat(response.items);
                 $scope.albumsMeta = response;
                 $scope.loadDisabled = false;

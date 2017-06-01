@@ -49,11 +49,11 @@ angular.module("FM.search.AlbumDetailCtrl", [
  */
 .controller("AlbumDetailCtrl", [
     "$scope",
-    "Spotify",
+    "PlayerSpotifyAlbumResource",
     "album",
     "albumTracks",
     "env",
-    function ($scope, Spotify, album, albumTracks, env) {
+    function ($scope, PlayerSpotifyAlbumResource, album, albumTracks, env) {
 
         /**
          * Album data
@@ -88,10 +88,11 @@ angular.module("FM.search.AlbumDetailCtrl", [
          */
         $scope.loadMore = function loadMore(){
             $scope.loadDisabled = true;
-            Spotify.getAlbumTracks($scope.album.id, {
+            PlayerSpotifyAlbumResource.getTracks({
+                id: $scope.album.id,
                 limit: env.SEARCH_LIMIT,
                 offset: $scope.albumTracks.length
-            }).then(function (response) {
+            }).$promise.then(function (response) {
                 $scope.albumTracks = $scope.albumTracks.concat(response.items);
                 $scope.meta = response;
                 $scope.loadDisabled = false;
