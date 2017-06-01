@@ -29,7 +29,9 @@ angular.module("FM.search.ArtistDetailCtrl", [
                 controller: "ArtistDetailCtrl",
                 resolve: {
                     artist: ["PlayerSpotifyArtistResource", "$route", function (PlayerSpotifyArtistResource, $route){
-                        return PlayerSpotifyArtistResource.get({id:$route.current.params.id}).$promise;
+                        return PlayerSpotifyArtistResource.get({
+                            id: $route.current.params.id.replace("spotify:artist:", "")
+                        }).$promise;
                     }],
                     albums: ["PlayerSpotifyArtistResource", "$route", function (PlayerSpotifyArtistResource, $route){
                         return PlayerSpotifyArtistResource.getAlbums({
@@ -41,7 +43,7 @@ angular.module("FM.search.ArtistDetailCtrl", [
                     }],
                     singles: ["PlayerSpotifyArtistResource", "$route", function (PlayerSpotifyArtistResource, $route){
                         return PlayerSpotifyArtistResource.getAlbums({
-                            id: $route.current.params.id,
+                            id: $route.current.params.id.replace("spotify:artist:", ""),
                             limit: env.SEARCH_LIMIT,
                             album_type: "single", // jshint ignore:line
                             country: env.REGION_CODE

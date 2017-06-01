@@ -30,7 +30,7 @@ angular.module("FM.search.AlbumDetailCtrl", [
                     }],
                     albumTracks: ["PlayerSpotifyAlbumResource", "$route", function (PlayerSpotifyAlbumResource, $route){
                         return PlayerSpotifyAlbumResource.getTracks({
-                            id: $route.current.params.id,
+                            id: $route.current.params.id.replace("spotify:album:", ""),
                             limit: env.SEARCH_LIMIT
                         }).$promise;
                     }]

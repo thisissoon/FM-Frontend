@@ -26,7 +26,7 @@ angular.module("FM.search.TrackSearchCtrl", [
                 resolve: {
                     search: ["PlayerSpotifySearchResource", "$route", function (PlayerSpotifySearchResource, $route){
                         return PlayerSpotifySearchResource.query({
-                            id: $route.current.params.query + "*",
+                            q: $route.current.params.query + "*",
                             type: "track",
                             limit: env.SEARCH_LIMIT,
                             market: env.REGION_CODE
