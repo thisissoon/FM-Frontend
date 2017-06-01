@@ -38,7 +38,7 @@ angular.module("FM.search.ArtistDetailCtrl", [
                             id: $route.current.params.id.replace("spotify:artist:", ""),
                             limit: env.SEARCH_LIMIT,
                             album_type: "album", // jshint ignore:line
-                            country: env.REGION_CODE
+                            market: env.REGION_CODE
                         }).$promise;
                     }],
                     singles: ["PlayerSpotifyArtistResource", "$route", function (PlayerSpotifyArtistResource, $route){
@@ -46,7 +46,7 @@ angular.module("FM.search.ArtistDetailCtrl", [
                             id: $route.current.params.id.replace("spotify:artist:", ""),
                             limit: env.SEARCH_LIMIT,
                             album_type: "single", // jshint ignore:line
-                            country: env.REGION_CODE
+                            market: env.REGION_CODE
                         }).$promise;
                     }],
                     // topTracks: ["Spotify", "$route", function (Spotify, $route){
@@ -150,7 +150,7 @@ angular.module("FM.search.ArtistDetailCtrl", [
                 limit: env.SEARCH_LIMIT,
                 album_type: "single", // jshint ignore:line
                 offset: $scope.singles.length,
-                country: env.REGION_CODE
+                market: env.REGION_CODE
             }).$promise.then(function (response) {
                 $scope.singles = $scope.singles.concat(response.items);
                 $scope.singlesMeta = response;
@@ -169,7 +169,7 @@ angular.module("FM.search.ArtistDetailCtrl", [
                 limit: env.SEARCH_LIMIT,
                 album_type: "album", // jshint ignore:line
                 offset: $scope.albums.length,
-                country: env.REGION_CODE
+                market: env.REGION_CODE
             }).$promise.then(function (response) {
                 $scope.albums = $scope.albums.concat(response.items);
                 $scope.albumsMeta = response;
