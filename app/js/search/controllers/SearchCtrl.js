@@ -44,7 +44,7 @@ angular.module("FM.search.SearchCtrl", [
             var deferred = $q.defer();
 
             PlayerSpotifySearchResource.query({
-                q: query,
+                q: query + "*",
                 type: "album,artist,track",
                 limit: env.SIDEBAR_SEARCH_LIMIT,
                 market: env.REGION_CODE
@@ -69,7 +69,7 @@ angular.module("FM.search.SearchCtrl", [
                 if (albums) {
                     var promises = [];
                     angular.forEach(response.albums.items, function (album){
-                        promises.push(PlayerSpotifyAlbumResource.get({ id: album.uri }).$promise);
+                        promises.push(PlayerSpotifyAlbumResource.get({ id: album.uri.replace("spotify:album:", "") }).$promise);
                     });
                     $q.all(promises)
                         .then(function (response){

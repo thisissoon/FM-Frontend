@@ -6,7 +6,7 @@
  * @requires ngRoute
  */
 angular.module("FM.search.TrackSearchCtrl", [
-    "spotify",
+    "FM.api.PlayerSpotifySearchResource",
     "ngRoute",
     "config"
 ])
@@ -24,11 +24,13 @@ angular.module("FM.search.TrackSearchCtrl", [
                 templateUrl: "partials/track-search.html",
                 controller: "TrackSearchCtrl",
                 resolve: {
-                    search: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.search($route.current.params.query, "track", {
+                    search: ["PlayerSpotifySearchResource", "$route", function (PlayerSpotifySearchResource, $route){
+                        return PlayerSpotifySearchResource.query({
+                            id: $route.current.params.query + "*",
+                            type: "track",
                             limit: env.SEARCH_LIMIT,
                             market: env.REGION_CODE
-                        });
+                        }).$promise;
                     }]
                 }
             });
@@ -46,10 +48,10 @@ angular.module("FM.search.TrackSearchCtrl", [
 .controller("TrackSearchCtrl", [
     "$scope",
     "$location",
-    "Spotify",
+    "PlayerSpotifySearchResource",
     "search",
     "env",
-    function ($scope, $location, Spotify, search, env) {
+    function ($scope, $location, PlayerSpotifySearchResource, search, env) {
 
         /**
          * Route search params
@@ -84,11 +86,13 @@ angular.module("FM.search.TrackSearchCtrl", [
          */
         $scope.loadMore = function loadMore(){
             $scope.loadDisabled = true;
-            Spotify.search($scope.search.query, "track", {
+            PlayerSpotifySearchResource.query({
+                q: $scope.search.query + "*",
+                type: "track",
                 limit: env.SEARCH_LIMIT,
                 offset: $scope.tracks.length,
                 market: env.REGION_CODE
-            }).then(function (response) {
+            }).$promise.then(function (response) {
                 $scope.tracks = $scope.tracks.concat(response.tracks.items);
                 $scope.meta = response.tracks;
                 $scope.loadDisabled = false;

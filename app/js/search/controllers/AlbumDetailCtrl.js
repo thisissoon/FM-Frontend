@@ -26,7 +26,7 @@ angular.module("FM.search.AlbumDetailCtrl", [
                 controller: "AlbumDetailCtrl",
                 resolve: {
                     album: ["PlayerSpotifyAlbumResource", "$route", function (PlayerSpotifyAlbumResource, $route){
-                        return PlayerSpotifyAlbumResource.get({id: $route.current.params.id}).$promise;
+                        return PlayerSpotifyAlbumResource.get({id: $route.current.params.id.replace("spotify:album:", "")}).$promise;
                     }],
                     albumTracks: ["PlayerSpotifyAlbumResource", "$route", function (PlayerSpotifyAlbumResource, $route){
                         return PlayerSpotifyAlbumResource.getTracks({
@@ -89,7 +89,7 @@ angular.module("FM.search.AlbumDetailCtrl", [
         $scope.loadMore = function loadMore(){
             $scope.loadDisabled = true;
             PlayerSpotifyAlbumResource.getTracks({
-                id: $scope.album.id,
+                id: $scope.album.id.replace("spotify:album:", ""),
                 limit: env.SEARCH_LIMIT,
                 offset: $scope.albumTracks.length
             }).$promise.then(function (response) {

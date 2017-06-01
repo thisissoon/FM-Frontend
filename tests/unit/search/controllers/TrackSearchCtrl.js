@@ -2,7 +2,7 @@
 
 describe("FM.search.TrackSearchCtrl", function() {
 
-    var $scope, $route, $rootScope, $httpBackend, Spotify, $location, search;
+    var $scope, $route, $rootScope, $httpBackend, PlayerSpotifySearchResource, $location, search;
 
     beforeEach(function (){
         module("FM.search.TrackSearchCtrl");
@@ -11,7 +11,7 @@ describe("FM.search.TrackSearchCtrl", function() {
     beforeEach(inject(function (_$httpBackend_) {
         $httpBackend = _$httpBackend_;
         $httpBackend.whenGET(/partials\/.*/).respond(200, "");
-        $httpBackend.whenGET(/api.spotify.com\/v1\/search.*/).respond(200, {  tracks: { items: [{},{}] }});
+        $httpBackend.whenGET(/.*\/search.*/).respond(200, {  tracks: { items: [{},{}] }});
     }));
 
     beforeEach(inject(function (  _$location_, _$route_, _$rootScope_, $injector, $controller ) {
@@ -22,7 +22,7 @@ describe("FM.search.TrackSearchCtrl", function() {
 
         $location = $injector.get("$location");
 
-        Spotify = $injector.get("Spotify");
+        PlayerSpotifySearchResource = $injector.get("PlayerSpotifySearchResource");
 
         search = {
             tracks: {
@@ -33,7 +33,7 @@ describe("FM.search.TrackSearchCtrl", function() {
         $controller("TrackSearchCtrl", {
             $scope: $scope,
             $location: $location,
-            Spotify: Spotify,
+            PlayerSpotifySearchResource: PlayerSpotifySearchResource,
             search: search
         });
     }));

@@ -96,7 +96,7 @@ angular.module("FM.player.trackDirective", [
                  */
                 $scope.addToPlaylist = function addToPlaylist (track) {
                     if (track && track.uri) {
-                        PlayerQueueResource.save({ uri: track.uri });
+                        PlayerQueueResource.save({ uri: track.uri.replace("spotify:track:", "") });
                     }
                 };
 

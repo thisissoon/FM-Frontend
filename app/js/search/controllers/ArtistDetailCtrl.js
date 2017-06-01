@@ -33,7 +33,7 @@ angular.module("FM.search.ArtistDetailCtrl", [
                     }],
                     albums: ["PlayerSpotifyArtistResource", "$route", function (PlayerSpotifyArtistResource, $route){
                         return PlayerSpotifyArtistResource.getAlbums({
-                            id: $route.current.params.id,
+                            id: $route.current.params.id.replace("spotify:artist:", ""),
                             limit: env.SEARCH_LIMIT,
                             album_type: "album", // jshint ignore:line
                             country: env.REGION_CODE
@@ -144,7 +144,7 @@ angular.module("FM.search.ArtistDetailCtrl", [
         $scope.loadMoreSingles = function loadMoreSingles(){
             $scope.loadDisabled = true;
             PlayerSpotifyArtistResource.getAlbums({
-                id: $scope.artist.id,
+                id: $scope.artist.id.replace("spotify:artist:", ""),
                 limit: env.SEARCH_LIMIT,
                 album_type: "single", // jshint ignore:line
                 offset: $scope.singles.length,
@@ -163,7 +163,7 @@ angular.module("FM.search.ArtistDetailCtrl", [
         $scope.loadMoreAlbums = function loadMoreAlbums(){
             $scope.loadDisabled = true;
             PlayerSpotifyArtistResource.getAlbums({
-                id: $scope.artist.id,
+                id: $scope.artist.id.replace("spotify:artist:", ""),
                 limit: env.SEARCH_LIMIT,
                 album_type: "album", // jshint ignore:line
                 offset: $scope.albums.length,

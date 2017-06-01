@@ -87,7 +87,7 @@ angular.module("FM.search.ArtistSearchCtrl", [
         $scope.loadMore = function loadMore(){
             $scope.loadDisabled = true;
             PlayerSpotifySearchResource.query({
-                id: $scope.search.query,
+                id: $scope.search.query + "*",
                 type: "artist",
                 limit: env.SEARCH_LIMIT,
                 offset: $scope.artists.length,
