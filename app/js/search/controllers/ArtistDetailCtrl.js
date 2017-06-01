@@ -80,10 +80,10 @@ angular.module("FM.search.ArtistDetailCtrl", [
     "artist",
     "albums",
     "singles",
-    "topTracks",
-    "relatedArtists",
+    // "topTracks",
+    // "relatedArtists",
     "env",
-    function ($scope, $location, PlayerSpotifyArtistResource, artist, albums, singles, topTracks, relatedArtists, env) {
+    function ($scope, $location, PlayerSpotifyArtistResource, artist, albums, singles, /*topTracks, relatedArtists,*/ env) {
 
         /**
          * Artist data
