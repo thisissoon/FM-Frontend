@@ -8,8 +8,9 @@
  */
 angular.module("FM.search.SearchCtrl", [
     "FM.api.PlayerQueueResource",
+    "FM.api.PlayerSpotifySearchResource",
+    "FM.api.PlayerSpotifyAlbumResource",
     "ui.bootstrap",
-    "spotify",
     "config"
 ])
 /**
@@ -27,9 +28,10 @@ angular.module("FM.search.SearchCtrl", [
     "$q",
     "$location",
     "env",
-    "Spotify",
+    "PlayerSpotifySearchResource",
+    "PlayerSpotifyAlbumResource",
     "PlayerQueueResource",
-    function ($scope, $rootScope, $q, $location, env, Spotify, PlayerQueueResource) {
+    function ($scope, $rootScope, $q, $location, env, PlayerSpotifySearchResource,PlayerSpotifyAlbumResource, PlayerQueueResource) {
 
         /**
          * Searches the spotify api using angular-spotify and returns a
@@ -41,10 +43,12 @@ angular.module("FM.search.SearchCtrl", [
         $scope.search = function search(query){
             var deferred = $q.defer();
 
-            Spotify.search(query, "album,artist,track", {
+            PlayerSpotifySearchResource.query({
+                q: query,
+                type: "album,artist,track",
                 limit: env.SIDEBAR_SEARCH_LIMIT,
                 market: env.REGION_CODE
-            }).then(function (response) {
+            }).$promise.then(function (response) {
                 var albums = (response.albums && response.albums.items && response.albums.items.length > 0),
                     tracks = (response.tracks && response.tracks.items && response.tracks.items.length > 0),
                     artists = (response.artists && response.artists.items && response.artists.items.length > 0),
@@ -65,7 +69,7 @@ angular.module("FM.search.SearchCtrl", [
                 if (albums) {
                     var promises = [];
                     angular.forEach(response.albums.items, function (album){
-                        promises.push(Spotify.getAlbum(album.uri));
+                        promises.push(PlayerSpotifyAlbumResource.get({ id: album.uri }).$promise);
                     });
                     $q.all(promises)
                         .then(function (response){

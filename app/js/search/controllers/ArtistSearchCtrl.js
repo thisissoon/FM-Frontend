@@ -6,7 +6,7 @@
  * @requires ngRoute
  */
 angular.module("FM.search.ArtistSearchCtrl", [
-    "spotify",
+    "FM.api.PlayerSpotifySearchResource",
     "ngRoute",
     "config",
 ])
@@ -24,11 +24,13 @@ angular.module("FM.search.ArtistSearchCtrl", [
                 templateUrl: "partials/artists-search.html",
                 controller: "ArtistSearchCtrl",
                 resolve: {
-                    search: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.search($route.current.params.query, "artist", {
+                    search: ["PlayerSpotifySearchResource", "$route", function (PlayerSpotifySearchResource, $route){
+                        return PlayerSpotifySearchResource.query({
+                            q: $route.current.params.query + "*",
+                            type: "artist",
                             limit: env.SEARCH_LIMIT,
                             market: env.REGION_CODE
-                        });
+                        }).$promise;
                     }]
                 }
             });
@@ -46,10 +48,10 @@ angular.module("FM.search.ArtistSearchCtrl", [
 .controller("ArtistSearchCtrl", [
     "$scope",
     "$location",
-    "Spotify",
+    "PlayerSpotifySearchResource",
     "search",
     "env",
-    function ($scope, $location, Spotify, search, env) {
+    function ($scope, $location, PlayerSpotifySearchResource, search, env) {
 
         /**
          * Route search params
@@ -84,11 +86,13 @@ angular.module("FM.search.ArtistSearchCtrl", [
          */
         $scope.loadMore = function loadMore(){
             $scope.loadDisabled = true;
-            Spotify.search($scope.search.query, "artist", {
+            PlayerSpotifySearchResource.query({
+                id: $scope.search.query,
+                type: "artist",
                 limit: env.SEARCH_LIMIT,
                 offset: $scope.artists.length,
                 market: env.REGION_CODE
-            }).then(function (response) {
+            }).$promise.then(function (response) {
                 $scope.artists = $scope.artists.concat(response.artists.items);
                 $scope.meta = response.artists;
                 $scope.loadDisabled = false;

@@ -6,9 +6,9 @@
  * @requires ngRoute
  */
 angular.module("FM.search.AlbumDetailCtrl", [
-    "spotify",
     "ngRoute",
     "config",
+    "FM.api.PlayerSpotifyAlbumResource",
     "FM.player.trackDirective"
 ])
 /**
@@ -25,13 +25,14 @@ angular.module("FM.search.AlbumDetailCtrl", [
                 templateUrl: "partials/albums-detail.html",
                 controller: "AlbumDetailCtrl",
                 resolve: {
-                    album: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.getAlbum($route.current.params.id);
+                    album: ["PlayerSpotifyAlbumResource", "$route", function (PlayerSpotifyAlbumResource, $route){
+                        return PlayerSpotifyAlbumResource.get({id: $route.current.params.id}).$promise;
                     }],
-                    albumTracks: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.getAlbumTracks($route.current.params.id, {
+                    albumTracks: ["PlayerSpotifyAlbumResource", "$route", function (PlayerSpotifyAlbumResource, $route){
+                        return PlayerSpotifyAlbumResource.getTracks({
+                            id: $route.current.params.id,
                             limit: env.SEARCH_LIMIT
-                        });
+                        }).$promise;
                     }]
                 }
             });
@@ -48,11 +49,11 @@ angular.module("FM.search.AlbumDetailCtrl", [
  */
 .controller("AlbumDetailCtrl", [
     "$scope",
-    "Spotify",
+    "PlayerSpotifyAlbumResource",
     "album",
     "albumTracks",
     "env",
-    function ($scope, Spotify, album, albumTracks, env) {
+    function ($scope, PlayerSpotifyAlbumResource, album, albumTracks, env) {
 
         /**
          * Album data
@@ -87,10 +88,11 @@ angular.module("FM.search.AlbumDetailCtrl", [
          */
         $scope.loadMore = function loadMore(){
             $scope.loadDisabled = true;
-            Spotify.getAlbumTracks($scope.album.id, {
+            PlayerSpotifyAlbumResource.getTracks({
+                id: $scope.album.id,
                 limit: env.SEARCH_LIMIT,
                 offset: $scope.albumTracks.length
-            }).then(function (response) {
+            }).$promise.then(function (response) {
                 $scope.albumTracks = $scope.albumTracks.concat(response.items);
                 $scope.meta = response;
                 $scope.loadDisabled = false;
