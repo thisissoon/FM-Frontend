@@ -119,7 +119,7 @@ angular.module("FM.api.RequestInterceptor", [
                             AlertService.set(ERRORS.STATUS_404_MESSAGE, "info");
                             break;
                         default:
-                            AlertService.set(response.statusText + ": " + response.data.message, "warning");
+                            AlertService.set(response.statusText + ": " + response.data && response.data.message ? response.data.message: "There was an error", "warning");
                             break;
                     }
 

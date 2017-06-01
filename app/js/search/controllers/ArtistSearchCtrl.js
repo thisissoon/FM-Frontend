@@ -6,7 +6,7 @@
  * @requires ngRoute
  */
 angular.module("FM.search.ArtistSearchCtrl", [
-    "spotify",
+    "FM.api.PlayerSpotifySearchResource",
     "ngRoute",
     "config",
 ])
@@ -24,11 +24,13 @@ angular.module("FM.search.ArtistSearchCtrl", [
                 templateUrl: "partials/artists-search.html",
                 controller: "ArtistSearchCtrl",
                 resolve: {
-                    search: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.search($route.current.params.query, "artist", {
+                    search: ["PlayerSpotifySearchResource", "$route", function (PlayerSpotifySearchResource, $route){
+                        return PlayerSpotifySearchResource.query({
+                            q: $route.current.params.query + "*",
+                            type: "artist",
                             limit: env.SEARCH_LIMIT,
                             market: env.REGION_CODE
-                        });
+                        }).$promise;
                     }]
                 }
             });

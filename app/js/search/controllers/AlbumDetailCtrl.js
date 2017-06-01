@@ -6,9 +6,9 @@
  * @requires ngRoute
  */
 angular.module("FM.search.AlbumDetailCtrl", [
-    "spotify",
     "ngRoute",
     "config",
+    "FM.api.PlayerSpotifyAlbumResource",
     "FM.player.trackDirective"
 ])
 /**
@@ -25,13 +25,14 @@ angular.module("FM.search.AlbumDetailCtrl", [
                 templateUrl: "partials/albums-detail.html",
                 controller: "AlbumDetailCtrl",
                 resolve: {
-                    album: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.getAlbum($route.current.params.id);
+                    album: ["PlayerSpotifyAlbumResource", "$route", function (PlayerSpotifyAlbumResource, $route){
+                        return PlayerSpotifyAlbumResource.get({id: $route.current.params.id}).$promise;
                     }],
-                    albumTracks: ["Spotify", "$route", function (Spotify, $route){
-                        return Spotify.getAlbumTracks($route.current.params.id, {
+                    albumTracks: ["PlayerSpotifyAlbumResource", "$route", function (PlayerSpotifyAlbumResource, $route){
+                        return PlayerSpotifyAlbumResource.getTracks({
+                            id: $route.current.params.id,
                             limit: env.SEARCH_LIMIT
-                        });
+                        }).$promise;
                     }]
                 }
             });
