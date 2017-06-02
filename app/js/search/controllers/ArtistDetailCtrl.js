@@ -49,12 +49,20 @@ angular.module("FM.search.ArtistDetailCtrl", [
                             market: env.REGION_CODE
                         }).$promise;
                     }],
-                    // topTracks: ["Spotify", "$route", function (Spotify, $route){
-                    //     return Spotify.getArtistTopTracks($route.current.params.id, env.REGION_CODE);
-                    // }],
-                    // relatedArtists: ["Spotify", "$route", function (Spotify, $route){
-                    //     return Spotify.getRelatedArtists($route.current.params.id);
-                    // }]
+                    topTracks: ["PlayerSpotifyArtistResource", "$route", function (PlayerSpotifyArtistResource, $route){
+                        return PlayerSpotifyArtistResource.getTopTracks({
+                            id: $route.current.params.id.replace("spotify:artist:", ""),
+                            limit: env.SEARCH_LIMIT,
+                            country: env.REGION_CODE
+                        }).$promise;
+                    }],
+                    relatedArtists: ["PlayerSpotifyArtistResource", "$route", function (PlayerSpotifyArtistResource, $route){
+                        return PlayerSpotifyArtistResource.getRelatedArtists({
+                            id: $route.current.params.id.replace("spotify:artist:", ""),
+                            limit: env.SEARCH_LIMIT,
+                            album_type: "single", // jshint ignore:line
+                        }).$promise;
+                    }]
                 }
             });
 
@@ -80,10 +88,10 @@ angular.module("FM.search.ArtistDetailCtrl", [
     "artist",
     "albums",
     "singles",
-    // "topTracks",
-    // "relatedArtists",
+    "topTracks",
+    "relatedArtists",
     "env",
-    function ($scope, $location, PlayerSpotifyArtistResource, artist, albums, singles, /*topTracks, relatedArtists,*/ env) {
+    function ($scope, $location, PlayerSpotifyArtistResource, artist, albums, singles, topTracks, relatedArtists, env) {
 
         /**
          * Artist data
@@ -120,18 +128,18 @@ angular.module("FM.search.ArtistDetailCtrl", [
          */
         $scope.singlesMeta = singles;
 
-        // /**
-        //  * List of artist top tracks
-        //  * @property topTracks
-        //  * @type {Array}
-        //  */
-        // $scope.topTracks = topTracks.tracks;
+        /**
+         * List of artist top tracks
+         * @property topTracks
+         * @type {Array}
+         */
+        $scope.topTracks = topTracks.tracks;
 
-        // /**
-        //  * @property relatedArtists
-        //  * @type {Array}
-        //  */
-        // $scope.relatedArtists = relatedArtists.artists;
+        /**
+         * @property relatedArtists
+         * @type {Array}
+         */
+        $scope.relatedArtists = relatedArtists.artists;
 
         /**
          * @property loadDisabled

@@ -33,6 +33,14 @@ angular.module("FM.api.PlayerSpotifyArtistResource", [
                 getAlbums: {
                     method: "GET",
                     url: env.FM_API_SERVER_ADDRESS + "spotify/artists/:id/albums",
+                },
+                getTopTracks: {
+                    method: "GET",
+                    url: env.FM_API_SERVER_ADDRESS + "spotify/artists/:id/top-tracks",
+                },
+                getRelatedArtists: {
+                    method: "GET",
+                    url: env.FM_API_SERVER_ADDRESS + "spotify/artists/:id/related-artists",
                 }
             }
         );

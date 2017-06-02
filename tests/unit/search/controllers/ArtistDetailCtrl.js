@@ -15,10 +15,10 @@ describe("FM.search.ArtistDetailCtrl", function() {
         topTracks = { tracks: [{},{}] };
         albums = { items: [{},{}] };
         artist = { id: "123" };
-        artists = [{ id: "123" },{ id: "123" }];
+        artists = { artists: [{ id: "123" },{ id: "123" }] };
 
         $httpBackend.whenGET(/partials\/.*/).respond(200, "");
-        $httpBackend.whenGET(/api.spotify.com\/v1\/artists\/.*\/top-tracks/).respond(200, topTracks);
+        $httpBackend.whenGET(/.*\/artists\/.*\/top-tracks/).respond(200, topTracks);
         $httpBackend.whenGET(/.*\/artists\/.*\/related-artists/).respond(200, artists);
         $httpBackend.whenGET(/.*\/artists\/.*\/albums/).respond(200, albums);
         $httpBackend.whenGET(/.*\/artists\/.*/).respond(200, artist);
