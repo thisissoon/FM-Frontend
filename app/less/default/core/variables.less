@@ -14,10 +14,10 @@
 
 @brand-spotify:             #2EBD59;
 
-@dj-theme-color:            #EDBC08;
+@dj-theme-color:            #EEEEEE;
 
 @brand-primary:             @dj-theme-color;
-@brand-secondary:           @white;
+@brand-secondary:           #4A4A4A;
 
 @brand-primary-light:       lighten(@brand-primary, 10%);
 @brand-primary-lighter:     lighten(@brand-primary, 20%);
@@ -46,14 +46,14 @@
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-@body-bg:               @dj-theme-color;
+@body-bg:               @brand-primary;
 //** Global text color on `<body>`.
-@text-color:            @white;
+@text-color:            @brand-secondary;
 //** Global textual link color.
-@link-color:            @white;
+@link-color:            @text-color;
 //** Link hover decoration.
 @link-hover-decoration: none;
-@text-muted:            rgba(255, 255, 255, 0.5);
+@text-muted:            fade(@text-color, 50);
 
 //== Buttons
 //
@@ -127,9 +127,9 @@
 @dropdown-bg:                    @brand-primary-light;
 
 //** Dropdown link text color.
-@dropdown-link-color:            @white;
+@dropdown-link-color:            @brand-secondary;
 //** Hover color for dropdown links.
-@dropdown-link-hover-color:      darken(@white, 5%);
+@dropdown-link-hover-color:      darken(@brand-secondary, 5%);
 //** Hover background for dropdown links.
 @dropdown-link-hover-bg:         lighten(@dropdown-bg, 10%);
 
@@ -171,7 +171,7 @@
 @track-footer-height-xs:        50px;
 @track-color:                   transparent;
 @track-fill:                    @brand-primary-lighter;
-@thumb-color:                   @white;
+@thumb-color:                   @brand-secondary;
 
 @thumb-radius:                  8px;
 @thumb-height:                  12px;
