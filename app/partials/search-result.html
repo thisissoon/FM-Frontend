@@ -1,5 +1,5 @@
 <!-- label -->
-<p class="h4 text-center text-sans-serif" ng-if="match.label.label">{{ match.label.label }}</p>
+<p class="h4 text-center text-sans-serif" ng-if="match.label.label && match.label.uri.indexOf('spotify:album') !== 0">{{ match.label.label }}</p>
 
 <!-- track -->
 <div class="media" ng-if="match.label.uri.indexOf('spotify:track') === 0">
