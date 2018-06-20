@@ -55,9 +55,9 @@
 
     <div ng-if="track.duration || track.duration_ms" class="track-right track-time text-right">
         <p>
-            <span ng-show="timer">{{ timer.elapsedTime | date: "H:mm:ss" | removeLeadingZeros }}</span>
+            <span ng-show="timer">{{ timer.elapsedTime | date: "H:mm:ss" : "UTC" | removeLeadingZeros }}</span>
             <span ng-show="timer" class="hidden-xs">/</span>
-            <span class="text-muted">{{ track.duration || track.duration_ms | date: "H:mm:ss" | removeLeadingZeros }}</span>
+            <span class="text-muted">{{ track.duration || track.duration_ms | date: "H:mm:ss" : "UTC" | removeLeadingZeros }}</span>
         </p>
     </div>
 </div>
